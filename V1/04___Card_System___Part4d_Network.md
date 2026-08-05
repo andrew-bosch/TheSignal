@@ -45,8 +45,8 @@ Network's pre-execution discovery card — spends 1 Exposure + 1 Findings to exp
 | Portrait validity | ✓ | Network +1 submitter — discovery operation aligns with transparency doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — operation district is revealed as part of discovery, not targeted as a zone | Art 01 §6–§7 |
 | Supported by components | ✓ | CovertOperation (unresolved, in Beat 3 grid) as target — physically verifiable by ARBITER at resolution | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; initiative order determines valid targets; ps_framing on target pending 04-n33/04-n34b | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely. | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 Automatic; initiative order determines valid targets; ps_framing on target pending 04-n33/04-n34b | Art 03 §9, §11 |
+| Data schema validation | ✓ | 04-n70 closed S95. `card_id` is present (`card_id="NET.CA.1"`) — earlier "missing card_id" claim was false, corrected. `doctrine_mod`/`boost`/`ps_framing`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` correctly absent (Immediate, Automatic, not `ElectPlayer`, not evergreen). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Exposure + Findings, both typed correctly). | Art 00a §9.2 |
@@ -59,7 +59,7 @@ Network's pre-execution discovery card — spends 1 Exposure + 1 Findings to exp
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.CA.1 = Card(
@@ -119,8 +119,8 @@ Network's Exposure generation card — converts the act of revealing into additi
 | Portrait validity | ✓ | portrait = None — Disclosure Loop is internal resource infrastructure, not a visible doctrinal act; absence confirmed intentional (Outstanding Issue) | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — self-targeting; no district context | Art 01 §6–§7 |
 | Supported by components | ✓ | Exposure as subject; Findings cost; no new components | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 cleanup; ARBITER tracks Reveal card resolutions this round; conditional resolution outstanding (Outstanding Issue) | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely. | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 cleanup; ARBITER tracks Reveal card resolutions this round; conditional resolution outstanding (Outstanding Issue) | Art 03 §9, §11 |
+| Data schema validation | ✓ | 04-n70 closed S95. `card_id` is present (`card_id="NET.CA.2"`) — earlier "missing card_id" claim was false, corrected. `doctrine_mod`/`boost`/`ps_framing`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` correctly absent. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; `success` field itself is a conditional expression (`X if reveal_resolved_this_round >= 1 else None`) — not player choice or `game.choose_one()` (P27's actual prohibition), so this passes, though the already-flagged Outstanding Issue about whether this should instead be modeled as a `restriction` gate stands. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings only, typed correctly). | Art 00a §9.2 |
@@ -134,7 +134,7 @@ Network's Exposure generation card — converts the act of revealing into additi
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.CA.2 = Card(
@@ -200,8 +200,8 @@ A Network operative submits intelligence on a target faction's committed operati
 | Portrait validity | ✓ | Network +1 submitter — forced transparency is core doctrine; FactionSpecific card, no other portrait entries | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone restriction | Art 01 §6–§7 |
 | Supported by components | ✓ | VM-xx registered in 00b §4 (04-n76 ✅) | Art 02 §6–§8; Art 07 |
-| Supported by game procedure | ✓ | Beat 2 d100 procedure at Art 03 §9.4 (04-n75 ✅); VM-xx Beat 3 public resolution clause (04-n76 ✅) | Art 03 §9, §11 |
-| Data schema validation | ⚠ | All §6.1 fields present; subject = CovertOperation flagged for 04b taxonomy validation. Still missing `card_id`/`doctrine_mod`/`boost`/`ps_framing`. | Art 04 §6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 2 d100 procedure at Art 03 §9.4 (04-n75 ✅); VM-xx Beat 3 public resolution clause (04-n76 ✅) | Art 03 §9, §11 |
+| Data schema validation | ✓ | `card_id` is present (`card_id="NET.CA.3"`) — earlier "missing card_id" claim was false, corrected. `doctrine_mod`/`boost`/`ps_framing`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` genuinely absent per audit tool, consistent with card mechanic. subject = CovertOperation flagged for 04b taxonomy validation (see Outstanding Issues). | Art 04 §6.1 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Exposure only, typed correctly). | Art 00a §9.2 |
@@ -214,7 +214,7 @@ A Network operative submits intelligence on a target faction's committed operati
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.CA.3 = Card(
@@ -284,7 +284,7 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 | Supported by zones | ✓ | target_district = adjacent to STD.CA.6.target_district; dependency resolution outstanding (Outstanding Issue) | Art 01 §6–§7 |
 | Supported by components | ✓ | PublicAct as target_object; Exposure cost; no new components | Art 02 §6–§8; Art 04b §5 |
 | Supported by game procedure | ✓ | Beat 2 Automatic; PA cost increase at Beat 4; STD.CA.6 submission ordering outstanding (Outstanding Issue) | Art 03 §9, §9.4, §10 |
-| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely. `target_district=district.adjacent(C06.target_district)` also uses a legacy `C06` sequential-number variable reference to STD.CA.6 (pre-ID-convention notation, same non-material category as GUI.CA.2's `id=STD.CA.2` note). | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | 04-n70 closed S95. `card_id` is present (`card_id="NET.CA.4"`) — earlier "missing card_id" claim was false, corrected. `doctrine_mod`/`boost`/`ps_framing`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` correctly absent. `target_district=district.adjacent(C06.target_district)` still uses a legacy `C06` sequential-number variable reference to STD.CA.6 (pre-ID-convention notation, same non-material category as GUI.CA.2's `id=STD.CA.2` note). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Exposure + Findings, both typed correctly). | Art 00a §9.2 |
@@ -298,7 +298,7 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.CA.4 = Card(
@@ -356,7 +356,7 @@ Network's Baryo-targeted presence card — specialized version of STD.CA.3 Campa
 | Supported by zones | ✓ | target_district = district.any(zone=Baryo) — Baryo zone definition outstanding (Outstanding Issue) | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken; Exposure cost; no new components | Art 02 §6, §8 |
 | Supported by game procedure | ✓ | Beat 3 Automatic; ARBITER places presence token; zone check at Dispatch | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely. | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | 04-n70 closed S95. `card_id` is present (`card_id="NET.CA.5"`) — earlier "missing card_id" claim was false, corrected. `doctrine_mod`/`boost`/`ps_framing`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` correctly absent. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Exposure only, typed correctly). | Art 00a §9.2 |
@@ -370,7 +370,7 @@ Network's Baryo-targeted presence card — specialized version of STD.CA.3 Campa
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.CA.5 = Card(
@@ -428,7 +428,7 @@ Network's credibility-to-Intel conversion card. Reflects the Network doctrine th
 | Supported by zones | ✓ | target_district = None — no district context | Art 01 §6–§7 |
 | Supported by components | ✓ | target_faction required; IntelToken keyed to target_faction at Dispatch | Art 02 §6–§8; Art 02 §11 |
 | Supported by game procedure | ✓ | Beat 3 Automatic; PS loss and IntelToken delivery handled by Art 03 apply effect | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70. Missing `card_id`/`boost`/`ps_framing` (`doctrine_mod=None` is present). | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | 04-n70 closed S95. `card_id` is present (`card_id="NET.CA.6"`) — earlier "missing card_id" claim was false, corrected. `boost`/`ps_framing`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` genuinely absent (`doctrine_mod=None` explicitly declared). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None` — PS loss is the success-effect cost, not a submission cost (per Art 04 §6.2, PS is non-fungible and can't appear in `cost`). | Art 00a §9.2 |
@@ -441,7 +441,7 @@ Network's credibility-to-Intel conversion card. Reflects the Network doctrine th
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.CA.6 = Card(
@@ -505,8 +505,8 @@ The message doesn't travel because Network announced it. It travels because Netw
 | Portrait validity | ✓ | Network +1 submitter — visible-but-deniable public signal aligns with Broadcaster doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named; IL restriction checked at resolution | Art 01 §6–§7 |
 | Supported by components | ✓ | Successcrit places 1 chip — standard chip placement, no new component | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 d100; IL check and chip placement handled by Art 03 apply effect | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Fields consistent with §6.1–§6.3. Missing `card_id`/`boost`/`ps_framing` (`doctrine_mod=None` is present). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 d100; IL check and chip placement handled by Art 03 apply effect | Art 03 §9, §11 |
+| Data schema validation | ✓ | `card_id` is present (`card_id="NET.CA.7"`) — earlier "missing card_id" claim was false, corrected. `boost`/`ps_framing`/`resolution_type` genuinely absent per audit tool (`doctrine_mod=None` explicitly declared). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Street-level signal; presence made legible without announcement | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Exposure only, typed correctly). | Art 00a §9.2 |
@@ -520,7 +520,7 @@ The message doesn't travel because Network announced it. It travels because Netw
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.CA.7 = Card(
@@ -558,7 +558,7 @@ NET.CA.7 = Card(
 ### NET.CA.8 — FAKE NEWS *(stub)*
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Network's disinformation-driven marker redirect — resolves the design gap identified at 04-n134 (Network had no Territory-layer card; all prior tactical play was Information/Standing layer). Genuine design review completed S154 (checklist below); two real gaps remain open (voice/narrative content, `target_profile.X` targeting notation) — see PM05 04-n217. Distinct from DIR.CA.4 Tactical Redirection (Automatic, repositions the acting faction's own presence) and from Network's existing Reveal suite (operates on information objects, not territory).
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -567,33 +567,35 @@ NET.CA.7 = Card(
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ⚠ |  |  |
-| Voice fit | ⚠ |  |  |
-| Doctrine alignment | ⚠ |  |  |
-| Card type fit | ⚠ |  |  |
+| Action fit | ✓ | Disinformation-driven marker redirect — distinct from DIR.CA.4 (Automatic, own presence) and from Network's Information-layer Reveal suite (this is the set's only Territory\|Redirect\|DeploymentMarker card); resolves 04-n134's design gap | Art 00 §7 |
+| Voice fit | ⚠ | `narrative`/`perspectives` both `None` — cannot assess voice against absent content. Real content gap, not mechanical; logged PM05 04-n217. | Art 00 §7 |
+| Doctrine alignment | ✓ | Network only; cross-resource (Exposure+Findings), d100 threshold 50, Beat 2 — consistent cost/timing shape with the rest of the covert set | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Network) | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Territory/Redirect/DeploymentMarker — Redirect is the Function whose underlying primitive is Move (relocates a component to a new destination) | Art 04b §4, §5 |
-| Balance | ⚠ |  |  |
-| Effect duration | ⚠ |  |  |
-| Persistence | ⚠ |  |  |
-| Trigger validity | ⚠ |  |  |
-| Portrait validity | ⚠ |  |  |
-| Supported by zones | ⚠ |  |  |
-| Supported by components | ⚠ |  |  |
-| Supported by game procedure | ⚠ |  |  |
-| Data schema validation | ⚠ | Pending 04-n70. Also missing `ring_mod`/`doctrine_mod`/`outcome_type`/`boost`/`ps_framing` (has `card_id`, unlike most of this set). | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 Card Story |
-| Outcome determinacy | ⚠ |  |  |
-| Resource cost positioning | ⚠ |  |  |
+| Balance | ⚠ | `successcrit`/`fail`/`failcrit` all `None` — a d100 roll with only one populated branch (bare success); every other reviewed d100 CA card in this set (NET.CA.3, NET.CA.7) carries at least a `failcrit` consequence. Not necessarily wrong (fail = cost spent, no effect, is a valid design), but the asymmetry with its siblings is worth a second look, not confirmed here. | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate — marker moved and flipped once at resolution; no lingering state beyond the natural board consequence | — |
+| Persistence | ✓ | Immediate — card fully resolved at Beat 2 | Art 04 §6 |
+| Trigger validity | ✓ | N/A — no trigger declared, consistent with other Beat-timed (non-reactive) CA cards | — |
+| Portrait validity | ✓ | Network +1 submitter — single entry | Art 04 §6.2 |
+| Supported by zones | ⚠ | Top-level `target_district = None` with a comment claiming the real value lives in "TargetProfile" — not a real nested accessor used anywhere else in the corpus. See Supported by components row and PM05 04-n217. | Art 01 §6–§7 |
+| Supported by components | ⚠ | `success` reads `target_profile.target_district`/`target_profile.freeform_destination` — checked against the rest of the corpus: this notation appears nowhere else in matching shape (2 other hits, both Syndicate, different construct). Every other card accesses these as bare `district(target)`/`target_freeform`. Genuine schema-notation gap, not a citation error — logged PM05 04-n217, not fixed inline (touches an unpopulated top-level field, not a pure rename). | Art 02 §6–§8 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 2 d100; ARBITER move+flip procedure fully described in `arbiter_note` | Art 03 §9, §11 |
+| Data schema validation | ✓ | `card_id` present (unlike CA.1–5, where earlier notes falsely claimed it missing). `ring_mod`/`doctrine_mod`/`outcome_type`/`boost`/`ps_framing`/`trigger`/`resolution_type` genuinely absent per audit tool — consistent with this card's mechanic (no ring modifier, no PS effect, no boost). 04-n70 closed S95, citation corrected. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79; `narrative`/`perspectives` fields also `None` in code (not just the prose placeholder) — see Voice fit row, PM05 04-n217. | Art 04 §5 Card Story |
+| Outcome determinacy | ✓ | `d100`; single populated branch (`success` only, `successcrit`/`fail`/`failcrit` all `None`) — no `game.choose_one()`, resolves deterministically. See Balance row for the asymmetry-with-siblings flag. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Exposure + Findings), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **`target_profile.X` targeting notation:** genuinely non-standard, not used elsewhere in the corpus in this shape. See PM05 04-n217 — needs a design call before normalizing, since the top-level `target_district` field is currently unpopulated rather than just misnamed.
+- **Voice/narrative absent:** `narrative`/`perspectives` both `None`, no Card Story content yet. See PM05 04-n217.
+- **Outcome asymmetry:** no `failcrit` consequence, unlike sibling d100 CA cards in this set (NET.CA.3, NET.CA.7). Flagged, not confirmed wrong — see Balance row.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ S154 | | |
 
 *Network plants false intelligence to redirect an opponent's DeploymentMarker to a useless district. 04-n134.*
 
@@ -668,8 +670,8 @@ Network's signature information-attack PA — a coordinated release of all subst
 | Portrait validity | ✓ | Network +1: submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted broadcast; no zone reference. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (all held, faction-keyed to target; Art 02 §6); Exposure × 2 cost (Art 02 §8) | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Token count calculated at Beat 4; all tokens spent regardless of outcome | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic` (schema_cleanup_log #41). `threshold` is a computed formula (`30 + 10*n`) rather than a flat int — a distinct pattern from other threshold fields in the corpus, though not necessarily wrong (§6.1 types `threshold` as `int \| None`, and this evaluates to an int at resolution time). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Token count calculated at Beat 4; all tokens spent regardless of outcome | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 closed S95. `id`/`card_id` both present. `resolution_type` corrected `Contested`→`Probabilistic` (schema_cleanup_log #41). `threshold` is a computed formula (`30 + 10*n`) rather than a flat int — a distinct pattern from other threshold fields in the corpus, but not wrong (§6.1 types `threshold` as `int \| None`, and this evaluates to an int at resolution time). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail populated (successcrit/failcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Exposure ×2 + all held Intel Tokens naming target), correctly typed. | Art 00a §9.2 |
@@ -682,7 +684,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.PA.1 = Card(
@@ -768,8 +770,8 @@ Network's broadcast-derived presence PA — scaling territorial expansion built 
 | Portrait validity | ✓ | Network +1: submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.up_to_three — valid zone references; restriction checks Established+ per district (valid zone conditions) | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken (Art 02 §6); Exposure × 2+ cost (Art 02 §8) | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Districts named at Phase B; restriction per district at Beat 0 | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Districts named at Phase B; restriction per district at Beat 0 | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 closed S95. `id`/`card_id` both present. `persistence_clearing_trigger`/`on_discard` correctly absent (Immediate, not evergreen). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource, scaling with district count (Exposure ×2+ + district native ×1/district), correctly typed. | Art 00a §9.2 |
@@ -782,7 +784,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.PA.2 = Card(
@@ -873,8 +875,8 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 | Portrait validity | ✓ | Network +1 submitter; FailCrit Network −1 (failed broadcast backfires — reckless accusation without traction); FactionSpecific, no other entries | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone restriction | Art 01 §6–§7 |
 | Supported by components | ✓ | No new component required — open hand is a physical visibility state, not a board marker; comply/resist is self-policing per Governing Rule 6.1a | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Art 03 §9.0 (Start of Month) provides generalizable Covert Dispatch obligation procedure — Steps 0–2 cover comply/resist for any active PA with this obligation type (04-n77 ✅) | Art 03 §9.0 |
-| Data schema validation | ⚠ | Fields present, but **`persistence_condition`, `persistence_effect`, and `restriction` are all bare strings**, not structured BoolExpr/MutationExpr. FactionHand subject flagged for 04b validation (see Outstanding Issues below). `card_id` missing (see Outstanding Issues). | Art 04 §6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Art 03 §9.0 (Start of Month) provides generalizable Covert Dispatch obligation procedure — Steps 0–2 cover comply/resist for any active PA with this obligation type (04-n77 ✅) | Art 03 §9.0 |
+| Data schema validation | ⚠ | `id`/`card_id` both present (`card_id = "NET.PA.3"`) — earlier "card_id missing" claim and its Outstanding Issues bullet were both false/stale (the modern `[FAC].[TYPE].n` numbering scheme is already applied here; PM05 04-n1 is a much older, unrelated numbering-*schema* rework proposal, not a per-card gate). Real gap remains: **`persistence_clearing_trigger`, `persistence_effect`, and `restriction` are all bare strings**, not structured TriggerExpr/MutationExpr/BoolExpr — tracked at PM02 L300 per the card's own inline comment. FactionHand subject flagged for 04b validation (see Outstanding Issues below). | Art 04 §6.1 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=`None`), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Exposure × 2), correctly typed. | Art 00a §9.2 |
@@ -882,13 +884,13 @@ Network turns its full broadcast infrastructure on a named faction, making them 
 #### Outstanding Issues
 
 - **Taxonomy subject:** subject = FactionHand — not a registered subject type. Needs 04b validation pass. (Non-gate — tracked in taxonomy checklist row.)
-- **Card ID:** TBD — pending PM05 04-n1 numbering pass. (Non-gate.)
+- **Bare-string fields:** `persistence_clearing_trigger`, `persistence_effect`, `restriction` are prose strings, not structured TriggerExpr/MutationExpr/BoolExpr. Tracked at PM02 L300 per the card's own inline comment — convert once that item resolves.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.PA.3 = Card(
@@ -974,19 +976,18 @@ A rival's public standing ticks upward — a win, a moment of visibility. Networ
 | Stack behavior (ModReactCard) | ⚠ | Same open question as the rest of the corpus. |  |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; not ring-scoped. |  |
 
-**Outstanding Issues:**
-- **Card name:** "Troll Farm" is still a placeholder — confirm before sign-off.
-- **Unblockability formalization:** Art 03 governing rule still doesn't exist — gates Issues Resolved.
-
 #### Outstanding Issues
 
-None
+- **Card name:** "Troll Farm" is still a placeholder — confirm before sign-off.
+- **Unblockability formalization:** Art 03 governing rule for "unblockable" effects still doesn't exist — gates Issues Resolved.
+
+*(These two bullets previously sat in a malformed bold-text pseudo-section above a separate, contradictory "None" — relocated for consistency, content unchanged.)*
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.2 = Card(
@@ -999,14 +1000,14 @@ NET.MOD.2 = Card(
               # fires when any other faction's standing marker increases (publicly observable)
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     beat    = None,  resolution = Automatic,  resolution_type = Transactional,
-    target_district = None,  target_faction = trigger.faction,  target_object = None,  target_freeform = None,  # scaffolded, not addressed
+    target_district = None,  target_faction = trigger.faction,  target_object = None,  target_freeform = None,
     cost    = Exposure * 1 + Capital * 1,
-    boost   = None,  # scaffolded, not addressed
+    boost   = None,
     success = faction(trigger.faction).standing.remove(1),
-    successcrit = None,  fail = None,  failcrit = None,  on_accept = None,  on_decline = None,  # scaffolded, not addressed
+    successcrit = None,  fail = None,  failcrit = None,  on_accept = None,  on_decline = None,
     restriction = None,
     portrait = {Network: PortraitEntry(submitter=+1)},
-    ps_framing = None,  # scaffolded, not addressed
+    ps_framing = None,
     narrative = None,  perspectives = None,  arbiter_note = None,
     design_note = "Network activates an Intel dossier the moment a faction's standing increases — converting gathered intelligence into immediate reputational damage at the opponent's highest-visibility moment. PS −1 is unblockable: once the information releases, retraction is impossible. Governing rule for unblockability outstanding — address alongside any second bypass-capable card. Trigger is standing_marker.increased (publicly observable, §5 P5 compliant). Does not fire on Network's own standing increases. card_id = NET.MOD.2 Cost reasoning: Capital funds the server farms and botnets needed to rapidly manufacture the public narrative.",
 )
@@ -1020,7 +1021,7 @@ NET.MOD.2 = Card(
 [↑ Public Acts](#network-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Network's mass-mobilization territorial disruption PA — burns Exposure and district-native resources to physically remove an opponent's Presence Token while shifting the PS balance. Genuine design review completed S154 (checklist below); the real remaining gap is mechanical, not conceptual: `success` is still written as prose rather than a structured MutationExpr, and voice content (`narrative`/`perspectives`/`portrait`) is unwritten — see PM05 04-n218.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -1030,32 +1031,33 @@ NET.MOD.2 = Card(
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Public mass mobilization to displace a rival's presence fits Network's broadcast/community doctrine | Art 00 §7 |
-| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Voice fit | ⚠ | `narrative`/`perspectives` fields are present but both `None`, with no justification (unlike e.g. NET.CA.2's justified-empty `portrait=None`) — real content gap, not a field-absence gap. See PM05 04-n218. | Art 00 §7 |
 | Doctrine alignment | ✓ | Public, Exposure-funded disruption is on-doctrine for Network | Art 00 §7 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Territory / Remove / PresenceToken — matches `card_status` DB directly | Art 04b §4 |
-| Balance | ⚠ | Cost + threshold 60 set, but effect magnitude can't be confirmed — `success` is prose | Art 02 §6–§7 |
-| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
-| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Balance | ⚠ | Cost + threshold 60 set, but effect magnitude can't be fully confirmed — `success` is prose, not typed code. | Art 02 §6–§7 |
+| Effect duration | ✓ | `persistence = Immediate` is present and correctly typed for a one-time token removal + PS shift. Earlier "no persistence field at all" claim was false — corrected. | Art 04 §5 P19 |
+| Persistence | ✓ | Same correction — field present, correctly `Immediate`. | Art 04 §6 |
 | Trigger validity | ✓ | No trigger field; d100 doesn't require one | — |
-| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
-| Supported by zones | ⚠ | No `target_district`/`target_faction` fields declared — referenced only inside the `success` string | Art 01 §6–§7 |
+| Portrait validity | ⚠ | `portrait = None` is present (not absent) but unjustified — every comparable Network CA/PA card carries a real portrait entry. Real content gap, see PM05 04-n218. | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_district = district.named`, `target_faction = faction.opponent` are both present as real Card fields. Earlier "no target fields declared, referenced only inside the success string" claim was false — corrected. | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken — existing component | Art 02 §6 |
 | Supported by game procedure | ✓ | Straightforward remove-and-shift at Beat 4 — no new procedure needed | Art 03 §9.4 |
-| Data schema validation | ✓ | `success` is a bare prose string, not a structured MutationExpr — separate, unresolved gap. `cost`'s `district_native(target_district)` — a third, unreconciled bare-function-call cost-notation form — normalized to the canonical `district.target_district.native` (schema_cleanup_log #22, closed S148). Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, most targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | `card_id` present (`card_id = "NET.PA.4"`), as are `outcome_type`/`ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`/`persistence`/all targeting fields/`restriction`/`boost`/`successcrit`/`fail`/`failcrit`/`arbiter_note` — earlier claim these were "missing entirely" was false across the board (confirmed against audit tool: only `persistence_clearing_trigger`/`on_discard` are genuinely absent, both correctly so). Real gap: **`success` is a bare prose string, not a structured MutationExpr** — see PM05 04-n218. `cost`'s `district_native(target_district)` — a third, unreconciled bare-function-call cost-notation form — normalized to the canonical `district.target_district.native` (schema_cleanup_log #22, closed S148). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Outcome determinacy | ⚠ | `successcrit`/`fail`/`failcrit` are all correctly `None` (single-outcome card, not a false gap) — but `success` itself being prose, not code, means it can't be verified as a genuine deterministic MutationExpr against P27. See PM05 04-n218. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Exposure + district native), correctly typed. Cost notation normalized from bare `district_native(target_district)` to `district.target_district.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **`success` is bare prose, not MutationExpr:** see PM05 04-n218 (covers NET.PA.4/5/6 together).
+- **`narrative`/`perspectives`/`portrait` unjustified-empty:** real content gap, see PM05 04-n218.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.PA.4 = Card(
@@ -1067,8 +1069,8 @@ NET.PA.4 = Card(
     beat    = 4,  resolution = d100,  threshold = 60,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 4,
-    resolution_type = Probabilistic,  outcome_type = None,  # scaffolded, not addressed
-    persistence = Immediate,  # scaffolded, not addressed
+    resolution_type = Probabilistic,  outcome_type = None,
+    persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
     target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
@@ -1077,7 +1079,7 @@ NET.PA.4 = Card(
     success = "Remove 1 target_faction's Presence Token from target_district. Target faction loses 1 PS. Network gains +1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = None,  # scaffolded, not addressed
+    portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "A loud territorial disruption. Burns Exposure and local resources to physically remove an opponent's token while shifting the PR balance.",
@@ -1091,7 +1093,7 @@ NET.PA.4 = Card(
 [↑ Public Acts](#network-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Network's pure PR-assassination PA — weaponizes the target's own native resource (Network must already hold a unit of it, prior economic embedding) to tank their Public Standing. Genuine design review completed S154 (checklist below); the real remaining gap is mechanical: `success` is still prose rather than MutationExpr, and voice content is unwritten — see PM05 04-n218.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -1101,32 +1103,33 @@ NET.PA.4 = Card(
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | PR attack converting an opponent's own resource into ammunition fits Network's information-warfare doctrine | Art 00 §7 |
-| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Voice fit | ⚠ | `narrative`/`perspectives` present but both `None`, unjustified — real content gap, see PM05 04-n218. | Art 00 §7 |
 | Doctrine alignment | ✓ | Exposure-funded PS attack is on-doctrine for Network | Art 00 §7 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
 | Taxonomy fit | ✓ | Standing / Shift / StandingMarker — matches `card_status` DB directly | Art 04b §4 |
-| Balance | ⚠ | Cost set, but effect magnitude (−3 PS) can't be fully cross-checked without a structured effect | Art 02 §6–§7 |
-| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
-| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Balance | ⚠ | Cost set, but effect magnitude (−3 PS) can't be fully cross-checked — `success` is prose, not typed code. | Art 02 §6–§7 |
+| Effect duration | ✓ | `persistence = Immediate` is present and correctly typed. Earlier "no persistence field at all" claim was false — corrected. | Art 04 §5 P19 |
+| Persistence | ✓ | Same correction — field present, correctly `Immediate`. | Art 04 §6 |
 | Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
-| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
-| Supported by zones | ⚠ | No `target_faction` field declared — referenced only inside `cost`/`success` strings | Art 01 §6–§7 |
+| Portrait validity | ⚠ | `portrait = None` is present (not absent) but unjustified. See PM05 04-n218. | Art 04 §6.2 |
+| Supported by zones | ✓ | `target_faction = faction.opponent` is present as a real Card field. Earlier "no target_faction field declared" claim was false — corrected. | Art 01 §6–§7 |
 | Supported by components | ✓ | Public Standing track, native resources — existing components | Art 02 §7–§8 |
 | Supported by game procedure | ✓ | Cost is paid entirely from Network's own resource pool (confirmed CostExpr rule) — the `faction.target.native` term only resolves which resource type is owed (the target's native type), not who pays it. Same "prior economic embedding" shape as GHO.CA.4: Network must already hold a unit of the target's native resource for this cost to be payable. | Art 04 §6.1–§6.3 |
-| Data schema validation | ⚠ | `success` is a bare prose string, not a structured MutationExpr. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | `card_id` present (`card_id = "NET.PA.5"`), as are `outcome_type`/`ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`/`persistence`/targeting fields/`restriction`/`boost`/`successcrit`/`fail`/`failcrit`/`arbiter_note` — earlier "missing entirely" claim was false across the board (confirmed against audit tool: only `persistence_clearing_trigger`/`on_discard` genuinely absent). Real gap: **`success` is a bare prose string, not a structured MutationExpr** — see PM05 04-n218. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Outcome determinacy | ⚠ | `successcrit`/`fail`/`failcrit` correctly `None` (not a false gap) — but `success` being prose, not code, can't be verified as a genuine deterministic MutationExpr against P27. See PM05 04-n218. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (2 Exposure — Network's own native — + 1 unit of the target's native type), both paid from Network's own pool. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **`success` is bare prose, not MutationExpr:** see PM05 04-n218 (covers NET.PA.4/5/6 together).
+- **`narrative`/`perspectives`/`portrait` unjustified-empty:** real content gap, see PM05 04-n218.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.PA.5 = Card(
@@ -1138,8 +1141,8 @@ NET.PA.5 = Card(
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 4,
-    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
-    persistence = Immediate,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,
+    persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
     target_district = None,  target_faction = faction.opponent,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
@@ -1148,7 +1151,7 @@ NET.PA.5 = Card(
     success = "Target faction loses 3 Public Standing. Network gains +1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = None,  # scaffolded, not addressed
+    portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "Pure PR assassination. Cost includes 1 unit of the target faction's native resource — Network must already hold it, prior economic embedding in the target's economy funding the smear campaign.",
@@ -1162,7 +1165,7 @@ NET.PA.5 = Card(
 [↑ Public Acts](#network-public-acts)
 
 #### Design Rationale
-⚠ Pending design review (09-16). See stub design note below.
+Network's PS-to-resource conversion PA — rewards a high, positive Public Standing track by converting it into any resource type Network names. Genuine design review completed S154 (checklist below); the real remaining gap is mechanical: `success` is still prose rather than MutationExpr, voice content is unwritten, and `subject = AnyResource` needs Art 04b taxonomy confirmation — see PM05 04-n218.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -1172,32 +1175,33 @@ NET.PA.5 = Card(
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Converting public goodwill (PS) into hard resources is a distinctive, doctrinally-grounded Network economy mechanism | Art 00 §7 |
-| Voice fit | ⚠ | No `narrative`/`perspectives` fields at all | Art 00 §7 |
+| Voice fit | ⚠ | `narrative`/`perspectives` present but both `None`, unjustified — real content gap, see PM05 04-n218. | Art 00 §7 |
 | Doctrine alignment | ✓ | PS-to-resource conversion directly rewards Network's "audience" doctrine | Art 00 §7 |
 | Card type fit | ✓ | PublicAct / FactionSpecific (Network) | Art 04 §6.2 |
 | Taxonomy fit | ⚠ | `subject = AnyResource` — checked against `ref_taxonomy.md`'s Subject vocabulary; not a specific registered component, same open question as GUI.PA.5's bare `District` subject — worth confirming as a registered term. | Art 04b §4 |
-| Balance | ⚠ | Cost cheap (Exposure×1) for a PS-scaled resource yield with no stated cap — can't fully assess without knowing realistic PS ranges | Art 02 §6–§7 |
-| Effect duration | ⚠ | No `persistence` field declared at all | Art 04 §5 P19 |
-| Persistence | ⚠ | Same gap — field absent | Art 04 §6 |
+| Balance | ⚠ | Cost cheap (Exposure×1) for a PS-scaled resource yield with no stated cap — can't fully assess without knowing realistic PS ranges, and `success` is prose rather than typed code. | Art 02 §6–§7 |
+| Effect duration | ✓ | `persistence = Immediate` is present and correctly typed. Earlier "no persistence field at all" claim was false — corrected. | Art 04 §5 P19 |
+| Persistence | ✓ | Same correction — field present, correctly `Immediate`. | Art 04 §6 |
 | Trigger validity | ✓ | No trigger field; Automatic doesn't require one | — |
-| Portrait validity | ⚠ | No `portrait` field at all | Art 04 §6.2 |
+| Portrait validity | ⚠ | `portrait = None` is present (not absent) but unjustified. See PM05 04-n218. | Art 04 §6.2 |
 | Supported by zones | ✓ | No district reference — faction-internal economy card, correctly no zone dependency | Art 01 §6–§7 |
 | Supported by components | ✓ | Public Standing track, generic resource pool — existing components | Art 02 §7–§8 |
 | Supported by game procedure | ✓ | Straightforward PS-read-and-convert at Beat 4 — no new procedure needed | Art 03 §9.4 |
-| Data schema validation | ⚠ | `success` is a bare prose string, not a structured MutationExpr. Missing entirely: `outcome_type`, `ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`, `persistence`, targeting fields, `restriction`, `boost`, `successcrit`/`fail`/`failcrit`, `card_id`, `arbiter_note`. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | `card_id` present (`card_id = "NET.PA.6"`), as are `outcome_type`/`ring_mod`/`doctrine_mod`/`trigger`/`resolution_type`/`persistence`/targeting fields/`restriction`/`boost`/`successcrit`/`fail`/`failcrit`/`arbiter_note` — earlier "missing entirely" claim was false across the board (confirmed against audit tool: only `persistence_clearing_trigger`/`on_discard` genuinely absent). Real gap: **`success` is a bare prose string, not a structured MutationExpr** — see PM05 04-n218. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79; no Card Story block | Art 04 §5 P26 |
-| Outcome determinacy | ⚠ | No structured success/fail split to check against P27 | Art 04 §5 P27 |
+| Outcome determinacy | ⚠ | `successcrit`/`fail`/`failcrit` correctly `None` (not a false gap) — but `success` being prose, not code, can't be verified as a genuine deterministic MutationExpr against P27. See PM05 04-n218. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Exposure × 1), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **`success` is bare prose, not MutationExpr:** see PM05 04-n218 (covers NET.PA.4/5/6 together).
+- **`narrative`/`perspectives`/`portrait` unjustified-empty:** real content gap, see PM05 04-n218.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 NET.PA.6 = Card(
@@ -1209,8 +1213,8 @@ NET.PA.6 = Card(
     beat    = 4,  resolution = Automatic,  threshold = None,
     ring_mod = None,  doctrine_mod = None,  trigger = None,
     value_rating = 1,
-    resolution_type = Transactional,  outcome_type = None,  # scaffolded, not addressed
-    persistence = Immediate,  # scaffolded, not addressed
+    resolution_type = Transactional,  outcome_type = None,
+    persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
     target_district = None,  target_faction = None,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
@@ -1219,7 +1223,7 @@ NET.PA.6 = Card(
     success = "Network names a resource type. Network gains 1 of that resource type for every 4 points of positive Public Standing they currently have.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
-    portrait = None,  # scaffolded, not addressed
+    portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
     design_note = "Network's economy is driven by their audience. This rewards them for maintaining a high, positive PS track by converting it into any resource they need.",
@@ -1253,7 +1257,7 @@ The district was already moving. Network didn't start the change — it arrived 
 | Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district` fixed by trigger, not a free choice. | Art 01 §6–7 |
 | Supported by components | ✓ | Chip placement and Exposure cost both standard. | Art 02 §6–8 |
-| Supported by game procedure | ✓ | Beat 4 React, reuses existing Art 03 §18 React rules. | Art 03 §18 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 4 React, reuses existing Art 03 §18 React rules. | Art 03 §18 |
 | Data schema validation | ✓ | `persistence`, `outcome_type`, and targeting fields are all explicitly declared; trigger now uses confirmed `board_state.changed(...)` vocabulary (`acting` checked and confirmed separately, was never a gap). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story + `narrative` field both present and well-formed. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Genuine two-branch outcome via a real d100 roll (not the invalid `Prediction` pattern GHO.MOD.1 used) — success/successcrit/fail/failcrit all properly structured. | Art 04 §5 P27 |
@@ -1272,7 +1276,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.1 = Card(
@@ -1331,7 +1335,7 @@ Network's standing takes a public hit. Before the damage settles, the redundant 
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; not a territory effect. | Art 01 §6–7 |
 | Supported by components | ✓ | Standard PS/standing-marker mechanism, once the magnitude is resolved. | Art 02 §6–8 |
-| Supported by game procedure | ✓ | Reuses existing PS-decrease event; no new ARBITER behavior. | Art 03; GR 6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Reuses existing PS-decrease event; no new ARBITER behavior. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ | `success` magnitude is a literal `TBD` — not a schema-format issue (the field is present and correctly typed as a mutation call), but a genuine unresolved content gap. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch (once the magnitude is resolved). | Art 04 §5 P27 |
@@ -1344,13 +1348,14 @@ Network's standing takes a public hit. Before the damage settles, the redundant 
 
 #### Outstanding Issues
 
-None
+- **`success` magnitude is a literal `TBD`:** `faction(Network).standing.add(TBD)` — not a real value, real design work needed (how much of the triggering PS loss does this negate — full, partial, flat amount?).
+- **`cost` unresolved:** `cost=None` carries an inline "possibly 1 Exposure" TBD comment, not a confirmed design decision.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.3 = Card(
@@ -1375,14 +1380,14 @@ NET.MOD.3 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,  # card consumed; cost TBD (possibly 1 Exposure)
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = faction(Network).standing.add(TBD),  # negate some or all of triggering decrease; magnitude TBD
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "PS recovery React. Fires when Network's own PS decreases by any cause. Partially or fully negates the loss — magnitude TBD at design pass. Enables Disclosure Loop (NET.CA.2) sacrifice + immediate recovery as a designed arc rather than a liability. Pairs with NET.CA.6 Sacrifice (PS→Intel) — the spend-and-recover cycle makes Network's PS expenditure feel controlled rather than punitive.",
@@ -1416,7 +1421,7 @@ The Situation Report lands — public, unavoidable, read by everyone at the tabl
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | Player-choice targeting among Network's existing-presence districts — a normal targeting mechanic. | Art 01 §6–7 |
 | Supported by components | ✓ | Standard chip-placement mechanism. | Art 02 §6–8 |
-| Supported by game procedure | ✓ | Reuses the existing Broadcast Card placement event; no new ARBITER behavior. | Art 03; GR 6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Reuses the existing Broadcast Card placement event; no new ARBITER behavior. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolding applied (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch; player-choice target isn't a probabilistic outcome. | Art 04 §5 P27 |
@@ -1435,7 +1440,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.4 = Card(
@@ -1460,14 +1465,14 @@ NET.MOD.4 = Card(
     affinity        = None,
     restriction     = faction(Network).any_presence,  # must have at least 1 district with presence
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.place(presence_chip, district=faction(Network).district.acting_choice, faction=Network, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Presence expansion React on broadcast_card.placed (db25, public SitRep card). Every public information event is a Network signal event — the story expanding means the Network's reach expands. Network selects which existing-presence district receives the chip. Fires 1–2 times per Quarter (Upkeep SitRep + possible Beat 5). Delivers §5a 'broadcast-derived presence' at the modifier card level.",
@@ -1501,7 +1506,7 @@ The same public broadcast reaches everywhere, but Network's Mid-ring footholds �
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `ring_constraint=2` matches the restriction's Ring-2 presence check. | Art 01 §6–7 |
 | Supported by components | ✓ | Same as NET.MOD.4. | Art 02 §6–8 |
-| Supported by game procedure | ✓ | Same as NET.MOD.4. | Art 03; GR 6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Same as NET.MOD.4. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolding applied. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
@@ -1520,7 +1525,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.5 = Card(
@@ -1545,14 +1550,14 @@ NET.MOD.5 = Card(
     affinity        = None,
     restriction     = faction(Network).presence_in_ring(2),
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.place(presence_chip, district=faction(Network).district.ring(2).acting_choice, faction=Network, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Ring 2–constrained variant of NET.MOD.4 (Amplification Array). Same trigger (broadcast_card.placed, db25) but fires only if Network has Mid ring presence; places chip in a Mid ring district. Deepens Network's Mid ring footprint each time public information spreads — Infrastructure districts amplify the signal.",
@@ -1605,7 +1610,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.6 = Card(
@@ -1630,14 +1635,14 @@ NET.MOD.6 = Card(
     affinity        = None,
     restriction     = faction(Network).any_presence,
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.place(presence_chip, district=faction(Network).district.ring(3).acting_choice, faction=Network, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Opportunistic Baryo expansion React. When any faction places presence in Ring 3 (Baryo), Network may place 1 chip in any Ring 3 district where it has presence (or adjacent — TBD at design pass). Network's community-relationship model means others' activity in Baryo draws Network in. Delivers §5a 'wide Presence coverage, Baryo outward' at the modifier deck level.",
@@ -1690,7 +1695,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.7 = Card(
@@ -1715,14 +1720,14 @@ NET.MOD.7 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.draw_modifier(faction=Network, count=2, if_acting_faction=Network, then_count=3),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Net growth engine. Draws 2 cards on any PA, or 3 if Network resolved it. Transforms public state changes into hand advantage.",
@@ -1775,7 +1780,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.8 = Card(
@@ -1800,14 +1805,14 @@ NET.MOD.8 = Card(
     affinity        = None,
     restriction     = faction(Network).any_presence,
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = list([arbiter.draw_modifier(faction=Network, count=1), arbiter.place(presence_chip, district=target_district, faction=Network, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Chain enabler. Triggers off Network placing a ModReact card. Replaces itself and drops Baryo presence, letting them stack noise sequentially.",
@@ -1860,7 +1865,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.9 = Card(
@@ -1885,14 +1890,14 @@ NET.MOD.9 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Exposure * 1 + Findings * 1,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.draw_modifier(faction=Network, count=4),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "The massive hand-flooder. Triggered by a high-tension public state change. Since there is no hand limit, Network holds these cards indefinitely to fund their cascading react chain Cost reasoning: Findings pinpoint the opponent's exact communication frequencies to successfully jam them.",
@@ -1945,7 +1950,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.10 = Card(
@@ -1970,14 +1975,14 @@ NET.MOD.10 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Resource(Exposure, 1),
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Network, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Opportunistic Baryo swap. When any faction places a presence chip in Ring 3 (Baryo), Network pays 1 Exposure to immediately swap it for a Network chip. Represents grassroots community organizing co-opting the opponent's momentum. Creates brutal point-disruption in the slums without requiring a Dispatch Token.",
@@ -2014,7 +2019,7 @@ The act goes through exactly as filed. What Network changes is what everyone thi
 | Portrait validity | ✓ | `{Network: submitter=+1}`. | Art 04 §6.2 |
 | Supported by zones | ✓ | No district reference — correct, not a territory effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | Standing Marker, Exposure — existing components. | Art 02 §6, §11 |
-| Supported by game procedure | ✓ | PA submission at Covert Dispatch/Phase B; standard Network React window; PA resolves normally at Beat 4. | Art 03 §18; Art 03 §9.2.0 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: PA submission at Covert Dispatch/Phase B; standard Network React window; PA resolves normally at Beat 4. | Art 03 §18; Art 03 §9.2.0 |
 | Data schema validation | ⚠ | Trigger/success expressed in current Expr syntax (04-n174); comma-tuple multi-effect form follows NET.CA.6 Sacrifice precedent. No confirmed MutationExpr vocabulary — same open gap as the rest of the corpus. | Art 04 §6.1–§6.3; PM05 04-n174 |
 | Card narrative | ✓ | Card Story present; narrative reads clean. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic` — deterministic, no dice. | Art 04 §5 P27 |
@@ -2033,7 +2038,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.11 = Card(
@@ -2097,7 +2102,7 @@ Network doesn't need to stop the act. It just needs everyone at the table to kno
 | Portrait validity | ✓ | `{Network: submitter=+1}`. | Art 04 §6.2 |
 | Supported by zones | ✓ | No district reference — correct, not a territory effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | Target Profile (face-down mechanism) — existing component. | Art 02 §6, §11 |
-| Supported by game procedure | ✓ | Reacts at Art 03 §9.2.0; face-down Target Profile mechanism and Beat 4 resolution both pre-existing procedure. | Art 03 §9.2.0; Art 03 §14 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Reacts at Art 03 §9.2.0; face-down Target Profile mechanism and Beat 4 resolution both pre-existing procedure. | Art 03 §9.2.0; Art 03 §14 |
 | Data schema validation | ⚠ | Trigger/success expressed in current Expr syntax (04-n174). `arbiter.reveal(...)` has no confirmed MutationExpr vocabulary — same open gap as the rest of the corpus. | Art 04 §6.1–§6.3; PM05 04-n174 |
 | Card narrative | ✓ | Card Story present; narrative reads clean. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic` — deterministic, no dice. | Art 04 §5 P27 |
@@ -2116,7 +2121,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.12 = Card(
@@ -2179,7 +2184,7 @@ Network's public act goes up with full press credentials attached — sourced, v
 | Portrait validity | ✓ | Submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; this isn't a territory effect. | Art 01 §6–7 |
 | Supported by components | ✓ | No new component needed — protection is a rules-state condition on an existing PA. | Art 02 §6–8 |
-| Supported by game procedure | ✓ | `arbiter_note` gives a clear procedural description (record protected PA, block targeting until it resolves, clear on resolution), matching the structured `persistence_effect` now backing it. | Art 03; GR 6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: `arbiter_note` gives a clear procedural description (record protected PA, block targeting until it resolves, clear on resolution), matching the structured `persistence_effect` now backing it. | Art 03; GR 6.1 |
 | Data schema validation | ✓ | `persistence_effect = arbiter.protect(trigger.card, from=targeting)` — valid confirmed MutationExpr. `success=None`; the card's one-time trigger action is establishing the Standing Condition itself. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story above is concrete; `narrative` field itself is still `None`. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single effect, no branching. | Art 04 §5 P27 |
@@ -2198,7 +2203,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.13 = Card(
@@ -2221,7 +2226,7 @@ NET.MOD.13 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Exposure * 1 + Findings * 1 + Mandate * 1,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     persistence = Seasonal,
     persistence_condition = not trigger.card.resolved,
@@ -2233,7 +2238,7 @@ NET.MOD.13 = Card(
     on_accept   = None,  on_decline = None,
 
     portrait     = {Network: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,  perspectives = None,
     design_note  = "Asset — human/institutional. Fires at §9.2 when Network places any PA on FRG. Effect: PA + all attached components immune from targeting until Beat 4 resolution. Ceiling-power card. Cost: Exposure×1 (signal is live) + Findings×1 (threat intelligence on who might try to jam it) + Mandate×1 (institutional authorization making interference legally indefensible). Three cross-resource cost requires trade relationships with Ghost and Directorate.",
     arbiter_note = "Network places PA on FRG at §9.2 and plays Press Credentials. Collect Exposure×1, Findings×1, Mandate×1. Record the protected PA. Until that PA resolves at Beat 4: no card or procedure may target the PA, its TargetProfile, its submitted resources, or any attached ModActionCard. On PA resolution: effect clears.",
@@ -2285,7 +2290,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.14 = Card(
@@ -2308,7 +2313,7 @@ NET.MOD.14 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
@@ -2318,7 +2323,7 @@ NET.MOD.14 = Card(
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,  perspectives = None,
     design_note  = "Asset — business. Hand-growth React on Network PS gain. When Network's standing increases, the subscriber base grows: Network draws 2 modifier cards. Completes the standing-interaction trilogy: MOD.2 Troll Farm (attacks when opponent gains PS), MOD.3 Backup Server Racks (recovers when Network loses PS), MOD.14 Subscriber Network (compounds when Network gains PS). Free cost — standing growth is Network's reward; this card amplifies without economic friction. Draw 2 (not 1) makes this a meaningful engine card across multiple triggers per Quarter.",
     arbiter_note = None,
@@ -2351,7 +2356,7 @@ A few calls, a few posts, and the block is suddenly full of people who care how 
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass). | Art 04 §6.1–§6.2; PM02 L269 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2365,7 +2370,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.15 = Card(
@@ -2380,13 +2385,39 @@ NET.MOD.15 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A few calls, a few posts, and the block is suddenly full of people who care how tonight goes.",
-    arbiter_note = "Playable by any faction, not just Network (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2416,7 +2447,7 @@ A camera crew sets up on the corner and starts streaming — whatever happens ne
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass). | Art 04 §6.1–§6.2; PM02 L269 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2430,7 +2461,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.16 = Card(
@@ -2445,13 +2476,39 @@ NET.MOD.16 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A camera crew sets up on the corner and starts streaming. Whatever happens next, it happens on the record.",
-    arbiter_note = "Playable by any faction, not just Network (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2481,7 +2538,7 @@ A crowd gathers outside, loud enough that whatever the named faction is trying t
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass). | Art 04 §6.1–§6.2; PM02 L269 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2495,7 +2552,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.17 = Card(
@@ -2510,13 +2567,39 @@ NET.MOD.17 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A crowd gathers outside, loud enough that whatever's happening inside has to happen slower, and worse, than planned.",
-    arbiter_note = "Playable by any faction, not just Network (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2546,7 +2629,7 @@ By morning the clip is everywhere at The Table — nobody needed to lie about wh
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass). | Art 04 §6.1–§6.2; PM02 L269 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2560,7 +2643,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.18 = Card(
@@ -2575,13 +2658,39 @@ NET.MOD.18 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "The clip is everywhere by morning. Nobody needed to lie about what it shows.",
-    arbiter_note = "Playable by any faction, not just Network (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2611,7 +2720,7 @@ Organic public interest builds ahead of the story — by the time Network runs i
 | Portrait validity | ✓ | `portrait=None` genuinely assessed — no independent doctrinal weight beyond the host action. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct for a faction deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Dispatch-bundling procedure at Art 03 §9.1.1/§9.4.0.1 covers attachment. | Art 03 §9.1.1, §9.4.0.1 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.1.1, §9.4.0.1 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence New Meridian event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | ModActionCard carries no `success`/`fail`-family fields (schema-locked None). | Art 04 §6.2 |
@@ -2625,7 +2734,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 ```python
 NET.MOD.19 = Card(
@@ -2640,13 +2749,35 @@ NET.MOD.19 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Organic public interest builds ahead of the story — by the time Network runs it, the audience is already listening.",
-    arbiter_note = "Attach at Dispatch to any CA/PA in Network's own submitted packet (Art 03 §9.1.1) — no card-level host restriction.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -2676,7 +2807,7 @@ Pre-positioned attention eases a public action — the story's already primed, w
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2690,7 +2821,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 NET.MOD.20 = Card(
@@ -2705,13 +2836,35 @@ NET.MOD.20 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Pre-positioned attention eases a public action — the story's already primed, waiting only for the result.",
-    arbiter_note = "Self-only, same basis as NET.MOD.19.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -2741,7 +2894,7 @@ A scrubbed broadcast channel removes the interference that would otherwise compl
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event, self-only clean. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2755,7 +2908,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 NET.MOD.21 = Card(
@@ -2770,13 +2923,35 @@ NET.MOD.21 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A scrubbed broadcast channel removes the interference that would otherwise complicate getting the message out clean.",
-    arbiter_note = "Reframed from a hostile-flavored seed concept, same basis as GHO.MOD.18/GUI.MOD.17/DIR.MOD.15/16.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -2806,7 +2981,7 @@ Coverage reaches every channel at once — nothing about the outcome is left to 
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Clean self-only event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2820,7 +2995,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.22 = Card(
@@ -2835,13 +3010,35 @@ NET.MOD.22 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Coverage reaches every channel at once — nothing about the outcome is left to chance when the whole city is already watching.",
-    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -2871,7 +3068,7 @@ Coverage across multiple channels amplifies an outcome further than any single p
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2885,7 +3082,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 NET.MOD.23 = Card(
@@ -2900,13 +3097,35 @@ NET.MOD.23 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Coverage across multiple channels amplifies an outcome further than any single placement would.",
-    arbiter_note = "Self-only, amplifies Network's own host action.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -2936,7 +3155,7 @@ An action catches unexpected attention and lands far harder than the plan ever a
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2950,7 +3169,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.24 = Card(
@@ -2965,13 +3184,35 @@ NET.MOD.24 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "An action catches unexpected attention and lands far harder than the plan ever accounted for.",
-    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3001,7 +3242,7 @@ A story that could have run doesn't — quietly protecting standing that a diffe
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly, no target-dependency gap. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3015,7 +3256,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 NET.MOD.25 = Card(
@@ -3030,13 +3271,35 @@ NET.MOD.25 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A story that could have run doesn't — quietly protecting standing that a different editorial call would have cost.",
-    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3066,7 +3329,7 @@ Being first to a story earns standing no follow-up coverage ever quite matches.
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3080,7 +3343,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 NET.MOD.26 = Card(
@@ -3095,13 +3358,35 @@ NET.MOD.26 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Being first to a story earns standing no follow-up coverage ever quite matches.",
-    arbiter_note = "Self-boost, major tier — resolves to the acting faction.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3131,7 +3416,7 @@ A pointed follow-up question at a public event costs a named faction some standi
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (schema_cleanup_log.md #21, closed). |  |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. |  |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3145,7 +3430,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 NET.MOD.27 = Card(
@@ -3160,13 +3445,35 @@ NET.MOD.27 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A pointed follow-up question at a public event costs a named faction some standing — small, but on the record.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA it's packet-paired with names as its target_faction (§6.1) — the modifier's target IS the host action, not an independently-declared field.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3196,7 +3503,7 @@ A rival's claim gets publicly discredited — Network doesn't have to lie, just 
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field (schema_cleanup_log.md #21, closed). |  |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. |  |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3210,7 +3517,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 NET.MOD.28 = Card(
@@ -3225,13 +3532,35 @@ NET.MOD.28 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A rival's claim gets publicly discredited — Network doesn't have to lie, just cover the correction as prominently as the original story.",
-    arbiter_note = "Same target-resolution behavior as NET.MOD.27, major tier.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3261,7 +3590,7 @@ Volunteer contributors cut the cost of coverage that a professional crew would o
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Correctly attaches at §9.2. | Art 03 §9.2 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3275,7 +3604,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 ```python
 NET.MOD.29 = Card(
@@ -3290,13 +3619,36 @@ NET.MOD.29 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Volunteer contributors cut the cost of coverage that a professional crew would otherwise charge for.",
     arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3326,7 +3678,7 @@ A standing broadcast slot lowers the cost of getting a message out — the infra
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.2 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3340,7 +3692,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 ```python
 NET.MOD.30 = Card(
@@ -3355,13 +3707,35 @@ NET.MOD.30 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,   # scaffolded, not addressed
-    boost           = None,   # scaffolded, not addressed
-    ps_framing      = None,   # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A standing broadcast slot lowers the cost of getting a message out — the infrastructure's already paid for.",
-    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 

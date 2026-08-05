@@ -52,20 +52,21 @@ Territory-control foundation card. Construction is publicly visible — the cove
 | Supported by zones | ✓ | `target_district = district.any` — valid. Ring entry implicit via presence requirement in restriction. | Art 01 §6–§7 |
 | Supported by components | ✓ | StructureBlock (Art 02 §6); presence token / deployment marker in restriction (Art 02 §6); faction native + district native cost (Art 02 §7). | Art 02 §6–§7 |
 | Supported by game procedure | ✓ | Submitted in Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4). ARBITER places Structure Block at Beat 3 outcome. Guild affinity evaluated at dispatch. | Art 03 §9, §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap as most CA/PA cards, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
-| Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), cross-faction-resource tier. `cost`'s first term typed to `.native`; second term corrected from bare `resource.district(native)` (misusing "native" as the district-reference argument) to `district.target.native` (schema_cleanup_log #22, closed S148). Tier/power match otherwise unexamined. | Art 00a §9.2 |
+| Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), cross-faction-resource tier. `cost`'s first term typed to `.native`; second term corrected from bare `resource.district(native)` (misusing "native" as the district-reference argument) to `district.target.native` (schema_cleanup_log #22, closed S148). Tier match conditional on the still-open whole-set economic model decision (04-n178) — not a defect of this card specifically. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 8 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.1 = Card(
@@ -150,20 +151,21 @@ Territory disruption card — the destructive mirror of STD.CA.1. Structure remo
 | Supported by zones | ✓ | `target_district = district.any`. Restriction uses self-or-adjacent presence — adjacency model required; district_adjacency confirmed (DB-09). | Art 01 §6–§7 |
 | Supported by components | ✓ | StructureBlock target (Art 02 §6); presence in restriction (Art 02 §6); dual cost (§8); failcrit `standing -= 1` (Art 02 §11). | Art 02 §6–§8; Art 02 §11 |
 | Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4.2); d100 threshold 50 with ring_mod. ARBITER removes Structure Block on success; standing loss on crit fail — Beat 3 outcome steps. | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), cross-faction-resource tier. `cost`'s first term typed to `.native`; second term corrected from bare `resource.district(native)` (misusing "native" as the district-reference argument) to `district.target.native` (schema_cleanup_log #22, closed S148). Tier/power match otherwise unexamined. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 8 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.2 = Card(
@@ -249,20 +251,21 @@ Presence-deepening card — a deliberate structural parallel to STD.CA.1. To Cam
 | Supported by zones | ✓ | `target_district = district.any`. Ring entry implicit via presence restriction. | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken (Art 02 §6); faction native + district native cost (Art 02 §7). | Art 02 §6, §7 |
 | Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4). ARBITER places PresenceToken on success. Network affinity evaluated at dispatch. | Art 03 §9, §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), cross-faction-resource tier. `cost`'s first term typed to `.native`; second term corrected from bare `resource.district(native)` (misusing "native" as the district-reference argument) to `district.target.native` (schema_cleanup_log #22, closed S148). Tier/power match otherwise unexamined. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 8 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.3 = Card(
@@ -341,20 +344,21 @@ Presence-disruption card — the destructive mirror of STD.CA.3, following the s
 | Supported by zones | ✓ | `target_district = district.any`. Restriction requires self-or-adjacent presence AND target has presence > 0. Adjacency model required. | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken in restriction and as target (Art 02 §6); dual cost (Art 02 §7); failcrit `standing -= 1` (Art 02 §11). | Art 02 §6, §7; Art 02 §11 |
 | Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4.2); d100 threshold 50 with ring_mod. ARBITER removes PresenceToken on success; double on crit success; standing loss on crit fail — Beat 3 outcome steps. | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), cross-faction-resource tier. `cost`'s first term typed to `.native`; second term corrected from bare `resource.district(native)` (misusing "native" as the district-reference argument) to `district.target.native` (schema_cleanup_log #22, closed S148). Tier/power match otherwise unexamined. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 8 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.4 = Card(
@@ -440,20 +444,21 @@ Universal intelligence card — the baseline for the Information layer. Observat
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: presence in self-or-adjacent OR Ghost exemption. | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (Art 02 §9); faction native cost (Art 02 §7); failcrit NotificationSlip (Art 02 §8 — subtype definition pending). | Art 02 §7, §8, §9 |
 | Supported by game procedure | ✓ | Dispatch (Art 03 §9.1); Beat 3 Resolution Grid (Art 03 §9.4.2); d100 threshold 50 with Ghost affinity. ARBITER delivers IntelToken on success, NotificationSlip to target on crit fail — Art 03 Beat 3 outcome steps (Art 07 ref is stale). | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit populated identically (additive on crit), failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native only, single term) — matches Balance row's "cheapest intel card" floor-power framing. `cost` typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 8 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.5 = Card(
@@ -535,20 +540,21 @@ Submission-layer Beat 2 card — places a cost modifier on Public Acts targeting
 | Supported by zones | ✓ | `target_district = district.any`. No presence restriction — broadcast effect is ambient to the district. | Art 01 §6 |
 | Supported by components | ✓ | PublicAct as target type; Exposure resource as cost. Both defined. | Art 02 §8; Art 04b §5 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0); moved to Beat 4 carry row during Beat 2 processing (Art 03 §9.4.2); arming and effect applied at Beat 4 (Art 03 §9.4.3). | Art 03 §9, §9.4, §10 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Exposure only, typed correctly). Restricted-acquisition resource narrows practical access mostly to Network/Ghost by design (per Design Rationale) — power/cost match not independently re-verified beyond that. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 8 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.6 = Card(
@@ -631,20 +637,21 @@ Beat 2 modifier for the acting faction's own Public Act — the offensive counte
 | Supported by zones | ✓ | N/A — `target_district = None`; card operates on acting faction's own PA submission, not a district. | — |
 | Supported by components | ✓ | PublicAct as target; Exposure as cost; `standing_impact` for outcome (Art 02 §11). | Art 02 §8; Art 02 §11; Art 04b §5 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0 Beat 0); moved to Beat 4 carry row during Beat 2 processing (Art 03 §9.4.2 Beat 2); `standing_impact` multiplier applied at Beat 4 (Art 03 §17). | Art 03 §9, §11, §17 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Exposure only, typed correctly), same shape as STD.CA.6. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 8 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.7 = Card(
@@ -726,20 +733,21 @@ Economy-bypasses-Territory card — the only Standard CovertOperation with no re
 | Supported by zones | ✓ | `target_district = district.any`. No presence restriction — capital bypasses standard entry requirement. | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken (Art 02 §6); Capital cost (Art 02 §8); failcrit PS −2 (Art 02 §11). | Art 02 §6, §8; Art 02 §11 |
 | Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 3 row of Resolution Grid (Art 03 §9.4.0 Beat 0); d100 threshold 50 with ring_mod and affinity; resolved at Beat 3 (Art 03 §9.4.2 Beat 3). | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Mono-resource (Capital only, typed correctly) — but Balance row already notes 3 Capital is "the highest Standard cost." P28 flags mono-resource + high-power as a check to confirm; not independently re-verified. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 8 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.8 = Card(
@@ -824,8 +832,8 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 | Supported by zones | ✓ | N/A — `target_district = None`; faction-level operation, no district target. | — |
 | Supported by components | ✓ | Capital (Art 02 §8) ✓. Overture modifier card full spec written — STD.MOD.1. | Art 02 §8; STD.MOD.1 |
 | Supported by game procedure | ⚠ | Dispatch and Beat 3 resolution ✓. Overture delivery procedure (ARBITER tableau → faction hand at Beat 3 resolution) pending Art 07 ARBITER subroutine pass. | Art 03 §9; STD.MOD.1 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Capital only, typed correctly); net-zero-to-actor transfer shape already covered in Balance row. | Art 00a §9.2 |
 
@@ -833,12 +841,14 @@ Alliance-seeding card — the only card in the Standard set that transfers resou
 
 - **Overture delivery procedure:** Overture delivered from ARBITER tableau to acting faction's hand at Beat 3 resolution of STD.CA.9. Exact procedure (ARBITER hands card; notation) pending Art 07 ARBITER subroutine pass.
 - **Anonymous transfer case-return:** Resources delivered to target faction at Beat 3. Covert attribution preserved — acting faction not announced. Procedure pending Art 03/Art 07 pass.
+- **Data schema validation:** 8 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.9 = Card(
@@ -922,22 +932,23 @@ Defensive Beat 2 positional wager — the only Standard card that explicitly pro
 | Portrait validity | ✓ | Guild `submitter=+1`: protecting built assets is non-optional doctrine — "we protect what we build" (DIR.PA.1, SYN.PA.2). Directorate `submitter=+1`: institutional assets require active defense — resourced accordingly (DIR.PA.1, SYN.PA.2). Ghost `submitter=−1`: active fortification conflicts with concealment doctrine — "best protection is not being found" (DIR.PA.1, SYN.PA.2). Network: no entry — "we protect our people first; infrastructure is secondary"; situational use, not doctrinal; absence justified. Syndicate: no entry — rational asset-value framing, no doctrinal stake in fortification; absence justified. | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: acting presence in target district. | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken (restriction); district native cost (Art 02 §8); threshold reduction applied to Beat 3 ops targeting acting assets. | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0); threshold reduction applied at Beat 3 resolution (Art 03 §9.4.3). | Art 03 §9, §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0); threshold reduction applied at Beat 3 resolution (Art 03 §9.4.3). Re-verified S154: the −25/−45 marker is not a bespoke mechanism — it's M-09 ("Card Effect | Protect-type operation card | Covert | Beat 2 | 1 per submitted | Variable | See card") in Art 03 §13.4's standard Difficulty Modifiers table, the same cumulative-before-rolling pipeline every other threshold modifier (BM-xx, CM-B, ring adjacency) already feeds. Outstanding Issue below was stale — closing it. | Art 03 §9, §9.4, §13.4 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (district native only) — previously marked "typed correctly," which was wrong: the term was bare `resource.district(native)`, misusing "native" as the district-reference argument rather than a type attribute. Corrected to `district.target.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-- **Art 03 dependency:** Threshold reduction marker placement (ARBITER places −25/−45 marker on Beat 3 ops targeting acting faction's assets at Beat 2 resolution) to be defined in Art 03 §9.4 Beat 2 processing steps.
-- **Status flag inconsistency:** this open Art 03 dependency coexists with `Issues Resolved ✓` in the Status row below — a live, undefined procedural gap.
+- ~~**Art 03 dependency:** Threshold reduction marker placement...~~ Resolved S154 — M-09 in Art 03 §13.4 already covers this generically (see Supported by game procedure row above); no bespoke Art 03 text was ever needed.
+- **Data schema validation:** 8 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.10 = Card(
@@ -1008,7 +1019,7 @@ Standard card available to all factions — any faction with a stake in an activ
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Accord lock — prevents voluntary dissolution of a named executed Accord; distinct from GHO.CA.4 (evidence destruction) and DIR.CA.3 (surveillance); any faction with a stake can invoke | Art 00 §7 |
-| Voice fit | ✓ | Standard card; five faction perspectives by design — each faction arrives at the same outcome through different means | Art 00 §7 |
+| Voice fit | ⚠ | Re-verified S154 — this row's ✓ was wrong. `perspectives` dict has 5 entries but they are Directorate/Ghost/Syndicate/Network/**Collective** — Collective is not one of the 5 factions in this game (Ghost/Network/Guild/Directorate/Syndicate, per §5a); **Guild's entry is entirely missing**. Design Rationale text above also says "Collective organizes pressure around it," so this isn't a one-off typo — it's consistent through both prose and spec. New finding, logged 04-n213. | Art 00 §7 |
 | Doctrine alignment | ✓ | Standard; 1 Mandate + 1 native resource; Mandate requirement gates casual play regardless of faction; lock/breach distinction is mechanically clean | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / Standard — lock filed covertly; acting faction not announced at resolution; effect (marked Accord) is publicly visible | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Information/Corrupt/Accord — corrupts the dissolution process; target is a defined physical component (executed Accord on table) | Art 04b §4, §5 |
@@ -1019,21 +1030,25 @@ Standard card available to all factions — any faction with a stake in an activ
 | Portrait validity | ✓ | No portrait entry — PS implications deferred to 04-n34 sweep | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — Accord is on table/overview, not district-anchored | Art 01 §6–§7 |
 | Supported by components | ✓ | Accord (executed, on table) — physically verifiable by all players; no ARBITER ledger required | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; lock enforcement and breach detection outstanding (Outstanding Issues) | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 Automatic; lock enforcement and breach detection outstanding (Outstanding Issues) | Art 03 §9, §11 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-faction-resource (Mandate + faction native, both typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None — all resolved. District-keyed resource model makes Mandate acquirable by any faction. `faction(acting).native` is existing notation precedent. Enforcement and breach detection are player-visible via the annotated public document per Governing Rule 6.1a — ARBITER does not track.
+- **Voice fit — invalid faction + missing Guild (04-n213, new S154):** `perspectives` dict names a non-existent "Collective" faction (also present in the Design Rationale prose) and has no Guild entry at all. Needs a real design pass, not a mechanical fix — genuine Guild voice to write, and a decision on what "Collective" was meant to represent (retire the line, or was it ever a placeholder for something else).
+- **Data schema validation:** 6 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
+
+Lock enforcement/breach detection and Mandate acquisition notation (previously the only content here) remain genuinely resolved — District-keyed resource model makes Mandate acquirable by any faction; `faction(acting).native` is existing notation precedent; enforcement/breach detection are player-visible via the annotated public document per Governing Rule 6.1a, ARBITER does not track.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.11 = Card(
@@ -1089,7 +1104,7 @@ Intel token cost makes this a premium play — factions must hold Intel specific
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Counter-counter card — removes a committed Beat 2 Block or Protect before it applies; fills gap where defensive positional wagers have no standard counter | Art 00 §7 |
-| Voice fit | ✓ | Standard card; all-faction access; no faction-specific voice required; perspectives block expected for full Standard spec — confirm complete in code block | Art 00 §7 |
+| Voice fit | ⚠ | Re-verified S154 — confirmed, and it's not complete: `perspectives = {}` is entirely empty. "No faction-specific voice required" doesn't hold here; every other card in this set carries 5 real perspective entries even where Doctrine alignment is N/A (e.g. STD.PA.9 Town Hall — deliberately no `affinity`/`doctrine_mod`, but still has 5 distinct written voices). New finding, logged 04-n214. | Art 00 §7 |
 | Doctrine alignment | ✓ | N/A — Standard card; no faction doctrine alignment required; no affinity; portrait = None | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / Standard / faction=All — all-faction counter-counter capability; no faction restriction | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Submission/Block/CovertOperation — removes a submitted covert op's effect before it applies; Block function correct | Art 04b §4, §5 |
@@ -1100,27 +1115,25 @@ Intel token cost makes this a premium play — factions must hold Intel specific
 | Portrait validity | ✓ | portrait = None — Standard card; no portrait entry confirmed intentional | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named — Beat 2 cards are district-anchored | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken cost; Beat 2 Block or Protect card as target (function=Block or function=Protect per Art 04b taxonomy) — scope CA-inclusive | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; target card must exist in Beat 2 row at resolution; discard occurs at Beat 2. CM cards are not valid targets — processed and discarded at Beat 1 (Art 03 §9.4.1.2) before CA.12 fires. Valid targets: CA cards (function=Block or function=Protect) and Protect/Fortify modifier plays. | Art 03 §9.4.1.2, §9.4.2 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 2 Automatic; target card must exist in Beat 2 row at resolution; discard occurs at Beat 2. CM cards are not valid targets — processed and discarded at Beat 1 (Art 03 §9.4.1.2) before CA.12 fires. Valid targets: CA cards (function=Block or function=Protect) and Protect/Fortify modifier plays. | Art 03 §9.4.1.2, §9.4.2 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | `cost = IntelToken() * 1` — Intel Token confirmed as a valid second `cost` category (§6.3, schema_cleanup_log #10). | Art 00a §9.2; Art 04 §6.3 |
 
 #### Outstanding Issues
 
-None — all design questions resolved:
-- Scope: CA-inclusive (covert grid + public Protect/Fortify). ARBITER sweeps both domains at Beat 2.
-- CM interaction: Countermeasure Cards (both types) are Beat 1 — processed and discarded at §9.4.1.2 before Beat 2 begins. CA.12 never encounters a live CM card.
-- Scope boundary: SYN.CA.4 Golden Parachute and SYN.CA.6 Parasitic are Beat 2 Automatic but not function=Block/Protect — not valid targets.
-- Resource refund: no refund (GR 7.2b consistent — committed resources are sunk).
-- Format: pre-convention flat format; full schema pass pending (04-47).
-- Remaining: 04-n70 (schema) + 04-n79 (narrative) — infrastructure sweeps only.
+- **Voice fit — empty perspectives dict (04-n214, new S154):** `perspectives = {}`. Needs 5 real faction voices written — genuine design/narrative work, not a mechanical fix.
+- **Data schema validation:** 6 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
+
+Design questions genuinely resolved (unaffected by the above): Scope is CA-inclusive (covert grid + public Protect/Fortify), ARBITER sweeps both domains at Beat 2. CM interaction: Countermeasure Cards (both types) are Beat 1 — processed and discarded at §9.4.1.2 before Beat 2 begins; CA.12 never encounters a live CM card. Scope boundary: SYN.CA.4 Golden Parachute and SYN.CA.6 Parasitic are Beat 2 Automatic but not function=Block/Protect — not valid targets. Resource refund: no refund (GR 7.2b consistent — committed resources are sunk). Format: pre-convention flat format; full schema pass pending (04-47).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.CA.12 = Card(
@@ -1177,21 +1190,22 @@ First Standard card with Public Standing shift as its primary covert effect — 
 | Portrait validity | ✓ | Network +1: broadcasting narrative to shift perception is core doctrine (DIR.PA.1, SYN.PA.2). Ghost −1: public narrative campaigns attract attention, conflicting with low-profile doctrine (DIR.PA.1, SYN.PA.2). Directorate −1: covert image manipulation undermines institutional legitimacy (DIR.PA.1, SYN.PA.2). Guild, Syndicate: no entry — neither has a doctrinal stake in covert narrative authorship | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.any; restriction checks acting faction's presence in that district | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. PS tracked on Public Standing track (Art 02 §7); NotificationSlip (failcrit, same as DIR.CA.2) | Art 02 §7; Art 03 §9.4 |
-| Supported by game procedure | ✓ | Beat 3 covert resolution; NotificationSlip failcrit follows DIR.CA.2 established procedure | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 covert resolution; NotificationSlip failcrit follows DIR.CA.2 established procedure | Art 03 §9.4 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=None), no `game.choose_one()` or conditional branching in any tier — each resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 6 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 C_DisinformationCampaign = Card(
@@ -1281,21 +1295,22 @@ Fills the Economy/Remove/IntelToken coverage gap in the Standard card set. All f
 | Portrait validity | ✓ | Ghost +1: destroying records aligns with low-profile and operational security doctrine. Network −1: information erasure conflicts with transparency and broadcast doctrine. Guild, Directorate, Syndicate: no entry | Art 04 §6.2 |
 | Supported by zones | ✓ | No district target; operation targets faction's supply directly | Art 01 §6–§7 |
 | Supported by components | ✓ | Intel tokens (Art 02 §5); no new components required | Art 02 §5 |
-| Supported by game procedure | ✓ | Beat 3 covert resolution; ARBITER blind draw from supply is consistent with ARBITER draw authority | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 covert resolution; ARBITER blind draw from supply is consistent with ARBITER draw authority | Art 03 §9.4 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success only populated (successcrit/fail/failcrit all None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 6 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 C_Disprove = Card(
@@ -1381,21 +1396,22 @@ UVM pricing model classifies this card's `IntelToken/Add` effect cleanly (valida
 | Portrait validity | ✓ | Syndicate +1: covert resource acquisition aligns with capital intelligence doctrine. Guild −1: taking what others gathered conflicts with earned-value principle. Directorate −1: bypasses sanctioned intelligence handling. Ghost, Network: no entry | Art 04 §6.2 |
 | Supported by zones | ✓ | No district target; operates directly on faction's supply | Art 01 §6–§7 |
 | Supported by components | ✓ | Intel tokens (Art 02 §5); dispatch case procedure established (Art 03 §9.4); no new components | Art 02 §5; Art 03 §9.4 |
-| Supported by game procedure | ✓ | Beat 3 covert resolution; face-down transfer to dispatch case follows established case-handling procedure | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 covert resolution; face-down transfer to dispatch case follows established case-handling procedure | Art 03 §9.4 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success only populated (successcrit/fail/failcrit all None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 6 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 C_IntelExtraction = Card(
@@ -1482,21 +1498,22 @@ Economy/Redirect/ModifierCard — splits Asset Extraction alongside Intel Extrac
 | Portrait validity | ✓ | Syndicate +1: covert resource acquisition aligns with capital intelligence doctrine. Guild −1: taking tools others built conflicts with earned-value principle. Directorate −1: seizure of operational resources bypasses legitimate process. Ghost, Network: no entry | Art 04 §6.2 |
 | Supported by zones | ✓ | No district target; operates directly on faction's modifier card hand | Art 01 §6–§7 |
 | Supported by components | ✓ | Modifier cards (Art 02); dispatch case procedure established (Art 03 §9.4); no new components | Art 02; Art 03 §9.4 |
-| Supported by game procedure | ✓ | Beat 3 covert resolution; face-down transfer to dispatch case follows established case-handling procedure | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 covert resolution; face-down transfer to dispatch case follows established case-handling procedure | Art 03 §9.4 |
+| Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success only populated (successcrit/fail/failcrit all None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Data schema validation:** 6 fields missing explicit declaration per current §6.1/§6.2 (see row above) — mechanical backfill candidate, Phase 0 D2.
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 C_ModifierRaid = Card(
@@ -1610,21 +1627,21 @@ Formal, public declaration of operational presence in a district — Automatic r
 | Portrait validity | ✓ | Directorate +1: submitter-bounded (SYN.PA.2). Ghost −1: submitter-bounded. No direct PS shift in portrait (DIR.PA.2) | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.any — valid zone reference; ring entry enforced at Beat 0 by ARBITER | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken (Art 02 §6); faction native × 2 cost (Art 02 §8) | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Beat 4 resolution; ring entry rules enforced at Beat 0 | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 4 resolution; ring entry rules enforced at Beat 0 | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 (cited here) closed S95, stale reference. Re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: 4 fields undeclared (`persistence_clearing_trigger`, `on_accept`, `on_decline`, `on_discard`) but all correctly resolve to `None` given this card's own design — `persistence=Immediate` (§6.2: clearing trigger N/A), `outcome_type=Unilateral` not `ElectPlayer` (on_accept/on_decline N/A), no special discard behavior needed. Unambiguous, zero-judgment declarations — safe backfill candidate, not a content gap. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (successcrit/fail/failcrit all `None`) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native × 2), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.PA.1 = Card(
@@ -1709,21 +1726,21 @@ A formal, public challenge to another faction's presence in a district — mono-
 | Portrait validity | ✓ | Network +1, Directorate +1, Ghost −1: all submitter-bounded (SYN.PA.2). PS effects are game effects, not Portrait shifts (DIR.PA.2) | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.any — valid zone reference; ring_mod calibrated to ring context | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken — target removal (Art 02 §6); ContestedMarker — procedural (Art 03 §9.4); faction native × 2 cost (Art 02 §8) | Art 02 §6, §8; Art 03 §9.4 |
-| Supported by game procedure | ✓ | Beat 4; Contested marker placement governed by Art 03 §9.4; ring_mod applies | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic` (schema_cleanup_log #41) — the `ContestedMarker` placement is a `success`-field effect, not a resolution-mechanism category; only this card among the 5 "Contested" instances actually placed one. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 4; Contested marker placement governed by Art 03 §9.4; ring_mod applies | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 (cited here) closed S95, stale reference. Re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: 4 fields undeclared (`persistence_clearing_trigger`, `on_accept`, `on_decline`, `on_discard`) but all correctly resolve to `None` given this card's own design — `persistence=Immediate` (§6.2: clearing trigger N/A), `outcome_type=Unilateral` not `ElectPlayer` (on_accept/on_decline N/A), no special discard behavior needed. Unambiguous, zero-judgment declarations — safe backfill candidate, not a content gap. Also: `resolution_type` corrected `Contested`→`Probabilistic` (schema_cleanup_log #41) — the `ContestedMarker` placement is a `success`-field effect, not a resolution-mechanism category; only this card among the 5 "Contested" instances actually placed one. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching in any tier. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native × 2), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.PA.2 = Card(
@@ -1817,21 +1834,21 @@ Public counterpart to STD.CA.1 (Build Structure). Same cost; unlike STD.CA.1, th
 | Portrait validity | ✓ | Guild +1, Ghost −1: submitter-bounded. Same doctrine logic as STD.CA.1 | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.any — valid; restriction checks district presence and structure state (valid zone conditions) | Art 01 §6–§7 |
 | Supported by components | ✓ | StructureBlock (Art 02 §7); PresenceToken — restriction (Art 02 §6); faction native + district native costs (Art 02 §8) | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 4; restriction checked at Beat 0 | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 4; restriction checked at Beat 0 | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 (cited here) closed S95, stale reference. Re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: 4 fields undeclared (`persistence_clearing_trigger`, `on_accept`, `on_decline`, `on_discard`) but all correctly resolve to `None` given this card's own design — `persistence=Immediate` (§6.2: clearing trigger N/A), `outcome_type=Unilateral` not `ElectPlayer` (on_accept/on_decline N/A), no special discard behavior needed. Unambiguous, zero-judgment declarations — safe backfill candidate, not a content gap. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Dual-resource cost (faction native + district native), identical expression to STD.CA.1 — cross-card claim ("same cost as STD.CA.1") checked directly and confirmed true. Both terms typed (`.native`, and district reference corrected from bare `resource.district(native)` to `district.target.native`), same fix as its CA counterpart (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.PA.3 = Card(
@@ -1919,21 +1936,21 @@ The PS attack card of the standard set. A formal public accusation carries both 
 | Portrait validity | ✓ | Network +1, Directorate +1, Ghost −1: submitter-bounded. PS shifts are game effects not Portrait (DIR.PA.2) | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted action; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (optional, Fresh — spent on resolution regardless; Art 02 §6); faction native × 2 cost (Art 02 §8) | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Beat 4; Intel token submitted with case at Phase B; token spent regardless | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 4; Intel token submitted with case at Phase B; token spent regardless | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 (cited here) closed S95, stale reference. Re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: 4 fields undeclared (`persistence_clearing_trigger`, `on_accept`, `on_decline`, `on_discard`) but all correctly resolve to `None` given this card's own design — `persistence=Immediate` (§6.2: clearing trigger N/A), `outcome_type=Unilateral` not `ElectPlayer` (on_accept/on_decline N/A), no special discard behavior needed. Unambiguous, zero-judgment declarations — safe backfill candidate, not a content gap. Also: `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native × 2), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.PA.4 = Card(
@@ -2023,21 +2040,22 @@ Formal public attribution of a covert action. Requires an Intel token naming the
 | Portrait validity | ✓ | Network +1 (doctrine), Ghost −2 (doctrine): both submitter-bounded. No Portrait shifts in effect fields | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted attribution; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (faction=target, age=Fresh or Stale — Expired excluded per restriction; Art 02 §6); faction native × 1 cost (Art 02 §8) | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Beat 4; Intel token submitted with case; token age determined at Beat 4 | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 4; Intel token submitted with case; token age determined at Beat 4 | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 (cited here) closed S95, stale reference. Re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: only `persistence_clearing_trigger` undeclared (`persistence=Immediate` — N/A per §6.2, unambiguous). `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail populated (successcrit/failcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource cost (faction native + Intel Token) — `faction.acting` term typed to `.native` (schema_cleanup_log #22, closed S148). Intel Token component confirmed §6.3 vocabulary (`IntelToken(about=faction(target))`, schema_cleanup_log #10). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **`arbiter_note` threshold values wrong (found S154):** `arbiter_note` says "threshold = age-based (50 Fresh / 35 Stale)". Code (`threshold = 30` base + Fresh affinity `+15`), `design_note` ("Fresh = 45, Stale = 30"), and the Design Rationale prose above all independently agree on **30 base / 45 Fresh** — `arbiter_note` is the outlier and is what ARBITER would actually read at the table. Corrected below (3-source agreement, not a design ambiguity — fixed inline rather than left as a flag).
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.PA.5 = Card(
@@ -2098,7 +2116,7 @@ STD.PA.5 = Card(
         Syndicate:   "Attribution is leverage. The question is always: what is the information worth on the table versus in hand?",
     },
     design_note  = "Standard information-attribution PA. Restriction requires Fresh or Stale token — Expired excluded (too degraded to constitute usable attribution evidence). Token spent regardless of outcome. Threshold from token age (Fresh = 45, Stale = 30) + Network +10. Ghost portrait −2: attributing any faction's covert op violates Ghost's belief that operational anonymity protects the intelligence discipline of the whole table — the highest negative portrait value in the set. Taxonomy: Shift/StandingMarker — the attribution is the delivery mechanism for the PS swing, not separate value.",
-    arbiter_note = "At Art 03 §9.2.0: Intel token placed on PA card with Target Profile face-down. At Art 03 §9.4.3.1.1: flip Target Profile face-up; verify token age — Fresh or Stale satisfies restriction; Expired does not. Beat 4: threshold = age-based (50 Fresh / 35 Stale) + 10 if Network. On success: announce '[Acting faction] attributes [op type, quarter] to [target faction].' Target −2 PS, acting +2 PS. Token spent. On fail: acting −1 PS. Token spent regardless.",
+    arbiter_note = "At Art 03 §9.2.0: Intel token placed on PA card with Target Profile face-down. At Art 03 §9.4.3.1.1: flip Target Profile face-up; verify token age — Fresh or Stale satisfies restriction; Expired does not. Beat 4: threshold = 30 base (Stale) + 15 if Fresh + 10 if Network. On success: announce '[Acting faction] attributes [op type, quarter] to [target faction].' Target −2 PS, acting +2 PS. Token spent. On fail: acting −1 PS. Token spent regardless.",
 )
 ```
 
@@ -2129,21 +2147,21 @@ The economic attack card of the standard PA set. PS is intentionally reversed fr
 | Portrait validity | ✓ | Syndicate +1, Guild −1: submitter-bounded. PS shifts are game effects, not Portrait | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted action; no zone reference. ring_mod = None. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | NativeResource (target's supply, Art 02 §8); faction native × 1 cost (Art 02 §8). Floor clause is procedural | Art 02 §8 |
-| Supported by game procedure | ✓ | Beat 4; ARBITER removes up to 2 native resources from target (floor = 0 — all available if fewer than 2) | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 4; ARBITER removes up to 2 native resources from target (floor = 0 — all available if fewer than 2) | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 (cited here) closed S95, stale reference. Re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: 4 fields undeclared (`persistence_clearing_trigger`, `on_accept`, `on_decline`, `on_discard`) but all correctly resolve to `None` given this card's own design — `persistence=Immediate` (§6.2: clearing trigger N/A), `outcome_type=Unilateral` not `ElectPlayer` (on_accept/on_decline N/A), no special discard behavior needed. Unambiguous, zero-judgment declarations — safe backfill candidate, not a content gap. Also: `resolution_type` corrected `Contested`→`Probabilistic`, same basis as STD.PA.2 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/fail/failcrit populated (successcrit=`None`), no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native × 1), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.PA.6 = Card(
@@ -2232,21 +2250,21 @@ Self-directed PS building — fills the gap in the standard set (STD.PA.4 attack
 | Portrait validity | ✓ | Directorate +1, Network +1, Ghost −1: submitter-bounded. No direct PS shift in portrait fields | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.any — valid zone; restriction checks presence in target district ✓ | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken — restriction check (Art 02 §6); faction native × 1 cost (Art 02 §8) | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Beat 4; restriction at Beat 0 | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 4; restriction at Beat 0 | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 (cited here) closed S95, stale reference. Re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: 4 fields undeclared (`persistence_clearing_trigger`, `on_accept`, `on_decline`, `on_discard`) but all correctly resolve to `None` given this card's own design — `persistence=Immediate` (§6.2: clearing trigger N/A), `outcome_type=Unilateral` not `ElectPlayer` (on_accept/on_decline N/A), no special discard behavior needed. Unambiguous, zero-judgment declarations — safe backfill candidate, not a content gap. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native × 1), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.PA.7 = Card(
@@ -2332,21 +2350,22 @@ The formal bilateral agreement mechanism of the standard set. Playing STD.PA.8 a
 | Portrait validity | ✓ | Directorate +1, Ghost −1: submitter-bounded. No PS shifts in portrait fields | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone reference. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | AccordForm (Art 06 §9.2). No new components. | Art 06 §9.2 |
-| Supported by game procedure | ✓ | Phase B: target faction named publicly. Beat 4: blank AccordForm delivered to submitting faction. Faction drafts and places per Art 06 §9.4. Execution at Debrief. | Art 03 Phase B; Art 06 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Phase B: target faction named publicly. Beat 4: blank AccordForm delivered to submitting faction. Faction drafts and places per Art 06 §9.4. Execution at Debrief. | Art 03 Phase B; Art 06 §9.4 |
+| Data schema validation | ✓ | 04-n70 (cited here) closed S95, stale reference. Re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: 4 fields undeclared (`persistence_clearing_trigger`, `on_accept`, `on_decline`, `on_discard`) but all correctly resolve to `None` given this card's own design — `persistence=Immediate` (§6.2: clearing trigger N/A), `outcome_type=Unilateral` not `ElectPlayer` (on_accept/on_decline N/A), no special discard behavior needed. Unambiguous, zero-judgment declarations — safe backfill candidate, not a content gap. | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (`arbiter.deliver(...)`) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (faction native × 1), typed to `.native` (schema_cleanup_log #22, closed S148). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
 - **Upkeep income tracking:** n/a — no ongoing income on STD.PA.8 itself (Accord income terms are player-drafted per Art 06 §9.3).
+- **Card narrative:** Card Story block empty — real content pending 04-n79 (open, not a consistency fix).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 STD.PA.8 = Card(
@@ -2446,13 +2465,13 @@ A faction that already has a marker down in a district books the hall, puts out 
 
 #### Outstanding Issues
 
-None
+None — re-verified S154. Only field the audit tool flags is `persistence_clearing_trigger`, which is correctly N/A (`persistence=Immediate`, §6.2). No content gaps: Card Story, all 5 perspectives, `design_note`, `arbiter_note` all genuinely written.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 STD.PA.9 = Card(

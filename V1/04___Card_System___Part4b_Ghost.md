@@ -61,7 +61,7 @@ A faction submits their operation. Ghost, watching, named all three things in ad
 | Supported by zones | ✓ | target_district = district.named — Ghost names a specific district in the prediction. No adjacency restriction (analytical op). | Art 01 §6 |
 | Supported by components | ✓ | Findings cost; CovertOperation as redirect target; stolen op's components governed by that op's spec. Ghost may receive off-faction resources (Mandate, Capacity, etc.) — tradeable at Debrief. | Art 02 §8 |
 | Supported by game procedure | ⚠ | Beat 2 resolution; ARBITER checks prediction against covert grid; if match + executable: lane redirect. Art 03 gap: Pattern Match redirect procedure not yet written in Art 03 §9.4 — simpler than the prior copy-injection model but still unwritten. | Art 03 §9 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | 04-n70 closed S95 — stale "Pending" note corrected. `id`/`card_id`/`doctrine_mod`/`boost`/`ps_framing` all present. Audit-flagged base fields (`persistence_clearing_trigger`, `on_accept`, `on_decline`, `on_discard`) correctly resolve to `None`: Immediate persistence, `outcome_type` isn't `ElectPlayer`, not the evergreen card. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic` (`resolution_type = Transactional`); single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings only, typed correctly). | Art 00a §9.2 |
@@ -77,7 +77,7 @@ A faction submits their operation. Ghost, watching, named all three things in ad
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.1 = Card(
@@ -159,21 +159,21 @@ Ghost-exclusive active-surveillance card — distinguishes from GHO.CA.3 Dossier
 | Portrait validity | ✓ | Ghost `submitter=+1`. Fires on submission (DIR.PA.1). Submitter-scoped (DIR.PA.2). Single entry (NET.PA.1). `failcrit = standing.remove(2)` is a PS shift (not Portrait — DIR.PA.2 clear). | Art 04 §6.2; Art 02 §11 |
 | Supported by zones | N/A | `target_district = None` — Intercept operates on submitted ops in the Resolution Grid, not a specific district. | — |
 | Supported by components | ✓ | IntelToken cost; Findings cost; IntelDeliverySlip (success); IntelToken (crit success); NotificationSlip (fail); PS −2 (failcrit). | Art 02 §8; Art 02 §11, §8 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); resolves Beat 2; reads Beat 3 grid column; d100 threshold 50; ARBITER delivers IS-xx via case (Art 07). Art 03 §9.4 Beat 2 Step 7a covers IS-xx delivery; Step 7b covers NotificationSlip; Step 7b.i covers failcrit. | Art 03 §9, §11; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` (`id="GHO.CA.2"` only). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Submitted at Dispatch (Art 03 §9.1); resolves Beat 2; reads Beat 3 grid column; d100 threshold 50; ARBITER delivers IS-xx via case (Art 07). Art 03 §9.4 Beat 2 Step 7a covers IS-xx delivery; Step 7b covers NotificationSlip; Step 7b.i covers failcrit. | Art 03 §9, §11; Art 07 |
+| Data schema validation | ⚠ | 04-n70 closed S95. `id`/`card_id`/`doctrine_mod` all present — prior note was wrong about that. Genuinely missing: `boost`, `ps_framing` (correctly resolve to `None` — no boost mechanic, no PS framing needed since only `failcrit` touches PS and that's a mechanical penalty, not a framed public act). `arbiter_note` was missing entirely; its content existed only as an Outstanding Issues bullet — moved into the field below. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Mono (IntelToken only) — see Balance row. IntelToken-as-cost raises an open schema question about typing Intel Tokens as a cost resource — flagged, not resolved. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-- **Arbiter note:** Crit success: deliver IntelToken (faction=target) to acting faction's case. Success: write target faction's first submitted op type and district on Intel Delivery Slip; deliver to acting faction's case. Fail: deliver Notification Slip to target faction's case. Crit fail: apply PS −2.
+None.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.2 = Card(
@@ -201,6 +201,7 @@ GHO.CA.2 = Card(
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
     narrative   = "To know what they are doing while they are doing it — that is the only intelligence that matters.",
     perspectives = {Ghost: "We do not wait for the after-action report. We read the operation as it happens."},
+    arbiter_note = "Crit success: deliver IntelToken (faction=target) to acting faction's case. Success: write target faction's first submitted op type and district on Intel Delivery Slip; deliver to acting faction's case. Fail: deliver Notification Slip to target faction's case. Crit fail: apply PS −2.",
 )
 ```
 
@@ -235,8 +236,8 @@ Targeting the unplayed hand directly would require physical access to the target
 | Portrait validity | ✓ | Ghost +1 submitter — intelligence operation confirms Ghost operational activity | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — operates on Beat 3 grid faction column; no district context required | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelDeliverySlip (IS-xx) — Art 02 component entry pending (04-n45); 00b definition update pending (04-n46) | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; ARBITER reads existing Beat 3 grid faction column — no new tracking required; Art 03 Beat 2 procedure addition pending (04-n44) | Art 03 §9, §9.4; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`/`doctrine_mod`/`boost`/`ps_framing` entirely. | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 2 Automatic; ARBITER reads existing Beat 3 grid faction column — no new tracking required; Art 03 Beat 2 procedure addition pending (04-n44) | Art 03 §9, §9.4; Art 07 |
+| Data schema validation | ⚠ | 04-n70 closed S95. `id`/`card_id` present — prior note was wrong about that. Genuinely missing: `doctrine_mod`, `boost`, `ps_framing`. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings only, typed correctly). | Art 00a §9.2 |
@@ -251,7 +252,7 @@ Targeting the unplayed hand directly would require physical access to the target
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.3 = Card(
@@ -308,7 +309,7 @@ Ghost's intelligence interdiction card — operational disruption rather than ev
 | Portrait validity | ✓ | No portrait entry — Ghost interdicting live intelligence is tradecraft, not doctrine; absence intentional | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — operates on Faction Resolution Grid, not a district | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken as target_object — component registered; Faction Resolution Grid is ARBITER-maintained procedure | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Art 03 §9.1 names target at Covert Dispatch; Beat 3 ARBITER checks first PA in target's Faction Resolution Grid queue; Beat 4 PA resolves without token (or is voided) | Art 03 §9.1, §9.4.2, §9.4.3; Art 07 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Art 03 §9.1 names target at Covert Dispatch; Beat 3 ARBITER checks first PA in target's Faction Resolution Grid queue; Beat 4 PA resolves without token (or is voided) | Art 03 §9.1, §9.4.2, §9.4.3; Art 07 |
 | Data schema validation | ✓ | All §6.1 fields present (card_id, doctrine_mod, boost, ps_framing); resolution=d100, resolution_type=Probabilistic, fail=None correctly typed. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
@@ -316,13 +317,13 @@ Ghost's intelligence interdiction card — operational disruption rather than ev
 
 #### Outstanding Issues
 
-None
+- **Card Story pending (04-n79).**
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.4 = Card(
@@ -390,8 +391,8 @@ A faction submits intelligence alongside their public declaration — an Intel T
 | Portrait validity | ✓ | Ghost +1 submitter — evidence corruption aligns with Ghost intelligence manipulation doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — token is in Faction Resolution Grid, not district-anchored | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (publicly placed on PA in FRG); Findings cost; no new components; target_freeform carries replacement faction name | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 resolution; ARBITER checks FRG for qualifying token; alters faction_name; if no qualifying token: fizzle | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 resolution; ARBITER checks FRG for qualifying token; alters faction_name; if no qualifying token: fizzle | Art 03 §9, §11 |
+| Data schema validation | ✓ | 04-n70 closed S95 — stale "Pending" note corrected. All §6.1 base fields present (`id`, `card_id`, `doctrine_mod`, `boost`, `ps_framing`). | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings only, typed correctly). | Art 00a §9.2 |
@@ -404,7 +405,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.CA.5 = Card(
@@ -463,8 +464,8 @@ Ghost installs a passive collection node in the target faction's operational dis
 | Portrait validity | ✓ | Ghost +1 submitter — collection operations align with Ghost intelligence doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | Adjacency restriction applied per 04-n6 direction — deployed collection node requires Ghost presence in target district or adjacent; no exemption (unlike analytical ops) | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (Art 02 §12); Findings cost; no new components | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 3 d100 resolution; tokens dispatched to Ghost case on success; failcrit NotificationSlip per standard | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Still missing `boost`/`ps_framing` (`card_id`/`doctrine_mod` present). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 d100 resolution; tokens dispatched to Ghost case on success; failcrit NotificationSlip per standard | Art 03 §9, §11 |
+| Data schema validation | ⚠ | Still missing `boost`/`ps_framing` (`card_id`/`doctrine_mod` present); `id` also absent (only `card_id` declared) — same pattern as CA.8/9/10/12 below, minor. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings only, typed correctly). | Art 00a §9.2 |
@@ -477,7 +478,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.7 = Card(
@@ -550,7 +551,7 @@ Ghost counts the Findings and commits: all of it against one target, declared be
 | Portrait validity | ✓ | Ghost +1 submitter — maximum-yield collection aligns with Ghost intelligence doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | Adjacency restriction applied per 04-n6 — field collection op requires Ghost presence in target district or adjacent | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (Art 02 §12); Findings cost; n validated at Beat 0 via arbiter_note (Art 04 §5 P20) | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 0: arbiter_note specifies ARBITER records declared n and validates Findings present; Beat 3 resolution per Art 03 §9, §11 | Art 03 §9, §11 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 0: arbiter_note specifies ARBITER records declared n and validates Findings present; Beat 3 resolution per Art 03 §9, §11 | Art 03 §9, §11 |
 | Data schema validation | ✓ | `boost = True: Findings * 1` — normalized from a bare undeclared `n` variable to the schema's confirmed `boost: BoostExpr` field. Still missing `ps_framing`. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
@@ -564,7 +565,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.CA.8 = Card(
@@ -653,7 +654,7 @@ Ghost's analysts have read enough of a rival's patterns to guess where they're h
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.15 = Card(
@@ -736,8 +737,8 @@ Ghost cashes one piece of intelligence for something more durable. ARBITER recor
 | Portrait validity | ✓ | Ghost +1 submitter — intelligence-to-modifier conversion aligns with Ghost doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted operation; no district required | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken cost; DebriefActionCard (type, DB:100) / SCIFRecord (DA-01) — registered in 00b §4 and Art 02 §13 | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | SCIFRecord instantiated at Beat 3 (Art 03 §9.4); Debrief draw procedure in Art 03 §11; DA-01 fields and procedure in Art 04 §12a | Art 03 §9, §11; Art 04 §12a |
-| Data schema validation | ⚠ | Still missing `boost`/`ps_framing`. | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9, §11; Art 04 §12a |
+| Data schema validation | ✓ | `boost`/`ps_framing` not declared, but correctly resolve to `None` — this card has no boost mechanic and no PS effect to frame. `id` also absent (only `card_id`), same minor pattern as CA.7/8/10/12. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cost is IntelToken alone — confirmed valid as its own cost category (§6.3, schema_cleanup_log #10), no fungible resource pairing required. | Art 00a §9.2; Art 04 §6.3 |
@@ -750,7 +751,7 @@ Ghost cashes one piece of intelligence for something more durable. ARBITER recor
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.9 = Card(
@@ -793,7 +794,7 @@ GHO.CA.9 = Card(
     narrative    = "The structure count is the number of ways they have committed themselves. Ghost counts carefully.",
     perspectives = {Ghost: "We do not need to be inside their operation. We need to know how large it is."},
     design_note  = "Converts held intelligence into future modifier capability — Ghost builds next Quarter's hand from this Quarter's intelligence. Pairs with Station, Full Take, and Synthesize: the SCIF pipeline is the destination for accumulated faction-keyed Intel. Yield scales with target development, creating an intelligence premium on heavily-built opponents.",
-    arbiter_note = "SCIFRecord procedure: Beat 3 instantiation (Art 03 §9.4); Debrief draw in Art 03 §11; DA-01 fields and procedure in Art 04 §12a.",
+    arbiter_note = None,
 )
 ```
 
@@ -824,8 +825,8 @@ One Intel token, two of their resources. The target's reserves are untouched —
 | Portrait validity | ✓ | Ghost +1 submitter — resource acquisition via intelligence pipeline aligns with Ghost doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | Adjacency restriction applied per 04-n6 — field collection op requires Ghost presence in target district or adjacent | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken cost; target faction native resource type delivered to case; no new components | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Resources in Dispatch Case returned at month-end per normal procedure — no new Art 03 step required | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Still missing `boost`/`ps_framing`. | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Resources in Dispatch Case returned at month-end per normal procedure — no new Art 03 step required | Art 03 §9, §11 |
+| Data schema validation | ✓ | `boost`/`ps_framing` not declared, but correctly resolve to `None` — same as CA.9. `id` also absent (only `card_id`), same minor pattern as CA.7/8/9/12. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cost is IntelToken alone — confirmed valid as its own cost category (§6.3, schema_cleanup_log #10), same basis as GHO.CA.9. | Art 00a §9.2; Art 04 §6.3 |
@@ -838,7 +839,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.CA.10 = Card(
@@ -915,8 +916,8 @@ Ghost's strategically decisive card. Reveals the target faction's Classified Dir
 | Portrait validity | ✓ | submitter=+1 unconditional + modifier=+1 on success — AND semantics outstanding (Outstanding Issue) | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — no district target; operates on abstract ClassifiedDirective object | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken cost (×2); ClassifiedDirective as target_object — component registration outstanding (Outstanding Issue) | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Private reveal via ARBITER screen; private faction-to-faction reveal procedure outstanding (Outstanding Issue) | Art 03 §9, §11; Art 07 |
-| Data schema validation | ⚠ | Pending 04-n70. `id`/`card_id` now correctly set to `"GHO.CA.11"`, matching the DB assignment — write-back gap closed. Still open: this card is functionally blocked the same way as Backdate/Field Verification (see its own Outstanding Issues below) but doesn't carry their "🚫 BLOCKED" header/Status-row treatment — inconsistent handling of the same blocked-status category. Flagged, not fixed. | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Private reveal via ARBITER screen; private faction-to-faction reveal procedure outstanding (Outstanding Issue) | Art 03 §9, §11; Art 07 |
+| Data schema validation | ⚠ | 04-n70 closed S95. `id`/`card_id` now correctly set to `"GHO.CA.11"`, matching the DB assignment (04-n172's "id=TBD" finding is now stale — resolved since S136). Re-examined the self-flagged BLOCKED-header inconsistency: not actually the same category as Backdate/Field Verification. Those two are permanently-closed-approach blocks (GR 7.2b makes the mechanism itself impossible — no procedure could fix it). This card's blocker is a missing ARBITER record-keeping procedure that can be built — a todo, not an impossibility. Current no-header treatment is correct as-is; not an inconsistency. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/failcrit populated (successcrit/fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ⚠ | Cross-resource (IntelToken ×2 + Findings ×3). Same open question re: typing Intel Tokens as a cost resource, flagged not resolved. | Art 00a §9.2 |
@@ -933,7 +934,7 @@ Ghost's strategically decisive card. Reveals the target faction's Classified Dir
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.11 = Card(
@@ -1010,9 +1011,11 @@ Ghost's intelligence amplification card — converts one held Intel token into t
 | Portrait validity | ✓ | Ghost +1 submitter only; submitter-bounded per SYN.PA.2 | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — internal intel processing; no district context | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken as both cost and subject; Findings cost; no new components | Art 02 §6–§8; Art 02 §12 |
-| Supported by game procedure | ✓ | Beat 3 Automatic; tokens delivered at Beat 3; SCIF/Flip gate eligibility of generated tokens outstanding (Outstanding Issue) | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 Automatic; tokens delivered at Beat 3; SCIF/Flip gate eligibility of generated tokens outstanding (Outstanding Issue) | Art 03 §9, §11 |
+| Data schema validation | ✓ | 04-n70 closed S95 — stale "Pending" note corrected. All §6.1 base fields present (`card_id`, `doctrine_mod`, `boost`, `ps_framing` all explicitly declared). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+| Outcome determinacy | ✓ | `Automatic`; single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). Row was missing entirely — added, this is a structural completeness fix, not new content. | Art 04 §5 P27 |
+| Resource cost positioning | ✓ | Cross-resource (Findings + IntelToken), correctly typed. Row was missing entirely — added. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
@@ -1022,7 +1025,7 @@ Ghost's intelligence amplification card — converts one held Intel token into t
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.6 = Card(
@@ -1083,8 +1086,8 @@ Ghost submits a token from their case. ARBITER alters the name on it. The token 
 | Portrait validity | ✓ | Ghost +1 submitter — intelligence manipulation is core Ghost doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — no district involvement; token is held asset, faction-targeted re-key only | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken as target_object; no new physical components; quarter field preserved | Art 02 §12 |
-| Supported by game procedure | ✓ | Token submitted in case; ARBITER alters faction field at Beat 3; returns to Ghost case — covered by standard Beat 3 cleanup | Art 03 §9.4 |
-| Data schema validation | ⚠ | Still missing `boost`/`ps_framing` (has `card_id`/`doctrine_mod`). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Token submitted in case; ARBITER alters faction field at Beat 3; returns to Ghost case — covered by standard Beat 3 cleanup | Art 03 §9.4 |
+| Data schema validation | ✓ | `boost`/`ps_framing` not declared, but correctly resolve to `None` — `cost=None` already means no boost mechanic applies, and there's no PS effect to frame. `id` also absent (only `card_id`), same minor pattern as CA.7/8/9/10. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ (N/A) | `cost=None` — CA slot is the only cost, per design. | Art 00a §9.2 |
@@ -1097,7 +1100,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.CA.12 = Card(
@@ -1176,7 +1179,7 @@ Standard equivalent: PM05 04-n15.
 | Portrait validity | ✓ | Ghost +1: submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no adjacency restriction. Card 🚫 BLOCKED. | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken as both cost and target; requires two writable fields (faction + quarter) outstanding (Outstanding Issue); instructions slip in case | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Plant mode delivery protocol same as Source Substitution — outstanding (Outstanding Issue) | Art 02 §6–§8; Art 03 §9.4 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Plant mode delivery protocol same as Source Substitution — outstanding (Outstanding Issue) | Art 02 §6–§8; Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
@@ -1190,7 +1193,7 @@ Standard equivalent: PM05 04-n15.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 Backdate = Card(
@@ -1206,7 +1209,7 @@ Backdate = Card(
     threshold       = 30,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = None,
     trigger         = None,
     resolution_type = "Deceptive",
     outcome_type    = None,
@@ -1278,21 +1281,19 @@ Standard equivalent: PM05 04-n15 (hired investigator reopening cold case — sam
 | Portrait validity | ✓ | Ghost +1: submitter-bounded; re-validation before acting is Ghost's core doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — self-operation on held token; no district context | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (Expired) as cost and target; requires writable quarter field (same as Backdate — see Backdate Outstanding Issue) | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Self-operation; no adjacency required; ARBITER updates quarter field on success, returns token on fail | Art 03 §9.4 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Self-operation; no adjacency required; ARBITER updates quarter field on success, returns token on fail | Art 03 §9.4 |
 | Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 
-- **🚫 BLOCKED:** GR 7.2b — the quarter field records when the token was committed; updating it to the current Quarter alters a committed provenance field. The field-update approach is permanently closed. Fundamental redesign required. Cross-ref: Art 04b §8.1 item 3, PM05 04-n103.
-
 #### Outstanding Issues
 
-None
+- **🚫 BLOCKED:** GR 7.2b — the quarter field records when the token was committed; updating it to the current Quarter alters a committed provenance field. The field-update approach is permanently closed. Fundamental redesign required. Cross-ref: Art 04b §8.1 item 3, PM05 04-n103. (Structural note: this bullet previously sat outside the Outstanding Issues section, below the checklist table, inconsistent with Backdate's identical case and every other card in the corpus — moved into its proper place, content unchanged.)
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 FieldVerification = Card(
@@ -1308,7 +1309,7 @@ FieldVerification = Card(
     threshold       = 35,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,  # scaffolded, not addressed
+    value_rating = None,
     trigger         = None,
     resolution_type = "Verification",
     outcome_type    = None,
@@ -1390,7 +1391,7 @@ Ghost's analysts have found a second set of books hiding behind the first — no
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.13 = Card(
@@ -1487,7 +1488,7 @@ Somewhere in a dispatch case, an operation that took a full Quarter to plan simp
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status |  |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.CA.14 = Card(
@@ -1575,21 +1576,21 @@ Ghost's highest-cost PA — a simultaneous public attribution of two factions us
 | Portrait validity | ✓ | Ghost +1: submitter-bounded. Published from position of knowledge — doctrine affirmed | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — two faction targets; no district reference. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (two, faction-keyed to different targets; Art 02 §6); Findings + Exposure + target-native cost (Art 02 §8) | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Two targets named at Phase B; both tokens submitted; Automatic Beat 4 | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Two targets named at Phase B; both tokens submitted; Automatic Beat 4 | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 closed S95 — stale "Pending" note corrected. All §6.1 base fields present (`id`, `card_id`, `doctrine_mod`, `boost`, `ps_framing`). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (2 Findings + 1 Exposure + 1 native from each named target + 2 Intel Tokens), correctly typed — see Balance row. Highest Ghost PA cost in the set, matching its "highest-cost PA" framing. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Card Story pending (04-n79).**
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.PA.1 = Card(
@@ -1686,21 +1687,21 @@ Ghost uses institutional channels to apply operational pressure on a named facti
 | Portrait validity | ✓ | Ghost +1: submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.any — valid zone; restriction: Ghost presence in district adjacent to target | Art 01 §6–§7 |
 | Supported by components | ✓ | No new component — threshold modifier is a world condition tracked by ARBITER; Findings × 2 cost (Art 02 §8) | Art 02 §8 |
-| Supported by game procedure | ✓ | Physical tracking: GHO.PA.2 card face-up + district marker; ARBITER removes at Close Month next Month | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Physical tracking: GHO.PA.2 card face-up + district marker; ARBITER removes at Close Month next Month | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 closed S95 — stale "Pending" note corrected. All §6.1 base fields present (`id`, `card_id`, `doctrine_mod`, `boost`, `ps_framing`). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (a `game.world_condition()` placement, matching the confirmed Seasonal/Transient-effect pattern in design_reference_card_system.md) — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings × 2), correctly typed. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **Card Story pending (04-n79).**
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.PA.2 = Card(
@@ -1787,8 +1788,8 @@ Ghost submits the case files in order — sequential, dated, attributed. The rec
 | Portrait validity | ✓ | Ghost +1 submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — tokens are held, not placed | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken expired (Art 02 §9); BM-xx (Art 02 §12); Findings × 1 (Art 02 §8) | Art 02 §8–§9, §12 |
-| Supported by game procedure | ✓ | BM-xx at Beat 4: boost detection at Art 03 §9.4.3.1.0.0; threshold at Art 03 §9.4.3.2.0; effect multiplication at Art 03 §9.4.3.3 | Art 03 §9.4.3 |
-| Data schema validation | ⚠ | All §6.1 fields present except `card_id`/`ps_framing` (missing entirely). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: BM-xx at Beat 4: boost detection at Art 03 §9.4.3.1.0.0; threshold at Art 03 §9.4.3.2.0; effect multiplication at Art 03 §9.4.3.3 | Art 03 §9.4.3 |
+| Data schema validation | ✓ | `card_id`/`ps_framing` are actually present — the "missing entirely" note was wrong on both. All §6.1 base fields confirmed present. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `d100`; success/successcrit/failcrit populated (fail=`None`), no `game.choose_one()` — resolves deterministically once boost `n` is known. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource base (Findings × 1), correctly typed; `boost` is Intel-Token-scaled (expired tokens), a 6th distinct Intel-Token-as-cost notation variant (`intel_token(holder=Ghost, status=Expired)`). | Art 00a §9.2 |
@@ -1801,7 +1802,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.PA.3 = Card(
@@ -1884,8 +1885,8 @@ Ghost files the request before Beat 4. The Broadcast Card has been face-up all Q
 | Portrait validity | ✓ | Ghost +1 submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None; target_object = BroadcastCard (Situation Report Zone) | Art 01 §6–§7 |
 | Supported by components | ✓ | BroadcastCard (DB:25, Art 02 §10); BroadcastEffectCard (DB:98, Art 02 §10); Target Profile target-object field (DB:48, Art 02 §8); Findings × 1 (Art 02 §8) | Art 02 §8, §10 |
-| Supported by game procedure | ✓ | §7.2.1 establishes BC/BEC link at setup. Art 03 §9.4.3.3.0 VM-xx placement clause; Art 03 §9.4.3.1.3 BEC public resolution step. | Art 03 §7.2.1, §9.4.3.1.3, §9.4.3.3 |
-| Data schema validation | ⚠ | All §6.1 fields present except `card_id`/`ps_framing` (missing entirely). Design_note's trailing "Cost reasoning: Exposure represents the deliberate unmasking of the threat..." sentence — checked against the dangling-fragment pattern and, unlike its other instances, **this one is correct**: the card's actual cost does include Exposure. Confirmed-good contrast case, not a defect. | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: §7.2.1 establishes BC/BEC link at setup. Art 03 §9.4.3.3.0 VM-xx placement clause; Art 03 §9.4.3.1.3 BEC public resolution step. | Art 03 §7.2.1, §9.4.3.1.3, §9.4.3.3 |
+| Data schema validation | ✓ | `card_id`/`ps_framing` are actually present — the "missing entirely" note was wrong on both, same pattern as PA.3. Design_note's trailing "Cost reasoning: Exposure represents the deliberate unmasking of the threat..." sentence — checked against the dangling-fragment pattern and, unlike its other instances, **this one is correct**: the card's actual cost does include Exposure. Confirmed-good contrast case, not a defect. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Findings × 1 + Exposure × 1), correctly typed. Notable: Exposure is Network's native resource, not Ghost's — a deliberate cross-faction resource cost, consistent with (and explained by) the design_note. | Art 00a §9.2 |
@@ -1898,7 +1899,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.PA.4 = Card(
@@ -1984,7 +1985,7 @@ Ghost files the act at Phase B. A table. A banner. Printed materials no other fa
 | Portrait validity | ✓ | Ghost +1 submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | Findings districts (University Perimeter, Data Exchange, Research Institute, Chorus Research) — all valid board zones | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken (Art 02 §6); Findings × 1 (Art 02 §8); max 6 chips/faction/district enforced at game.add() (GR 8.1) | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Beat 4 PA resolution; game.add() for presence chips; GR 8.1 chip cap | Art 03 §9.4 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 4 PA resolution; game.add() for presence chips; GR 8.1 chip cap | Art 03 §9.4 |
 | Data schema validation | ✓ | All §6.1 fields present | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Story block above | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | success = exactly one outcome; successcrit = additive delta; fail = None; failcrit = additive delta | Art 04 §5 P27 |
@@ -1998,7 +1999,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.PA.5 = Card(
@@ -2086,7 +2087,7 @@ A faction places a public act backed by an Intel token, confident the attributio
 | Portrait validity | ✓ | `{Ghost: submitter=+1}` — submitter-bounded, correctly structured. | Art 04 §6.2 |
 | Supported by zones | ✓ | No district reference — correct, this isn't a territory effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | Intel Token (on the placed PA) and PS shift both reuse existing components. | Art 02 §6, §11 |
-| Supported by game procedure | ✓ | React timing at Art 03 §9.2.0, Target Profile face-down mechanism, Ghost Source Substitution as the intelligence-generation chain — all pre-existing procedure, no new ARBITER behavior. | Art 03 §18; Art 03 §9.2.0 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: React timing at Art 03 §9.2.0, Target Profile face-down mechanism, Ghost Source Substitution as the intelligence-generation chain — all pre-existing procedure, no new ARBITER behavior. | Art 03 §18; Art 03 §9.2.0 |
 | Data schema validation | ⚠ | `resolution`/`resolution_type` now valid (`Automatic`/`Transactional`); missing ring_constraint/ring_origin/value_rating/boost/ps_framing scaffolding fields remain (04-n177). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field still empty despite Card Story being present above. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Genuine two-branch outcome (declaration matches / doesn't), now modeled via `Automatic` with a real success/fail branch. | Art 04 §5 P27 |
@@ -2105,7 +2106,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.1 = Card(
@@ -2117,9 +2118,9 @@ GHO.MOD.1 = Card(
 
     trigger = public_act.placed_on_frg(faction=opponent, uses_intel_token=True),
     beat    = None,  # React — fires at Art 03 §9.2.0, not in initiative
-    ring_constraint = None,  # scaffolded, not addressed
-    ring_origin     = None,  # scaffolded, not addressed
-    value_rating    = None,  # scaffolded, not addressed
+    ring_constraint = None,
+    ring_origin     = None,
+    value_rating    = None,
     resolution = Automatic,
     threshold  = None,
     ring_mod   = None,  doctrine_mod = None,  resolution_type = Transactional,
@@ -2131,7 +2132,7 @@ GHO.MOD.1 = Card(
     affinity    = None,
     restriction = None,
     cost        = None,  # card consumed on fire (success or misfire)
-    boost       = None,  # scaffolded, not addressed
+    boost       = None,
 
     success = (
         arbiter.remove(IntelToken, from=target_PA),
@@ -2144,7 +2145,7 @@ GHO.MOD.1 = Card(
     on_accept   = None,  on_decline = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
 
     narrative    = None,
     perspectives = None,  # pending D-04-08
@@ -2180,7 +2181,7 @@ Someone moves a piece onto ground Ghost already quietly holds. Nothing dramatic 
 | Portrait validity | ✓ | `{Ghost: submitter=+1}` — submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district` — correct. | Art 01 §6–7 |
 | Supported by components | ✓ | Intel Token delivery reuses the standard mechanism. | Art 02 §6–8 |
-| Supported by game procedure | ✓ | Reuses existing chip-placement event and Intel Token delivery; no new ARBITER procedure. | Art 03; GR 6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Reuses existing chip-placement event and Intel Token delivery; no new ARBITER procedure. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolding to be added consistent with 04-n177 (this card already has ring_constraint/ring_origin/value_rating declared — only `ps_framing`/`boost`/`resolution_type` need adding). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story present above. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
@@ -2199,7 +2200,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.2 = Card(
@@ -2224,14 +2225,14 @@ GHO.MOD.2 = Card(
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,  # Ghost must be present in triggered district
     cost            = None,  # card consumed on fire
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=trigger.faction)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,  # pending
     perspectives = None,  # pending
     design_note  = "Passive Intel generation from nearby faction activity. Trigger: any faction places presence in a Ghost-present district (publicly observable). Ghost receives 1 Intel token keyed to the placing faction. Intelligence-minimal design: Ghost learns who is expanding near its positions without taking any action.",
@@ -2284,7 +2285,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.3 = Card(
@@ -2309,14 +2310,14 @@ GHO.MOD.3 = Card(
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=Directorate)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Directorate-targeted variant of GHO.MOD.2 (Perimeter Sensors). Same trigger/effect, faction-narrowed. Directorate expansion near Ghost positions is a high-priority intelligence signal — Directorate is Ghost's doctrinal suppressor. Narrower window than generic variant; more reliable in Directorate-heavy games.",
@@ -2369,7 +2370,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.4 = Card(
@@ -2394,14 +2395,14 @@ GHO.MOD.4 = Card(
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=Network)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Network-targeted variant of GHO.MOD.2 (Perimeter Sensors). Network presence placement near Ghost positions generates Network-keyed Intel — Ghost tracks the broadcast infrastructure expanding into shared territory. Network expansion = exposure risk for Ghost covert ops in those districts.",
@@ -2454,7 +2455,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.5 = Card(
@@ -2479,14 +2480,14 @@ GHO.MOD.5 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Findings * 1 + Exposure * 1,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.shift(standing_marker, faction=trigger.faction, amount=-(trigger.amount * 2)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Late-game Flipped intel sink. Ghost spends the target's native resource to invert their public victory into a disaster. Since Reacts occur after the state change (the positive shift), this effectively applies a negative shift equal to double the trigger amount to achieve the inversion Cost reasoning: Exposure is expended to actively seed the manufactured narrative into the public consciousness.",
@@ -2539,7 +2540,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.6 = Card(
@@ -2564,14 +2565,14 @@ GHO.MOD.6 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Resource(faction(trigger.faction).native, 1),
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.deliver(faction(Ghost), trigger.resources),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Ghost pays 1 cross-faction resource to copy the entire resource draw of an opponent's Upkeep phase. Pure mirrored parasitic economy.",
@@ -2624,7 +2625,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.7 = Card(
@@ -2649,14 +2650,14 @@ GHO.MOD.7 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Findings * 1 + Capacity * 1 + Capital * 1,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Ghost, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Reacts to a massive late-game state change. By physically swapping 1 of the target's chips for 1 Ghost chip, Ghost instantly drops the opponent's chip count, stripping the Dominant marker the moment it is placed and forcing them back to Established. Delays the endgame condition Cost reasoning: Requires Capacity to house the cell and Capital to fund their sudden activation, backed by precise intelligence.",
@@ -2709,7 +2710,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.8 = Card(
@@ -2734,14 +2735,14 @@ GHO.MOD.8 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Resource(faction(trigger.faction).native, 1),
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Reacts to a faction reaching IL-02 (Established). Ghost burns 1 cross-faction resource to immediately remove one of their chips, instantly downgrading them back to IL-01. Slows the table's structural expansion.",
@@ -2778,7 +2779,7 @@ The token changes hands quietly, the paperwork goes through — and by the time 
 | Portrait validity | ✓ | `{Ghost: submitter=+1}`, correctly structured. | Art 04 §6.2 |
 | Supported by zones | ✓ | No district reference — correct, not a territory effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | Modifier cards and Intel Token both reuse existing components. | Art 02 §6, §11 |
-| Supported by game procedure | ✓ | PA submission at Covert Dispatch/Phase B; standard Ghost React window. | Art 03 §18; Art 03 §9.2.0 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: PA submission at Covert Dispatch/Phase B; standard Ghost React window. | Art 03 §18; Art 03 §9.2.0 |
 | Data schema validation | ⚠ | Trigger/success re-expressed from string-literal fossil to Expr syntax (04-n174). `arbiter.remove(...)` has no confirmed MutationExpr vocabulary — same open gap as the rest of the corpus. Scaffolding fields added (ring_constraint/ring_origin/value_rating/boost/ps_framing, 04-n177). | Art 04 §6.1–§6.3; PM05 04-n174 |
 | Card narrative | ✓ | Card Story present. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic` — deterministic ARBITER check (was an Intel Token used at submission), no dice appropriate. | Art 04 §5 P27 |
@@ -2797,7 +2798,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.9 = Card(
@@ -2861,7 +2862,7 @@ No warning, no negotiation — just a hand suddenly empty and a faction scrambli
 | Portrait validity | ✓ | `{Ghost: submitter=+1}`, correctly structured. | Art 04 §6.2 |
 | Supported by zones | ✓ | No district reference — correct, not a territory effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | Faction Hand, Findings, Intel Token — existing components. | Art 02 §6, §11 |
-| Supported by game procedure | ✓ | PA submission at Covert Dispatch/Phase B; standard Ghost React window; Debrief redraw per standard procedure. | Art 03 §18; Art 03 §9.2.0 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: PA submission at Covert Dispatch/Phase B; standard Ghost React window; Debrief redraw per standard procedure. | Art 03 §18; Art 03 §9.2.0 |
 | Data schema validation | ⚠ | Trigger/success re-expressed from string-literal fossil to Expr syntax (04-n174). `arbiter.discard_hand(...)` has no confirmed MutationExpr vocabulary — same open gap as the rest of the corpus. Scaffolding fields added (04-n177). | Art 04 §6.1–§6.3; PM05 04-n174 |
 | Card narrative | ✓ | Card Story present. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic` — deterministic, no dice. | Art 04 §5 P27 |
@@ -2880,7 +2881,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.10 = Card(
@@ -2944,7 +2945,7 @@ The table watches Ghost trade one sealed envelope for another. Nobody objects �
 | Portrait validity | ✓ | `{Ghost: submitter=+1}`, correctly structured. | Art 04 §6.2 |
 | Supported by zones | ✓ | No district reference — correct, not a territory effect. | Art 01 §6–§7 |
 | Supported by components | ✓ | Target Profile (face-down mechanism) — existing component. | Art 02 §6, §11 |
-| Supported by game procedure | ✓ | Reacts at Art 03 §9.2.0; face-down Target Profile mechanism and Beat 4 Apex Check both pre-existing procedure. | Art 03 §9.2.0; Art 03 §14 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Reacts at Art 03 §9.2.0; face-down Target Profile mechanism and Beat 4 Apex Check both pre-existing procedure. | Art 03 §9.2.0; Art 03 §14 |
 | Data schema validation | ⚠ | Trigger/success re-expressed from string-literal fossil to Expr syntax (04-n174). `arbiter.swap_target_profile(...)` has no confirmed MutationExpr vocabulary — same open gap as the rest of the corpus. Scaffolding fields added (04-n177). | Art 04 §6.1–§6.3; PM05 04-n174 |
 | Card narrative | ✓ | Card Story present. | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic` — deterministic, no dice. | Art 04 §5 P27 |
@@ -2963,7 +2964,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.11 = Card(
@@ -3026,7 +3027,7 @@ A contact who was already embedded in the district long before the tension marke
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass rule). | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3040,7 +3041,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.MOD.12 = Card(
@@ -3055,13 +3056,39 @@ GHO.MOD.12 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A contact who was already in the district long before the tension marker went down passes along what they've seen.",
-    arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3091,7 +3118,7 @@ Weeks of passive signals collection get compiled and handed over at the exact mo
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass rule). | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3105,7 +3132,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.MOD.13 = Card(
@@ -3120,13 +3147,39 @@ GHO.MOD.13 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Weeks of passive collection, compiled and handed over at the moment it's actually useful.",
-    arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3156,7 +3209,7 @@ A detail that doesn't add up surfaces at exactly the wrong moment — nothing is
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass rule). | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3170,7 +3223,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.MOD.14 = Card(
@@ -3185,13 +3238,39 @@ GHO.MOD.14 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Nothing is proven. Nothing needs to be — the timeline just stops holding together, right when it matters.",
-    arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3221,7 +3300,7 @@ Ghost knew exactly which detail would unravel the named faction's position if it
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass rule). | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3235,7 +3314,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.MOD.15 = Card(
@@ -3250,13 +3329,39 @@ GHO.MOD.15 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Ghost knew exactly which detail would unravel them if it surfaced now. It surfaces now.",
-    arbiter_note = "Playable by any faction, not just Ghost (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3286,7 +3391,7 @@ Advance modeling means Ghost already knows how this plays out before committing 
 | Portrait validity | ✓ | `portrait=None` genuinely assessed — no independent doctrinal weight beyond the host action. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct for a faction deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Dispatch-bundling procedure at Art 03 §9.1.1/§9.4.0.1 covers attachment. | Art 03 §9.1.1, §9.4.0.1 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.1.1, §9.4.0.1 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence New Meridian event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | ModActionCard carries no `success`/`fail`-family fields (schema-locked None). | Art 04 §6.2 |
@@ -3300,7 +3405,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.MOD.16 = Card(
@@ -3315,13 +3420,35 @@ GHO.MOD.16 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Advance modeling means Ghost already knows how this plays out before committing to it.",
-    arbiter_note = "Attach at Dispatch to any CA/PA in Ghost's own submitted packet (Art 03 §9.1.1) — no card-level host restriction.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3351,7 +3478,7 @@ Removing an unknown smooths the acting faction's own play — Ghost prefers cert
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3365,7 +3492,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 GHO.MOD.17 = Card(
@@ -3380,13 +3507,35 @@ GHO.MOD.17 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Removing an unknown smooths the acting faction's own play — Ghost prefers certainty to speed.",
-    arbiter_note = "Self-only, same basis as GHO.MOD.16.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3416,7 +3565,7 @@ A scrubbed data channel removes the noise that would otherwise complicate the op
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event, self-only clean. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3430,7 +3579,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 GHO.MOD.18 = Card(
@@ -3445,13 +3594,35 @@ GHO.MOD.18 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A scrubbed data channel removes the noise that would otherwise complicate the operation.",
-    arbiter_note = "Reframed from a hostile-flavored seed concept, same basis as GUI.MOD.17/DIR.MOD.15/16.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3481,7 +3652,7 @@ A fully assembled intelligence picture leaves nothing to chance — the operatio
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Clean self-only event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3495,7 +3666,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.19 = Card(
@@ -3510,13 +3681,35 @@ GHO.MOD.19 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A fully assembled intelligence picture leaves nothing to chance — the operation proceeds on certainty, not estimate.",
-    arbiter_note = "Capstone tier — log actual play outcomes before treating +20 as balanced.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3546,7 +3739,7 @@ An operation run on verified information performs better than the plan ever assu
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3560,7 +3753,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 GHO.MOD.20 = Card(
@@ -3575,13 +3768,35 @@ GHO.MOD.20 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "An operation run on verified information performs better than the plan ever assumed.",
-    arbiter_note = "Self-only, amplifies Ghost's own host action.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3611,7 +3826,7 @@ Multiple independent confirmations amplify an outcome well past what a single so
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3625,7 +3840,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.21 = Card(
@@ -3640,13 +3855,35 @@ GHO.MOD.21 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Multiple independent confirmations amplify an outcome well past what a single source would support.",
-    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3676,7 +3913,7 @@ An error is quietly fixed before anyone notices it was ever there — a small, d
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly, no target-dependency gap. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3690,7 +3927,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 GHO.MOD.22 = Card(
@@ -3705,13 +3942,35 @@ GHO.MOD.22 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "An error is quietly fixed before anyone notices it was ever there — a small, deliberate protection of standing.",
-    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half resolves to the acting faction.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3741,7 +4000,7 @@ A selective disclosure earns Ghost credibility and standing — true as far as i
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3755,7 +4014,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 GHO.MOD.23 = Card(
@@ -3770,13 +4029,35 @@ GHO.MOD.23 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A selective disclosure earns Ghost credibility and standing — true as far as it goes, and it goes exactly as far as intended.",
-    arbiter_note = "Self-boost, major tier — resolves to the acting faction.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3806,7 +4087,7 @@ A detail reaches exactly the right ears — quiet, deniable, and costly to whoev
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field. |  |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. |  |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3820,7 +4101,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 GHO.MOD.24 = Card(
@@ -3835,13 +4116,35 @@ GHO.MOD.24 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A detail reaches exactly the right ears — quiet, deniable, and costly to whoever it's about.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA it's packet-paired with names as its target_faction (§6.1) — the modifier's target IS the host action, not an independently-declared field.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3871,7 +4174,7 @@ A rival's flawed analysis becomes public — Ghost didn't lie, it just let the t
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field. |  |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. |  |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3885,7 +4188,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | ✓ S154 | |
 
 ```python
 GHO.MOD.25 = Card(
@@ -3900,13 +4203,35 @@ GHO.MOD.25 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A rival's flawed analysis becomes public — Ghost didn't lie, it just let the truth land at the worst possible time.",
-    arbiter_note = "Same target-resolution behavior as GHO.MOD.24, major tier.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3936,7 +4261,7 @@ Prior research lowers the cost of new analysis — nothing here starts from zero
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Correctly attaches at §9.2. | Art 03 §9.2 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3950,7 +4275,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 ```python
 GHO.MOD.26 = Card(
@@ -3965,13 +4290,36 @@ GHO.MOD.26 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Prior research lowers the cost of new analysis — nothing here starts from zero.",
     arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA.",
+
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -4001,7 +4349,7 @@ Borrowed analytical tools cut the overhead of building anything from scratch.
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §9.2 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -4015,7 +4363,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 ```python
 GHO.MOD.27 = Card(
@@ -4030,13 +4378,35 @@ GHO.MOD.27 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Borrowed analytical tools cut the overhead of building anything from scratch.",
-    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 

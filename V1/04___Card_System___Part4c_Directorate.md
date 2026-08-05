@@ -46,7 +46,7 @@ Directorate's positional authority card — asserts institutional control over a
 | Supported by zones | ✓ | target_district = district.any — no presence requirement | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components; game.block() is an existing Beat 2 mechanism | Art 02 §6–§8 |
 | Supported by game procedure | ✓ | Beat 2 positional wager; game.block() applies at Beat 2 resolution; game.block resolution (resources on blocked card) outstanding (Outstanding Issue) | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`, `doctrine_mod`, `boost`, `ps_framing` entirely (not just unset). | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | 04-n70 closed S95. `card_id` is present (`card_id="DIR.CA.1"`) — earlier note's "missing card_id entirely" claim was false, corrected. `doctrine_mod`/`boost`/`ps_framing`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` correctly absent: no execution-quality dimension, Immediate persistence needs no clearing trigger, not an `ElectPlayer` outcome, not evergreen. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Missing row, scaffolded. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Missing row, scaffolded. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
@@ -60,7 +60,7 @@ Directorate's positional authority card — asserts institutional control over a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 DIR.CA.1 = Card(
@@ -117,8 +117,8 @@ Directorate's permanent removal card — eliminates a faction's deployment marke
 | Portrait validity | ✓ | Directorate +1 submitter — single entry; failcrit −1 PS is game effect (not portrait), confirmed per DIR.PA.2 | Art 04 §6.2; Art 02 §11 |
 | Supported by zones | ✓ | target_district = district.any; ChorusNode.deployment_marker excluded; Detention zone on Directorate public tableau | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken restriction; DeploymentMarker target; Detention zone is a faction Terminal zone; Intel age definition outstanding (Outstanding Issue) | Art 02 §6–§8; Art 02 §11 |
-| Supported by game procedure | ✓ | Beat 3 d100 resolution; Intel check at Dispatch; ARBITER moves marker to Detention; visible to all players; no NotificationSlip needed | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`, `doctrine_mod`, `boost`, `ps_framing` entirely. | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 3 d100 resolution; Intel check at Dispatch; ARBITER moves marker to Detention; visible to all players; no NotificationSlip needed | Art 03 §9, §11 |
+| Data schema validation | ✓ | 04-n70 closed S95. `card_id` is present (`card_id="DIR.CA.2"`) — earlier note's "missing card_id entirely" claim was false, corrected. `doctrine_mod`/`boost`/`ps_framing`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` correctly absent (Immediate, `d100`, not `ElectPlayer`, not evergreen). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Missing row, scaffolded. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Missing row, scaffolded. Cross-faction-resource (Mandate + Findings, both typed correctly). | Art 00a §9.2 |
@@ -132,7 +132,7 @@ Directorate's permanent removal card — eliminates a faction's deployment marke
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 DIR.CA.2 = Card(
@@ -201,8 +201,8 @@ An earlier model used a permanent passive feed with beat3_pre_resolution deliver
 | Portrait validity | ✓ | Directorate +1 submitter — institutional monitoring doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.any — no presence requirement | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelDeliverySlip (IS-xx) — Art 02 component entry pending (04-n45); 00b definition update pending (04-n46) | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; ARBITER reads existing Beat 3 grid row — no new tracking required; Art 03 Beat 2 procedure addition pending (04-n44) | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`, `doctrine_mod`, `boost`, `ps_framing` entirely. | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 2 Automatic; ARBITER reads existing Beat 3 grid row — no new tracking required; Art 03 Beat 2 procedure addition pending (04-n44) | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 closed S95. `card_id` is present (`card_id="DIR.CA.3"`) — earlier note's "missing card_id entirely" claim was false, corrected. `doctrine_mod`/`boost`/`ps_framing`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` correctly absent. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Missing row, scaffolded. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Missing row, scaffolded. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
@@ -218,7 +218,7 @@ An earlier model used a permanent passive feed with beat3_pre_resolution deliver
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 DIR.CA.3 = Card(
@@ -275,8 +275,8 @@ Directorate's repositioning card — the only card in the full set using Territo
 | Portrait validity | ✓ | Directorate +1 submitter — single entry; repositioning aligns with tactical doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | source and target both district.named; adjacency enforced in restriction; ChorusNode excluded from both | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken in restriction and as target; Mandate cost; adjacency per district_adjacency table | Art 02 §6; Art 02 §8 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; tokens moved before Beat 3 resolution; entry qualification and move count resolution outstanding (Outstanding Issues) | Art 03 §9, §11 |
-| Data schema validation | ⚠ | Pending 04-n70. Also missing `card_id`, `doctrine_mod`, `boost`, `ps_framing` entirely. | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 2 Automatic; tokens moved before Beat 3 resolution; entry qualification and move count resolution outstanding (Outstanding Issues) | Art 03 §9, §11 |
+| Data schema validation | ✓ | 04-n70 closed S95. `card_id` is present (`card_id="DIR.CA.4"`) — earlier note's "missing card_id entirely" claim was false, corrected. `doctrine_mod`/`boost`/`ps_framing`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` correctly absent. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Missing row, scaffolded. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Missing row, scaffolded. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
@@ -290,7 +290,7 @@ Directorate's repositioning card — the only card in the full set using Territo
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 DIR.CA.4 = Card(
@@ -352,7 +352,7 @@ Formal, narrow, deterministic revocation of exactly one named presence token —
 | Portrait validity | ✓ | Directorate submitter=+1, single entry | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named; restriction checks target's influence tier — valid zone condition | Art 01 §6–§7 |
 | Supported by components | ✓ | PresenceToken — existing component; no new component required | Art 02 §6 |
-| Supported by game procedure | ✓ | Beat 4; `arbiter.remove(presence_chip, ...)` is a direct token removal, no derived-state write — Governing Rule 9.1-compliant per its own design_note | Art 03 §9.4 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Beat 4; `arbiter.remove(presence_chip, ...)` is a direct token removal, no derived-state write — Governing Rule 9.1-compliant per its own design_note | Art 03 §9.4 |
 | Data schema validation | ✓ | Both `id` and `card_id` set (good — addresses the missing-`card_id` gap flagged elsewhere in this review). `ps_framing = None` (no PS effect on this card — correct). `narrative`/`perspectives` now populated (schema_cleanup_log #39). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79; no Card Story block present. `narrative`/`perspectives` fields now populated (schema_cleanup_log #39). | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (successcrit/fail/failcrit all `None`) — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
@@ -366,7 +366,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 *Redesigned — resolves 04-n104 (originally targeted InfluenceTier, a derived/non-targetable state, violating GR 9.1). Simplified per GR 6.1 / Design Pillar 4.7b: no ARBITER calculation — removes exactly 1 named presence token. Closes 1 of 6 toward the 54-card floor (04-n149).*
 
@@ -445,7 +445,7 @@ Card-as-condition Permanent PA that auto-reverts any new presence chip placed in
 | Portrait validity | ✓ | Directorate submitter=+1, single entry | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named | Art 01 §6–§7 |
 | Supported by components | ✓ | Operates on existing presence_chip component; no new component required | Art 02 §6 |
-| Supported by game procedure | ✓ | Self-policing per Governing Rule 6.1a; deployment marker itself is never touched, only the resulting chip (Governing Rule 8.3a-compliant, explicitly reasoned in design_note) | Art 03 §9; Governing Rule 6.1a, 8.3a |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Self-policing per Governing Rule 6.1a; deployment marker itself is never touched, only the resulting chip (Governing Rule 8.3a-compliant, explicitly reasoned in design_note) | Art 03 §9; Governing Rule 6.1a, 8.3a |
 | Data schema validation | ✓ | Both `id` and `card_id` set (addresses the missing-`card_id` gap flagged elsewhere in this review). `narrative`/`perspectives` now populated (schema_cleanup_log #39). `resolution_type` corrected `Permanent public act`→`Transactional` — fully redundant with `persistence=Permanent`, which already carries the fact (schema_cleanup_log #41), same basis as DIR.PA.6/DIR.PA.11. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79; no Card Story block present. `narrative`/`perspectives` fields now populated (schema_cleanup_log #39). | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `success = None` — card placement itself IS the effect (card-as-condition pattern); no `game.choose_one()` or conditional branching anywhere in the spec. | Art 04 §5 P27 |
@@ -459,7 +459,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 *Redesigned — resolves 04-n104. Retaxonomized Territory|Block|PresenceToken (not InfluenceTier; not Submission — the subject controlled is presence-token accumulation). Permanent standing card, self-inclusive ("a new law"), reactive to any presenceChip addition. Closes 1 of 6 toward the 54-card floor (04-n149).*
 
@@ -554,7 +554,7 @@ The Directorate dispatches a team to the district — no announcement, no negoti
 | Supported by zones | ✓ | target_district = district.named | Art 01 §6–§7 |
 | Supported by components | ⚠ | BM-xx not yet registered — gate: 04-n81 | Art 02 §6; Art 02 §11–§12 |
 | Supported by game procedure | ⚠ | Beat 0 boost detection (04-n82); Beat 2/3 BM-xx resolution (04-n83); Discovery definition (04-n84) — all gate sign-off | Art 03 §9, §11 |
-| Data schema validation | ⚠ | boost field present; threshold-scaling noted in §6.3; affinity corrected to None (04-n70). Still missing `card_id`/`ps_framing`. `cost`'s first term (and the identical term in `boost`) typed to `.native` (schema_cleanup_log #22, closed S148) — that piece resolved; card_id/ps_framing gaps remain. | Art 04 §6.1–§6.3 |
+| Data schema validation | ⚠ | boost field present; threshold-scaling noted in §6.3; affinity corrected to None (04-n70). `card_id` is present (`card_id="DIR.CA.5"`) — earlier "missing card_id" claim was false, corrected. `ps_framing` genuinely absent per audit tool (no PS effect on this card). `cost`'s first term (and the identical term in `boost`) typed to `.native` (schema_cleanup_log #22, closed S148). | Art 04 §6.1–§6.3 |
 | Outcome determinacy | ✓ | Missing row, scaffolded. `d100`; all four tiers populated (success/successcrit/fail/failcrit), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Triple-component cost (faction resource + district native + IntelToken) — cross-resource tier, consistent with this card's maximum-force framing. IntelToken component confirmed §6.3 vocabulary (`IntelToken(about=faction(target))`, schema_cleanup_log #10). District-native term corrected from bare `resource.district(native)` to `district.target_district.native` (schema_cleanup_log #22, closed S148), same fix applied to `boost`. | Art 00a §9.2; Art 04 §6.3 |
 
@@ -568,7 +568,7 @@ The Directorate dispatches a team to the district — no announcement, no negoti
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 *v2.2: boost model replaces Phase B n-declaration; base cost = faction×1 + native×1 + IntelToken (Mandate×2 removed); boost = same unit; threshold = 65−10×n_boost; PS scales with (1+n) in both directions; successcrit = PS+(1+n_boost) (public endorsement of clean large-scale op); fail = NotificationSlip; failcrit = Discovery + PS−(1+n_boost); modifier scope = target faction only; 04-n81/82/83/84 gate sign-off.*
 
@@ -638,8 +638,8 @@ An internal team works through the standing record. Active directives in this ri
 | Portrait validity | ✓ | Directorate +1 submitter — institutional allocation aligns with authority doctrine | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named; restriction = chip count > 1 | Art 01 §6–§7 |
 | Supported by components | ✓ | Counts face-up Directorate Permanent cards in Directorate play area — no new component | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | `game.active_permanents(faction=, ring=)` now formalized as a confirmed §6.3 primitive (schema_cleanup_log #26, PM05 04-n201) — a simple physical tally, GR 6.1-compliant. | Art 03 §9; Art 04 §6.3 |
-| Data schema validation | ⚠ | Fields consistent with §6.1–§6.3, but missing `card_id`, `boost`, `ps_framing` entirely (though `doctrine_mod=None` is declared, unlike DIR.CA.1–4). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: `game.active_permanents(faction=, ring=)` now formalized as a confirmed §6.3 primitive (schema_cleanup_log #26, PM05 04-n201) — a simple physical tally, GR 6.1-compliant. | Art 03 §9; Art 04 §6.3 |
+| Data schema validation | ✓ | `card_id` is present (`card_id="DIR.CA.6"`) — earlier "missing card_id" claim was false, corrected. `boost`/`ps_framing`/`resolution_type` genuinely absent per audit tool (no boost mechanic, no PS effect, resolution_type correctly implied by `resolution=d100`). `doctrine_mod=None` is explicitly declared. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Internal audit — standing record clean, allocation approved | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Missing row, scaffolded. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Missing row, scaffolded. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
@@ -652,7 +652,7 @@ An internal team works through the standing record. Active directives in this ri
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 *New card. Fills Economy|Add|NativeResource gap (04b §8.2 HP).*
 
@@ -715,8 +715,8 @@ Before any version of events could circulate, the Directorate's closed channels 
 | Portrait validity | ✓ | Directorate +1 submitter | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named; restriction = chip count > 1 | Art 01 §6–§7 |
 | Supported by components | ✓ | PS marker (existing); no new component | Art 02 §11–§12 |
-| Supported by game procedure | ✓ | PS movement by ARBITER at Beat 3 resolution is an existing procedure; `game.active_permanents(faction=, ring=)` now formalized as a confirmed §6.3 primitive (schema_cleanup_log #26, PM05 04-n201), same fix as DIR.CA.6. | Art 03 §9; Art 04 §6.3 |
-| Data schema validation | ⚠ | Fields consistent with §6.1–§6.3, but missing `card_id`, `boost`, `ps_framing` entirely (`doctrine_mod=None` is declared). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: PS movement by ARBITER at Beat 3 resolution is an existing procedure; `game.active_permanents(faction=, ring=)` now formalized as a confirmed §6.3 primitive (schema_cleanup_log #26, PM05 04-n201), same fix as DIR.CA.6. | Art 03 §9; Art 04 §6.3 |
+| Data schema validation | ✓ | `card_id` is present (`card_id="DIR.CA.7"`) — earlier "missing card_id" claim was false, corrected. `boost`/`ps_framing`/`resolution_type` genuinely absent per audit tool. `doctrine_mod=None` is explicitly declared. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Closed-channel record circulation; public confidence signal without disclosed authorship | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Missing row, scaffolded. `d100`; success/successcrit/failcrit populated (fail=None), no `game.choose_one()` — resolves deterministically. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Missing row, scaffolded. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
@@ -730,7 +730,7 @@ Before any version of events could circulate, the Directorate's closed channels 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 *New card. Fills Standing|Shift|PublicStanding gap (04b §8.2 HP). Narrative grounding: covert mechanism, public outcome via closed-channel circulation of institutional record.*
 
@@ -793,8 +793,8 @@ The district is under enhanced institutional review. Documentation requirements 
 | Portrait validity | ✓ | Directorate +1 submitter | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named — no presence requirement | Art 01 §6–§7 |
 | Supported by components | ✓ | Uses existing Modifier tokens — no new component | Art 02 §11 |
-| Supported by game procedure | ✓ | ARBITER places existing Modifier tokens (−15) on each Beat 3 row targeting district at Beat 2 resolution — within existing modifier placement procedure | Art 03 §9 |
-| Data schema validation | ⚠ | Automatic, no threshold/ring_mod; Beat 2. But missing `card_id`, `boost`, `ps_framing` entirely (`doctrine_mod=None` is declared). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: ARBITER places existing Modifier tokens (−15) on each Beat 3 row targeting district at Beat 2 resolution — within existing modifier placement procedure | Art 03 §9 |
+| Data schema validation | ✓ | `card_id` is present (`card_id="DIR.CA.8"`) — earlier "missing card_id" claim was false, corrected. `boost`/`ps_framing`/`resolution_type` genuinely absent per audit tool. `doctrine_mod=None` is explicitly declared. Automatic, no threshold/ring_mod; Beat 2. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Enhanced institutional review; uniform scrutiny including own ops | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | Missing row, scaffolded. `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Missing row, scaffolded. Mono-resource (Mandate only, typed correctly). | Art 00a §9.2 |
@@ -808,7 +808,7 @@ The district is under enhanced institutional review. Documentation requirements 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 *New card. Fills Resolution|Modify|ModifierToken gap (04b §8.2 MP). No new component — uses existing Modifier tokens placed per-row.*
 
@@ -890,20 +890,24 @@ Directorate's district-level regulatory control PA. All non-Directorate presence
 | Supported by zones | ✓ | target_district = district.any — valid; restriction checks Directorate's influence tier in the district (valid zone condition) | Art 01 §6–§7 |
 | Supported by components | ⚠ | RegulatoryOverrideMarker is a new component — register in Art 02 before production | Art 02; Art 03 §9.4 |
 | Supported by game procedure | ⚠ | World condition application to PresenceToken.Add actions needs ARBITER tracking protocol. RegulatoryOverrideMarker component registration required | Art 03 §9.4; Art 02 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | 04-n70 closed S95. `id`/`card_id` both present. `persistence_clearing_trigger`/`on_discard` correctly absent — this card uses `persistence_effect`'s own `clear_on=` inline instead (a different, also-valid encoding), not evergreen. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None` — passes the PA-wide check flagged going into this phase. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Mandate × 2), correctly typed (`.mandate` attribute present). Design_note's mismatched trailing fragment (referenced Exposure, which isn't part of this card's cost) removed — resolved, PM05 04-n186. | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-None
+- **RegulatoryOverrideMarker unregistered:** New component referenced by this card (`arbiter.place(RegulatoryOverrideMarker, ...)`) has no Art 02 entry. Register before production.
+- **ARBITER tracking protocol:** World-condition application of +1 native cost to all non-Directorate PresenceToken.Add actions in the district needs a defined ARBITER tracking procedure in Art 03 §9.4 — not yet written.
+- **Balance/playtesting:** Seasonal scope (affects all remaining Months of Quarter) at Mandate×2 is a strong effect for the cost — flagged for playtesting, not yet validated.
+
+*(These three were previously omitted from Outstanding Issues despite being flagged ⚠ in the checklist above — relocated here for consistency, content unchanged.)*
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 DIR.PA.1 = Card(
@@ -995,8 +999,8 @@ Directorate's institutional intelligence-gathering PA. No formal restriction —
 | Portrait validity | ✓ | Directorate +1: submitter-bounded | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — faction-targeted; no zone reference. N/A | Art 01 §6–§7 |
 | Supported by components | ✓ | IntelToken (yielded by ARBITER from supply, Art 02 §6); Mandate × 3 cost (Art 02 §8) | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | ARBITER tracks STD.PA.4/STD.PA.5 resolution outcomes; yields based on that record | Art 03 §9.4 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: ARBITER tracks STD.PA.4/STD.PA.5 resolution outcomes; yields based on that record | Art 03 §9.4 |
+| Data schema validation | ✓ | 04-n70 closed S95. `id`/`card_id` both present. `persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` correctly absent — `Automatic`, not `ElectPlayer`, Immediate persistence, not evergreen. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Mandate × 3), correctly typed. Design_note's mismatched trailing fragment (wrong resource — Findings, not Mandate — and wrong card, referencing "the injunction"/DIR.PA.6) removed — resolved, PM05 04-n186. | Art 00a §9.2 |
@@ -1009,7 +1013,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 DIR.PA.2 = Card(
@@ -1098,7 +1102,7 @@ Directorate's persistent territorial control tool — a district-level board con
 | Supported by zones | ✓ | target_district = district.named — standard targeting | Art 01 §6–§7 |
 | Supported by components | ✓ | Operates on deployment markers (existing component); no new component required | Art 02 §6–§8 |
 | Supported by game procedure | ⚠ | Beat 4 PA resolution defined; persistence_condition monitoring trigger not yet in Art 03 (PM05 04-n29 — blocks Issues Resolved) | Art 03 §9 |
-| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | 04-n70 closed S95. `id`/`card_id` both present. `doctrine_mod`/`persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard` correctly absent — this card uses `persistence_condition` (a continuous predicate) rather than a discrete clearing trigger, consistent with its self-policing auto-discard design. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Mandate × 2 + Capacity × 1), correctly typed throughout. | Art 00a §9.2 |
@@ -1113,7 +1117,7 @@ Directorate's persistent territorial control tool — a district-level board con
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 *Redesigned — v1.0 (ring-scope) retired.*
 
@@ -1185,8 +1189,8 @@ Directorate's pre-emptive PA block — distinct from DIR.PA.1 Regulatory Overrid
 | Portrait validity | ✓ | Directorate +1 submitter-bounded; placing a public institutional block is maximum doctrinal expression | Art 04 §6.2 |
 | Supported by zones | ✓ | No district target — faction-targeted; no operational footprint restriction | Art 01 §6–§7 |
 | Supported by components | ✓ | No new component — card on Overview is the persistent condition | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Phase B void: Dispatch Token returned, target −1 PS, card removed. No resources committed at Phase B (payment is Beat 4 Step 1) — nothing to refund. PAs declared before Injunction resolved (Beat 4) are committed board states; Governing Rule 7.2b governs, no retroactive block applies | Art 03 §9; Governing Rule 7.2b; Governing Rule 7.3 |
-| Data schema validation | ⚠ | Pending 04-n70. `resolution_type` corrected `Permanent public act`→`Transactional` — the open question this row originally raised is answered: no dedicated value needed, `persistence=Permanent` already carries the fact (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Phase B void: Dispatch Token returned, target −1 PS, card removed. No resources committed at Phase B (payment is Beat 4 Step 1) — nothing to refund. PAs declared before Injunction resolved (Beat 4) are committed board states; Governing Rule 7.2b governs, no retroactive block applies | Art 03 §9; Governing Rule 7.2b; Governing Rule 7.3 |
+| Data schema validation | ✓ | 04-n70 closed S95. `resolution_type` corrected `Permanent public act`→`Transactional` — the open question this row originally raised is answered: no dedicated value needed, `persistence=Permanent` already carries the fact (schema_cleanup_log #41). `arbiter_note` was entirely absent — the card's ARBITER-facing procedure existed only inside `design_note`, which per doctrine is designer-only rationale, not ARBITER-facing. Fixed: added a proper `arbiter_note`. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present and non-`None`. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Triple cross-resource (Mandate + Capital + Findings, ×1 each), correctly typed throughout — notable as the highest resource-type-diversity cost seen in the corpus so far. | Art 00a §9.2 |
@@ -1199,7 +1203,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 *Redesigned — v2.0. PublicAct → PublicAct. InjunctionMarker removed; card-as-condition pattern. Seasonal → Permanent with dual clearing condition (trigger OR Phase 21). Dispatch Token consumed on trigger per Governing Rule 7.3. target_taxonomy field introduced (§6.1/§6.2) — later repurposed and merged into target_freeform (schema_cleanup_log #52, closes 04-n106). Self-policing per Governing Rule 6.1a.*
 
@@ -1255,6 +1259,7 @@ P_StandingInjunction = Card(
     },
 
     design_note = "Card placed in Directorate play area (public, face-up; target faction and target_freeform declared at Phase B). Card IS the persistent condition. Enforcement per Governing Rule 6.1a: Directorate monitors Phase B — when target submits a PA matching target_freeform, Directorate calls it; ARBITER voids the PA (target −1 PS, Dispatch Token consumed per Governing Rule 7.3, card removed). PA resources not yet committed at Phase B (payment is Beat 4 Step 1) — nothing to refund. PAs declared before Injunction resolved at Beat 4 are unaffected — committed board state per Governing Rule 7.2b. Quarter-end expiry: if untriggered at Phase 21, Directorate removes card and recovers 1 Mandate. target_freeform may not be BilateralAgreement — Accords are bilateral and cannot be unilaterally blocked. Distinct from DIR.PA.1 (cost increase on presence placement) and DIR.CA.1 (single-Beat block in one district).",
+    arbiter_note = "Beat 4: place card in Directorate's play area, face-up, naming target_faction and target_freeform. Card is the standing condition — no separate marker. From this point, monitor Phase B: if the named faction submits a PA matching target_freeform, Directorate may call it — void the PA (target −1 PS, consume Dispatch Token per GR 7.3), then remove this card. No resources refunded to the target (payment isn't committed until Beat 4 Step 1). PAs already declared before this card resolved at Beat 4 stand — do not retroactively block them (GR 7.2b). If untriggered by Phase 21: remove the card, return 1 Mandate to Directorate.",
 )
 ```
 
@@ -1305,7 +1310,7 @@ Checkpoints go up overnight. By the time the next wave of crews tries to move eq
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 ```python
 DIR.PA.7 = Card(
@@ -1390,7 +1395,7 @@ The subpoena doesn't ask permission. It arrives with the evidence already attach
 | Portrait validity | ✓ | Directorate `submitter=+1` — institutional audit, playing to type | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = None` — faction-targeted, no district | Art 01 §6–§7 |
 | Supported by components | ✓ | NativeResource, Intel Token, Public Standing track — all existing components | Art 02 §6–§7 |
-| Supported by game procedure | ✓ | `ElectPlayer` outcome_type with `on_accept`/`on_decline` is confirmed, established vocabulary (SYN.PA.1, SYN.PA.3) — no new procedure needed | Art 03 §9 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: `ElectPlayer` outcome_type with `on_accept`/`on_decline` is confirmed, established vocabulary (SYN.PA.1, SYN.PA.3) — no new procedure needed | Art 03 §9 |
 | Data schema validation | ✓ | All base fields now present. `success` (bare prose) replaced entirely — `success`/`successcrit`/`fail`/`failcrit` correctly `None` for `ElectPlayer`, real logic now in `on_accept`/`on_decline`. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story above; narrative/perspectives populated with 3 voices per `ref_card_types.md`'s FactionSpecific convention | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, `outcome_type = ElectPlayer` — `on_accept`/`on_decline` both populated, no `game.choose_one()`, matching SYN.PA.1's confirmed pattern | Art 04 §5 P27 |
@@ -1404,7 +1409,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 |  | |
 
 ```python
 DIR.PA.8 = Card(
@@ -1483,7 +1488,7 @@ Directorate's first Territory|Add|PresenceToken card — closes the audit-flagge
 | Portrait validity | ✓ | Directorate submitter=+1, single entry | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named; same-ring-adjacency check via `district.adjacent(...).where(ring==...)` — valid zone condition | Art 01 §6–§7 |
 | Supported by components | ✓ | presence_chip — existing component; each placement respects the 6-chip-per-district cap (`cap_check=True`, Governing Rule 8.1) | Art 02 §6 |
-| Supported by game procedure | ✓ | Design_note claims this reuses "the same counting mechanism as CA.6 Institutional Audit / CA.7 Institutional Brief" — checked directly, **true**: same `game.active_permanents(faction=, ring=)` call, now formalized as a confirmed §6.3 primitive (schema_cleanup_log #26, PM05 04-n201). | Art 03 §9, §11; Art 04 §6.3 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Design_note claims this reuses "the same counting mechanism as CA.6 Institutional Audit / CA.7 Institutional Brief" — checked directly, **true**: same `game.active_permanents(faction=, ring=)` call, now formalized as a confirmed §6.3 primitive (schema_cleanup_log #26, PM05 04-n201). | Art 03 §9, §11; Art 04 §6.3 |
 | Data schema validation | ⚠ | Both `id` and `card_id` set (addresses #24). `narrative`/`perspectives` now populated (schema_cleanup_log #39). `arbiter_note = None` — unusual; every other reviewed card in this set carries at least a brief arbiter_note. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79; no Card Story block present. `narrative`/`perspectives` fields now populated (schema_cleanup_log #39). | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated — no `game.choose_one()` or conditional branching (the `for_each`/`limit` construct iterates deterministically over a fixed board-state count, not a player choice). `outcome_type = Unilateral` present. | Art 04 §5 P27 |
@@ -1497,7 +1502,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 *Directorate's first Territory|Add|PresenceToken card — closes the audit-flagged win-path gap (04-n89: "the faction whose win condition is territorial Established status has zero native presence-placement cards"). Closes 1 of 6 toward the 54-card floor (04-n149). Ring-spread mechanic, not single-district stacking — confirmed against Directorate's actual win path (Established in more districts, not Dominant) and the 6-chip-per-district cap. N capped at 2 (max same-ring neighbors per district).*
 
@@ -1563,7 +1568,7 @@ DIR.PA.9 = Card(
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
-Public Standing counterpart to covert DIR.CA.7 Institutional Brief — closes the audit's Standing gap (04-n108: Directorate's only PS card was covert, backwards for an "on the record" faction). N = count of districts where Directorate holds Established+ tier, scaling both success and fail symmetrically — a genuine gamble (bigger claim, bigger swing in both directions) rather than a guaranteed accumulator.
+Public Standing counterpart to covert DIR.CA.7 Institutional Brief — gives Directorate a public PS lever alongside its existing covert one, fitting for an "on the record" institutional faction. **Citation correction:** earlier text attributed this to PM05 04-n108 — checked directly, 04-n108's actual scope is (1) GHO/SYN/GUI having zero faction-specific Standing cards, and (2) unconfirmed efficiency calibration of DIR.CA.7/NET.CA.7 against the STD floor; neither is what this card addresses, and 04-n108 remains fully Open regardless of this card. N = count of districts where Directorate holds Established+ tier, scaling both success and fail symmetrically — a genuine gamble (bigger claim, bigger swing in both directions) rather than a guaranteed accumulator.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -1598,9 +1603,9 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
-*Public Standing counterpart to covert DIR.CA.7 Institutional Brief — closes the audit's Standing gap (04-n108: Directorate's only PS card was covert, backwards for an 'on the record' faction). Closes 2 of remaining 4 toward the 54-card floor (04-n149). A genuine gamble, not a guaranteed accumulator: government presence reads publicly as either safety or oppression, so the swing (not just the odds) scales with the size of the claim — this also self-balances the 'yield scaling at scale' concern flagged at 04-n116 for CA.6/CA.7, since the downside grows with N too.*
+*Public Standing counterpart to covert DIR.CA.7 Institutional Brief — gives Directorate a public PS lever alongside its covert one (04-n108 citation corrected — see Design Rationale; 04-n108 remains Open, unrelated to this card). Closes 2 of remaining 4 toward the 54-card floor (04-n149). A genuine gamble, not a guaranteed accumulator: government presence reads publicly as either safety or oppression, so the swing (not just the odds) scales with the size of the claim — this also self-balances the 'yield scaling at scale' concern flagged at 04-n116 for CA.6/CA.7, since the downside grows with N too.*
 
 ```python
 DIR.PA.10 = Card(
@@ -1682,7 +1687,7 @@ Resolves the long-standing counter-card design gap for Permanent PAs (04-n142) �
 | Portrait validity | ✓ | Directorate submitter=+1, single entry | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = None — game-wide scope, no single zone reference | Art 01 §6–§7 |
 | Supported by components | ✓ | No new component — cost-match is a direct read of the target PA's own printed cost | Art 02 §6 |
-| Supported by game procedure | ✓ | Self-policing per Governing Rule 6.1a; cost-match is a physical lookup, not an ARBITER calculation (GR 6.1/4.7b-safe, explicitly reasoned in design_note) | Art 03 §9; Governing Rule 6.1, 6.1a |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Self-policing per Governing Rule 6.1a; cost-match is a physical lookup, not an ARBITER calculation (GR 6.1/4.7b-safe, explicitly reasoned in design_note) | Art 03 §9; Governing Rule 6.1, 6.1a |
 | Data schema validation | ✓ | Both `id` and `card_id` set (addresses #24). `narrative`/`perspectives` now populated (schema_cleanup_log #39). `resolution_type` corrected `Permanent public act`→`Transactional`, same basis as DIR.PA.5/DIR.PA.6 (schema_cleanup_log #41). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79; no Card Story block present. `narrative`/`perspectives` fields now populated (schema_cleanup_log #39). | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`; only `success` populated (a flat PS +1 for establishing the institution) — no `game.choose_one()` or conditional branching. `outcome_type = Unilateral` present. | Art 04 §5 P27 |
@@ -1696,7 +1701,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | | |
+| Status | ✓ S154 | | |
 
 *Resolves 04-n142 — the long-standing counter-card design gap for Permanent PAs, originally named for Entry/Exit Controls. Establishes a standing, game-wide due-process institution: any faction may petition to remove any of Directorate's own currently-active standing Public Acts by matching its printed cost + 1 Intel Token. Atomic resolution (pay + prove, immediate removal) — no untracked exemption state, unlike an earlier draft of the cooperative-PA concept this replaced. Closes the last 1 of 6 toward the 54-card floor (04-n149) — Directorate now at exactly 54.*
 
@@ -1780,7 +1785,7 @@ A rival faction moves a marker onto ground the Directorate already considers und
 | Portrait validity | ✓ | `{Directorate: submitter=+1}` is submitter-bounded, correctly structured per P16. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district`; no ring constraint, consistent with an Established-gated (not ring-gated) mechanism. | Art 01 §6–7 |
 | Supported by components | ✓ | Presence chip removal reuses the standard mechanism; `arbiter.remove(presence_chip,...)` is confirmed to never target a Deployment Marker, so no GR 8.3a conflict. | Art 02 §6–8; GR 8.3a |
-| Supported by game procedure | ✓ | Reuses existing chip-removal behavior; no new ARBITER procedure needed. | Art 03; GR 6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Reuses existing chip-removal behavior; no new ARBITER procedure needed. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177): `ps_framing`/`boost`/`resolution_type` now present as placeholders, not filled with real values; `cost` remains a TBD comment. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Card Story above gives a concrete event, but the in-card `narrative` prose field is still empty — narrative-writing pass still needed. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch, no `game.choose_one()`. | Art 04 §5 P27 |
@@ -1799,7 +1804,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 *First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core). Full content-review: 3 open flags (cost/04-n178, family firing-window overlap, narrative prose absent). Design Pass ✓ (all 22 rows evaluated), Issues Resolved not yet (real flags remain open).*
 
@@ -1826,14 +1831,14 @@ DIR.MOD.1 = Card(
     affinity        = None,
     restriction     = faction(Directorate).influence >= Established,  # jurisdictional authority requires Established presence
     cost            = None,  # card consumed; cost TBD (possibly 1 Mandate)
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Military-mode enforcement React. Fires when any faction places presence in a district where Directorate has Established presence. Directorate may remove 1 chip immediately. Restriction: Directorate must be Established — jurisdictional authority is earned by presence, not proclaimed. This is the suppression toolkit delivered at React speed: Directorate responds to expansion before Beat 3 resolves. Cost TBD — possibly 1 Mandate (enforcement has institutional overhead).",
@@ -1886,7 +1891,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 *Faction-targeted variant of DIR.MOD.1. Trigger narrowed to Syndicate presence placement. Syndicate's capital-driven territorial expansion is Directorate's primary doctrinal adversary in Ring 1/2. Full content-review: 3 open flags (Syndicate portrait-on-target question, cost-flag inconsistency vs. DIR.MOD.1, family firing-window overlap). Design Pass ✓, Issues Resolved not yet.*
 
@@ -1913,14 +1918,14 @@ DIR.MOD.2 = Card(
     affinity        = None,
     restriction     = faction(Directorate).influence >= Established,
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=Syndicate, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Syndicate-targeted variant of DIR.MOD.1. Directorate's doctrine makes no distinction between rogue capital and rogue information — Syndicate's gray-market acquisitions are the same institutional threat as Network's broadcasts. Syndicate portrait flat=-1 on fire: the Syndicate's response to having presence removed is public and traceable. Narrower trigger window than generic; reliable in SYN-heavy games.",
@@ -1954,7 +1959,7 @@ In the Core, nobody double-checks Directorate's paperwork. A rival plants a mark
 | Portrait validity | ✓ | `{Directorate: submitter=+1}` only — no target-faction entry, so DIR.MOD.2's Item 7 question doesn't apply here. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `ring_constraint=1` matches trigger's `ring=1` scope; consistent. | Art 01 §6–7 |
 | Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict, family-wide resolution. | Art 02 §6–8; GR 8.3a |
-| Supported by game procedure | ✓ (contingent) | Same as siblings. | Art 03; GR 6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Same as siblings. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177) — placeholders only. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
@@ -1973,7 +1978,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 *Ring-constrained variant of DIR.MOD.1. Ring 1 (Core) only. No Established restriction — Directorate has blanket institutional authority in Core ring regardless of presence level. Full content-review: carries DIR.MOD.1's self-fire flag plus a frequency flag specific to being both unrestricted and Ring 1-locked. Design Pass ✓, Issues Resolved not yet.*
 
@@ -2000,14 +2005,14 @@ DIR.MOD.3 = Card(
     affinity        = None,
     restriction     = None,  # Core ring: no Established requirement — blanket institutional authority
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Ring 1–constrained variant of DIR.MOD.1. Core ring is institutional home territory — Directorate removes presence without needing Established status. Reflects doctrine: Directorate's authority in the Core is structural, not earned faction by faction. Strongest DIR enforcement React — no restriction to work around.",
@@ -2041,7 +2046,7 @@ Two factions shake hands on an Accord. Before the ink dries, a Directorate clerk
 | Portrait validity | ✓ | `{Directorate: submitter=+1}` — submitter-bounded, correctly structured. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; Accords have no district dimension. | Art 01 §6–7 |
 | Supported by components | ✓ | `faction(Directorate).mandate.add()` reuses the standard resource-grant mechanism; no component conflict (unlike the enforcement family's marker-removal edge). | Art 02 §6–8 |
-| Supported by game procedure | ✓ | No novel procedure — Accord formation is already a defined board event. | Art 03; GR 6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: No novel procedure — Accord formation is already a defined board event. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177) — placeholders only. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
@@ -2060,7 +2065,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 *Legislative-mode React. Directorate documents all new Accords — procedural overhead yields Mandate income. Full content-review: checked against GR 9.1/§4.16 (income generation untouchable), confirmed not a violation (event-triggered grant, not Upkeep income modification); open flags are frequency-reliability and the standard schema/cost/stack gaps shared across the set. Design Pass ✓, Issues Resolved not yet.*
 
@@ -2087,14 +2092,14 @@ DIR.MOD.4 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = faction(Directorate).mandate.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Legislative-mode React on accord.placed. Directorate charges institutional overhead for registering diplomatic agreements — Mandate income regardless of which factions are party to the Accord.",
@@ -2147,7 +2152,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 *React to subsidize the heavy Mandate cost of Permanent PAs. Full content-review: checked for exploit potential (none found; bounded by Permanent PA scarcity); `portrait=None` cross-set inconsistency flagged; remaining flags are the standard schema/cost/stack gaps shared across the set. Design Pass ✓, Issues Resolved not yet.*
 
@@ -2174,14 +2179,14 @@ DIR.MOD.5 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = faction(Directorate).mandate.add(2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Economy fixer. Triggers when Directorate places a Permanent Public Act on their Faction Resolution Grid at Phase 9.2 (before resolution). Instantly yields 2 Mandate, subsidizing the crippling Q1/Q2 cost of laying down their win-condition standing condition PAs.",
@@ -2234,7 +2239,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 *Creates a standing global difficulty constraint triggered by a World Event. Full content-review: every row evaluated (Design Pass ✓), but this card cannot reach Issues Resolved yet: `world_event.played` trigger frequency depends entirely on undesigned Broadcast Card taxonomy (XA-54, blocks Balance/Trigger frequency/Supported-by-procedure/Resource-cost-positioning), and `portrait=None` is flagged as likely wrong for this specific card (should carry a submitter entry). Taxonomy re-derivation (checked against DIR.PA.1 directly, not assumed) holds up on re-check.*
 
@@ -2270,14 +2275,14 @@ DIR.MOD.6 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Mandate * 1 + Exposure * 1,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = None,
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Environmental shaping. Triggers when ARBITER reveals a World Event. The card is placed face-up on the Directorate's Faction Resolution Grid as a standing condition for the rest of the Quarter, imposing a -10 difficulty penalty on any opponent PA targeting a district where Directorate holds Established influence or higher. Solves the 'world event extension' gap by letting Directorate piggyback on the World Event phase to declare their own global environmental constraint. Legally escapes Art 00a §9.1 because it modifies action difficulty (9.1a), not resource income. Cost reasoning: Exposure represents the widespread public broadcast necessary to enforce an emergency lockdown. ⚠ XA-54: 'world_event.played' assumes 'World Event' is either a defined Broadcast Card subtype or a synonym for all Broadcast Cards — Broadcast Card design is open; trigger frequency depends entirely on how many World Events exist in the Broadcast Deck.",
@@ -2330,7 +2335,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 *Jurisdictional claim over private development. Full content-review: confirmed as STD.MOD.98's cited precedent; primary open flag is Balance/Trigger-frequency (no restriction, no cost, fires on any opponent structure placement table-wide — the least-gated card in the set, genuinely worth a design decision beyond the generic 04-n178 cost question). Design Pass ✓, Issues Resolved not yet.*
 
@@ -2357,14 +2362,14 @@ DIR.MOD.7 = Card(
     affinity        = None,
     restriction     = None,
     cost            = None,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.place(presence_chip, district=target_district, faction=Directorate, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Win-condition engine. Whenever an opponent builds a structure, Directorate immediately claims jurisdictional oversight, placing a presence chip in that district for free. Helps Directorate passively achieve 'Established in more districts'.",
@@ -2398,7 +2403,7 @@ A faction declares a public act in territory Directorate already runs. Before Be
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | Condition is district-scoped via the Directorate-Established filter; consistent with existing zone model. | Art 01 §6–7 |
 | Supported by components | ✓ | Resource-token removal off a submitted card reuses the standard payment/submission mechanism; correctly routes to Reservoir, not Directorate income — checked against GR 9.1/§4.16, not a violation. | Art 02 §6–8; GR 9.1 |
-| Supported by game procedure | ✓ | Reuses the existing §9.2 FRG-placement event and Beat 4 payment/shortfall procedure (P20) — no new ARBITER behavior. | Art 03; GR 6.1 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Reuses the existing §9.2 FRG-placement event and Beat 4 payment/shortfall procedure (P20) — no new ARBITER behavior. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177) — placeholders only. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
@@ -2417,7 +2422,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 *Impounds public operational funds in Established territory. Full content-review: checked against the Private Information Gate (00a §10.1) and Art 04 §5 P20 (shortfall handling), both hold up; trigger parameterization uses the confirmed §6.3 `district.where(BoolExpr)` form (schema_cleanup_log #9). This is the strongest-closing card in the set so far — only the standard deferred-schema and stack-behavior flags remain. Design Pass ✓, Issues Resolved not yet.*
 
@@ -2444,14 +2449,14 @@ DIR.MOD.8 = Card(
     affinity        = None,
     restriction     = None,
     cost            = Mandate * 1 + Capital * 1,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = arbiter.remove(resource_token, target=trigger.card, count=1, to=Reservoir),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Bureaucratic taxation. Triggers when a PA is placed on the FRG targeting a Directorate-Established district. Directorate instantly impounds 1 resource token off the card, returned to the Reservoir — not claimed as Directorate income. The acting faction must either add a replacement resource before Beat 4, or suffer partial-payment failure. Cost reasoning: Requires Capital to mobilize the physical impoundment teams while Mandate authorizes the seizure.",
@@ -2504,7 +2509,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | |  |  |
+| Status | ✓ S154 | | |
 
 ```python
 DIR.MOD.9 = Card(
@@ -2537,14 +2542,14 @@ DIR.MOD.9 = Card(
     affinity        = None,
     restriction     = None,
     cost            = IntelToken(about=trigger.faction, status=[Fresh, Stale]) * 1,
-    boost           = None,  # scaffolded, not addressed
+    boost           = None,
 
     success     = faction(Directorate).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
-    ps_framing   = None,  # scaffolded, not addressed
+    ps_framing   = None,
     narrative    = None,
     perspectives = None,
     design_note  = "Fills Directorate's Economy|Remove gap (previously zero cards in that cell, §9). Reactive: fires whenever ANY faction's PS decreases, for any reason — the public souring on a faction is the trigger. Gate: Directorate must hold a non-Expired Intel token keyed to the same faction whose PS just dropped, consumed on fire. Effect is two-part: (1) +1 PS to Directorate for opening the sanction (matches PA.6 Standing Injunction's placement-PS precedent); (2) Permanent standing condition blocking ALL Public Act submission from the sanctioned faction — not one taxonomy, the whole class — until they pay a 2-native fine to Reservoir (self-policing per GR 6.1a, same clearing pattern as Zoning Freeze/Standing Injunction). No quarter-end escape valve — this is a debt the target must actively clear, not a deterrent play with a built-in expiry. First Permanent-persistence ModReactCard in the set (existing precedent is Immediate fire-and-consume or Seasonal-until-Quarter-end) — a new but consistent extension of the card-as-condition pattern, not new ARBITER behavior requiring a fresh procedure.",
@@ -2578,7 +2583,7 @@ A Directorate enforcement unit moves into the contested district at the moment o
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass convention). Effect is a mechanical Boost/Hinder with doctrinal alignment already captured via Doctrine alignment/narrative; no independent per-faction scoring needed. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district` (schema-locked None); `ring_constraint=None` correct for a faction-deck card (only Ring-modifier-deck cards carry a set ring_constraint, 04-n161). | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked; Battlefield Modifier Card mechanic already established. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2 (commit)/1.2.3 (reveal)/1.2.4 (announce) and §10.1.4.0/§10.1.4.1 (cleanup) fully cover this card's mechanic. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding, not previously applied to this subclass). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event — target's contribution to the contest, not a mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None — no success/successcrit/fail/failcrit fields; effect is a printed deterministic value, not a resolution tier. | Art 04 §6.2 |
@@ -2592,7 +2597,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 *First ModBattleCard content in the game, establishing the stub format for the whole subclass. `effect` is a fixed direction printed on the card; `target` is named by whoever plays it at commit — not restricted to Directorate or to a contesting faction. Directorate's literal-force doctrine (§5a: "military assets: enforcement personnel and equipment for conflict resolution and presence removal") expressed as a Boost. Count/magnitude: 4 cards per faction — 2 Boost + 2 Hinder, magnitudes +1/+2 and −1/−2 respectively; `value_rating` mirrors `magnitude`. Flagged for playtest validation, not treated as final (04-n94). This is the weaker Boost tier (+1). The checklist's N/A set is 6 rows for this subclass (Taxonomy fit, Effect duration, Persistence, Trigger validity, Outcome determinacy, Resource cost positioning), more constrained than ModActionCard's 4 (§6.2's modifier constraints table additionally forces `affinity`/`restriction`/`perspectives`/`design_note` None for ModBattleCard). Portrait: ModBattleCard carries no portrait value, permanently. Applies to all 44 ModBattleCard stubs (24 Ring/Standard + 20 faction).*
 
@@ -2609,13 +2614,39 @@ DIR.MOD.10 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None, 
     narrative    = "Directorate enforcement units, deployed not to seize new ground but to hold whatever the institution has already decided should hold.",
-    arbiter_note = "Playable by any faction, not just Directorate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2645,7 +2676,7 @@ A curfew order drops on short notice, checkpoints going up before anyone can rea
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass convention). | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district` (schema-locked); `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2659,7 +2690,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 *Hinder counterpart to DIR.MOD.10, expressing the other half of §5a's Directorate doctrine: "Suppression toolkit: push other factions' control tiers down rather than building own tiers up — best suppression capability in the game." A curfew doesn't reinforce Directorate's own position in the contest — it makes the named faction's position harder to hold, a Tactic rather than a deployed Asset. Weaker Hinder tier (−1); DIR.MOD.13 Martial Lockdown is the escalated −2 counterpart. Same disposition as DIR.MOD.10.*
 
@@ -2676,13 +2707,39 @@ DIR.MOD.11 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None, 
     narrative    = "A curfew order goes out on short notice — official reasoning vague, timing anything but coincidental.",
-    arbiter_note = "Playable by any faction, not just Directorate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2712,7 +2769,7 @@ Institutional hardware — barricades, vehicles, surveillance rigs — gets sign
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass convention). | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2726,7 +2783,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 *Second Boost card, Equipment category rather than DIR.MOD.10's human Asset — rounds out the pattern-setter with all three naming-convention categories represented (Asset/Equipment/Tactic) before replicating to the other four factions. Stronger Boost tier (+2) — heavier material commitment than the routine personnel deployment of DIR.MOD.10. Same disposition as DIR.MOD.10.*
 
@@ -2743,13 +2800,39 @@ DIR.MOD.12 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None, 
     narrative    = "Institutional hardware, signed out of storage on short notice and committed to wherever the tension is highest tonight.",
-    arbiter_note = "Playable by any faction, not just Directorate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2779,7 +2862,7 @@ Full lockdown comes down from Government Citadel, no explanation offered — whi
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass convention). | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Art 03 §10.1.2 Steps 1.2.2/1.2.3/1.2.4 and §10.1.4 cleanup fully cover this card. | Art 03 §10.1.2, §10.1.4 |
+| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2793,7 +2876,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 *Escalated Hinder counterpart to DIR.MOD.11 Emergency Curfew (−2 vs. −1) — completes the 2 Boost / 2 Hinder pattern. Where Curfew is a routine administrative order, Lockdown is Directorate's "best suppression capability in the game" (§5a) turned all the way up: full mobilization against the named faction's position, not just restricted movement. Same disposition as DIR.MOD.11.*
 
@@ -2810,13 +2893,39 @@ DIR.MOD.13 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None, 
     narrative    = "The order comes down from Government Citadel: full lockdown, effective immediately. No one asks who requested it.",
-    arbiter_note = "Playable by any faction, not just Directorate (Art 03 §10.1.2 Step 1.2.2) — commit face-down in front of the named target.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    affinity = None,
+    restriction = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2846,7 +2955,7 @@ A directive already cleared through channels lets a Directorate operation procee
 | Portrait validity | ✓ | `portrait=None` genuinely assessed, not a TBD punt — a procedural ease carries no independent doctrinal weight beyond what the host action already scores. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None`/`ring_origin=None` correct (faction deck, not ring-sourced). | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Dispatch-bundling procedure at Art 03 §9.1.1/§9.4.0.1 covers attachment; `arbiter_note` cites it. | Art 03 §9.1.1, §9.4.0.1 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.1.1, §9.4.0.1 |
 | Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding, not previously applied to this corpus). | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence New Meridian event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | ModActionCard carries no `success`/`fail`-family fields of its own (schema-locked None). | Art 04 §6.2 |
@@ -2860,7 +2969,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 *First ModActionCard content in the game exercising the actual `ModActionExpr` menu (04-n157 pattern-setter; STD.MOD.1 Overture and SYN.MOD.1 The Fixer, the two prior "ModActionCard" entries, were both migrated to Issued ModReactCard, leaving this slot genuinely empty until now). Establishes the tagged-union call convention for `ModActionExpr` — `ModActionExpr.<variant>(...)`, no prior instance existed to follow. Fields per §6.1/§6.2 (ModActionCard column) and the 04-n157 action-space analysis: **host-binding** is packet-pairing only — attach at Dispatch assembly to any CA/PA in the acting faction's own submitted packet (Art 03 §9.1.1); no card-level restriction field exists or is needed, and a ModActionCard can never reach a rival's sealed Dispatch Case. **Cost** is `None` uniformly — Beat 0 payment validation (Art 03 §9.4.0.1 Step 2) could support a live modifier cost here, unlike ModBattleCard's true no-cost-step case, but the splay-display convention (§9.4.0.1 Step 4) makes a distinct modifier cost illegible, so it folds into the host packet's total drain instead. **Count/format:** 12 cards/faction — 4 `threshold_delta` (this tier) + 2 `success_multiplier` + 4 `ps_shift` + 2 `cost_reduction`, asymmetric because the four effect types have genuinely different magnitude-variation room (§6.3): `threshold_delta` runs against the d100 threshold scale (real thresholds 25–65, `ring_mod`/`doctrine_mod` already establish ±10/±15 as meaningful) and supports 4 tiers (+5/+10/+15/+20); `ps_shift` likewise grew from an initial 2-card same-direction reading to a full 2×2 self/target matrix (see DIR.MOD.19); the other two effect types are small-integer/exponential mechanics that stay at 2 tiers. Directorate's institutional-authority doctrine (§5a) expressed as a pre-cleared procedural advantage — this is the weakest tier (+5).*
 
@@ -2873,18 +2982,40 @@ DIR.MOD.14 = Card(
     layer   = None,  function = None,  subject = None,
 
     effect          = ModActionExpr.threshold_delta(n=5),  # self-only — no faction param on this variant (§6.3).
-    value_rating    = 1,      # minor tier of 3 (threshold_delta supports 3 magnitude tiers — +5/+10/+15)
+    value_rating    = 1,      # minor tier of 4 (threshold_delta supports 4 magnitude tiers — +5/+10/+15/+20; capstone is DIR.MOD.25)
     ring_constraint = None,
     ring_origin     = None,
     # All other Card fields None per §6.2 Modifier Subclass Field Constraints (ModActionCard column) — no trigger, no beat, no resolution, no target_* fields.
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,   # Assessed, not a TBD punt — procedural ease carries no independent doctrinal weight beyond the host action's own score
     narrative    = "A directive already cleared through channels lets a Directorate operation proceed without the friction a fresh request would meet.",
-    arbiter_note = "Attach at Dispatch assembly to any CA/PA in the same faction's own packet (Art 03 §9.1.1) — no card-level host restriction, narrative fit is advisory only. Effect applies only to the host it's packeted with; cannot reach another faction's operation.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -2914,7 +3045,7 @@ An inspection scheduled and passed well in advance leaves nothing for bad luck �
 | Portrait validity | ✓ | `portrait=None` warranted — no independent doctrinal weight. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct for a faction deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis as DIR.MOD.14. | Art 03 §9.1.1 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event, self-only clean. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2928,7 +3059,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 *Mid tier of the 4 `threshold_delta` cards (+10, matching the `ring_mod`/`doctrine_mod` baseline granularity — §6.5). Reframed from an earlier hostile-flavored seed concept ("Regulatory Inspection" — raising a rival's difficulty, `Whiteboard/modifier_card_ideas.md`) per **04-n170**: `threshold_delta` carries no faction parameter (§6.3), so it can only ever ease the acting faction's own host action, never a rival's. Reframe clean.*
 
@@ -2941,17 +3072,39 @@ DIR.MOD.15 = Card(
     layer   = None,  function = None,  subject = None,
 
     effect          = ModActionExpr.threshold_delta(n=10),
-    value_rating    = 2,      # mid tier of 3
+    value_rating    = 2,      # second of 4 tiers
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "An inspection scheduled and passed well in advance leaves nothing for bad luck — or a rival's tip-off — to catch.",
-    arbiter_note = "Reframed from a hostile-flavored seed concept — self-only, same basis as all threshold_delta cards in this set.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -2981,7 +3134,7 @@ A visible deployment backs up whatever the Directorate is about to attempt — t
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ⚠ | See Voice fit — implies dual-purpose effect. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -2995,7 +3148,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 *Third of **4** `threshold_delta` tiers (+15), not the capstone — DIR.MOD.25 Executive Mandate (+20) is the true capstone. Also reframed from a hostile-flavored seed concept per 04-n170, same basis as DIR.MOD.15. Magnitude exceeds the ±15 `doctrine_mod` baseline only nominally. **Narrative implies a rival-facing effect ("resistance evaporates") the self-only mechanic can't deliver; flagged for a light tighten, matching STD.MOD.29.***
 
@@ -3012,13 +3165,35 @@ DIR.MOD.16 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A visible deployment backs up whatever the Directorate is about to attempt — resistance tends to evaporate before it fully forms.",
-    arbiter_note = "Reframed from a hostile-flavored seed concept, same basis as DIR.MOD.15. Narrative flagged — implies dual-purpose effect despite self-only mechanic.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3048,7 +3223,7 @@ Procedural correctness compounds — an action executed exactly to protocol prod
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3062,7 +3237,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 *Common tier of the 2 `success_multiplier` cards (n=1) — 04-n157: this effect type supports only 2 tiers, since n=1 already doubles the host's effect and n=2 triples it.*
 
@@ -3079,13 +3254,35 @@ DIR.MOD.17 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Procedural correctness compounds — an action executed exactly to protocol produces more than the protocol strictly requires.",
-    arbiter_note = "Self-only, same as all non-ps_shift ModActionExpr variants (§6.3) — amplifies the acting faction's own host action, never a rival's.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3115,7 +3312,7 @@ A measured response becomes full institutional mobilization — the outcome land
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3129,7 +3326,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 *Rare/capstone tier of the 2 `success_multiplier` cards (n=2 — triples the host's success effect). Flagged for playtest, same caveat as ModBattleCard's magnitude scale (04-n94) — reserve for high-stakes plays, not routine deployment.*
 
@@ -3146,13 +3343,35 @@ DIR.MOD.18 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A measured response becomes full institutional mobilization — the outcome lands far past what was ever authorized on paper.",
-    arbiter_note = "Rare/capstone tier — log actual play outcomes before treating n=2 as balanced.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3182,7 +3401,7 @@ The Directorate's conduct is cited publicly as the standard — a small, deliber
 | Portrait validity | ✓ | `portrait=None` warranted — PS shift is the card's whole effect. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly, no target-dependency gap. | Art 03 §9.1.1 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3196,7 +3415,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 *`ps_shift` is a full 2×2 matrix, not a 2-card direction split — 4 cards total (DIR.MOD.19/23/20/24), mirroring ModBattleCard's Boost+1/+2, Hinder−1/−2 structure exactly. Unlike the other three `ModActionExpr` variants, `ps_shift` carries a faction parameter (§6.3: `acting | target | named faction`), so both **direction** (self vs. target) and **magnitude** (±1/±2) vary independently. This card: self, minor (+1). DIR.MOD.23 Commendation: self, major (+2). DIR.MOD.20 Public Reprimand: target, major (−2). DIR.MOD.24 Internal Affairs Referral: target, minor (−1).*
 
@@ -3213,13 +3432,35 @@ DIR.MOD.19 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "The Directorate's conduct is cited publicly as the standard — a small, deliberate boost to standing.",
-    arbiter_note = "ps_shift is the only ModActionExpr variant with a faction parameter — this half of the pair always resolves to the acting faction.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3249,7 +3490,7 @@ An official rebuke lands on whoever the action was aimed at — public, on the r
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field. |  |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. |  |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3263,7 +3504,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 *Target-hinder, major tier (−2) of the `ps_shift` 2×2 matrix — see DIR.MOD.19 for the full structure. Magnitude mirrors the established Intel Token Hinder precedent rather than the ±1 baseline, since a named PS hit reads as a real consequence, not a nudge. This is one of two cards in the set that reach a faction other than the acting one — legitimately, since `ps_shift` is schema-built for it (unlike `threshold_delta`/`success_multiplier`/`cost_reduction`, flagged self-only at 04-n170).*
 
@@ -3280,13 +3521,35 @@ DIR.MOD.20 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "An official rebuke lands on whoever the action was aimed at — public, on the record, and costly.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA it's packet-paired with names as its target_faction (§6.1) — the modifier's target IS the host action, not an independently-declared field.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3316,7 +3579,7 @@ A jurisdictional formality is waived for this faction alone, quietly, ahead of s
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.2 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3330,7 +3593,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 *Common tier of the 2 `cost_reduction` cards (n=1). PA-only per §6.3 — CA cost is committed at dispatch before Beat 0 and cannot be reduced post-submission.*
 
@@ -3347,13 +3610,35 @@ DIR.MOD.21 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A jurisdictional formality is waived for this faction alone, quietly, ahead of submission.",
-    arbiter_note = "PA host only. Attach at Dispatch (Art 03 §9.2) alongside the declared PA; reduces the resource total owed at Beat 4 by 1 unit.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3383,7 +3668,7 @@ Materiel and personnel already committed elsewhere in the institution get redire
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Correctly attaches at §9.2. | Art 03 §9.2 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.2 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3397,7 +3682,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 *Capstone tier of the 2 `cost_reduction` cards (n=2). PA costs sample at 1–4 total units (04-n157) — a 2-unit reduction approaches making many PAs nearly free; flagged for playtest same as the rest of this set.*
 
@@ -3414,13 +3699,35 @@ DIR.MOD.22 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Materiel and personnel already committed elsewhere in the institution get redirected — the public act proceeds at a fraction of its nominal cost.",
-    arbiter_note = "Capstone cost_reduction tier — log actual play outcomes before treating a 2-unit reduction as balanced.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3450,7 +3757,7 @@ A commendation issued through official channels carries more weight than a compl
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | `faction="acting"` resolves cleanly. | Art 03 §9.1.1 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3464,7 +3771,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 *Added alongside DIR.MOD.24 to complete the `ps_shift` 2×2 matrix. Self-boost, major tier (+2) — stronger counterpart to DIR.MOD.19 Model Citizen. See DIR.MOD.19 for the full matrix structure.*
 
@@ -3481,13 +3788,35 @@ DIR.MOD.23 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "A commendation issued through official channels carries more weight than a compliment — it's the institution putting its name behind the outcome.",
-    arbiter_note = "Self-only, resolves to the acting faction. Major tier — flagged for playtest same as the rest of this set.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3517,7 +3846,7 @@ Nothing is announced. A referral goes into a file, and somehow the file's conten
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Card's target is the host CA/PA it's packet-paired with at Dispatch (Art 03 §9.1.1) — `faction="target"` is definitionally the host's target, not a separately-validated field. |  |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. |  |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3531,7 +3860,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 |  | |
 
 *Added alongside DIR.MOD.23 to complete the `ps_shift` 2×2 matrix. Target-hinder, minor tier (−1) — softer counterpart to DIR.MOD.20 Public Reprimand: a quiet referral rather than a public rebuke. Drawn from the Faction ModAction seed pool (`Whiteboard/modifier_card_ideas.md`).*
 
@@ -3543,18 +3872,40 @@ DIR.MOD.24 = Card(
     type    = ModActionCard,  subtype = FactionSpecific,  faction = Directorate,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModActionExpr.ps_shift(faction="target", delta=-1), of the 2×2 matrix
+    effect          = ModActionExpr.ps_shift(faction="target", delta=-1),  # target-hinder, minor tier of the 2×2 matrix
     value_rating    = 1,
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "Nothing is announced. A referral goes into a file, and somehow the file's contents find their way into conversation.",
-    arbiter_note = "`faction=\"target\"` resolves to whichever faction the host CA/PA itself names as its target_faction (§6.1) — same behavior as DIR.MOD.20, minor tier.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -3584,7 +3935,7 @@ An executive mandate carries the full authority of Directorate leadership — no
 | Portrait validity | ✓ | `portrait=None` warranted. | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | `ring_constraint=None`/`ring_origin=None` correct. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components. | Art 02 |
-| Supported by game procedure | ✓ | Same Dispatch-bundling basis. | Art 03 §9.1.1 |
+| Supported by game procedure | ⚠ | `arbiter_note` was found redundant and removed (S154 follow-up), but the card still carries a separate inline `#` comment, so it isn't clean yet — not ✓. Comment: see code. | Art 03 §9.1.1 |
 | Data schema validation | ✓ | 04-n177 scaffolding placeholders added. | Art 04 §6.1–§6.3; 04-n177 |
 | Card narrative | ✓ | Plain 1-sentence event, correctly self-only. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
@@ -3598,7 +3949,7 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | | |  |
+| Status | ✓ S154 | | |
 
 *`threshold_delta` is 4 tiers total (+5/+10/+15/+20). True capstone (+20); DIR.MOD.16 Show of Force (+15) is the third of four, not the top. `value_rating` is widened schema-wide to 1–4 (§6.1/§6.2) so this tier gets its own distinct value (4) instead of sharing DIR.MOD.16's band. Faction ModActionCard count: 12 cards/faction (4 threshold_delta + 2 success_multiplier + 4 ps_shift + 2 cost_reduction); Ring ModAction: 24 cards/ring. Closes the Directorate ModActionCard set (12/12 cards); one narrative flag carried (DIR.MOD.16).*
 
@@ -3615,13 +3966,35 @@ DIR.MOD.25 = Card(
     ring_constraint = None,
     ring_origin     = None,
     cost            = None,
-    resolution_type = None,  # scaffolded, not addressed
-    boost           = None,  # scaffolded, not addressed
-    ps_framing      = None,  # scaffolded, not addressed
+    resolution_type = None,
+    boost           = None,
+    ps_framing      = None,
 
     portrait     = None,
     narrative    = "An executive mandate carries the full authority of Directorate leadership — nothing left to interpret, nothing left to contest.",
-    arbiter_note = "Capstone threshold_delta tier — log actual play outcomes before treating +20 as balanced.",
+    arbiter_note = None,
+    beat = None,
+    resolution = None,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    trigger = None,
+    outcome_type = None,
+    persistence = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
+    target_district = None,
+    target_faction = None,
+    target_object = None,
+    target_freeform = None,
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
