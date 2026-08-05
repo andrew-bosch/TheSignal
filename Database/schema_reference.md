@@ -85,7 +85,7 @@ No table should be designed without knowing which core axis it hangs from and at
 `action_costs`, `action_restrictions`, `action_valid_targets`, `allocation_types`, `beat`, `card_faction_modifiers`, `card_metadata`, `card_subtypes`, `card_types`, `district_connections`, `game_actions`
 
 **Design tracking tables (card design workspace — S117):**
-`card_status`, `card_subject_map`
+`card_status`, `card_subject_map`, `card_checklist` (added S155)
 
 ---
 
@@ -577,6 +577,35 @@ CREATE TABLE `card_status` (
 - `cost_native_count` = distinct native resource types in the cost (0=free, 1=mono or single-cross-type, 2+=multi-type cross).
 - STD cards with `resource.faction(acting)` (no subtype) = mono regardless of submitter (submitter-relative). STD cards naming a specific faction's native type (e.g., Exposure, Capital, Mandate) = cross at design level.
 - **Distribution (S119, 90 non-blocked cards):** mono/fixed=58 · mono/variable=4 · cross/fixed=14 · free/fixed=14. Intel Token cards=12.
+
+### card_checklist (6,970 rows as of S155 — 383 cards)
+```sql
+CREATE TABLE `card_checklist` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `card_id` VARCHAR(15) NOT NULL,      -- joins to card_status.card_id
+  `category` VARCHAR(60) NOT NULL,     -- e.g. "Balance", "Supported by game procedure", "Trigger frequency (ModReactCard)"
+  `verdict` VARCHAR(60) NOT NULL,      -- raw Pass-column text, verbatim: '✓', '⚠', '⚠ (deferred)', '✓ (best-effort, pre-Art 00c)', etc. — not normalized
+  `note` TEXT,
+  `artifact_ref` VARCHAR(255),
+  `source_file` VARCHAR(80) NOT NULL,  -- basename of the Part*.md file the row was parsed from
+  UNIQUE KEY `uq_card_category` (`card_id`, `category`),
+  KEY `idx_category` (`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+
+**Purpose (S155):** Every card's Design Checklist table (17 base rows, +5 more for ModReactCard type) — currently only readable as prose inside each card's markdown — mirrored into DB so cross-card/cross-faction audits (PM05 09-16 steps 4–5, PM02 L352) can run as SQL instead of bespoke Python each session. First concrete step toward the "DB-queryable Art 04" goal Andy set S155 — this table, not a full Card()-field migration; `.md` stays source of truth, this is a derived, re-syncable projection (same discipline as `card_status`).
+
+**Sync:** `.md` is authoritative. Re-generate and reload after any checklist edit: `python3 tools/extract_card_checklist.py` (writes `Database/card_checklist_load.sql`) then `mysql the_signal_db < Database/card_checklist_load.sql` (script always starts with `DELETE FROM card_checklist;`, full reload not incremental). Not yet wired into the same "update immediately" discipline as `card_status` — treat as needing a manual re-sync pass before/after any large checklist-editing session until that habit is established.
+
+**Coverage gap (expected, matches card_status):** 3 card_ids in `card_status` have no `card_checklist` rows — `GD-01`/`DA-01`/`DA-02`, non-`Card()` template pages that were never in scope for the standard 17-row review. Also excludes the two Ghost fossil cards sharing the placeholder `id="Ghost-ext-TBD"` with no real `card_id=` field (`Backdate`, `Field Verification`) — same pre-existing gap `card_status` already carries (see its notes above); the extraction script detects and skips these explicitly (reported as "no resolvable card_id" in its stdout) rather than mislabeling them under a fake shared ID.
+
+**Sample query — reproduces the exact metric PM05 04-n221 tracks, per faction:**
+```sql
+SELECT cs.faction, COUNT(*) AS flagged
+FROM card_checklist cc JOIN card_status cs ON cc.card_id = cs.card_id
+WHERE cc.category = 'Supported by game procedure' AND cc.verdict LIKE '⚠%'
+GROUP BY cs.faction ORDER BY flagged DESC;
+```
 
 ### card_subject_map (S117)
 ```sql

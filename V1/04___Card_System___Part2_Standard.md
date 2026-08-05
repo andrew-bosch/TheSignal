@@ -21,10 +21,10 @@
 | [STD.CA.9](#c09-fund) | Fund |
 | [STD.CA.10](#c10-protect) | Protect |
 | [STD.CA.12](#c39-absolute-compromise) | Absolute Compromise |
-| [—](#standard-disinformation-campaign) | Disinformation Campaign |
-| [—](#standard-disprove) | Disprove |
-| [—](#standard-intel-extraction) | Intel Extraction |
-| [—](#standard-modifier-raid) | Modifier Raid |
+| [STD.CA.13](#stdca13--disinformation-campaign) | Disinformation Campaign |
+| [STD.CA.14](#stdca14--disprove) | Disprove |
+| [STD.CA.15](#stdca15--intel-extraction) | Intel Extraction |
+| [STD.CA.16](#stdca16--modifier-raid) | Modifier Raid |
 
 ### STD.CA.1 — BUILD STRUCTURE
 [↑ Covert Operations](#standard-covert-operations)
@@ -932,7 +932,7 @@ Defensive Beat 2 positional wager — the only Standard card that explicitly pro
 | Portrait validity | ✓ | Guild `submitter=+1`: protecting built assets is non-optional doctrine — "we protect what we build" (DIR.PA.1, SYN.PA.2). Directorate `submitter=+1`: institutional assets require active defense — resourced accordingly (DIR.PA.1, SYN.PA.2). Ghost `submitter=−1`: active fortification conflicts with concealment doctrine — "best protection is not being found" (DIR.PA.1, SYN.PA.2). Network: no entry — "we protect our people first; infrastructure is secondary"; situational use, not doctrinal; absence justified. Syndicate: no entry — rational asset-value framing, no doctrinal stake in fortification; absence justified. | Art 04 §6.2 |
 | Supported by zones | ✓ | `target_district = district.any`. Restriction: acting presence in target district. | Art 01 §6, §7 |
 | Supported by components | ✓ | PresenceToken (restriction); district native cost (Art 02 §8); threshold reduction applied to Beat 3 ops targeting acting assets. | Art 02 §6, §8 |
-| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0); threshold reduction applied at Beat 3 resolution (Art 03 §9.4.3). Re-verified S154: the −25/−45 marker is not a bespoke mechanism — it's M-09 ("Card Effect | Protect-type operation card | Covert | Beat 2 | 1 per submitted | Variable | See card") in Art 03 §13.4's standard Difficulty Modifiers table, the same cumulative-before-rolling pipeline every other threshold modifier (BM-xx, CM-B, ring adjacency) already feeds. Outstanding Issue below was stale — closing it. | Art 03 §9, §9.4, §13.4 |
+| Supported by game procedure | ✓ | Submitted at Dispatch (Art 03 §9.1); placed in Beat 2 row at Resolution Grid setup (Art 03 §9.4.0); threshold reduction applied at Beat 3 resolution (Art 03 §9.4.3). Re-verified S154: the −25/−45 marker is not a bespoke mechanism — it's M-09 ("Card Effect \| Protect-type operation card \| Covert \| Beat 2 \| 1 per submitted \| Variable \| See card") in Art 03 §13.4's standard Difficulty Modifiers table, the same cumulative-before-rolling pipeline every other threshold modifier (BM-xx, CM-B, ring adjacency) already feeds. Outstanding Issue below was stale — closing it. | Art 03 §9, §9.4, §13.4 |
 | Data schema validation | ⚠ | 04-n70 (cited here) closed S95, stale reference — re-verified S154 via `audit_card_corpus.py` against current §6.1/§6.2: missing explicit declarations for `persistence_clearing_trigger`, `boost`, `on_accept`, `on_decline`, `on_discard`, `ps_framing`, `design_note`, `arbiter_note` (schema growth post-S95, mostly `=None`-eligible — same corpus-wide Phase 0 D2 gap, not unique to this card). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Card Story block confirmed still empty (04-n79 genuinely open, not stale) | Art 04 §5 P26 |
 | Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
@@ -1165,7 +1165,7 @@ STD.CA.12 = Card(
 
 ---
 
-### STANDARD — DISINFORMATION CAMPAIGN
+### STD.CA.13 — DISINFORMATION CAMPAIGN
 [↑ Covert Operations](#standard-covert-operations)
 
 #### Design Rationale
@@ -1270,7 +1270,7 @@ C_DisinformationCampaign = Card(
 
 ---
 
-### STANDARD — DISPROVE
+### STD.CA.14 — DISPROVE
 [↑ Covert Operations](#standard-covert-operations)
 
 #### Design Rationale
@@ -1369,7 +1369,7 @@ C_Disprove = Card(
 
 ---
 
-### STANDARD — INTEL EXTRACTION
+### STD.CA.15 — INTEL EXTRACTION
 [↑ Covert Operations](#standard-covert-operations)
 
 #### Design Rationale
@@ -1473,7 +1473,7 @@ C_IntelExtraction = Card(
 
 ---
 
-### STANDARD — MODIFIER RAID
+### STD.CA.16 — MODIFIER RAID
 [↑ Covert Operations](#standard-covert-operations)
 
 #### Design Rationale

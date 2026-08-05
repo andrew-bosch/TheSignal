@@ -15,10 +15,10 @@
 | [SYN.CA.3](#c33-hostile-acquisition) | Hostile Acquisition |
 | [SYN.CA.4](#c34-golden-parachute) | Golden Parachute |
 | [SYN.CA.5](#c35-regulatory-capture) | Regulatory Capture |
-| [—](#syndicate-land-title) | Land Title |
-| [SYN.CA.9](#syndicate-hostile-takeover) | Hostile Takeover |
+| [SYN.CA.8](#synca8--land-title) | Land Title |
+| [SYN.CA.9](#synca9--hostile-takeover) | Hostile Takeover |
 | [SYN.CA.10](#syn-ca-10--accord-transfer) | Accord Transfer |
-| [—](#syndicate-parasitic) | Parasitic |
+| [SYN.CA.6](#synca6--parasitic) | Parasitic |
 | [—](#syndicate-corporate-blackmail) | Corporate Blackmail |
 | [SYN.CA.11](#syn-ca-11--redline) | Redline |
 
@@ -424,7 +424,7 @@ Design note: Transfer an Accord's obligations from the original party to a named
 **PORTFOLIO REVIEW** — Cross-Category — Reveal — Intel tokens held.
 Design note: Name a faction; ARBITER announces that faction's current Intel token count to acting faction only (private). Syndicate may immediately offer to purchase one token from that faction at 3 Capital — target faction may decline. Provides Syndicate an information entry point without requiring field presence. Addresses zero information/intelligence gap.
 
-### Syndicate — LAND TITLE
+### SYN.CA.8 — LAND TITLE
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
@@ -499,7 +499,7 @@ LandTitle = Card(
 
 ---
 
-### Syndicate — HOSTILE TAKEOVER
+### SYN.CA.9 — HOSTILE TAKEOVER
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
@@ -707,7 +707,7 @@ SYN.CA.10 = Card(
 
 ---
 
-### Syndicate — PARASITIC
+### SYN.CA.6 — PARASITIC
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale

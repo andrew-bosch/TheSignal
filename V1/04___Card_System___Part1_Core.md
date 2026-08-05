@@ -32,6 +32,7 @@ Artifact 04 is the complete design specification for The Signal's action card sy
 | §12 | [Rules & Constraints](#12-rules-constraints) |
 | §13 | [Card Information Design Requirements](#13-card-information-design-requirements) |
 | §14 | [Special Conditions & Gameplay Impacts](#14-special-conditions-gameplay-impacts) |
+| §15 | [Deferred Design — Blocked Cards](#15-deferred-design--blocked-cards) |
 
 **File Map:** Artifact 04 is physically split across 8 files — one version, one sign-off, single artifact. Card specs are addressed by Card ID, not section number.
 
@@ -1770,6 +1771,205 @@ Non-native resources acquired through:
 1. District incursion — presence in districts controlled by the resource's native faction
 2. Direct faction-to-faction trade at any agreed rate
 3. Where no direct trade is arranged: conversion follows **The Translation** (Art 03 §19.1), a Chorus-Node-presence-tiered rate table (Established 2:1, Present 3:1, None 4:1, Tied/Contested 5:1) — not a flat universal rate.
+
+---
+
+## 15. Deferred Design — Blocked Cards
+
+Cards that have been removed from the active §7 corpus — they are not in play, not part of any faction's deck, and out of scope for the standard 17-row Design Checklist review — pending a fundamental redesign that hasn't happened yet. Both entries below carry the retired `id="Ghost-ext-TBD"` placeholder rather than a real `FAC.TYPE.n` card_id (ID-04 renumber never assigned one, since assigning a real ID to a permanently-blocked mechanism was judged premature — the redesign may change what the card does enough to change its taxonomy). Relocated here S155 (moved out of Ghost §7, Andy's direction) so §7 only holds cards that are actually part of the live corpus; content is unchanged from its last edit. Open tracking: PM05 04-n103 (original block ruling, S107/closed) and 04-n205 (open — cost-typing note, explicitly deferred to whenever this redesign happens).
+
+### Backdate 🚫 BLOCKED — Deferred Design
+[↑ 15. Deferred Design](#15-deferred-design--blocked-cards)
+
+#### Design Rationale
+Intelligence poisoning — alter the quarter field on a held Intel token to make it appear older. A Fresh token can be degraded to Stale or Expired. The primary use is the poisoned gift (plant mode): deliver a degraded token to a target faction who will discover — when they attempt to use it — that their intelligence is stale or worthless. The acting faction sacrifices a functional token to waste a future opposing action. Keep mode has narrower use: Ghost may want to make an operation appear to have occurred earlier (strategic alibi). Threshold 30 is harder than Source Substitution (45) because temporal records are more verifiable — altering when something happened is more conspicuous than altering who. Fail destroys the token; failcrit notifies the originally-named faction. Ghost adjacency applies in plant mode.
+
+Standard equivalent: PM05 04-n15.
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Temporal falsification of intelligence records — primary use is poisoned gift (plant Expired token on target to waste their attribution play) | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — temporal record manipulation as operational doctrine | Art 00 §7 |
+| Doctrine alignment | ✓ | Ghost only; threshold 30 (harder than Source Substitution 45) reflects temporal records are more verifiable; same keep/plant dual mode as Source Substitution | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Corrupt/IntelToken (quarter field) — distinct from Source Substitution (faction field) | Art 04b §4 |
+| Balance | ✓ | Threshold 30 — harder than Source Substitution; temporal records more verifiable; fail destroys token — real cost | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate: token altered and returned/planted at Beat 3; fail destroys token at Beat 3 | — |
+| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Trigger validity | ✓ | N/A — trigger = None; restriction enforces Intel token presence | — |
+| Portrait validity | ✓ | Ghost +1: submitter-bounded | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — faction-targeted; no adjacency restriction. Card 🚫 BLOCKED. | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken as both cost and target; requires two writable fields (faction + quarter) outstanding (Outstanding Issue); instructions slip in case | Art 02 §6–§8 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Plant mode delivery protocol same as Source Substitution — outstanding (Outstanding Issue) | Art 02 §6–§8; Art 03 §9.4 |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+
+#### Outstanding Issues
+
+- **Token writable fields:** Intel token component must support two writable fields (faction name + quarter). Confirm component design in Art 02.
+- **Plant mode delivery protocol:** Same as Source Substitution — discreet delivery to target terminal during Beat 3 cleanup; procedure not yet defined in Art 03/07.
+- **🚫 BLOCKED:** Two permanent constraints. (1) Location: Intel token in private terminal zone is not reachable by opposing card. (2) GR 7.2b: the quarter field records when the token was committed — a committed fact; retroactive alteration violates the finality principle. The provenance-field approach is permanently closed. Fundamental redesign required; design path must be additive. Cross-ref: Art 04b §8.1 item 3, PM05 04-n103.
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ S154 | | |
+
+```python
+Backdate = Card(
+    id      = "Ghost-ext-TBD",  version = "v1.0",
+    name    = "Backdate",
+    tagline = "Corrupt the quarter field on a held Intel token — make it appear older than it is.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
+
+    layer    = Information,  function = Corrupt,  subject = IntelToken,
+
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 30,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating = None,
+    trigger         = None,
+    resolution_type = "Deceptive",
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = None,
+    target_faction  = faction.any_or_none,  # None = keep; named = plant
+    target_object   = intel_token.held,
+
+    target_freeform=None,
+    affinity    = None,
+    restriction = faction(Ghost).holds_intel_token(count=1),
+    cost        = Findings * 2 + IntelToken() * 1,
+
+    # Instructions slip in case: [new quarter — must be earlier than current] | [return: self / named faction]
+    success = (
+        arbiter.corrupt(intel_token.held, field=quarter, value=declared_earlier_quarter),
+        if target_faction == None:
+            arbiter.return_to_case(intel_token),
+        else:
+            arbiter.deliver_discreet(intel_token, target_faction),
+    ),
+    successcrit = None,
+    fail        = arbiter.destroy(intel_token),
+    failcrit    = (
+        arbiter.destroy(intel_token),
+        arbiter.dispatch(NotificationSlip, recipient=intel_token.faction_named),
+    ),
+
+    portrait = {Ghost: PortraitEntry(submitter=+1)},
+
+    narrative    = "The question is not what the token says. The question is when it says it happened.",
+    perspectives = {
+        Ghost: "An old record is a useless record. We are making it old.",
+    },
+    design_note  = "Temporal falsification — quarter field only. Distinct from Source Substitution (faction field). Threshold 30 vs 45: altering when is harder than altering who. Primary use: plant mode to deliver degraded/Expired token as poisoned gift — target wastes a future attribution play. Keep mode: make own operations appear to have occurred earlier. Intel token component must support two writable fields (faction + quarter). A Standard-deck card carries an equivalent mechanic.",
+    arbiter_note = "Instructions slip in case: new quarter number (must pre-date current Quarter) + keep or plant destination. Beat 3: d100 vs 30. On success: alter quarter field; token age reclassified accordingly (may shift Fresh → Stale, Stale → Expired, or Fresh → Expired depending on magnitude). Keep: return in case. Plant: discreet delivery to target terminal (same protocol as Source Substitution). On fail: destroy token. On failcrit: destroy + NotificationSlip to faction named on token.",
+)
+```
+
+---
+
+### Field Verification 🚫 BLOCKED — Deferred Design
+[↑ 15. Deferred Design](#15-deferred-design--blocked-cards)
+
+#### Design Rationale
+Ghost re-validates expired intelligence. An Expired Intel token is submitted in the dispatch case with no instructions — the question posed to ARBITER is simply: is this still current? On success, the token's quarter is updated to the present Quarter and its classification becomes Fresh. On fail, the token is returned Expired and Ghost has lost only the dispatch slot. No Findings cost — the slot IS the investment. Threshold 35 reflects genuine uncertainty: intelligence gathered 4+ quarters ago may or may not still describe reality; there is no guarantee the world has not changed. This is not falsification — Ghost is genuinely re-checking a cold lead. Self-operation only; no adjacency required. Distinct from Source Substitution and Backdate (which falsify; this verifies).
+
+Standard equivalent: PM05 04-n15 (hired investigator reopening cold case — same mechanic, costs Findings, lower threshold).
+
+#### Card Story
+⚠ Story pending 04-n79.
+
+**Design checklist:**
+
+| Category | Pass | Note | Artifact ref |
+|----------|------|------|--------------|
+| Action fit | ✓ | Ghost re-validating aged intelligence — "understanding must precede action" includes verifying that old understanding is still current; Expired → Fresh recovery | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — verification as discipline, not just collection | Art 00 §7 |
+| Doctrine alignment | ✓ | Ghost only; no Findings cost — slot IS the investment; self-operation only; distinct from Source Substitution/Backdate (falsification vs. verification) | Art 00 §7; Art 04 §6.5 |
+| Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — intelligence pipeline methodology; standard equivalent flagged PM05 04-n15 | Art 04 §6.2; Art 04b §5 |
+| Taxonomy fit | ✓ | Information/Recover/IntelToken — Recover returns a degraded element to active play; Expired → Fresh is a recovery | Art 04b §4 |
+| Balance | ✓ | No Findings cost; dispatch slot only; fail = slot wasted, token returned (no token loss); threshold 35 creates meaningful failure rate | Art 02 §6–§7 |
+| Effect duration | ✓ | Immediate: token updated or returned at Beat 3; no persistent state | — |
+| Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
+| Trigger validity | ✓ | N/A — trigger = None; restriction enforces Expired token in case | — |
+| Portrait validity | ✓ | Ghost +1: submitter-bounded; re-validation before acting is Ghost's core doctrine | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = None — self-operation on held token; no district context | Art 01 §6–§7 |
+| Supported by components | ✓ | IntelToken (Expired) as cost and target; requires writable quarter field (same as Backdate — see Backdate Outstanding Issue) | Art 02 §6–§8 |
+| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Self-operation; no adjacency required; ARBITER updates quarter field on success, returns token on fail | Art 03 §9.4 |
+| Data schema validation | ⚠ | Pending 04-n70 | Art 04 §6.1–§6.3 |
+| Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
+
+#### Outstanding Issues
+
+- **🚫 BLOCKED:** GR 7.2b — the quarter field records when the token was committed; updating it to the current Quarter alters a committed provenance field. The field-update approach is permanently closed. Fundamental redesign required. Cross-ref: Art 04b §8.1 item 3, PM05 04-n103.
+
+#### Status
+
+| | Design Pass | Issues Resolved | Signed off |
+|--|-------------|-----------------|------------|
+| Status | ✓ S154 | | |
+
+```python
+FieldVerification = Card(
+    id      = "Ghost-ext-TBD",  version = "v1.0",
+    name    = "Field Verification",
+    tagline = "Re-validate an Expired Intel token — confirm the intelligence is still current.",
+    type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
+
+    layer    = Information,  function = Recover,  subject = IntelToken,
+
+    beat            = 3,
+    resolution      = d100,
+    threshold       = 35,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating = None,
+    trigger         = None,
+    resolution_type = "Verification",
+    outcome_type    = None,
+    persistence     = Immediate,
+    persistence_condition = None,
+    persistence_effect    = None,
+
+    target_district = None,  # self-operation; no adjacency required
+    target_faction  = None,
+    target_object   = intel_token.held,  # must be Expired; submitted in case
+
+    target_freeform=None,
+    affinity    = None,
+    restriction = intel_token.held.age == Expired,
+    cost        = None,  # no resource cost; dispatch slot is the investment (Governing Rule 7.3c)
+
+    success = (
+        arbiter.update(intel_token.held, field=quarter, value=game.current_quarter),
+        arbiter.return_to_case(intel_token),
+    ),
+    successcrit = None,
+    fail        = arbiter.return_to_case(intel_token),  # token returned Expired; no loss
+    failcrit    = None,
+
+    portrait = {Ghost: PortraitEntry(submitter=+1)},
+
+    narrative    = "The intelligence is old. The question is whether it is still true.",
+    perspectives = {
+        Ghost: "We go back to check. The answer determines whether we can use this at all.",
+    },
+    design_note  = "Self-operation to re-validate cold intelligence. No Findings cost — dispatch slot only. Fail returns the token Expired (no loss beyond the slot). Success advances token to Fresh (current Quarter). d100 threshold 35 reflects genuine uncertainty about whether aged intelligence still describes reality. Not falsification — Ghost is actually checking. Distinct from Source Substitution and Backdate. A Standard-deck equivalent exists (hired PI, higher cost).",
+    arbiter_note = "Token submitted in case. Restriction: token must be Expired. No instructions slip needed. Beat 3: d100 vs 35. On success: update token's quarter field to current Quarter; token is now Fresh; return in case. On fail: return token in case unchanged (still Expired). No resource consumed either outcome.",
+)
+```
 
 ---
 

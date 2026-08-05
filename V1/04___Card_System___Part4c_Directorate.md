@@ -15,7 +15,7 @@
 | [STD.CA.11](#c23-tort-interference) | Tort Interference |
 | [DIR.CA.3](#c24-surveillance-placement) | Surveillance Placement |
 | [DIR.CA.4](#c25-tactical-redirection) | Tactical Redirection |
-| [DIR.CA.5](#directorate-sanctioned-raid) | Sanctioned Raid |
+| [DIR.CA.5](#dirca5--sanctioned-raid) | Sanctioned Raid |
 | [DIR.CA.6](#dirca6--institutional-audit) | Institutional Audit |
 | [DIR.CA.7](#dirca7--institutional-brief) | Institutional Brief |
 | [DIR.CA.8](#dirca8--enhanced-scrutiny) | Enhanced Scrutiny |
@@ -527,7 +527,7 @@ DIR.PA.5 = Card(
 
 ---
 
-### Directorate — SANCTIONED RAID
+### DIR.CA.5 — SANCTIONED RAID
 [↑ Covert Operations](#directorate-covert-operations)
 
 #### Design Rationale
@@ -854,8 +854,8 @@ DIR.CA.8 = Card(
 |------|------|
 | [DIR.PA.1](#p11-regulatory-override) | Regulatory Override |
 | [DIR.PA.2](#p12-convene-an-inquiry) | Convene an Inquiry |
-| [—](#directorate-entryexit-controls) | Entry/Exit Controls |
-| [—](#directorate-standing-injunction) | Standing Injunction |
+| [DIR.PA.3](#dirpa3--entryexit-controls) | Entry/Exit Controls |
+| [DIR.PA.6](#dirpa6--standing-injunction) | Standing Injunction |
 | [DIR.PA.4](#dirpa4--regulatory-downgrade-stub) | Regulatory Downgrade |
 | [DIR.PA.5](#dirpa5--zoning-freeze-stub) | Zoning Freeze |
 | [DIR.PA.7](#dirpa7--curfew-stub) | Curfew |
@@ -1076,7 +1076,7 @@ DIR.PA.2 = Card(
 
 ---
 
-### Directorate — ENTRY/EXIT CONTROLS
+### DIR.PA.3 — ENTRY/EXIT CONTROLS
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale
@@ -1164,7 +1164,7 @@ EntryExitControls = Card(
 
 ---
 
-### DIRECTORATE — STANDING INJUNCTION
+### DIR.PA.6 — STANDING INJUNCTION
 [↑ Public Acts](#directorate-public-acts)
 
 #### Design Rationale

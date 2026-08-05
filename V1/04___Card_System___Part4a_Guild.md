@@ -15,7 +15,7 @@
 | [GUI.CA.3](#c13-foundation-rights) | Foundation Rights |
 | [GUI.CA.4](#c14-construction-crew) | Construction Crew |
 | [GUI.CA.5](#c15-infrastructure-yield) | Infrastructure Yield |
-| [—](#guild-labor-contract) | Labor Contract |
+| [GUI.CA.6](#guica6--labor-contract) | Labor Contract |
 | [GUI.CA.10](#guica10--development-order) | Development Order |
 
 ### GUI.CA.1 — FORTIFY STRUCTURE
@@ -492,7 +492,7 @@ GUI.CA.5 = Card(
 
 ---
 
-### Guild — LABOR CONTRACT
+### GUI.CA.6 — LABOR CONTRACT
 [↑ Covert Operations](#guild-covert-operations)
 
 #### Design Rationale

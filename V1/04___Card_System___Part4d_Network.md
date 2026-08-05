@@ -15,7 +15,7 @@
 | [NET.CA.3](#c28-breaking-news) | Breaking News |
 | [NET.CA.4](#c29-network-cascade) | Network Cascade |
 | [NET.CA.5](#c30-community-anchor) | Community Anchor |
-| [NET.CA.6](#network-sacrifice) | Sacrifice |
+| [NET.CA.6](#netca6--sacrifice) | Sacrifice |
 | [—](#network-weaponized-transparency) | Weaponized Transparency (Retired S70) |
 | [NET.CA.7](#netca7--ground-signal) | Ground Signal |
 | [NET.CA.8](#netca8--fake-news) | Fake News |
@@ -402,7 +402,7 @@ NET.CA.5 = Card(
 
 ---
 
-### Network — SACRIFICE
+### NET.CA.6 — SACRIFICE
 [↑ Covert Operations](#network-covert-operations)
 
 #### Design Rationale
@@ -493,7 +493,7 @@ The message doesn't travel because Network announced it. It travels because Netw
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | PS generation when not Dominant — fills Standing|Shift gap in Network set; successcrit converts signal to physical presence | Art 00 §7 |
+| Action fit | ✓ | PS generation when not Dominant — fills Standing\|Shift gap in Network set; successcrit converts signal to physical presence | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Network perspective — presence made legible, not announced | Art 00 §7 |
 | Doctrine alignment | ✓ | Network only; IL ≤ Established restriction is doctrinal (no outreach needed at Dominant); Exposure×1 cost calibrated to PS yield | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Network) — street-level signal is unannounced, deniable | Art 04 §6.2; Art 04b §5 |
@@ -643,7 +643,7 @@ NET.CA.8 = Card(
 |------|------|
 | [NET.PA.1](#p13-public-disclosure) | Public Disclosure |
 | [NET.PA.2](#p14-community-rally) | Community Rally |
-| [—](#network-live-coverage) | Live Coverage |
+| [NET.PA.3](#netpa3--live-coverage) | Live Coverage |
 
 ### NET.PA.1 — PUBLIC DISCLOSURE
 [↑ Public Acts](#network-public-acts)
@@ -843,7 +843,7 @@ NET.PA.2 = Card(
 
 ---
 
-### Network — LIVE COVERAGE
+### NET.PA.3 — LIVE COVERAGE
 [↑ Public Acts](#network-public-acts)
 
 #### Design Rationale
