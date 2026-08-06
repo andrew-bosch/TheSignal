@@ -570,10 +570,35 @@ def build_wiki():
     
     config['nav'].append({'Overview': 'index.md'})
     
+    # Parent tabs that fold several categories into one top-nav tab (each folded
+    # category becomes a sidebar sub-section via navigation.sections). S156: keeps
+    # the top nav compact so it doesn't render off-page.
+    MERGE_GROUPS = [
+        {'title': 'Game System',       'members': ['components_mechanics', 'toolkits_engine']},
+        {'title': 'Reference & Notes', 'members': ['creative_vignettes', 'reference', 'whiteboard']},
+    ]
+    _merge_of = {m: g['title'] for g in MERGE_GROUPS for m in g['members']}
+    _cats_by_id = {c['id']: c for c in CATEGORIES}
+    _emitted_groups = set()
+
     for cat in CATEGORIES:
         if cat['id'] == 'home':
             continue
-        if cat['files']:
+        parent = _merge_of.get(cat['id'])
+        if parent:
+            # emit the parent tab once, at the position of its first member
+            if parent in _emitted_groups:
+                continue
+            _emitted_groups.add(parent)
+            group = next(g for g in MERGE_GROUPS if g['title'] == parent)
+            subsections = [
+                {_cats_by_id[mid]['title']: _cats_by_id[mid]['files']}
+                for mid in group['members']
+                if _cats_by_id.get(mid) and _cats_by_id[mid]['files']
+            ]
+            if subsections:
+                config['nav'].append({parent: subsections})
+        elif cat['files']:
             config['nav'].append({cat['title']: cat['files']})
 
     homelab_files = copy_homelab_docs()

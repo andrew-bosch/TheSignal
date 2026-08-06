@@ -384,13 +384,12 @@ Guild believes the Chorus is an evaluation: humanity's response will be judged n
 
 Network believes no one gets to decide this in the dark. They arrived after The Chorus Papers, and loudly. Their presence in New Meridian is not territorial occupation — it is broadcast reach, community relationships, and the infrastructure of public knowledge. A district with Network presence is a district that knows what is happening there. Presence tokens represent how far the Network's voice carries; the win condition is not about holding ground — it is about ensuring that when the answer to the Chorus is spoken, the public of New Meridian has already heard everything The Table tried to keep quiet. Network and Syndicate share a structural relationship neither faction announces publicly: proxy funding flows through channels that route around Directorate visibility, a lateral bypass that both factions find useful for different reasons.
 
-- **Economy:** Exposure via Public Acts and tripwire fires
-- **True engine:** modifier deck — React and instant modifier cards pulled from action deck into modifier deck on discard; deck grows each Quarter through play, making Network louder without individual cards becoming stronger
-- **Tripwire:** public global condition on the Overview; declares Network is monitoring a named operation type from a named faction; fires when condition met → Exposure income + Standing damage to target + presence token gains; paranoia effect of a pending broadcast is free
-- **Structures:** accelerate modifier deck growth; not the win condition
-- **Win path:** wide Presence coverage, Baryo outward, broadcast-derived; Q6–8 modifier deck self-sustaining with multiple React options per Upkeep
-- **Attack vectors:** vs. Directorate = territorial; vs. Ghost = informational (exposing covert operations and SCIF pipelines)
-- **Deck feel:** distributed, reactive, increasingly loud as the game progresses
+- **Economy:** Exposure, generated through Public Acts and the React modifier engine firing on public events.
+- **True engine — the React modifier deck:** Network's defining system. React and instant modifier cards move from the action deck into the modifier deck as they are played and discarded, so the deck *grows* each Quarter — Network gets louder through play without any single card becoming stronger. Its React cards fire on public and board events (a Public Act resolving, a district tipping into open contest, rival expansion near Network presence) to yield presence, Standing shifts, Exposure, and intelligence — and a subset feed the deck itself (drawing further modifier cards), so by Q6–8 Network holds multiple React options each Upkeep and the engine is self-sustaining. Reactive reach, not deliberate placement, is how the Network's voice carries.
+- **Structures:** accelerate modifier-deck growth; not the win condition.
+- **Win path:** wide Presence coverage, Baryo outward, broadcast-derived — presence accrues reactively as the city gets loud; Q6–8 self-sustaining React engine.
+- **Attack vectors:** vs. Directorate = territorial; vs. Ghost = informational (exposing covert operations and SCIF pipelines).
+- **Deck feel:** distributed, reactive, increasingly loud as the game progresses.
 
 **Directorate**
 

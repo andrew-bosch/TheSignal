@@ -1,7 +1,19 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-08-04 — Session 154 Close
+**Last Updated:** 2026-08-05 — Session 156 Close
+
+### Session 156 Summary (2026-08-05)
+
+**DB-queryable Art 04 bodies — second step of Andy's DB-queryable-Art-04 goal (PM02 L356).** New `card_body` (EAV mirror of every `Card()` field, ~16k rows / 384 cards incl. GD-01), `card_restriction_clause` (restriction decomposed to subject/op/value), and `v_card_body` pivot view in `the_signal_db`. `.md` stays SOT; re-syncable via `tools/extract_card_body.py` + `Database/card_body_schema.sql`. EAV chosen over a wide table (heterogeneous CA/PA/MOD field sets). DA-01/DA-02 excluded (not `Card()` instances). Collation gotcha fixed: MariaDB 11.8 defaults new tables to `uca1400_ai_ci`; pin `general_ci` to join `card_status`. Turned the full faction audit from ~6 sessions of `.md`-reading into 1 SQL-driven session.
+
+**PM05 09-16 steps 4–5 COMPLETE — the primary Art 04 sign-off gate (PM02 L357).** All five faction set re-audits (STD+faction denominator) + cross-faction synthesis, one session, main loop at Opus strength. Docs: `Whiteboard/{directorate,ghost,guild,network,syndicate}_reaudit_S156.md`, `cross_faction_synthesis_S156.md`, `audit_findings_log_S156.md` (22 open findings + ground rules + triage routing). PM05 **09-17** created as the single consolidated-triage item (spins off reactive actions; supersedes S155's merge-into-04-n221 routing — 04-n221 now takes only the procedure subset). Headline: the S154 modifier corpus closed nearly every faction's largest S119–128 baseline gap. **§9.2 re-sorts into three buckets — mono {DIR,SYN} / native-cross {GUI} / foreign-gated cross {GHO flip, NET Findings}** — correcting the baseline's mono grouping (Guild's "zero-cross" claim was stale). **Ghost is the intel-hub:** 19 non-Ghost cards (NET 7, SYN 7, DIR 5) gated on Findings/Intel, supplied via free trade → the intel economy assumes Ghost at the table (Ghost-absent games degrade, SYS-1). Five distinct control poles, no differentiation failure.
+
+**Three scope corrections (Andy), locked as audit ground rules** (memory `feedback_card_audit_ground_rules.md`): (1) STD+faction denominator, not faction-only; (2) resource trade incl. Intel is a verbal procedure (Art 03 §11.0), never a card gap; (3) treat the S119–128 baseline as a dated snapshot — re-validate every claim (proven: Guild's §9.2 claim was stale).
+
+**Two genuine open items:** Network "Tripwire" = stale pre-ModReact terminology → §5a Network rewritten to center the React modifier engine (PM02 L355, monolith regenerated). Ghost CA.11 Signals Analysis flagged for **full reimagining** (mechanism undefined, depends on the undesigned Classified Directive subsystem; does NOT gate Art 04).
+
+**Wiki:** top nav consolidated 11→8 tabs (Game System + Reference & Notes merges) in `tools/build_wiki.py`; deployed. New memories: `project_card_body_db.md`, `feedback_card_audit_ground_rules.md`, `project_art04_audit_steps45.md`.
 
 ### Session 155 Summary (2026-08-05)
 

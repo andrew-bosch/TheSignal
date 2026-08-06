@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 156 next | Updated: 2026-08-05**
+**Session 157 next | Updated: 2026-08-05**
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
 
@@ -33,41 +33,41 @@ Then prompt: *"What's our focus today?"*
 
 ---
 
-## S155 Accomplishments (closed)
+## S156 Accomplishments (closed)
 
-**Sequencing decision (PM02 L352):** PM05 09-16 steps 4–5 (faction-level + cross-faction re-audit) confirmed as primary, ahead of the 95-card Art 03 procedure-gap list (04-n221) — closes the open question from S154 close. New procedural/redesign items steps 4–5 surface merge into 04-n221 as found rather than becoming separate items.
+**DB-queryable Art 04 bodies — the goal's second step delivered (PM02 L356):** new `card_body` (EAV mirror of every `Card()` field, ~16k rows / 384 cards incl. GD-01), `card_restriction_clause` (restriction decomposed to subject/op/value), and `v_card_body` pivot view in `the_signal_db`. `.md` stays SOT; re-syncable via `tools/extract_card_body.py` + `Database/card_body_schema.sql`. This turned the full faction audit from the ~6-session .md-read slog it was into a 1-session SQL-driven pass. Collation gotcha caught & fixed: MariaDB 11.8 defaults new tables to `uca1400_ai_ci` — must pin `utf8mb4_general_ci` to join `card_status`.
 
-**First step on Andy's "DB-queryable Art 04" goal (PM02 L353):** new `card_checklist` table in `the_signal_db` — every card's Design Checklist rows (category/verdict/note), 6,970 rows, 383 cards, joins to `card_status`. Built via agy delegation, then hardened directly after catching a real bug: ~20 cards' markdown headings omit the real card_id (bare faction-name headings), and trusting heading text for card_id silently collided distinct cards onto one fake ID — fixed by resolving from each card's own `Card()` block instead. `.md` stays source of truth; DB is a re-syncable projection via `tools/extract_card_checklist.py`.
+**PM05 09-16 steps 4–5 COMPLETE — the primary Art 04 sign-off gate (PM02 L357):** all five faction set re-audits (**STD+faction** denominator) + the cross-faction synthesis, in one session. Docs: `Whiteboard/{directorate,ghost,guild,network,syndicate}_reaudit_S156.md` + `cross_faction_synthesis_S156.md`. Headline: the S154 modifier corpus closed nearly every faction's largest S119–128 baseline gap. Key findings: §9.2 re-sorts into three buckets (**mono {DIR,SYN} / native-cross {GUI} / foreign-gated cross {GHO,NET}** — baseline's mono grouping corrected); **Ghost is the intel-hub** for NET+SYN+DIR (19 gated cards, transacted via free trade → Ghost-absent games degrade); five distinct control poles, no differentiation failure.
 
-**Heading/SOT cleanup + Backdate/Field Verification relocated (PM02 L354):** fixed all 18 cards whose headings were missing their real ID (across Standard/Guild/Ghost/Directorate/Network/Syndicate), plus their TOC anchors. Separately, per Andy's direction, moved Backdate and Field Verification (the two permanently-blocked Ghost fossil cards, GR 7.2b, no real card_id) out of the live §7 corpus into a new **Art 04 Part1_Core.md §15 "Deferred Design — Blocked Cards"** appendix — content unchanged, PM05 04-n205 repointed. Monolith regenerated; checklist re-extracted to confirm zero data drift.
+**Three scope corrections mid-audit (Andy):** (1) denominator is STD+faction (universal STD CA/PA pool + faction set), matching the 09-16 step-4 "(STD+faction)" definition; (2) resource trade incl. Intel is a verbal procedure (Art 03 §11.0, `ref_procedures.md:191–192`), never a card gap; (3) treat the S119–128 baseline as a dated snapshot — re-validate every claim (proven: Guild's "zero-cross" §9.2 claim was stale).
 
-**Steps 4–5 scope refined with Andy, execution approach settled:** see Current Focus below for the full plan — audit format, the new implied-vs-leverageable-strategy dimension, step 4 ordering, and the decision to run the audit as the main loop at Opus/Fable strength (not subagents), sequential with a checkpoint after Directorate.
+**Two genuine open items resolved/scoped:** Network "Tripwire" = stale pre-ModReact terminology → **§5a Network rewritten** to center the React modifier engine (PM02 L355, monolith regenerated). Ghost **CA.11 Signals Analysis → flagged for full reimagining** (mechanism undefined, depends on undesigned Classified Directive subsystem); does NOT gate Art 04.
 
-Full detail: PM02 L352–L354.
+**Findings tracking:** `Whiteboard/audit_findings_log_S156.md` — 22 open findings + audit ground rules + triage routing. PM05 **09-17** created as the single consolidated-review item (spins off reactive actions after triage).
+
+**Wiki:** top nav consolidated 11→8 tabs (Game System + Reference & Notes merges) in `tools/build_wiki.py` (survives rebuilds); deployed to pinky.
+
+Full detail: PM02 L355–L357.
 
 ---
 
-## Current Focus (S156)
+## Current Focus (S157)
 
-**PRIMARY — start PM05 09-16 steps 4–5: faction-level + cross-faction card set re-audit.** Genuinely unblocked (full corpus Design Pass complete, S154) and fully scoped (S155). Start with **step 4, Directorate** (paired with Standard, matching the old S119–128 grouping), then checkpoint with Andy before replicating across Ghost → Guild → Network → Syndicate, then step 5 (cross-faction synthesis).
+**PRIMARY — PM05 09-17: consolidated triage of the steps 4–5 audit findings.** The full audit is done (S156). 22 findings sit in `Whiteboard/audit_findings_log_S156.md` with a routing summary + audit ground rules. Triage in one pass and spin off reactive actions: schema items → `schema_cleanup_log.md`; Art 03 procedure gaps → 04-n221; design/§9.2/balance questions → Andy + PM02; verify items → confirm against source. This is the gate between the completed audit and Art 04 sign-off. Read the per-faction docs + `cross_faction_synthesis_S156.md` for context; the `card_body`/`v_card_body`/`card_restriction_clause`/`card_checklist` tables in `the_signal_db` are the query substrate.
 
-**Execution approach, locked S155:** run this as the main loop directly, at Opus or Fable strength (Andy: `/fast` or equivalent model swap before starting) — not subagents. This is collaborative design work done in-conversation, not a report to generate and hand back; the checkpoint-after-Directorate pattern requires the main loop to be the one doing the analysis. Sequential, one faction at a time — S141 already found that batching loses real findings full reference-context review catches.
+**Highest-signal items to land first (from the synthesis):** (a) SYS-1 — the Ghost-centered intel economy + Ghost-absent-game degradation (design decision, generalizes 04-n126); (b) the §9.2 pass re-run **by the three buckets**, not the old mono grouping; (c) Guild GUI-1 (baseline §9.2 claim stale → revisit 04-n119) and GUI-2 (defense scaling).
 
-**Format:** same as the old S119–128 passes — deck feel, doctrine coherence, layer coverage, win-path support, §9.2 floor/ceiling economics, all vs Art 04 §5a — now covering each faction's full CA+PA+MOD set for the first time (old pass only ever saw CA/PA, predates the 232-card modifier corpus). Baseline for comparison only, not ground truth: `Whiteboard/card_analysis_summary_S119-128.md` — re-derive fresh, then check against it.
+**Then — the other Art 04 sign-off gate:** the pre-existing card-audit backlog (Add-vs-Redirect mis-tag sweep; `target`-field audit SYN.PA.1; 04-n177; `ref_board_narrative.md` sync; 04-n221's 95-card procedure list). Card-level sign-offs stay gated behind both this and 09-17.
 
-**New dimension, Andy S155:** explicitly identify (a) *implied* strategies — what §5a/doctrine claims a faction should do, rated thin/thick against actual card support; (b) *leverageable* strategies — plays the card set enables whether or not §5a ever named them. Step 4 = both within one faction's own toolkit; step 5 = cross-faction synergies/counters that only show up in comparison (e.g. the old Network-disable-vs-Guild-no-covert-ops interaction). Folds in what the old cross-faction pass handled ad hoc via a side doc (4 emergent patterns, closed no-op S128).
+**Design item (its own session — do not start cold):** Ghost **CA.11 full reimagining** — tied to what Ghost's "act on hidden objectives / suppress premature consensus" endpoint should mechanically be, plus the undesigned Classified Directive subsystem (content home Art 05-vs-08; deduction/partial-reveal procedure). Explicitly not gating Art 04.
 
-**Before starting:** load full reference context, not just Art 04 (`ref_components.md`/`ref_procedures.md`/`ref_card_types.md`/`ref_resources.md`/`ref_world_narrative.md`/`ref_board_narrative.md`/`design_reference_card_system.md`) — S141 discipline. `card_checklist` (`the_signal_db`, S155) is the query substrate for the structured/mechanical side (taxonomy, checklist flags, cost axes) — query it instead of re-deriving by hand.
-
-**Secondary — 95-card Art 03 procedure/redesign list, PM05 04-n221.** Not started. Real ARBITER procedure content currently living only in `arbiter_note`/comments, not in Art 03 — now the standing collection point for any new procedure-gap findings steps 4–5 turn up.
-
-**Opportunistic backlog (full detail in PM05):** ten non-gating schema stragglers (04-n203–04-n212); seven content/voice gaps needing Andy's input (04-n213/214/216/217/218/219/220); Add-vs-Redirect mis-tag sweep; `target`-field semantics audit (SYN.PA.1); 04-n180 (session-commentary sweep); MariaDB HNSW RAG ingestion + cron agent-memory sync; 04-n177 expanded scope; `ref_board_narrative.md` sync; smaller carried items (04-n163/164/166/167/168/148/150/26/27/126/123, XA-54, 06-n01).
+**Opportunistic backlog (full detail in PM05):** schema stragglers 04-n203–04-n212; content/voice gaps 04-n213/214/216–220; 04-n180 (session-commentary sweep); MariaDB HNSW RAG ingestion + cron agent-memory sync; smaller carried items (04-n163/164/166/167/168/148/150/26/27/126/123, XA-54, 06-n01).
 
 ---
 
 ## Pending Sign-offs
 
-- **Art 04** — Draft. Full corpus now has a genuine Design Pass (S154 milestone). Two gates remain before any set-level sign-off: (1) **09-16 steps 4–5** — faction-level + cross-faction card set analysis against the now fully-reviewed corpus (primary focus above); (2) the pre-existing card-audit-issue backlog (mis-tag sweep, target-field audit, 04-n177, board narrative sync, the new 95-card 04-n221 list). Card-level sign-offs stay gated behind both.
+- **Art 04** — Draft. **Gate (1) 09-16 steps 4–5 CLEARED S156** (faction + cross-faction re-audit complete — the milestone that had been the primary sign-off gate). Two gates remain before any set-level sign-off: (a) PM05 **09-17** — consolidated triage of the 22 audit findings + resolution of anything material it surfaces (primary focus above); (b) the pre-existing card-audit-issue backlog (mis-tag sweep, target-field audit, 04-n177, board narrative sync, the 95-card 04-n221 list). Card-level sign-offs stay gated behind both. **CA.11 explicitly does NOT gate** (flagged for reimagining). §5a Network text updated S156 (L355).
 - **Art 00a** — v0.13, Signed Off.
 - **Art 02** — v2.5, Signed Off.
 - **Art 03** — v4.15, Signed Off. (Will need re-opening once 04-n221's procedure-writing starts.)

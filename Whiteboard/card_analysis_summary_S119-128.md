@@ -1,5 +1,7 @@
 # Card Set Audit Program — Consolidated Summary (S119–S128)
 
+> ⚠ **SUPERSEDED by the S156 re-audit (PM05 09-16 steps 4–5).** This is a **dated S119 snapshot**, kept only as the comparison baseline — do **not** treat its claims as current. The S156 pass (docs: `Whiteboard/{directorate,ghost,guild,network,syndicate}_reaudit_S156.md` + `cross_faction_synthesis_S156.md`) re-derived everything against the current corpus and found several claims here **stale** — most notably Guild's "zero cross-resource cost / §9.2 inversion" (now cross-heavy) and "Ghost cannot trade Intel" (trade is a verbal procedure). The S154 modifier corpus also closed most of the gaps flagged below. Read S156 for current state; use this only to see what the *first* pass found.
+
 Between S119 and S128, each of the game's five factions had its full CA/PA card set audited against Art 04 §5a (Faction Playstyle Reference) — checking deck feel, doctrine coherence, layer coverage, win-path support, and economic (§9.2 floor/ceiling) compliance. The five per-faction audits (STD+DIR, STD+GHO, STD+GUI, STD+NET, STD+SYN) were followed by a cross-faction synthesis (04-n110, closed S128) comparing deck feel, win-path support, and sustained-pressure posture across all five. This program directly seeded steps 4 and 5 of the later 09-16 full-corpus card review roadmap. The six source files were retired to `Retired/Whiteboard_Archive/` S153; this summary is the readable digest that remains live.
 
 ---
