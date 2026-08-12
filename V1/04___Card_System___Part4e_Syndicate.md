@@ -308,7 +308,7 @@ Syndicate's bribe card — pays a named faction to nullify their Beat 3 operatio
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 SYN.CA.4 = Card(
@@ -318,7 +318,7 @@ SYN.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Economy,  function = Protect,  subject = NativeResource,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -344,7 +344,11 @@ SYN.CA.4 = Card(
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate's submission-layer blocking card — analogous to DIR.CA.1 Invoke Jurisdiction (Directorate) but broader in scope and more expensive. Where DIR.CA.1 is limited to STD.CA.1/STD.CA.3, Regulatory Capture blocks any named action type in a district for one round. This flexibility reflects Syndicate's financial reach into regulatory structures. The cross-resource cost (Capital×2 + Exposure×1) at Beat 2 Automatic with public announcement makes it a visible table signal — everyone knows Syndicate has blocked this action type; the Exposure component reflects the public visibility of the announcement itself. The portrait entry with modifier=-2 when targeting a Guild-primary action type captures the doctrinal tension: buying regulatory outcomes is precisely what Guild's permanence doctrine opposes.
+Syndicate's submission-layer block. Capital buys regulatory *outcomes*, not regulatory *authority* — and that distinction is the whole card. An institution that writes a rule is bound by the rule it wrote. Syndicate does not write rules; it purchases exemptions from them, so the block falls on every faction at the table except the one that paid for it. The asymmetry is the mechanism and the doctrine at once: "control comes from positioning early" means owning the process before anyone else thinks to ask who administers it.
+
+The block is public and announced at Beat 2 — regulatory capture is not covert in its effects, only in its arrangement. The Exposure component prices that visibility: the table learns a district has gone quiet and can infer who benefits. The Portrait modifier fires when the captured district is one Guild has built up, where the doctrinal cost runs highest — Syndicate claims to enable humanity's response, and here it is charging rent on the ability to mount one.
+
+Committing Capital at Beat 2 against a Beat 3 slate nobody has revealed is a positional bet: if no rival routes an operation through the district this round, the purchase buys silence in an empty room.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -353,58 +357,60 @@ Syndicate's submission-layer blocking card — analogous to DIR.CA.1 Invoke Juri
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Broad submission-layer block — Capital buys regulatory control over any named action type; broader than DIR.CA.1 (Directorate, STD.CA.1/STD.CA.3 only); public announcement makes it a visible table signal | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Syndicate perspective by design — regulatory capture as market governance | Art 00 §7 |
-| Doctrine alignment | ✓ | Syndicate only; Capital×3; public announcement; Guild-primary portrait modifier outstanding (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
+| Action fit | ✓ | Submission-layer block scoped to a component the rules already identify — every rival Covert Operation routed at the named district, for one round. Capital converts to procedural control; the public announcement makes it a table-visible act. | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific, three voices — Syndicate frames purchased enforcement as market governance; Ghost records the change without naming it; Guild speaks from the site that went idle. | Art 00 §7 |
+| Doctrine alignment | ✓ | Syndicate only. The self-exemption is the doctrinal core — a purchased favour rather than an authored rule, so the acting faction is not bound by what it bought. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — regulatory purchase is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ⚠ | Submission/Block/NamedActionType — NamedActionType definition outstanding (Outstanding Issue). `v_card_mechanical_alignment` (DB) also shows `Non-component Subject` for "NamedActionType" — extends the unregistered-Subject gap with a fourth distinct subject string. | Art 04b §4, §5 |
-| Balance | ✓ | Cross-resource cost (Capital×2 + Exposure×1). Breadth calibration and NamedActionType scope outstanding (Outstanding Issues). | Art 02 §6–§7 |
+| Taxonomy fit | ✓ | Submission/Block/CovertOperation — all three registered vocabulary; the Subject is a real component the block can be resolved against. | Art 04b §4, §5 |
+| Balance | ✓ | Cross-resource cost (Capital×2 + Exposure×1) against a whole-district block. Breadth is bounded by lasting one round, by the ChorusNode exclusion, and by the wager: an unused district returns nothing. | Art 02 §6–§7 |
 | Effect duration | ✓ | One round: block applies for round=game.round only | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None; Beat 2 positional wager fires on submission | — |
-| Portrait validity | ✓ | Syndicate +1 submitter with modifier=−2 for Guild-primary action type; firing conditions outstanding (Outstanding Issue) | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.any; ChorusNode excluded | Art 01 §6–§7 |
-| Supported by components | ✓ | NamedActionType definition outstanding (Outstanding Issue); no new physical components | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; named action type blocked for round; public announcement by ARBITER | Art 03 §9, §11 |
+| Trigger validity | ✓ | N/A — trigger = None; resolves at Beat 2 on submission. | — |
+| Portrait validity | ✓ | Syndicate +1 submitter, modifier −2 where the captured district holds Guild at Established or above — a board state ARBITER can read directly at resolution. | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named; ChorusNode excluded by restriction. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new physical components; the block resolves against Covert Operation submissions already present in the resolution grid. | Art 02 §6–§8 |
+| Supported by game procedure | ✓ | Beat 2 Automatic; rival Covert Operations at the named district blocked for the round; public announcement by ARBITER. | Art 03 §9, §11 |
 | Data schema validation | ⚠ | `card_id` present and correctly typed (verified against `--dump-d`). Missing `doctrine_mod`/`boost`/`ps_framing` (plus boilerplate `persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard`). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). `PositionalWager` records that the commitment is made before the Beat 3 slate is revealed — the resolution itself is not uncertain. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capital + Exposure, both typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-- **`NamedActionType` definition:** What constitutes a "named action type" — is this a card name (e.g., "STD.CA.1"), a taxonomy function (e.g., "Add — StructureBlock"), or a broader category (e.g., "Build")? The breadth of the block changes significantly based on this definition.
-- **portrait modifier=-2 for Guild-primary action:** `mod_where=action_type(named).primary_faction == Guild` — confirm "primary_faction" is a defined property of action types, or if this needs to be a player declaration at submission.
-- **Comparison to DIR.CA.1:** SYN.CA.5 is explicitly broader than DIR.CA.1 at a 1-Mandate premium. Ensure the gap is documented in design notes for balance review.
+- *(none)*
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | ✓ S157 | ✓ S157 | |
 
 ```python
 SYN.CA.5 = Card(
-    id      = "SYN.CA.5",  card_id="SYN.CA.5",  version="v1.0",
+    id      = "SYN.CA.5",  card_id="SYN.CA.5",  version="v2.0",
     name    = "Regulatory Capture",
-    tagline = "Block a specific action type in a named district for one round.",
+    tagline = "Block every rival covert operation in a named district for one round. Yours proceed.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = Submission,  function = Block,  subject = NamedActionType,
+    layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
-    target_district=district.any, target_faction=None, target_object=NamedActionType,
+    target_district=district.named, target_faction=None, target_object=CovertOperation,
     target_freeform=None,
     affinity=None,
     restriction = district(target) != ChorusNode,
     cost        = Capital * 2 + Exposure * 1,
-    success     = game.block(district(target), action_type=named, round=game.round, public=True),
+    success     = game.block(district(target), type=CovertOperation, faction != acting, round=game.round, public=True),
     successcrit=None, fail=None, failcrit=None,
-    portrait    = {Syndicate: PortraitEntry(submitter=+1, modifier=-2, mod_where=action_type(named).primary_faction == Guild)},
+    portrait    = {Syndicate: PortraitEntry(submitter=+1, modifier=-2, mod_where=district(target).faction(Guild).influence_tier >= Established)},
     narrative   = "If you own enough of the regulatory structure, you define what is permitted. The Syndicate does not see this as corruption. They see it as governance.",
-    perspectives = {Syndicate: "The regulatory framework exists. We simply ensure it reflects current market conditions."},
+    perspectives = {
+        Syndicate: "The regulatory framework exists. We simply ensure it reflects current market conditions.",
+        Ghost:     "The regulation did not change. The enforcement did. We logged which, and when, and who stopped filing.",
+        Guild:     "We had the permits. We had the crews. We had a district that needed the work. Someone made a call.",
+    },
     design_note  = None,
     arbiter_note = None,
     value_rating = 2,
@@ -635,6 +641,7 @@ SYN.CA.10 = Card(
 
     beat         = 3,
     resolution   = d100,
+    resolution_type = Probabilistic,
     threshold    = 50,
     ring_mod     = None,
     doctrine_mod = None,
@@ -948,6 +955,7 @@ SYN.CA.11 = Card(
 
     beat         = 3,
     resolution   = d100,
+    resolution_type = Probabilistic,
     threshold    = 50,
     ring_mod     = None,
     doctrine_mod = None,
@@ -1052,6 +1060,7 @@ SYN.CA.12 = Card(
 
     beat         = 3,
     resolution   = Automatic,
+    resolution_type = Transactional,
     threshold    = None,
     ring_mod     = None,
     doctrine_mod = None,
@@ -1371,6 +1380,7 @@ SYN.PA.3 = Card(
     ring_mod     = None,
     doctrine_mod = None,
     value_rating = 1,
+    resolution_type = Transactional,
     outcome_type = ElectPlayer,
 
     target_district = None,
@@ -1648,7 +1658,7 @@ SYN.MOD.1 = Card(
 
     trigger         = accord.activated,
     beat            = None,
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
 

@@ -8626,6 +8626,7 @@ STD.MOD.98 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -8709,6 +8710,7 @@ STD.MOD.99 = Card(
     value_rating    = 2,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -8792,6 +8794,7 @@ STD.MOD.100 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -8875,6 +8878,7 @@ STD.MOD.101 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -8958,6 +8962,7 @@ STD.MOD.102 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -9041,6 +9046,7 @@ STD.MOD.103 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9124,6 +9130,7 @@ STD.MOD.104 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9207,6 +9214,7 @@ STD.MOD.105 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9290,6 +9298,7 @@ STD.MOD.106 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9373,6 +9382,7 @@ STD.MOD.107 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9456,6 +9466,7 @@ STD.MOD.108 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9539,6 +9550,7 @@ STD.MOD.109 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9622,6 +9634,7 @@ STD.MOD.110 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9705,6 +9718,7 @@ STD.MOD.111 = Card(
     value_rating    = 2,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9788,6 +9802,7 @@ STD.MOD.112 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9871,6 +9886,7 @@ STD.MOD.113 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -9954,6 +9970,7 @@ STD.MOD.114 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -10037,6 +10054,7 @@ STD.MOD.115 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10120,6 +10138,7 @@ STD.MOD.116 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10203,6 +10222,7 @@ STD.MOD.117 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10286,6 +10306,7 @@ STD.MOD.118 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10369,6 +10390,7 @@ STD.MOD.119 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10452,6 +10474,7 @@ STD.MOD.120 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10535,6 +10558,7 @@ STD.MOD.121 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10618,6 +10642,7 @@ STD.MOD.122 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10701,6 +10726,7 @@ STD.MOD.123 = Card(
     value_rating    = 2,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10784,6 +10810,7 @@ STD.MOD.124 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10867,6 +10894,7 @@ STD.MOD.125 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -10950,6 +10978,7 @@ STD.MOD.126 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -11033,6 +11062,7 @@ STD.MOD.127 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -11116,6 +11146,7 @@ STD.MOD.128 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -11199,6 +11230,7 @@ STD.MOD.129 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -11282,6 +11314,7 @@ STD.MOD.130 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -11365,6 +11398,7 @@ STD.MOD.131 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -11448,6 +11482,7 @@ STD.MOD.132 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -11531,6 +11566,7 @@ STD.MOD.133 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,

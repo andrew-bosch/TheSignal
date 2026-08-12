@@ -15,6 +15,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'threshold', 'None', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'ring_mod', 'None', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'doctrine_mod', 'None', '04___Card_System___Part1_Core.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'value_rating', '3', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'trigger', 'structure_block.placed(district=deed.district)', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'resolution_type', 'Transactional', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'outcome_type', 'None', '04___Card_System___Part1_Core.md');
@@ -5399,6 +5400,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.98', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.98', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.98', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.98', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.98', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.98', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.98', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5436,6 +5438,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.99', 'value_rating', '2', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.99', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.99', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.99', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.99', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.99', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.99', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5473,6 +5476,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.100', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.100', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.100', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.100', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.100', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.100', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.100', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5510,6 +5514,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.101', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.101', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.101', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.101', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.101', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.101', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.101', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5547,6 +5552,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.102', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.102', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.102', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.102', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.102', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.102', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.102', 'target_district', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5584,6 +5590,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.103', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.103', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.103', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.103', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.103', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.103', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.103', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5621,6 +5628,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5658,6 +5666,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5695,6 +5704,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.106', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.106', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.106', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.106', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.106', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.106', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.106', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5732,6 +5742,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.107', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.107', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.107', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.107', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.107', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.107', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.107', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5769,6 +5780,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.108', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.108', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.108', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.108', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.108', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.108', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.108', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5806,6 +5818,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.109', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.109', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.109', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.109', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.109', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.109', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.109', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5843,6 +5856,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.110', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.110', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.110', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.110', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.110', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.110', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.110', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5880,6 +5894,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.111', 'value_rating', '2', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.111', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.111', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.111', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.111', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.111', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.111', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5917,6 +5932,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.112', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.112', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.112', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.112', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.112', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.112', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.112', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5954,6 +5970,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.113', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.113', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.113', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.113', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.113', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.113', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.113', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5991,6 +6008,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.114', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.114', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.114', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.114', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.114', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.114', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.114', 'target_district', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6028,6 +6046,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.115', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.115', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.115', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.115', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.115', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.115', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.115', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6065,6 +6084,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6102,6 +6122,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6139,6 +6160,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.118', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.118', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.118', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.118', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.118', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.118', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.118', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6176,6 +6198,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.119', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.119', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.119', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.119', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.119', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.119', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.119', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6213,6 +6236,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.120', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.120', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.120', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.120', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.120', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.120', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.120', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6250,6 +6274,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.121', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.121', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.121', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.121', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.121', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.121', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.121', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6287,6 +6312,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.122', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.122', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.122', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.122', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.122', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.122', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.122', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6324,6 +6350,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.123', 'value_rating', '2', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.123', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.123', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.123', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.123', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.123', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.123', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6361,6 +6388,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.124', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.124', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.124', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.124', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.124', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.124', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.124', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6398,6 +6426,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.125', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.125', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.125', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.125', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.125', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.125', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.125', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6435,6 +6464,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.126', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.126', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.126', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.126', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.126', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.126', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.126', 'target_district', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6472,6 +6502,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.127', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.127', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.127', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.127', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.127', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.127', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.127', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6509,6 +6540,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6546,6 +6578,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6583,6 +6616,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.130', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.130', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.130', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.130', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.130', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.130', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.130', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6620,6 +6654,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.131', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.131', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.131', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.131', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.131', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.131', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.131', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6657,6 +6692,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.132', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.132', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.132', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.132', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.132', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.132', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.132', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6694,6 +6730,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.133', 'value_rating', '1', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.133', 'resolution', 'Automatic', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.133', 'threshold', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.133', 'resolution_type', 'Transactional', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.133', 'ring_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.133', 'doctrine_mod', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.133', 'target_district', 'trigger.district', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6780,7 +6817,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.2', 'affinity', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.2', 'restriction', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.2', 'cost', 'None', '04___Card_System___Part4a_Guild.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.2', 'success', '(\n        faction(acting).native.add(1),\n        faction(acting).native.add(1)\n    )', '04___Card_System___Part4a_Guild.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.2', 'success', '(\n        faction(acting).native.add(1),\n        district(target).native.add(1)\n    )', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.2', 'successcrit', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.2', 'fail', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.2', 'failcrit', 'None', '04___Card_System___Part4a_Guild.md');
@@ -6840,7 +6877,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.4', 'threshold', '65', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.4', 'ring_mod', '{0: -15, 1: -10, 2: 0, 3: +10}', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.4', 'doctrine_mod', 'None', '04___Card_System___Part4a_Guild.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.4', 'value_rating', '3', '04___Card_System___Part4a_Guild.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.4', 'value_rating', '2', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.4', 'trigger', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.4', 'resolution_type', 'Probabilistic', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.4', 'outcome_type', 'None', '04___Card_System___Part4a_Guild.md');
@@ -6926,7 +6963,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.6', 'affinity', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.6', 'restriction', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.6', 'cost', 'None', '04___Card_System___Part4a_Guild.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.6', 'success', '(\n        faction(acting).native.add(1),\n        faction(acting).native.add(1),\n    )', '04___Card_System___Part4a_Guild.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.6', 'success', '(\n        faction(acting).native.add(1),\n        district(target).native.add(1),\n    )', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.6', 'successcrit', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.6', 'fail', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.6', 'failcrit', 'None', '04___Card_System___Part4a_Guild.md');
@@ -7037,7 +7074,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.9', 'threshold', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.9', 'ring_mod', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.9', 'doctrine_mod', 'None', '04___Card_System___Part4a_Guild.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.9', 'value_rating', '3', '04___Card_System___Part4a_Guild.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.9', 'value_rating', '2', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.9', 'trigger', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.9', 'resolution_type', 'PositionalWager', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.9', 'outcome_type', 'None', '04___Card_System___Part4a_Guild.md');
@@ -7076,7 +7113,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.10', 'threshold', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.10', 'ring_mod', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.10', 'doctrine_mod', 'None', '04___Card_System___Part4a_Guild.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.10', 'value_rating', 'None', '04___Card_System___Part4a_Guild.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.10', 'value_rating', '1', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.10', 'trigger', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.10', 'resolution_type', 'Transactional', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.10', 'outcome_type', 'None', '04___Card_System___Part4a_Guild.md');
@@ -7499,7 +7536,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.PA.10', 'threshold', '50', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.PA.10', 'ring_mod', '{Ring3: +10, Ring2: 0, Ring1: -10, Ring0: -15}', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.PA.10', 'doctrine_mod', '{Neighbor: +15, Opposed: -15}', '04___Card_System___Part4a_Guild.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.PA.10', 'value_rating', 'None', '04___Card_System___Part4a_Guild.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.PA.10', 'value_rating', '4', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.PA.10', 'trigger', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.PA.10', 'resolution_type', 'Probabilistic', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.PA.10', 'outcome_type', 'Unilateral', '04___Card_System___Part4a_Guild.md');
@@ -8941,7 +8978,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.15', 'doctrine_mod', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.15', 'value_rating', '1', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.15', 'trigger', 'None', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.15', 'resolution_type', 'Transactional', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.15', 'resolution_type', 'PositionalWager', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.15', 'outcome_type', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.15', 'persistence', 'Immediate', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.15', 'persistence_condition', 'None', '04___Card_System___Part4b_Ghost.md');
@@ -9058,6 +9095,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.11', 'threshold', '30', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.11', 'ring_mod', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.11', 'doctrine_mod', 'None', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.11', 'value_rating', '4', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.11', 'trigger', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.11', 'resolution_type', 'Probabilistic', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.11', 'outcome_type', 'None', '04___Card_System___Part4b_Ghost.md');
@@ -9222,7 +9260,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.14', 'doctrine_mod', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.14', 'value_rating', '2', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.14', 'trigger', 'None', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.14', 'resolution_type', 'Transactional', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.14', 'resolution_type', 'PositionalWager', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.14', 'outcome_type', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.14', 'persistence', 'Immediate', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.14', 'persistence_condition', 'None', '04___Card_System___Part4b_Ghost.md');
@@ -10692,7 +10730,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.2', 'perspectives', '{Directorate: \"The marker has been detained. Its conversion will not occur.\"}', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.2', 'design_note', '\"Marker moved to Directorate public tableau Detention zone — Governing Rule 8.3a compliant (moved, not removed from play). Permanent: marker remains in Detention for remainder of session. No NotificationSlip — detention is publicly visible on Directorate tableau. Faction Terminals may be unique per faction.\"', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.2', 'arbiter_note', '\"Consume Intel token. Move named faction\'s deployment marker from target district to Directorate public tableau Detention zone. Physically place on Detention area — visible to all players. No separate notification. Crit success: return 3 Mandate to Directorate. Crit fail: no marker move; −1 PS to Directorate only.\"', '04___Card_System___Part4c_Directorate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.2', 'value_rating', '3', '04___Card_System___Part4c_Directorate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.2', 'value_rating', '2', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'id', '\"DIR.CA.3\"', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'card_id', '\"DIR.CA.3\"', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'version', '\"v2.0\"', '04___Card_System___Part4c_Directorate.md');
@@ -10914,6 +10952,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.6', 'doctrine_mod', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.6', 'trigger', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.6', 'value_rating', '1', '04___Card_System___Part4c_Directorate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.6', 'resolution_type', 'Probabilistic', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.6', 'outcome_type', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.6', 'persistence', 'Immediate', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.6', 'persistence_condition', 'None', '04___Card_System___Part4c_Directorate.md');
@@ -10954,6 +10993,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.7', 'doctrine_mod', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.7', 'trigger', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.7', 'value_rating', '1', '04___Card_System___Part4c_Directorate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.7', 'resolution_type', 'Probabilistic', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.7', 'outcome_type', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.7', 'persistence', 'Immediate', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.7', 'persistence_condition', 'None', '04___Card_System___Part4c_Directorate.md');
@@ -10994,6 +11034,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.8', 'doctrine_mod', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.8', 'trigger', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.8', 'value_rating', '1', '04___Card_System___Part4c_Directorate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.8', 'resolution_type', 'PositionalWager', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.8', 'outcome_type', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.8', 'persistence', 'Immediate', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.8', 'persistence_condition', 'None', '04___Card_System___Part4c_Directorate.md');
@@ -11240,7 +11281,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.PA.8', 'threshold', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.PA.8', 'ring_mod', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.PA.8', 'doctrine_mod', 'None', '04___Card_System___Part4c_Directorate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.PA.8', 'value_rating', '4', '04___Card_System___Part4c_Directorate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.PA.8', 'value_rating', '2', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.PA.8', 'trigger', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.PA.8', 'resolution_type', 'Transactional', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.PA.8', 'outcome_type', 'ElectPlayer', '04___Card_System___Part4c_Directorate.md');
@@ -12722,6 +12763,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.7', 'doctrine_mod', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.7', 'trigger', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.7', 'value_rating', '1', '04___Card_System___Part4d_Network.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.7', 'resolution_type', 'Probabilistic', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.7', 'outcome_type', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.7', 'persistence', 'Immediate', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.7', 'persistence_condition', 'None', '04___Card_System___Part4d_Network.md');
@@ -12758,6 +12800,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.8', 'beat', '2', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.8', 'resolution', 'd100', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.8', 'threshold', '50', '04___Card_System___Part4d_Network.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.8', 'resolution_type', 'Probabilistic', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.8', 'persistence', 'Immediate', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.8', 'persistence_condition', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.8', 'persistence_effect', 'None', '04___Card_System___Part4d_Network.md');
@@ -13081,6 +13124,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.1', 'beat', '4', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.1', 'resolution', 'd100', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.1', 'threshold', '50', '04___Card_System___Part4d_Network.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.1', 'resolution_type', 'Probabilistic', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.1', 'ring_mod', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.1', 'doctrine_mod', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.1', 'outcome_type', 'None', '04___Card_System___Part4d_Network.md');
@@ -13107,7 +13151,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.1', 'arbiter_note', '\"Beat 4: when a PA success produces a board state change in district X (influence chip count changes, or structure block placed/removed), Network may announce Pirate Transmitter. Confirm trigger validity. Network spends 1 Exposure and rolls d100 (threshold 50, usual modifiers). Success: place 1 Network chip in district X. Successcrit: +1 PS additional. Fail: no effect. Failcrit: −1 PS.\"', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'id', '\"NET.MOD.3\"', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'card_id', '\"NET.MOD.3\"', '04___Card_System___Part4d_Network.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'version', '\"v0.1\"', '04___Card_System___Part4d_Network.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'version', '\"v1.0\"', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'name', '\"Backup Server Racks\"', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'tagline', '\"When Network loses standing, redirect the narrative before it lands.\"', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'type', 'ModReactCard', '04___Card_System___Part4d_Network.md');
@@ -13130,9 +13174,9 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'target_object', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'affinity', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'restriction', 'None', '04___Card_System___Part4d_Network.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'cost', 'None', '04___Card_System___Part4d_Network.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'boost', 'None', '04___Card_System___Part4d_Network.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'success', 'faction(Network).standing.add(TBD)', '04___Card_System___Part4d_Network.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'cost', 'Exposure * 1', '04___Card_System___Part4d_Network.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'boost', 'True: Exposure * 1', '04___Card_System___Part4d_Network.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'success', 'faction(Network).standing.add(1 + n_boost)', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'successcrit', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'fail', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'failcrit', 'None', '04___Card_System___Part4d_Network.md');
@@ -13142,7 +13186,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'ps_framing', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'narrative', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'perspectives', 'None', '04___Card_System___Part4d_Network.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'design_note', '\"PS recovery React. Fires when Network\'s own PS decreases by any cause. Partially or fully negates the loss — magnitude TBD at design pass. Enables Disclosure Loop (NET.CA.2) sacrifice + immediate recovery as a designed arc rather than a liability. Pairs with NET.CA.6 Sacrifice (PS→Intel) — the spend-and-recover cycle makes Network\'s PS expenditure feel controlled rather than punitive.\"', '04___Card_System___Part4d_Network.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'design_note', '\"PS recovery React. Fires when Network\'s own PS decreases by any cause. Recovery scales with what the player is willing to spend: base Exposure buys 1 PS back, each further unit of Exposure buys another, so a faction can negate a small knock cheaply or buy out a heavy one at real cost. Enables Disclosure Loop (NET.CA.2) sacrifice + immediate recovery as a designed arc rather than a liability. Pairs with NET.CA.6 Sacrifice (PS→Intel) — the spend-and-recover cycle makes Network\'s PS expenditure feel controlled rather than punitive.\"', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.3', 'arbiter_note', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.4', 'id', '\"NET.MOD.4\"', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.MOD.4', 'card_id', '\"NET.MOD.4\"', '04___Card_System___Part4d_Network.md');
@@ -14438,7 +14482,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.4', 'threshold', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.4', 'ring_mod', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.4', 'trigger', 'None', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.4', 'resolution_type', 'Transactional', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.4', 'resolution_type', 'PositionalWager', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.4', 'outcome_type', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.4', 'persistence', 'Immediate', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.4', 'persistence_condition', 'None', '04___Card_System___Part4e_Syndicate.md');
@@ -14462,39 +14506,39 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.4', 'value_rating', '1', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'id', '\"SYN.CA.5\"', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'card_id', '\"SYN.CA.5\"', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'version', '\"v1.0\"', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'version', '\"v2.0\"', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'name', '\"Regulatory Capture\"', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'tagline', '\"Block a specific action type in a named district for one round.\"', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'tagline', '\"Block every rival covert operation in a named district for one round. Yours proceed.\"', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'type', 'CovertOperation', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'subtype', 'FactionSpecific', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'faction', 'Syndicate', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'layer', 'Submission', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'function', 'Block', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'subject', 'NamedActionType', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'subject', 'CovertOperation', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'beat', '2', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'resolution', 'Automatic', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'threshold', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'ring_mod', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'trigger', 'None', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'resolution_type', 'Transactional', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'resolution_type', 'PositionalWager', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'outcome_type', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'persistence', 'Immediate', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'persistence_condition', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'persistence_effect', 'None', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'target_district', 'district.any', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'target_district', 'district.named', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'target_faction', 'None', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'target_object', 'NamedActionType', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'target_object', 'CovertOperation', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'target_freeform', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'affinity', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'restriction', 'district(target) != ChorusNode', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'cost', 'Capital * 2 + Exposure * 1', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'success', 'game.block(district(target), action_type=named, round=game.round, public=True)', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'success', 'game.block(district(target), type=CovertOperation, faction != acting, round=game.round, public=True)', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'successcrit', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'fail', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'failcrit', 'None', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'portrait', '{Syndicate: PortraitEntry(submitter=+1, modifier=-2, mod_where=action_type(named).primary_faction == Guild)}', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'portrait', '{Syndicate: PortraitEntry(submitter=+1, modifier=-2, mod_where=district(target).faction(Guild).influence_tier >= Established)}', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'narrative', '\"If you own enough of the regulatory structure, you define what is permitted. The Syndicate does not see this as corruption. They see it as governance.\"', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'perspectives', '{Syndicate: \"The regulatory framework exists. We simply ensure it reflects current market conditions.\"}', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'perspectives', '{\n        Syndicate: \"The regulatory framework exists. We simply ensure it reflects current market conditions.\",\n        Ghost:     \"The regulation did not change. The enforcement did. We logged which, and when, and who stopped filing.\",\n        Guild:     \"We had the permits. We had the crews. We had a district that needed the work. Someone made a call.\",\n    }', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'design_note', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'arbiter_note', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.5', 'value_rating', '2', '04___Card_System___Part4e_Syndicate.md');
@@ -14588,6 +14632,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.10', 'subject', 'AccordCard', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.10', 'beat', '3', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.10', 'resolution', 'd100', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.10', 'resolution_type', 'Probabilistic', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.10', 'threshold', '50', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.10', 'ring_mod', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.10', 'doctrine_mod', 'None', '04___Card_System___Part4e_Syndicate.md');
@@ -14704,6 +14749,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.11', 'subject', 'AccordAgreement', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.11', 'beat', '3', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.11', 'resolution', 'd100', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.11', 'resolution_type', 'Probabilistic', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.11', 'threshold', '50', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.11', 'ring_mod', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.11', 'doctrine_mod', 'None', '04___Card_System___Part4e_Syndicate.md');
@@ -14741,6 +14787,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.12', 'subject', 'AccordForm', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.12', 'beat', '3', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.12', 'resolution', 'Automatic', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.12', 'resolution_type', 'Transactional', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.12', 'threshold', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.12', 'ring_mod', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.CA.12', 'doctrine_mod', 'None', '04___Card_System___Part4e_Syndicate.md');
@@ -14865,6 +14912,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.PA.3', 'ring_mod', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.PA.3', 'doctrine_mod', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.PA.3', 'value_rating', '1', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.PA.3', 'resolution_type', 'Transactional', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.PA.3', 'outcome_type', 'ElectPlayer', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.PA.3', 'target_district', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.PA.3', 'target_faction', 'faction(any, not=Syndicate)', '04___Card_System___Part4e_Syndicate.md');
@@ -14985,7 +15033,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.MOD.1', 'beat', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.MOD.1', 'ring_constraint', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.MOD.1', 'ring_origin', 'None', '04___Card_System___Part4e_Syndicate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.MOD.1', 'value_rating', 'None', '04___Card_System___Part4e_Syndicate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.MOD.1', 'value_rating', '1', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.MOD.1', 'resolution', 'Automatic', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.MOD.1', 'threshold', 'None', '04___Card_System___Part4e_Syndicate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('SYN.MOD.1', 'resolution_type', 'Transactional', '04___Card_System___Part4e_Syndicate.md');

@@ -165,7 +165,7 @@ DIR.CA.2 = Card(
     perspectives = {Directorate: "The marker has been detained. Its conversion will not occur."},
     design_note  = "Marker moved to Directorate public tableau Detention zone — Governing Rule 8.3a compliant (moved, not removed from play). Permanent: marker remains in Detention for remainder of session. No NotificationSlip — detention is publicly visible on Directorate tableau. Faction Terminals may be unique per faction.",
     arbiter_note = "Consume Intel token. Move named faction's deployment marker from target district to Directorate public tableau Detention zone. Physically place on Detention area — visible to all players. No separate notification. Crit success: return 3 Mandate to Directorate. Crit fail: no marker move; −1 PS to Directorate only.",
-    value_rating = 3,
+    value_rating = 2,
 )
 ```
 
@@ -666,6 +666,7 @@ DIR.CA.6 = Card(
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
+    resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -744,6 +745,7 @@ DIR.CA.7 = Card(
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
+    resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -808,7 +810,7 @@ The district is under enhanced institutional review. Documentation requirements 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 *New card. Fills Resolution|Modify|ModifierToken gap (04b §8.2 MP). No new component — uses existing Modifier tokens placed per-row.*
 
@@ -822,6 +824,7 @@ DIR.CA.8 = Card(
     beat=2, resolution=Automatic, threshold=None,
     ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
+    resolution_type = PositionalWager,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -1425,7 +1428,7 @@ DIR.PA.8 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating    = 4,
+    value_rating    = 2,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = ElectPlayer,

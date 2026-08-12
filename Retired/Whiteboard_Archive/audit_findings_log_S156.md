@@ -1,5 +1,7 @@
 # Audit Findings Log — 09-16 Steps 4–5 (opened S156)
 
+> **✅ TRIAGED S157 — PM05 09-17 closed. Verdict: PM02 L358.** This file is now a historical record of what was found, not a live worklist. Per-finding dispositions are in the Triage Summary at the bottom. **Several findings below were overturned or corrected during triage** — do not cite a finding from the tables above without checking its disposition first. **Deletion trigger:** delete once the S157 spin-off items (00a-80, 04-n222/223/224, `schema_cleanup_log.md` #59–#63) are themselves closed, or sooner if PM02 L358 is judged to carry enough of the record.
+
 **Purpose:** running collector for every issue surfaced during the faction-level (step 4) and cross-faction (step 5) card-set re-audits. Findings are **logged, not resolved** here (per `feedback_review_pass_scope`). Triage happens once, in the consolidated review (**PM05 09-17**), which then spins off reactive actions (schema fixes, design changes, Art 03 procedure items → 04-n221, etc.).
 
 **Denominator for all audits:** faction-specific set **+ universal STD CA/PA pool** (STD ring mods conditional). Per 09-16 step-4 "STD+faction."
@@ -92,12 +94,46 @@ The baseline's mono-economy grouping (Directorate+Guild+Syndicate) is corrected 
 
 ---
 
-## Triage summary (for PM05 09-17)
+## Triage summary — COMPLETE S157 (PM05 09-17 closed; verdict PM02 L358)
 
-**23 findings total** across 5 factions + systemic. Rough routing (to be confirmed at 09-17):
-- **design/systemic (Andy + PM02):** SYS-1 (Ghost intel economy), DIR win-path characteristic, GUI-2 defense scaling, NET-2/NET-3 (§9.2 Ghost-gating, PA.3 inversion), SYN-2 (Ghost dependency).
-- **verify (confirm against source):** NET-1 tripwire, GUI-1/GUI-3/GUI-4 (§9.2 stale, 04-n2, CA.2), SYN-1/SYN-3/SYN-4 (§9.2 grouping, 04-n125, 04-n124).
-- **blocked/gate:** GHO-1 (CA.11 / Art 06 — ties to Art 03-init).
-- **schema → `schema_cleanup_log.md`:** DIR-1/DIR-2 (resolution_type), GHO-2/GHO-3, GUI-5, NET-4, SYN-5.
-- **§9.2 pass (by bucket):** GUI-1, NET-2/3, SYN-1.
-- **observations (no action, record for sign-off narrative):** SYS-2, SYS-3, SYS-4, and the many positive deltas (baseline gaps the modifier corpus closed).
+**Corrected count: 27 findings logged, 26 live** (NET-1 closed at S156). The original "23 findings total" below counted only the five faction tables and omitted SYS-1..4; SESSION_BRIEF's "22" was that 23 minus NET-1.
+
+### Dispositions
+
+| # | Disposition |
+|---|---|
+| DIR-1 | **Split.** `resolution_type` half → `schema_cleanup_log.md` **#59**, reframed corpus-wide (46 cards). "`fail = None` leaves failure undefined" half **dropped — not a defect**: 35 of 44 d100 cards use `fail = None`, including DIR.CA.2, the sibling this finding cites as correct. |
+| DIR-2 | → **#59** (same item). |
+| DIR-3 | **CONFIRMED UNBUILT → resolved by cutting the claim.** The §5a line was the only occurrence in all of V1. At real Core adjacency degrees (4/6/6/4) against a 3-card draw ceiling it would have been a second, larger modifier economy. Andy: cut. Executed S157. |
+| DIR-4 | **CONFIRMED UNBUILT → 04-n222.** Verified `cost`, `portrait` *and* `ps_framing` all `None` on DIR.MOD.10–13. Andy overturned the §5a premise: military action is Directorate doctrine executing — it should cost **Public Standing**, not Portrait, and may earn Portrait. Scoped as one pass (§5a edit + 4 cards). |
+| DIR-5 | Playtest-watch, unchanged. No action. |
+| DIR-6 | Folded into 04-n223's economy re-derivation — "expansion is generic" is a claim about Directorate's economic profile, which the cost data now contradicts. |
+| GHO-1 | Unchanged — CA.11 reimagining, own session, explicitly non-gating. `value_rating` half → **#60**. |
+| GHO-2 | → **#60**. |
+| GHO-3 | → **#60**. Its note that CA.11 is no longer the stale `id=TBD` row **verified correct** (`d100`/`Probabilistic`). |
+| GUI-1 | **CONFIRMED STALE — and its replacement is stale too.** → **04-n223**. Guild has 10 cross-cost cards (not the 12 claimed), 50% of its costed set, highest of any faction; PA.9's four resource types confirmed. |
+| GUI-2 | Defense scaling — carried as a balance/playtest watch, unchanged. |
+| GUI-3 | **CONFIRMED DIVERGENT → cards win.** All five MODs carry `restriction = None`; no presence gate, no STD.CA.1 specificity, MOD.9 not structure-triggered at all. Andy: fix the text. §5a rewritten S157; **04-n2 closed as superseded**. |
+| GUI-4 | **RESOLVED → closed.** Payout mismatch genuinely gone (v1.1, `cost = None`, flat 2 Capacity). Notation residue only → **#63**. |
+| GUI-5 | **Split and partly corrected.** `value_rating` → **#60**; GUI.MOD.10's unassigned taxonomy → **04-n224**. Its `cost_type = NULL` claim is **wrong** — cost is populated and `cost_type` is not a schema field. |
+| NET-1 | Closed S156 (§5a rewrite, PM02 L355). Not a 09-17 item. |
+| NET-2 | **Downstream of configuration → 00a-80** (systemic half) and 04-n223 (economy half). |
+| NET-3 | → **04-n223**. |
+| NET-4 | **Corrected.** Both field citations wrong (NET.CA.8's cost is populated; `cost_primary_amount` is not a schema field). Real defect is NET.MOD.3's `add(TBD)` → **#62** and **04-n224**. NET.CA.8's actual gaps stay at 04-n217. |
+| SYN-1 | **Partly stale → 04-n223.** Deep inversions confirmed (CA.8 C×6, CA.10 C×3, CA.3 C×3), but the mono framing does not survive: Syndicate has 10 cross-cost cards, and 04-n123's "zero" is false. |
+| SYN-2 | → **00a-80** (mirrors NET-2). |
+| SYN-3 | **Closed.** 04-n125 was already ✅ S130; CA.12's stub state is 04-n219's scope, nothing new. |
+| SYN-4 | **NOT satisfied → 04-n124 stays open.** Taglines are mechanical descriptions, not doctrine justification. And the live half: SYN.CA.7's `on_accept` is still debit-only, with no credit expression to Syndicate — a mechanical defect. |
+| SYN-5 | **Split; two citations corrected.** `NamedActionType` → new **#61** (it was routed to #27, which is DIR.CA.8's `Difficulty` — different card). Portrait `flat=` **dropped**: schema #7 fully closed S150, zero instances remain corpus-wide. SYN.MOD.1 `value_rating` → #60. CA.12 → 04-n219; PA.4/5 → 04-n220 (and NET.PA.4/5/6 → 04-n218). |
+| SYS-1 | **REFRAMED by Andy → 00a-80.** Not an intel-economy defect — the first concrete symptom of the undesigned sub-6-player configuration. The card degradation is real only under "exclude the faction"; the other three candidate configurations largely dissolve it. Gates smaller-group playtest, not Art 04. |
+| SYS-2 | Observation, recorded for the sign-off narrative. No action. |
+| SYS-3 | Observation (Resolution is the rarest layer) — worth a deliberate call eventually, not spun off this pass. |
+| SYS-4 | Observation (free-trade rule load-bearing but uncarded) — carry into rules teaching. No action. |
+
+### Spun-off items
+
+**PM05:** 00a-80 (sub-6-player configuration) · 04-n222 (Directorate military lane) · 04-n223 (§9.2 re-derivation) · 04-n224 (remaining partial cards) · 04-n2 closed · 04-n119 premise-noted · 04-n123/126 flagged stale · 04-n124 re-opened in substance · 09-17 closed.
+
+**`schema_cleanup_log.md`:** #59 `resolution_type` absent (46 cards) · #60 `value_rating` unset (8) · #61 `NamedActionType` unregistered · #62 the one live `TBD` · #63 GUI.CA.2 notation residue.
+
+**Art 03 procedure gaps → 04-n221:** none. No finding in this log turned out to be an Art 03 coverage gap — DIR-3 was cut rather than proceduralised, and GUI-3 resolved to card-carried rather than a standing rule.

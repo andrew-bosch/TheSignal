@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.93 Draft  
+**Version:** 0.9.96 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-08-04  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -374,7 +374,7 @@ Ghost believes understanding must precede action — that an incorrect answer to
 Guild believes the Chorus is an evaluation: humanity's response will be judged not by intent, but by what it builds. Improvisation reveals weakness. Shortcuts reveal urgency. What Guild places on the board is not a tactical position — it is an argument about what humanity is capable of at its best, made permanent in physical form. Guild is also the only faction at The Table that cannot operate covertly in principle: planetary-scale infrastructure cannot be classified. Operations are submitted through the shared dispatch procedure (sealed, timed), but the results are never hidden — everything lands immediately on the board as a presence token or structure. The procedure is shared; the doctrine is not. The deck does not feel covert. It feels like construction.
 
 - **Economy:** Capacity, compounded via GUI.CA.5 Infrastructure Yield — zero-cost Automatic; draws Capacity from each Established or Dominant district each Quarter
-- **Passive income:** +1 Capacity when any opponent completes STD.CA.1 in a district where Guild has presence (Guild employees did the work)
+- **Passive income — the React modifier lane:** rival development pays Guild. React modifiers yield Capacity when any opponent places a Structure Block (premiums for Core placements and for Directorate's institutional builds), salvage when any structure is demolished, and supervision fees when a rival reaches Established. No presence gate and no dependence on Guild's own play — the city cannot build without Guild labor.
 - **GUI.CA.2 Materials Acquisition:** converts correctly anticipated demolition into paid recovery
 - **Win condition:** structures on board, not just presence tokens — Guild is building the response, not positioning for it
 - **Win path:** Foundation Rights (GUI.CA.3, near-automatic in Ring 0) → high tier in Core and Mid → GUI.CA.5 compounds → Fortify Structure (GUI.CA.1) defends → GUI.CA.2 collects salvage from the table's demolition activity
@@ -395,7 +395,7 @@ Network believes no one gets to decide this in the dark. They arrived after The 
 
 The Directorate's doctrine is not domination — it is managed stability. Survival requires control, restraint, and continuity; the win state is Established in more districts than any other faction because that configuration is not hegemony — it is the only board state the Directorate can guarantee remains reversible. No faction Dominant anywhere means no escalation has outrun institutional capacity to model and correct. Suppression is the instrument of restraint, not aggression: pushing another faction's tier down prevents a condition from becoming irreversible. The Directorate makes no distinction between rogue capital and rogue information — the Syndicate's gray-market acquisitions and the Network's broadcast operations are the same threat expressed through different channels. The procedural commitment does not change based on the mechanism of the disruption.
 
-- **Economy:** Mandate via institutional acts and Core structures; Core structures draw an adjacency bonus: +1 modifier card per adjacent district at Established presence
+- **Economy:** Mandate via institutional acts and Core structures
 - **Modifier deck — military assets:** enforcement personnel and equipment for conflict resolution and presence removal; available but costs Portrait
 - **Modifier deck — legislative assets:** regulatory teams that reduce Public Act costs and extend world event duration; the doctrinal mode
 - **Suppression toolkit:** push other factions' control tiers down rather than building own tiers up — best suppression capability in the game
@@ -499,7 +499,6 @@ class Card:
 
 
 class PortraitEntry:
-    flat:      int | None         # fires on resolution regardless of submitter — faction-specific cards only (L131)
     submitter: int | None         # fires when this faction submits the card
     where:     BoolExpr | None    # entry fires only when this evaluates True
     modifier:  int | None         # adjustment to submitter under additional condition
@@ -667,33 +666,13 @@ Function:     → Art 04b §4
 Subject:      → Art 04b §4
 Resolution:   d100 | Automatic
 ResolutionType:      Probabilistic | Transactional | PositionalWager
-# Formalized from a free-form str (schema_cleanup_log #41) — was 9 values in active use, only
-# 2 documented. Full-corpus discriminating test applied to every candidate: does deleting this value lose
-# information no other field already carries? Result: 6 of 9 either mapped directly onto Resolution
-# (Probabilistic = d100, Transactional = Automatic) or were pure restatements of another field; only one
-# genuinely distinct third category survived.
-#   Probabilistic:    resolution = d100 always.
-#   Transactional:    resolution = Automatic always — immediate, deterministic, no cross-beat dependency.
-#   PositionalWager:  resolution = Automatic, but the effect targets a not-yet-revealed future beat's
-#                      submission slate (e.g. a Beat 2 card modifying a Beat 4 op that hasn't been declared
-#                      yet) — deterministic once resolved, but committed against genuinely unknown
-#                      information, unlike a plain Transactional card. 8 confirmed instances: STD.CA.6,
-#                      STD.CA.7, STD.CA.10, GUI.CA.1/2/6/9, SYN.CA.6.
-# Collapsed into the above, not separately confirmed:
-#   "Contested"            → Probabilistic. 5 instances (STD.PA.2/4/5/6, NET.PA.1); only STD.PA.2 actually
-#                            placed a ContestedMarker (a `success`-field effect) — the label didn't
-#                            correlate with a real distinct mechanism across its own cluster.
-#   "Permanent public act" → Transactional. 3 instances (DIR.PA.5/6/11); fully redundant with the
-#                            existing `persistence = Permanent` field.
-#   "Predictive"            → Transactional. 1 instance (GHO.CA.1); resolution = Automatic, deterministic
-#                            declare-then-verify check — not a distinct resolution mechanism.
-# Not formalized — tied to broken/blocked cards, left as non-conforming pending their own separate fix:
-#   "Conditional"  — GHO.MOD.1, a pre-S127 fossil already carrying an invalid `resolution = Prediction`
-#                    value (schema_cleanup_log #12). Fix belongs to that item's own reconciliation.
-#   "Deceptive"    — Backdate, 🚫 BLOCKED (GR 7.2b, PM05 04-n103), fundamental redesign required.
-#   "Verification" — Field Verification, 🚫 BLOCKED (same GR 7.2b reason, same PM05 gate).
-#   "PlayerChoice(target)" — pre-registered (PM05 04-n36) for a not-yet-built Directorate card family;
-#                    never actually appears as a real field value anywhere in the corpus.
+#   Probabilistic:    resolution = d100.
+#   Transactional:    resolution = Automatic — immediate and deterministic, with no cross-beat dependency.
+#   PositionalWager:  resolution = Automatic, but the effect is committed against a future beat's
+#                     submission slate that is not revealed at the time of commitment (e.g. a Beat 2
+#                     card modifying a Beat 4 op that has not been declared yet). Deterministic once
+#                     resolved; what distinguishes it from Transactional is the unknown information
+#                     at the moment of commitment, not the resolution mechanism.
 Ring:                0 (Chorus Node) | 1 (Core) | 2 (The Mid) | 3 (Baryo)
 PentagramRelation:   Neighbor | Opposed
 OutcomeType:         Binary | ElectPlayer | ElectDistrict | ElectFaction | BilateralAgreement | Unilateral
@@ -1683,6 +1662,7 @@ GD01 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating    = 3,
     trigger         = structure_block.placed(district=deed.district),
     resolution_type = Transactional,
     outcome_type    = None,

@@ -1,7 +1,27 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-08-05 — Session 156 Close
+**Last Updated:** 2026-08-12 — Session 157 Close
+
+### Session 157 Summary (2026-08-12)
+
+**PM05 09-17 COMPLETE — the second and last original Art 04 sign-off gate (PM02 L358).** All 27 findings from the S156 audit triaged in one pass. The method mattered more than the throughput: every `[verify]` finding was re-derived against primary source — `card_body` queries and the §5a/Art 03 text — rather than against the S156 audit documents, per the audit's own ground rule that any prior pass is a dated snapshot. That discipline overturned four conclusions and corrected five claims outright, including two citations of schema fields that do not exist and one citation of an item closed at S150.
+
+**The §9.2 economic model does not survive contact with the corpus.** Baseline grouped DIR+GUI+SYN as mono; S156 corrected to three buckets. Cost-composition data breaks both: foreign-resource share is essentially flat (GUI 50 %, SYN 43 %, DIR 41 %, NET 40 %, GHO 23 %), Directorate is not mono on either measure, and Guild's native ceilings run deeper than Directorate's. 04-n119/123/126 all rest on counts now demonstrably false. → **04-n223**, scoped to re-derive the grouping before running the pass. Andy's ruling reframes the goal: *cross-costs are desirable* — they drive trade and inter-faction dependence — so the pass measures whether interdependence is well-distributed, not whether factions are mono.
+
+**SYS-1 reframed by Andy.** The Ghost-centred intel economy is not a defect but the first concrete symptom of an undesigned area: every artifact says 2–6 players while the whole design assumes 5 factions + ARBITER, and nothing specifies how a smaller game is played. → **00a-80**, explicitly deferred from gating Art 04 (gates smaller-group playtest instead). One of only two deferrals on record, with Ghost CA.11.
+
+**Schema cleanup — #59–#63 and #66 closed, #64–#65 open.** #59: `resolution_type` populated on all 46 cards that lacked it; Art 04 §6.3 rewritten as specification-only after Andy's ruling that schema sections must carry specification, not analysis — a principle that generalizes to the rest of §6. #60: found **two derivation conventions coexisting** for `value_rating` (CA/PA on UVM cost per L284, modifier cards on the S132/S134 "mirrors magnitude" rule) — something no reference file recorded, and the reason 177 cards looked anomalous; 5 now-computable cards rated, 4 drifted corrected. #61: Andy ruled `action_type` is not a concept the game wants, so **SYN.CA.5 was rescoped to v2.0** onto real components, its `faction != acting` self-exemption becoming the card's doctrinal core (an institution is bound by the ordinance it writes; Syndicate buys a favour). #62: Andy reframed NET.MOD.3's `TBD` as a **boost mechanic**, and chasing the blocker found **Art 03 §18 has no cost-payment step at all** — 26 costed ModReactCards are unresolvable by the written procedure, a gap untracked anywhere → folded into 04-n221. #63: not cosmetic — GUI.CA.2/GUI.CA.6 carried a live payout defect, and my own earlier closure of GUI-4 this same session was wrong (I compared the code against itself instead of against its stated intent).
+
+**#66 — the cost model was built on sand.** `card_effect_component`, the table from which `total_pair_cost` and therefore every `value_rating` derives, had **no extractor** and was roughly a month stale (32 % of rows still carried retired `+=` syntax). Built `tools/extract_card_effects.py`, rebuilt the table, wired it into the sync. Diffing tiers before and after caught two bugs in the new extractor that reading the code would not have — missing `on_accept`/`on_decline` (which carry the entire effect on ElectPlayer cards) and bare list markers being priced as mutations. **18 of 205 cards change tier; none applied**, pending two questions in **04-n228**. DIR.PA.8 was corrected 4→2 earlier in the session against the stale model and now reads 3 — a pointed demonstration that everything tiered before the rebuild is provisional.
+
+**Tooling.** `tools/sync_card_db.sh` — one command regenerates the Art 04 monolith and rebuilds all three DB mirrors (`card_body`, `card_checklist`, `card_effect_component`), with row-count floors guarding against a truncated extract wiping a mirror, plus a `value_rating` drift check and a taxonomy↔pricing-model sync check. Two classes of silent drift that previously accumulated unnoticed are now reported on every run.
+
+**Audit program closed and archived.** The seven S156 audit documents and the superseded S119–128 summary moved to `Retired/Whiteboard_Archive/`; the standing digest is `Whiteboard/last_full_card_set_audit.md` — methodology, what was asked of the corpus, and faction + cross-faction conclusions as corrected at S157, with a standing note that three successive audit generations each found the previous one's claims partly stale.
+
+**Design Pass materiality test confirmed (04-n225)** — a change resets Design Pass only when it alters what a card *does* or how it is *strategically classified*, not when it fills a derived value. Applied to 7 cards.
+
+Decisions: PM02 **L358–L366**.
 
 ### Session 156 Summary (2026-08-05)
 

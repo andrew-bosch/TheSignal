@@ -532,6 +532,7 @@ NET.CA.7 = Card(
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
+    resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -609,6 +610,7 @@ NET.CA.8 = Card(
 
     beat    = 2,
     resolution = d100,  threshold = 50,
+    resolution_type = Probabilistic,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
 
@@ -1290,6 +1292,7 @@ NET.MOD.1 = Card(
               # specifically as a consequence of a PA resolving — not a CA, another React, or Upkeep
     target_district = trigger.district,
     beat    = 4,  resolution = d100,  threshold = 50,
+    resolution_type = Probabilistic,
     ring_mod=None,  doctrine_mod=None,  outcome_type=None,
     value_rating = 1,
     persistence=Immediate,  persistence_condition=None,  persistence_effect=None,
@@ -1355,11 +1358,11 @@ Network's standing takes a public hit. Before the damage settles, the redundant 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 NET.MOD.3 = Card(
-    id      = "NET.MOD.3",  card_id = "NET.MOD.3",  version = "v0.1",
+    id      = "NET.MOD.3",  card_id = "NET.MOD.3",  version = "v1.0",
     name    = "Backup Server Racks",
     tagline = "When Network loses standing, redirect the narrative before it lands.",
     type    = ModReactCard,  faction = Network,
@@ -1379,10 +1382,10 @@ NET.MOD.3 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = None,  # card consumed; cost TBD (possibly 1 Exposure)
-    boost           = None,
+    cost            = Exposure * 1,
+    boost           = True: Exposure * 1,
 
-    success     = faction(Network).standing.add(TBD),  # negate some or all of triggering decrease; magnitude TBD
+    success     = faction(Network).standing.add(1 + n_boost),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -1390,7 +1393,7 @@ NET.MOD.3 = Card(
     ps_framing   = None,
     narrative    = None,
     perspectives = None,
-    design_note  = "PS recovery React. Fires when Network's own PS decreases by any cause. Partially or fully negates the loss — magnitude TBD at design pass. Enables Disclosure Loop (NET.CA.2) sacrifice + immediate recovery as a designed arc rather than a liability. Pairs with NET.CA.6 Sacrifice (PS→Intel) — the spend-and-recover cycle makes Network's PS expenditure feel controlled rather than punitive.",
+    design_note  = "PS recovery React. Fires when Network's own PS decreases by any cause. Recovery scales with what the player is willing to spend: base Exposure buys 1 PS back, each further unit of Exposure buys another, so a faction can negate a small knock cheaply or buy out a heavy one at real cost. Enables Disclosure Loop (NET.CA.2) sacrifice + immediate recovery as a designed arc rather than a liability. Pairs with NET.CA.6 Sacrifice (PS→Intel) — the spend-and-recover cycle makes Network's PS expenditure feel controlled rather than punitive.",
     arbiter_note = None,
 )
 ```

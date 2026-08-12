@@ -153,7 +153,7 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 GUI.CA.2 = Card(
@@ -188,7 +188,7 @@ GUI.CA.2 = Card(
 
     success     = (
         faction(acting).native.add(1),
-        faction(acting).native.add(1)
+        district(target).native.add(1)
     ),
     successcrit = None,
     fail        = None,
@@ -358,7 +358,7 @@ GUI.CA.4 = Card(
     threshold       = 65,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = 3,
+    value_rating = 2,
     trigger         = None,
     resolution_type = Probabilistic,
     outcome_type    = None,
@@ -496,7 +496,7 @@ GUI.CA.5 = Card(
 [↑ Covert Operations](#guild-covert-operations)
 
 #### Design Rationale
-Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demolition revenue, Labor Contract covers construction revenue. Together they implement the Guild doctrine that no structural change to New Meridian happens without Guild being paid. Beat 2 positional wager: Guild names a faction and bets an action slot on that faction building this Quarter. Zero resource cost means a wrong read loses only the slot. Payout mirrors STD.CA.1's cost (2 Capacity), making the card self-calibrating if STD.CA.1's cost changes in playtesting.
+Guild's construction-revenue card: no structural change to New Meridian happens without Guild being paid for the labour that made it possible. Beat 2 positional wager — Guild names a faction and bets an action slot on that faction building this Quarter; zero resource cost means a wrong read loses only the slot. Payout mirrors STD.CA.1's cost exactly (1 native + 1 district native), making the card self-calibrating: if STD.CA.1's cost changes in playtesting, this reward scales with it. Paying out in the district's own resource as well as Guild's native is deliberate — the card earns Guild a stake in whatever the district actually produces, not just more of what Guild already has.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -533,7 +533,7 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 GUI.CA.6 = Card(
@@ -565,7 +565,7 @@ GUI.CA.6 = Card(
 
     success     = (
         faction(acting).native.add(1),
-        faction(acting).native.add(1),
+        district(target).native.add(1),
     ),
     successcrit = None,
     fail        = None,
@@ -855,7 +855,7 @@ GUI.CA.9 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = 3,
+    value_rating = 2,
     trigger         = None,
     resolution_type = PositionalWager,
     outcome_type    = None,
@@ -963,7 +963,7 @@ GUI.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,
+    value_rating = 1,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = None,
@@ -1961,7 +1961,7 @@ GUI.PA.10 = Card(
     threshold       = 50,
     ring_mod        = {Ring3: +10, Ring2: 0, Ring1: -10, Ring0: -15},
     doctrine_mod    = {Neighbor: +15, Opposed: -15},
-    value_rating = None,
+    value_rating = 4,
     trigger         = None,
     resolution_type = Probabilistic,
     outcome_type    = Unilateral,

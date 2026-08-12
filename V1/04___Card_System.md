@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.93 Draft  
+**Version:** 0.9.96 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-08-04  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -374,7 +374,7 @@ Ghost believes understanding must precede action — that an incorrect answer to
 Guild believes the Chorus is an evaluation: humanity's response will be judged not by intent, but by what it builds. Improvisation reveals weakness. Shortcuts reveal urgency. What Guild places on the board is not a tactical position — it is an argument about what humanity is capable of at its best, made permanent in physical form. Guild is also the only faction at The Table that cannot operate covertly in principle: planetary-scale infrastructure cannot be classified. Operations are submitted through the shared dispatch procedure (sealed, timed), but the results are never hidden — everything lands immediately on the board as a presence token or structure. The procedure is shared; the doctrine is not. The deck does not feel covert. It feels like construction.
 
 - **Economy:** Capacity, compounded via GUI.CA.5 Infrastructure Yield — zero-cost Automatic; draws Capacity from each Established or Dominant district each Quarter
-- **Passive income:** +1 Capacity when any opponent completes STD.CA.1 in a district where Guild has presence (Guild employees did the work)
+- **Passive income — the React modifier lane:** rival development pays Guild. React modifiers yield Capacity when any opponent places a Structure Block (premiums for Core placements and for Directorate's institutional builds), salvage when any structure is demolished, and supervision fees when a rival reaches Established. No presence gate and no dependence on Guild's own play — the city cannot build without Guild labor.
 - **GUI.CA.2 Materials Acquisition:** converts correctly anticipated demolition into paid recovery
 - **Win condition:** structures on board, not just presence tokens — Guild is building the response, not positioning for it
 - **Win path:** Foundation Rights (GUI.CA.3, near-automatic in Ring 0) → high tier in Core and Mid → GUI.CA.5 compounds → Fortify Structure (GUI.CA.1) defends → GUI.CA.2 collects salvage from the table's demolition activity
@@ -395,7 +395,7 @@ Network believes no one gets to decide this in the dark. They arrived after The 
 
 The Directorate's doctrine is not domination — it is managed stability. Survival requires control, restraint, and continuity; the win state is Established in more districts than any other faction because that configuration is not hegemony — it is the only board state the Directorate can guarantee remains reversible. No faction Dominant anywhere means no escalation has outrun institutional capacity to model and correct. Suppression is the instrument of restraint, not aggression: pushing another faction's tier down prevents a condition from becoming irreversible. The Directorate makes no distinction between rogue capital and rogue information — the Syndicate's gray-market acquisitions and the Network's broadcast operations are the same threat expressed through different channels. The procedural commitment does not change based on the mechanism of the disruption.
 
-- **Economy:** Mandate via institutional acts and Core structures; Core structures draw an adjacency bonus: +1 modifier card per adjacent district at Established presence
+- **Economy:** Mandate via institutional acts and Core structures
 - **Modifier deck — military assets:** enforcement personnel and equipment for conflict resolution and presence removal; available but costs Portrait
 - **Modifier deck — legislative assets:** regulatory teams that reduce Public Act costs and extend world event duration; the doctrinal mode
 - **Suppression toolkit:** push other factions' control tiers down rather than building own tiers up — best suppression capability in the game
@@ -499,7 +499,6 @@ class Card:
 
 
 class PortraitEntry:
-    flat:      int | None         # fires on resolution regardless of submitter — faction-specific cards only (L131)
     submitter: int | None         # fires when this faction submits the card
     where:     BoolExpr | None    # entry fires only when this evaluates True
     modifier:  int | None         # adjustment to submitter under additional condition
@@ -667,33 +666,13 @@ Function:     → Art 04b §4
 Subject:      → Art 04b §4
 Resolution:   d100 | Automatic
 ResolutionType:      Probabilistic | Transactional | PositionalWager
-# Formalized from a free-form str (schema_cleanup_log #41) — was 9 values in active use, only
-# 2 documented. Full-corpus discriminating test applied to every candidate: does deleting this value lose
-# information no other field already carries? Result: 6 of 9 either mapped directly onto Resolution
-# (Probabilistic = d100, Transactional = Automatic) or were pure restatements of another field; only one
-# genuinely distinct third category survived.
-#   Probabilistic:    resolution = d100 always.
-#   Transactional:    resolution = Automatic always — immediate, deterministic, no cross-beat dependency.
-#   PositionalWager:  resolution = Automatic, but the effect targets a not-yet-revealed future beat's
-#                      submission slate (e.g. a Beat 2 card modifying a Beat 4 op that hasn't been declared
-#                      yet) — deterministic once resolved, but committed against genuinely unknown
-#                      information, unlike a plain Transactional card. 8 confirmed instances: STD.CA.6,
-#                      STD.CA.7, STD.CA.10, GUI.CA.1/2/6/9, SYN.CA.6.
-# Collapsed into the above, not separately confirmed:
-#   "Contested"            → Probabilistic. 5 instances (STD.PA.2/4/5/6, NET.PA.1); only STD.PA.2 actually
-#                            placed a ContestedMarker (a `success`-field effect) — the label didn't
-#                            correlate with a real distinct mechanism across its own cluster.
-#   "Permanent public act" → Transactional. 3 instances (DIR.PA.5/6/11); fully redundant with the
-#                            existing `persistence = Permanent` field.
-#   "Predictive"            → Transactional. 1 instance (GHO.CA.1); resolution = Automatic, deterministic
-#                            declare-then-verify check — not a distinct resolution mechanism.
-# Not formalized — tied to broken/blocked cards, left as non-conforming pending their own separate fix:
-#   "Conditional"  — GHO.MOD.1, a pre-S127 fossil already carrying an invalid `resolution = Prediction`
-#                    value (schema_cleanup_log #12). Fix belongs to that item's own reconciliation.
-#   "Deceptive"    — Backdate, 🚫 BLOCKED (GR 7.2b, PM05 04-n103), fundamental redesign required.
-#   "Verification" — Field Verification, 🚫 BLOCKED (same GR 7.2b reason, same PM05 gate).
-#   "PlayerChoice(target)" — pre-registered (PM05 04-n36) for a not-yet-built Directorate card family;
-#                    never actually appears as a real field value anywhere in the corpus.
+#   Probabilistic:    resolution = d100.
+#   Transactional:    resolution = Automatic — immediate and deterministic, with no cross-beat dependency.
+#   PositionalWager:  resolution = Automatic, but the effect is committed against a future beat's
+#                     submission slate that is not revealed at the time of commitment (e.g. a Beat 2
+#                     card modifying a Beat 4 op that has not been declared yet). Deterministic once
+#                     resolved; what distinguishes it from Transactional is the unknown information
+#                     at the moment of commitment, not the resolution mechanism.
 Ring:                0 (Chorus Node) | 1 (Core) | 2 (The Mid) | 3 (Baryo)
 PentagramRelation:   Neighbor | Opposed
 OutcomeType:         Binary | ElectPlayer | ElectDistrict | ElectFaction | BilateralAgreement | Unilateral
@@ -1683,6 +1662,7 @@ GD01 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating    = 3,
     trigger         = structure_block.placed(district=deed.district),
     resolution_type = Transactional,
     outcome_type    = None,
@@ -13139,6 +13119,7 @@ STD.MOD.98 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -13222,6 +13203,7 @@ STD.MOD.99 = Card(
     value_rating    = 2,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -13305,6 +13287,7 @@ STD.MOD.100 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -13388,6 +13371,7 @@ STD.MOD.101 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -13471,6 +13455,7 @@ STD.MOD.102 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -13554,6 +13539,7 @@ STD.MOD.103 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -13637,6 +13623,7 @@ STD.MOD.104 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -13720,6 +13707,7 @@ STD.MOD.105 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -13803,6 +13791,7 @@ STD.MOD.106 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -13886,6 +13875,7 @@ STD.MOD.107 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -13969,6 +13959,7 @@ STD.MOD.108 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14052,6 +14043,7 @@ STD.MOD.109 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14135,6 +14127,7 @@ STD.MOD.110 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14218,6 +14211,7 @@ STD.MOD.111 = Card(
     value_rating    = 2,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14301,6 +14295,7 @@ STD.MOD.112 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14384,6 +14379,7 @@ STD.MOD.113 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14467,6 +14463,7 @@ STD.MOD.114 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -14550,6 +14547,7 @@ STD.MOD.115 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14633,6 +14631,7 @@ STD.MOD.116 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14716,6 +14715,7 @@ STD.MOD.117 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14799,6 +14799,7 @@ STD.MOD.118 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14882,6 +14883,7 @@ STD.MOD.119 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -14965,6 +14967,7 @@ STD.MOD.120 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15048,6 +15051,7 @@ STD.MOD.121 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15131,6 +15135,7 @@ STD.MOD.122 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15214,6 +15219,7 @@ STD.MOD.123 = Card(
     value_rating    = 2,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15297,6 +15303,7 @@ STD.MOD.124 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15380,6 +15387,7 @@ STD.MOD.125 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15463,6 +15471,7 @@ STD.MOD.126 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = None,
@@ -15546,6 +15555,7 @@ STD.MOD.127 = Card(
     value_rating    = 1,  # diverges from the magnitude-mirror convention — pricing model places this tier here
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15629,6 +15639,7 @@ STD.MOD.128 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15712,6 +15723,7 @@ STD.MOD.129 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15795,6 +15807,7 @@ STD.MOD.130 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15878,6 +15891,7 @@ STD.MOD.131 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -15961,6 +15975,7 @@ STD.MOD.132 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -16044,6 +16059,7 @@ STD.MOD.133 = Card(
     value_rating    = 1,
 
     resolution = Automatic,  threshold = None,
+    resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
 
     target_district = trigger.district,
@@ -16222,7 +16238,7 @@ Guild-exclusive economic counter to demolition — not a defense card but a reve
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 GUI.CA.2 = Card(
@@ -16257,7 +16273,7 @@ GUI.CA.2 = Card(
 
     success     = (
         faction(acting).native.add(1),
-        faction(acting).native.add(1)
+        district(target).native.add(1)
     ),
     successcrit = None,
     fail        = None,
@@ -16427,7 +16443,7 @@ GUI.CA.4 = Card(
     threshold       = 65,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating = 3,
+    value_rating = 2,
     trigger         = None,
     resolution_type = Probabilistic,
     outcome_type    = None,
@@ -16565,7 +16581,7 @@ GUI.CA.5 = Card(
 [↑ Covert Operations](#guild-covert-operations)
 
 #### Design Rationale
-Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demolition revenue, Labor Contract covers construction revenue. Together they implement the Guild doctrine that no structural change to New Meridian happens without Guild being paid. Beat 2 positional wager: Guild names a faction and bets an action slot on that faction building this Quarter. Zero resource cost means a wrong read loses only the slot. Payout mirrors STD.CA.1's cost (2 Capacity), making the card self-calibrating if STD.CA.1's cost changes in playtesting.
+Guild's construction-revenue card: no structural change to New Meridian happens without Guild being paid for the labour that made it possible. Beat 2 positional wager — Guild names a faction and bets an action slot on that faction building this Quarter; zero resource cost means a wrong read loses only the slot. Payout mirrors STD.CA.1's cost exactly (1 native + 1 district native), making the card self-calibrating: if STD.CA.1's cost changes in playtesting, this reward scales with it. Paying out in the district's own resource as well as Guild's native is deliberate — the card earns Guild a stake in whatever the district actually produces, not just more of what Guild already has.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -16602,7 +16618,7 @@ Construction analogue to GUI.CA.2 Materials Acquisition — GUI.CA.2 covers demo
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 GUI.CA.6 = Card(
@@ -16634,7 +16650,7 @@ GUI.CA.6 = Card(
 
     success     = (
         faction(acting).native.add(1),
-        faction(acting).native.add(1),
+        district(target).native.add(1),
     ),
     successcrit = None,
     fail        = None,
@@ -16924,7 +16940,7 @@ GUI.CA.9 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = 3,
+    value_rating = 2,
     trigger         = None,
     resolution_type = PositionalWager,
     outcome_type    = None,
@@ -17032,7 +17048,7 @@ GUI.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = None,
+    value_rating = 1,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = None,
@@ -18030,7 +18046,7 @@ GUI.PA.10 = Card(
     threshold       = 50,
     ring_mod        = {Ring3: +10, Ring2: 0, Ring1: -10, Ring0: -15},
     doctrine_mod    = {Neighbor: +15, Opposed: -15},
-    value_rating = None,
+    value_rating = 4,
     trigger         = None,
     resolution_type = Probabilistic,
     outcome_type    = Unilateral,
@@ -21037,7 +21053,7 @@ Ghost's analysts have read enough of a rival's patterns to guess where they're h
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 GHO.CA.15 = Card(
@@ -21055,7 +21071,7 @@ GHO.CA.15 = Card(
     doctrine_mod    = None,
     value_rating    = 1,
     trigger         = None,
-    resolution_type = Transactional,
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
@@ -21333,6 +21349,7 @@ GHO.CA.11 = Card(
     threshold       = 30,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating    = 4,
     trigger         = None,
     resolution_type = Probabilistic,
     outcome_type    = None,
@@ -21671,7 +21688,7 @@ Somewhere in a dispatch case, an operation that took a full Quarter to plan simp
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 GHO.CA.14 = Card(
@@ -21689,7 +21706,7 @@ GHO.CA.14 = Card(
     doctrine_mod    = None,
     value_rating    = 2,
     trigger         = None,
-    resolution_type = Transactional,
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
@@ -24763,7 +24780,7 @@ DIR.CA.2 = Card(
     perspectives = {Directorate: "The marker has been detained. Its conversion will not occur."},
     design_note  = "Marker moved to Directorate public tableau Detention zone — Governing Rule 8.3a compliant (moved, not removed from play). Permanent: marker remains in Detention for remainder of session. No NotificationSlip — detention is publicly visible on Directorate tableau. Faction Terminals may be unique per faction.",
     arbiter_note = "Consume Intel token. Move named faction's deployment marker from target district to Directorate public tableau Detention zone. Physically place on Detention area — visible to all players. No separate notification. Crit success: return 3 Mandate to Directorate. Crit fail: no marker move; −1 PS to Directorate only.",
-    value_rating = 3,
+    value_rating = 2,
 )
 ```
 
@@ -25264,6 +25281,7 @@ DIR.CA.6 = Card(
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
+    resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -25342,6 +25360,7 @@ DIR.CA.7 = Card(
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
+    resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -25406,7 +25425,7 @@ The district is under enhanced institutional review. Documentation requirements 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 *New card. Fills Resolution|Modify|ModifierToken gap (04b §8.2 MP). No new component — uses existing Modifier tokens placed per-row.*
 
@@ -25420,6 +25439,7 @@ DIR.CA.8 = Card(
     beat=2, resolution=Automatic, threshold=None,
     ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
+    resolution_type = PositionalWager,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -26023,7 +26043,7 @@ DIR.PA.8 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating    = 4,
+    value_rating    = 2,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = ElectPlayer,
@@ -29132,6 +29152,7 @@ NET.CA.7 = Card(
     beat=3, resolution=d100, threshold=50,
     ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
+    resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
     target_district = district.named,
@@ -29209,6 +29230,7 @@ NET.CA.8 = Card(
 
     beat    = 2,
     resolution = d100,  threshold = 50,
+    resolution_type = Probabilistic,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
 
@@ -29890,6 +29912,7 @@ NET.MOD.1 = Card(
               # specifically as a consequence of a PA resolving — not a CA, another React, or Upkeep
     target_district = trigger.district,
     beat    = 4,  resolution = d100,  threshold = 50,
+    resolution_type = Probabilistic,
     ring_mod=None,  doctrine_mod=None,  outcome_type=None,
     value_rating = 1,
     persistence=Immediate,  persistence_condition=None,  persistence_effect=None,
@@ -29955,11 +29978,11 @@ Network's standing takes a public hit. Before the damage settles, the redundant 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 NET.MOD.3 = Card(
-    id      = "NET.MOD.3",  card_id = "NET.MOD.3",  version = "v0.1",
+    id      = "NET.MOD.3",  card_id = "NET.MOD.3",  version = "v1.0",
     name    = "Backup Server Racks",
     tagline = "When Network loses standing, redirect the narrative before it lands.",
     type    = ModReactCard,  faction = Network,
@@ -29979,10 +30002,10 @@ NET.MOD.3 = Card(
     target_object   = None,
     affinity        = None,
     restriction     = None,
-    cost            = None,  # card consumed; cost TBD (possibly 1 Exposure)
-    boost           = None,
+    cost            = Exposure * 1,
+    boost           = True: Exposure * 1,
 
-    success     = faction(Network).standing.add(TBD),  # negate some or all of triggering decrease; magnitude TBD
+    success     = faction(Network).standing.add(1 + n_boost),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
 
@@ -29990,7 +30013,7 @@ NET.MOD.3 = Card(
     ps_framing   = None,
     narrative    = None,
     perspectives = None,
-    design_note  = "PS recovery React. Fires when Network's own PS decreases by any cause. Partially or fully negates the loss — magnitude TBD at design pass. Enables Disclosure Loop (NET.CA.2) sacrifice + immediate recovery as a designed arc rather than a liability. Pairs with NET.CA.6 Sacrifice (PS→Intel) — the spend-and-recover cycle makes Network's PS expenditure feel controlled rather than punitive.",
+    design_note  = "PS recovery React. Fires when Network's own PS decreases by any cause. Recovery scales with what the player is willing to spend: base Exposure buys 1 PS back, each further unit of Exposure buys another, so a faction can negate a small knock cheaply or buy out a heavy one at real cost. Enables Disclosure Loop (NET.CA.2) sacrifice + immediate recovery as a designed arc rather than a liability. Pairs with NET.CA.6 Sacrifice (PS→Intel) — the spend-and-recover cycle makes Network's PS expenditure feel controlled rather than punitive.",
     arbiter_note = None,
 )
 ```
@@ -32651,7 +32674,7 @@ Syndicate's bribe card — pays a named faction to nullify their Beat 3 operatio
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 SYN.CA.4 = Card(
@@ -32661,7 +32684,7 @@ SYN.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Economy,  function = Protect,  subject = NativeResource,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -32687,7 +32710,11 @@ SYN.CA.4 = Card(
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate's submission-layer blocking card — analogous to DIR.CA.1 Invoke Jurisdiction (Directorate) but broader in scope and more expensive. Where DIR.CA.1 is limited to STD.CA.1/STD.CA.3, Regulatory Capture blocks any named action type in a district for one round. This flexibility reflects Syndicate's financial reach into regulatory structures. The cross-resource cost (Capital×2 + Exposure×1) at Beat 2 Automatic with public announcement makes it a visible table signal — everyone knows Syndicate has blocked this action type; the Exposure component reflects the public visibility of the announcement itself. The portrait entry with modifier=-2 when targeting a Guild-primary action type captures the doctrinal tension: buying regulatory outcomes is precisely what Guild's permanence doctrine opposes.
+Syndicate's submission-layer block. Capital buys regulatory *outcomes*, not regulatory *authority* — and that distinction is the whole card. An institution that writes a rule is bound by the rule it wrote. Syndicate does not write rules; it purchases exemptions from them, so the block falls on every faction at the table except the one that paid for it. The asymmetry is the mechanism and the doctrine at once: "control comes from positioning early" means owning the process before anyone else thinks to ask who administers it.
+
+The block is public and announced at Beat 2 — regulatory capture is not covert in its effects, only in its arrangement. The Exposure component prices that visibility: the table learns a district has gone quiet and can infer who benefits. The Portrait modifier fires when the captured district is one Guild has built up, where the doctrinal cost runs highest — Syndicate claims to enable humanity's response, and here it is charging rent on the ability to mount one.
+
+Committing Capital at Beat 2 against a Beat 3 slate nobody has revealed is a positional bet: if no rival routes an operation through the district this round, the purchase buys silence in an empty room.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -32696,58 +32723,60 @@ Syndicate's submission-layer blocking card — analogous to DIR.CA.1 Invoke Juri
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Broad submission-layer block — Capital buys regulatory control over any named action type; broader than DIR.CA.1 (Directorate, STD.CA.1/STD.CA.3 only); public announcement makes it a visible table signal | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Syndicate perspective by design — regulatory capture as market governance | Art 00 §7 |
-| Doctrine alignment | ✓ | Syndicate only; Capital×3; public announcement; Guild-primary portrait modifier outstanding (Outstanding Issue) | Art 00 §7; Art 04 §6.5 |
+| Action fit | ✓ | Submission-layer block scoped to a component the rules already identify — every rival Covert Operation routed at the named district, for one round. Capital converts to procedural control; the public announcement makes it a table-visible act. | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific, three voices — Syndicate frames purchased enforcement as market governance; Ghost records the change without naming it; Guild speaks from the site that went idle. | Art 00 §7 |
+| Doctrine alignment | ✓ | Syndicate only. The self-exemption is the doctrinal core — a purchased favour rather than an authored rule, so the acting faction is not bound by what it bought. | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — regulatory purchase is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ⚠ | Submission/Block/NamedActionType — NamedActionType definition outstanding (Outstanding Issue). `v_card_mechanical_alignment` (DB) also shows `Non-component Subject` for "NamedActionType" — extends the unregistered-Subject gap with a fourth distinct subject string. | Art 04b §4, §5 |
-| Balance | ✓ | Cross-resource cost (Capital×2 + Exposure×1). Breadth calibration and NamedActionType scope outstanding (Outstanding Issues). | Art 02 §6–§7 |
+| Taxonomy fit | ✓ | Submission/Block/CovertOperation — all three registered vocabulary; the Subject is a real component the block can be resolved against. | Art 04b §4, §5 |
+| Balance | ✓ | Cross-resource cost (Capital×2 + Exposure×1) against a whole-district block. Breadth is bounded by lasting one round, by the ChorusNode exclusion, and by the wager: an unused district returns nothing. | Art 02 §6–§7 |
 | Effect duration | ✓ | One round: block applies for round=game.round only | — |
 | Persistence | ✓ | Immediate — card fully resolved at resolution beat; no lingering game-state marker | Art 04 §6 |
-| Trigger validity | ✓ | N/A — trigger = None; Beat 2 positional wager fires on submission | — |
-| Portrait validity | ✓ | Syndicate +1 submitter with modifier=−2 for Guild-primary action type; firing conditions outstanding (Outstanding Issue) | Art 04 §6.2 |
-| Supported by zones | ✓ | target_district = district.any; ChorusNode excluded | Art 01 §6–§7 |
-| Supported by components | ✓ | NamedActionType definition outstanding (Outstanding Issue); no new physical components | Art 02 §6–§8 |
-| Supported by game procedure | ✓ | Beat 2 Automatic; named action type blocked for round; public announcement by ARBITER | Art 03 §9, §11 |
+| Trigger validity | ✓ | N/A — trigger = None; resolves at Beat 2 on submission. | — |
+| Portrait validity | ✓ | Syndicate +1 submitter, modifier −2 where the captured district holds Guild at Established or above — a board state ARBITER can read directly at resolution. | Art 04 §6.2 |
+| Supported by zones | ✓ | target_district = district.named; ChorusNode excluded by restriction. | Art 01 §6–§7 |
+| Supported by components | ✓ | No new physical components; the block resolves against Covert Operation submissions already present in the resolution grid. | Art 02 §6–§8 |
+| Supported by game procedure | ✓ | Beat 2 Automatic; rival Covert Operations at the named district blocked for the round; public announcement by ARBITER. | Art 03 §9, §11 |
 | Data schema validation | ⚠ | `card_id` present and correctly typed (verified against `--dump-d`). Missing `doctrine_mod`/`boost`/`ps_framing` (plus boilerplate `persistence_clearing_trigger`/`on_accept`/`on_decline`/`on_discard`). | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | `Automatic`, single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). `PositionalWager` records that the commitment is made before the Beat 3 slate is revealed — the resolution itself is not uncertain. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cross-resource (Capital + Exposure, both typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
 
-- **`NamedActionType` definition:** What constitutes a "named action type" — is this a card name (e.g., "STD.CA.1"), a taxonomy function (e.g., "Add — StructureBlock"), or a broader category (e.g., "Build")? The breadth of the block changes significantly based on this definition.
-- **portrait modifier=-2 for Guild-primary action:** `mod_where=action_type(named).primary_faction == Guild` — confirm "primary_faction" is a defined property of action types, or if this needs to be a player declaration at submission.
-- **Comparison to DIR.CA.1:** SYN.CA.5 is explicitly broader than DIR.CA.1 at a 1-Mandate premium. Ensure the gap is documented in design notes for balance review.
+- *(none)*
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | ✓ S157 | ✓ S157 | |
 
 ```python
 SYN.CA.5 = Card(
-    id      = "SYN.CA.5",  card_id="SYN.CA.5",  version="v1.0",
+    id      = "SYN.CA.5",  card_id="SYN.CA.5",  version="v2.0",
     name    = "Regulatory Capture",
-    tagline = "Block a specific action type in a named district for one round.",
+    tagline = "Block every rival covert operation in a named district for one round. Yours proceed.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
-    layer   = Submission,  function = Block,  subject = NamedActionType,
+    layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
-    target_district=district.any, target_faction=None, target_object=NamedActionType,
+    target_district=district.named, target_faction=None, target_object=CovertOperation,
     target_freeform=None,
     affinity=None,
     restriction = district(target) != ChorusNode,
     cost        = Capital * 2 + Exposure * 1,
-    success     = game.block(district(target), action_type=named, round=game.round, public=True),
+    success     = game.block(district(target), type=CovertOperation, faction != acting, round=game.round, public=True),
     successcrit=None, fail=None, failcrit=None,
-    portrait    = {Syndicate: PortraitEntry(submitter=+1, modifier=-2, mod_where=action_type(named).primary_faction == Guild)},
+    portrait    = {Syndicate: PortraitEntry(submitter=+1, modifier=-2, mod_where=district(target).faction(Guild).influence_tier >= Established)},
     narrative   = "If you own enough of the regulatory structure, you define what is permitted. The Syndicate does not see this as corruption. They see it as governance.",
-    perspectives = {Syndicate: "The regulatory framework exists. We simply ensure it reflects current market conditions."},
+    perspectives = {
+        Syndicate: "The regulatory framework exists. We simply ensure it reflects current market conditions.",
+        Ghost:     "The regulation did not change. The enforcement did. We logged which, and when, and who stopped filing.",
+        Guild:     "We had the permits. We had the crews. We had a district that needed the work. Someone made a call.",
+    },
     design_note  = None,
     arbiter_note = None,
     value_rating = 2,
@@ -32978,6 +33007,7 @@ SYN.CA.10 = Card(
 
     beat         = 3,
     resolution   = d100,
+    resolution_type = Probabilistic,
     threshold    = 50,
     ring_mod     = None,
     doctrine_mod = None,
@@ -33291,6 +33321,7 @@ SYN.CA.11 = Card(
 
     beat         = 3,
     resolution   = d100,
+    resolution_type = Probabilistic,
     threshold    = 50,
     ring_mod     = None,
     doctrine_mod = None,
@@ -33395,6 +33426,7 @@ SYN.CA.12 = Card(
 
     beat         = 3,
     resolution   = Automatic,
+    resolution_type = Transactional,
     threshold    = None,
     ring_mod     = None,
     doctrine_mod = None,
@@ -33714,6 +33746,7 @@ SYN.PA.3 = Card(
     ring_mod     = None,
     doctrine_mod = None,
     value_rating = 1,
+    resolution_type = Transactional,
     outcome_type = ElectPlayer,
 
     target_district = None,
@@ -33991,7 +34024,7 @@ SYN.MOD.1 = Card(
 
     trigger         = accord.activated,
     beat            = None,
-    ring_constraint = None,  ring_origin = None,  value_rating = None,
+    ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
 

@@ -713,3 +713,238 @@ cost = Findings * 2 + Exposure * 1
 **Status:** Open, flagged not fixed. Candidate direction: pick one form as canonical (likely `list([...])`, given it has the clearer precedent so far) and sweep the corpus for the other — scope not yet counted.
 
 ---
+### 59. Category: `resolution_type` field absent entirely — 46 cards corpus-wide, one large contiguous block plus scattered singletons
+
+**Surfaced by:** 09-17 triage (S157), re-deriving Directorate findings DIR-1/DIR-2 (`Retired/Whiteboard_Archive/audit_findings_log_S156.md`) against the corpus instead of against the two cards that surfaced them. The findings read as a Directorate consistency nit (CA.6/CA.7 `resolution=d100` and CA.8 `resolution=Automatic`, all three with no `resolution_type` where their siblings carry `Probabilistic`/`Transactional`). Corpus-wide query says otherwise — **46 cards have no `resolution_type` row at all**:
+
+- **STD.MOD.98–133 (36 cards)** — the entire Ring ModReactCard block, `resolution=Automatic`. Contiguous and complete, so almost certainly one authoring pass that never populated the field, not 36 independent omissions.
+- **10 scattered singletons** — DIR.CA.6, DIR.CA.7 (`d100`); DIR.CA.8 (`Automatic`); NET.CA.7, NET.CA.8, NET.MOD.1 (`d100`); SYN.CA.10, SYN.CA.11 (`d100`); SYN.CA.12, SYN.PA.3 (`Automatic`).
+
+Populated corpus baseline for comparison: `Automatic`→`Transactional` 117, `Automatic`→`PositionalWager` 8, `d100`→`Probabilistic` 37, and 176 cards with `resolution=None`/`resolution_type=None` (field present, explicitly None — not part of this gap).
+
+**Distinct from item #12**, which was *invalid values* on GHO.MOD.1 (`Prediction`/`"Conditional"`) and closed S149 — verified still correct (`Automatic`/`Transactional`). This item is field *absence*, untracked anywhere.
+
+Likely mechanical for most of the 46 (`d100`→`Probabilistic`, `Automatic`→`Transactional`), but not blindly: `PositionalWager` exists as a third value on 8 Automatic cards, so each Automatic case needs a look rather than a bulk default.
+
+**Status: FIXED S157 — all 46 filled, `.md` and DB mirror both current.** Andy's call: fill all 46, keep the field as-is (the alternative considered and rejected was narrowing the field to only where it discriminates — see below). Breakdown:
+
+- **7 → `Probabilistic`** (DIR.CA.6/7, NET.CA.7/8, NET.MOD.1, SYN.CA.10/11). Derivable with no judgment: all 37 pre-existing d100 cards carry `Probabilistic`, no exceptions, and the schema defines `Probabilistic: resolution = d100`.
+- **38 → `Transactional`** (STD.MOD.98–133, SYN.CA.12, SYN.PA.3). For the 36-card ModReactCard block: a React card fires on a trigger — an event that has *already happened* — so it cannot be committed against an unrevealed submission slate, which makes `Transactional` the only possible value for the subclass. 56 other ModReactCards already carried it. SYN.CA.12 (Beat 3, delivers a blank Accord form) and SYN.PA.3 (Beat 4, ElectPlayer) were each tested individually.
+- **1 → `PositionalWager`** (DIR.CA.8 Enhanced Scrutiny). See below.
+
+Placement follows the corpus convention (immediately before `outcome_type`). Monolith regenerated; `card_body` re-extracted and reloaded. Corpus now: Transactional 155 · Probabilistic 44 · PositionalWager 9 · None/None 176 = 384. **Zero absent.**
+
+**The derivability finding, recorded because it will resurface.** `resolution_type` carries no information on d100 cards (`Probabilistic ⟺ d100`, exceptionless) and none on ModReactCards (always `Transactional`, by the trigger argument above). It earns its place only on non-React `Automatic` cards, where it discriminates `Transactional` from `PositionalWager` — 9 cards out of 384. DIR.CA.6's own checklist had already reached this conclusion independently ("`resolution_type` correctly implied by `resolution=d100`"), which is why its blank was a considered position rather than an oversight. Andy chose uniformity over narrowing; if the field is ever revisited, this is the case for it.
+
+**Gating:** was gating Art 04 sign-off (Andy, S157 — all five S157 items gate, no deferrals). **Now closed**, so it no longer gates. #60–#63 remain open and gating.
+
+**Not a defect — dropped from DIR-1:** the finding's second claim, that CA.6/CA.7's `fail = None` leaves the failed roll undefined. `fail = None` is the corpus convention — **35 of 44** `d100` cards use it, including DIR.CA.2, the very sibling DIR-1 cites as the correct pattern. Only 9 d100 cards define a non-None `fail`. Nothing to fix.
+
+---
+
+### 60. Category: `value_rating` unset — 8 cards, split between absent field and string `"None"`
+
+**Surfaced by:** 09-17 triage (S157), consolidating GHO-2, GHO-3, GUI-5 and part of SYN-5 — four separate per-faction findings that are one corpus-wide item. Full list:
+
+- **Field absent entirely (2):** GD-01, GHO.CA.11.
+- **Present, valued string `"None"` (6):** GHO.MOD.1, GUI.CA.10, GUI.MOD.10, GUI.PA.10, STD.MOD.1, SYN.MOD.1.
+
+Populated baseline: 1 ×184, 2 ×125, 3 ×37, 4 ×30 — an int 1–4 scale, so `"None"` as a string is off-vocabulary in a field that is otherwise uniformly numeric. Whether unrated should be expressed as absent, `None`, or a real rating is the open question; the two forms currently coexist with no stated distinction.
+
+Two of the 8 are blocked on other work rather than on this item: **GHO.CA.11** is flagged for full reimagining (Art 06 Classified Directive dependency), and **GD-01** is not a `Card()` instance in the normal sense. The other 6 are live.
+
+**Status: FIXED S157.** The framing above ("8 cards unset = a gap") was wrong in both directions, and the re-derivation is the useful part of this item.
+
+**Two derivation conventions coexist — by design.** `value_rating` was never populated by one rule. **(a) CA/PA cards** were tiered on `total_pair_cost` from `v_card_pair_uvm_cost` at **<3.0 → 1 · 3.0–4.99 → 2 · 5.0–6.99 → 3 · ≥7.0 → 4** (PM02 **L284**, S145), applied by a two-pass batch script to 162 of 164 cards. **(b) Modifier cards** carry ratings from the earlier **S132/S134 "mirrors magnitude"** convention, which L284 explicitly preserved ("already carried a matching `value_rating`… no conflict"), resolving only the 9 cards where the rules disagreed in favour of the pricing tier. **176 of the 264 rated modifier cards are not in the UVM view at all** — auditing them against the cost tiers produces false positives. Neither `tools/value_rating_sweep.py` nor `tools/d1_backfill_sweep.py` assigns values; both only scaffold `= None`. The S145 batch script is not in `tools/`.
+
+**What was actually wrong — two things, both now fixed:**
+
+1. **L284's "revisit per-card when each unblocks" was overdue.** Five of the eight had become computable since S145: **GD-01 → 3** (6.40), **GHO.CA.11 → 4** (26.67), **GUI.CA.10 → 1** (2.20), **GUI.PA.10 → 4** (9.25), **SYN.MOD.1 → 1** (1.00). GD-01 and GHO.CA.11 had the field absent entirely and had it inserted; the rest were the string `"None"`. **SYN.MOD.1 is a modifier card** and so sat between the two conventions — resolved to the UVM tier on L284's own precedent that the pricing model wins on conflict.
+2. **Four CA/PA cards had drifted** from the tier scheme, all rated *above* their computed tier — **DIR.PA.8** 4→2 (cost 3.00), **GUI.CA.9** 3→2 (4.00), **GUI.CA.4** 3→2 (4.10), **DIR.CA.2** 3→2 (4.13). This is post-S145 edit drift, not S145 error: DIR.PA.8 is confirmed rewritten at S150 (item #29) from a `d100`+prose hybrid to ElectPlayer, which moved its cost while its rating stayed. Note DIR.PA.8 is a **two-tier** correction.
+
+**Three remain `None`, correctly** — GHO.MOD.1, GUI.MOD.10, STD.MOD.1 "Overture": no computable `total_pair_cost`, which is exactly what L284 says `None` means. Corpus is now 1×186 · 2×129 · 3×35 · 4×31 · None×3 = 384.
+
+**Regression guard added.** `tools/sync_card_db.sh` now runs a CA/PA-only drift check against the L284 boundaries on every sync, plus a "computable cost but no rating" check for the revisit case. Advisory — it reports, never edits, never fails the sync. Modifier cards are excluded by design. Currently reports clean.
+
+**Also corrected:** `Reference/design_reference_card_system.md` documented only convention (a) as though it were the whole rule, which is what made both the 177 modifier cards and the 8 `None`s look like defects. It now describes both conventions, the S157 verification, and drops the stale claim that GHO.CA.11 is still `id=TBD`.
+
+**One card left flagged, not fixed: DIR.CA.8** — rated, but absent from `v_card_pair_uvm_cost` entirely (no computable cost), the only CA/PA card in that position. Ties to **#27** (its unregistered `Difficulty` subject) and **#64** (its `PositionalWager` recategorisation) — three findings on one card.
+
+**Gating:** was gating; **now closed**, so it no longer gates. **Closing ownership:** this item owned `value_rating` for all 8 — 04-n224 still owns GUI.PA.10's and GUI.MOD.10's taxonomy/completion state, which this does not touch.
+
+---
+
+### 61. Category: `subject = NamedActionType` — unregistered Subject term, single instance, tracked nowhere
+
+**Surfaced by:** 09-17 triage (S157), chasing SYN-5's citation. SYN.CA.5 Regulatory Capture (`Submission | Block | NamedActionType`) is the **only** card in the corpus using this subject; it does not appear in `ref_taxonomy.md`'s Subject Vocabulary, and it is not logged in this file or PM05.
+
+**The citation it arrived under was wrong.** SYN-5 routed it to "schema_cleanup #27," but #27 is DIR.CA.8's `Difficulty` — a different card and a different term, though the same category of defect (unregistered, non-component Subject). Hence this separate entry.
+
+Underlying question is the same as #27's: `NamedActionType` isn't a physical component, it's a declared parameter (the action type Syndicate names when blocking). Whether the Subject vocabulary should admit declared-parameter terms at all, or whether these belong in `target_freeform`, is one decision covering both cards.
+
+**Correction (S157): #27 is CLOSED, not an open partner.** This entry originally said "resolve together with #27." #27 was closed at S149 — DIR.CA.8's `Difficulty` was reclassified to `ModifierToken`, GUI.CA.9's to `CovertOperation`, and GHO.CA.15's `TargetProfile` registered as-is. What #27 leaves behind is not an open item but a **governing precedent**, and it decides the principle here: *"Subject values must be valid Art 04b taxonomy Subjects, not just registered ad hoc — 'Difficulty' wasn't a real component/Subject at all, so it doesn't pass; the 2 cards using it were **reclassified rather than the string registered**."* `NamedActionType` fails the identical test: it is a play-time declared parameter, not a component. So the disposition is reclassify, not register — only the destination is open.
+
+**The consequence nobody traced — DIR.CA.8's missing cost, root-caused and FIXED S157.** #27's fix moved DIR.CA.8 onto `ModifierToken`, but `uvm_assumptions` (the pricing model's per-Subject base-rate table) had **no `ModifierToken` row** — it still carried the retired `Difficulty` at 2.50. So the card silently dropped out of `v_card_recommended_cost_full`, making it the **only CA/PA card in the corpus with no computable `total_pair_cost`** — which is what blocked it in #60. A correct taxonomy fix broke a downstream model because nothing connected the two.
+
+**Fix applied:** `Difficulty` → `ModifierToken` renamed in both `uvm_assumptions` and `uvm_pair_assumptions` (the pair row was `Difficulty/Modify = 2.50`, exactly the pair DIR.CA.8 priced on before S149). This is a **pure relabel, not a new rate** — the same rename S149 applied to the card, finally applied to the pricing table — so DIR.CA.8's pricing is preserved rather than invented. Verified: `Difficulty` was used by 0 cards and absent from `effect_category_uvm_map`, so nothing else could reach it. **DIR.CA.8 now prices at 2.50 → tier 1, matching the `value_rating = 1` it already carried** — it was correctly rated all along, just unverifiable.
+
+**Regression guard added** to `tools/sync_card_db.sh`: reports any Subject in use with no UVM base rate (a fault — those cards fall out of the cost model), and any priced Subject no card uses (a hint only, since a rate can be reached through `effect_category_uvm_map` rather than as a card's primary subject). Currently reports one hint: **`Capital` priced at 8.75 with no card using it** — left in place, flagged for verification rather than dropped.
+
+**Still open — SYN.CA.5's destination.** Andy's call (S157): **discuss, the card may need rescoping** rather than a straight reclassification. The card blocks a player-named action type; its portrait clause reads `action_type(named).primary_faction == Guild`, implying *named actions* rather than the CovertOp/PublicAct categories, and `target_object` carries the same invalid `NamedActionType` term while `target_freeform` — the Target Profile slot consolidated for exactly this kind of play-time declaration (#52) — sits `None`. Existing `Block`-function precedent: `CovertOperation` ×3 (DIR.CA.1, GHO.CA.14, STD.CA.12), `DeploymentMarker` ×2, `PublicAct` ×2, `PresenceToken` ×1. **`NamedActionType`'s `uvm_assumptions` rate (3.00, pair `NamedActionType/Block`) is deliberately left in place** until the card's scope is settled — removing it before then would drop SYN.CA.5 out of the cost model, the exact failure this item just root-caused.
+
+**SYN.CA.5 RESCOPED — Andy's call (S157): `action_type` is not a concept the game wants.** Rather than reclassify the subject and leave an invented category in the mechanism, the card was rescoped onto components the rules already identify. **v1.0 → v2.0:**
+
+- `subject` and `target_object` → **`CovertOperation`** (registered, priced, matching the existing `Block` precedent: DIR.CA.1, GHO.CA.14, STD.CA.12).
+- `success` → `game.block(district(target), type=CovertOperation, faction != acting, round=game.round, public=True)`, borrowing the corpus idiom of blocking real components rather than a category. `target_district` → `district.named`.
+- **Self-exemption added (`faction != acting`) — Andy's fiction, and the sharpest thing about the card:** an institution that authors an ordinance is bound by it; Syndicate is buying a *favour*, so it blocks others and not itself. That asymmetry is now the card's doctrinal core and is what distinguishes it from every other `Block` card, none of which self-exempt.
+- **Portrait modifier re-anchored** from `action_type(named).primary_faction == Guild` (a referent being deleted) to `district(target).faction(Guild).influence_tier >= Established` — same fiction, now readable from the board.
+- **`resolution_type` → `PositionalWager`.** Surfaced while rewriting the checklist: Capital is committed at Beat 2 against a Beat 3 slate nobody has revealed, so an unused district returns nothing — Andy's own existence test from GHO.CA.14/15. The card's *existing* checklist already described it as a "Beat 2 positional wager" while the field said `Transactional`; the prose knew before the field did.
+- Pricing moves `NamedActionType/Block` 3.00 → `CovertOperation/Block` 3.67, both tier 2 — **`value_rating` stays 2**, no knock-on.
+- Prose rewritten: new tagline, three-voice `perspectives` (was Syndicate-only), Design Rationale rebuilt. The old rationale opened by comparing the card to DIR.CA.1 by name — an **L276 violation** (cards must stand on their own); the ordinance-vs-favour distinction is preserved but stated as Syndicate's doctrine rather than as a comparison. `narrative` unchanged — it survives the rescope intact.
+- **All three Outstanding Issues cleared**, checklist re-derived (Taxonomy fit ⚠→✓, Supported by components ⚠→✓), `card_status` synced, Status table → Design Pass ✓ S157 / Issues Resolved ✓ S157.
+- **`NamedActionType` retired** from `uvm_assumptions` and `uvm_pair_assumptions` — deleted only *after* the card no longer used it, so nothing dropped out of the cost model.
+
+**Status: CLOSED S157.** No longer gates.
+
+**Spun off — DIR.CA.1 is a new #64 candidate.** It blocks a named card list in a district at Beat 2 against the same unrevealed Beat 3 slate, and carries `resolution_type = Transactional`. By the test just applied to SYN.CA.5 it is a `PositionalWager`. Not changed here — it belongs to #64's 72-card re-derivation, and DIR.CA.1 is now the third card (with GHO.CA.1) whose existing `Transactional` value looks wrong under Andy's existence test.
+
+---
+
+### 62. Category: `TBD` left in a live mechanical field — one instance corpus-wide
+
+**Surfaced by:** 09-17 triage (S157), re-deriving NET-4. NET.MOD.3 Backup Server Racks has `success = faction(Network).standing.add(TBD)` — an undetermined magnitude in an executable field. A corpus-wide scan for `TBD` found this is the **only** occurrence in a mechanical field; the other 7 hits are all in `design_note`/`arbiter_note` (DIR.MOD.1, DIR.PA.3, NET.MOD.3, NET.MOD.6, STD.CA.11, SYN.CA.7), which the clean-card rule retires independently under 04-n221.
+
+**NET-4's own field citations were wrong and are corrected here:** it reported NET.CA.8 as `cost` amount NULL and NET.MOD.3 as `cost_primary_amount` NULL. Neither holds — NET.CA.8's cost is populated (`Exposure * 1 + Findings * 1`), NET.MOD.3's cost is `None` by design, and `cost_primary_amount` is not a field in the schema at all. NET.CA.8's real gaps are voice content and targeting notation, already tracked at PM05 04-n217.
+
+**Resolved S157 — but not by picking a number.** The obvious fix was a fixed magnitude, and the corpus argued for +1: NET.MOD.2 "Troll Farm" is the card's structural twin (reacts to a standing change, shifts by 1, `Exposure * 1 + Capital * 1`, `value_rating` 1); NET.CA.7 sets Network's rate at 1 Exposure → +1 PS; and +2 would have made NET.CA.6 Sacrifice (−2 PS for an Intel Token) net-free, breaking the exact pairing the card's own `design_note` names as its purpose.
+
+**Andy reframed it: this is a `boost` mechanic.** `standing.add(n)` with a player-declared multiplier delivers the `design_note`'s "some or all of the triggering decrease" directly, without needing a `trigger.magnitude` accessor — which does not exist (confirmed accessors are `trigger.district`, `trigger.faction`, `trigger.object`, `trigger.card.*`), and inventing one would need a general Art 03 procedure under Design Pillar 4.7b anyway.
+
+**The blocker was procedural, and checking it found something larger.** Art 04 §6.2 already permits `boost` on ModReactCard (`—`, per-card), so the schema was never the obstacle. But Art 03's boost model derives the multiplier from *excess resources in a submission packet* (§7 covert, §9.4.3 Public Acts), and **§18 React Card Rules has no cost-payment step at all** — Announce → confirm trigger → *"resolves per its stated effect"* → discard. All 12 React mentions in Art 03 were checked. **26 ModReactCards carry a real cost** (NET 7, GHO 7, SYN 6, DIR 3, GUI 3) and are therefore unresolvable by the written procedure, entirely independently of boost. That gap was untracked anywhere → new **PM05 04-n227**.
+
+**Andy's ruling: allow `boost` on ModReactCards** — React cards resolve much as Public Acts do, and being publicly announced under §18.1 they impose *less* ARBITER overhead than covert dispatch, since the table validates the excess count in the open. 04-n227 carries the proposed §18.1.1 Pay Cost step for his approval before any edit to the signed-off Art 03.
+
+**NET.MOD.3 written against that design (v0.1 → v1.0):** `cost = Exposure * 1`, `boost = True: Exposure * 1`, `success = faction(Network).standing.add(1 + n_boost)`. Base Exposure buys 1 PS back; each further unit buys another — a cheap answer to a small knock, a real price to buy out a heavy one, and NET.CA.6 Sacrifice stays genuinely costly because full recovery must be paid for. Both inline `# TBD` comments stripped per the clean-card rule; `design_note` rewritten to describe the scaling. **Playable only once 04-n227 lands.**
+
+**Verified:** zero `TBD` remain in any mechanical field corpus-wide (the 7 residual instances are all `design_note`/`arbiter_note`, which 04-n221 retires independently).
+
+**Status: CLOSED S157.** No longer gates. The procedural dependency it exposed is tracked at 04-n227, which does gate.
+
+**Note on ownership:** the earlier claim that "04-n224 owns the magnitude decision" is superseded — 04-n224 listed NET.MOD.3 only as a partial-card entry, and the magnitude is resolved here.
+
+---
+
+### 63. Category: two identical `add(1)` mutations where one `add(2)` would do — residual of a resolved payout mismatch
+
+**Surfaced by:** 09-17 triage (S157), verifying GUI-4. GUI.CA.2 Materials Acquisition (v1.1) has `success = (faction(acting).native.add(1), faction(acting).native.add(1))` — arithmetically 2 Capacity, but written as two separate unit mutations on the same target.
+
+The S122 finding GUI-4 tracked (code/comment payout mismatch: 2 Capacity vs 1 Capacity + district-native) is **resolved** — cost is `None`, payout is a flat 2, no contradiction remains. What survives is only the notation: the doubled unit call reads as a fossil of the two-part payout the card used to have.
+
+Cosmetic, and cheap to fix, but flagged rather than fixed here because "collapse repeated same-target mutations" is a corpus-wide notation convention question (related to #58's multi-mutation form question) rather than a one-card cleanup.
+
+**This was NOT cosmetic, and closing GUI-4 as "resolved" at the 09-17 triage was my error.** I checked GUI.CA.2's code against itself — cost `None`, payout a flat 2, no internal contradiction — instead of against its own Design Rationale. Read against the prose, the S122 payout mismatch was never resolved; it was *flattened*, by rewriting two different payout lines into the same resource.
+
+**Two cards, wrong in opposite directions.** Both STD.CA.1 and STD.CA.2 cost `faction.acting.native * 1 + district.target.native * 1`.
+
+- **GUI.CA.2** — Design Rationale says *"Success mirrors STD.CA.2's cost exactly (1 native + 1 district native) — intentionally self-calibrating."* Code paid `native.add(1)` twice = 2 native. **Prose right, code wrong**; the district-native half had been silently dropped, so the self-calibration the card is built on did not work.
+- **GUI.CA.6** — Design Rationale said *"Payout mirrors STD.CA.1's cost (2 Capacity)."* STD.CA.1 does not cost 2 Capacity. **Code faithfully implemented a false claim about another card** — a clean instance of `feedback_card_reference_staleness`.
+
+**Fixed S157** — both now `(faction(acting).native.add(1), district(target).native.add(1))`, restoring the stated self-calibration and making the doubled-`add(1)` notation question moot rather than needing an `add(2)` collapse. GUI.CA.6's Design Rationale rewritten: false cost claim corrected, and its L276-violating opener ("Construction analogue to GUI.CA.2 Materials Acquisition…") removed.
+
+**Andy's design ruling (S157), worth carrying beyond this card:** *"I actually want more cross-costs than less. This is a good thing. It encourages trade and makes each faction dependent on each other."* This reframes the §9.2 work at **04-n223** — cross-resource costs are a deliberate interdependence mechanism, not an "inversion" to be corrected, and the free-trade rule (Art 03 §11.0) is what they exist to drive. Tier movement to be accepted if the UVM model shows a significant shift.
+
+**Status: CLOSED S157.** No longer gates. **GUI-4 (audit log) is retroactively wrong** — recorded here rather than reopened, since the underlying defect is now fixed.
+
+---
+
+### 66. Category: `card_effect_component` — the table the entire cost model reads from has no extractor and is at least a month stale
+
+**Surfaced by:** #63's fix (S157). After correcting GUI.CA.2/GUI.CA.6's payout in `.md` and running a full resync, `card_effect_component` still showed the **old** decomposition: `faction(acting).resource.native += 1` twice, carrying an inline comment that no longer exists in the source.
+
+**What that table is.** `v_card_pair_uvm_cost.total_pair_cost` — the number behind **every `value_rating` tier in the corpus** — is computed from `card_effect_component`, which decomposes each card's effect fields into priced units. It is not a view; it is a populated table.
+
+**Nothing rebuilds it.** No extractor exists anywhere in `tools/` or `Database/`; the only references are `schema_reference.md` and a July DB backup. `tools/sync_card_db.sh` rebuilds `card_body`, `card_restriction_clause` and `card_checklist` — not this. It appears to have been populated once by an ad-hoc script that was not kept.
+
+**Measurable staleness: 114 of 358 rows (32%) still use the retired `+=`/`-=` statement syntax** that items #17, #51 and #55 swept out of the corpus entirely. Roughly a third of the table demonstrably predates those sweeps.
+
+**Consequence — this reaches backwards.** Every tier decision resting on `total_pair_cost` is computed from a snapshot, not from current card content: L284's original S145 tiering, the nine re-tierings applied at S157 under #60, and the drift check added to `sync_card_db.sh` the same session. **The method is sound; the numbers are not currently trustworthy.** GUI.CA.2/CA.6 reporting "no drift" immediately after their payout changed is the proof — the model never saw the change.
+
+**Mitigation applied S157:** `sync_card_db.sh` now prints an explicit warning ahead of its drift result, naming the row count and stating the result is indicative only. Better a check that admits its own substrate is stale than one that projects false confidence.
+
+**Needed:** an extractor for `card_effect_component` on the pattern of `extract_card_body.py`, wired into `sync_card_db.sh`; then a rebuild, then a re-verification of every `value_rating` tier against the refreshed numbers. Until that exists, treat `total_pair_cost` as a dated estimate.
+
+**FIXED S157 — `tools/extract_card_effects.py` built, table rebuilt, wired into the sync.**
+
+The source turned out to be far cleaner than the derived table implied: today's outcome fields contain **zero** `+=`/`-=` (the #17/#51/#55 sweeps worked) and reduce to four shapes — `.add()/.remove()` 111, `arbiter.*` 102, `game.*` 42, other 10 — plus the 5 known bare-prose fields. All the historical mess was in the table, not the corpus, which made the parser tractable.
+
+`tools/sync_card_db.sh` now rebuilds **three** mirrors (`card_body`, `card_checklist`, `card_effect_component`) in one command. The staleness warning added earlier the same session is retired and replaced by an empty-table integrity check. Pre-rebuild table backed up to `Database/db_backups/card_effect_component_pre_S157_rebuild.sql`.
+
+**Two bugs the before/after diff caught in my own extractor** — worth recording, because neither would have been visible without diffing tiers:
+1. **Auxiliary effect fields were missing.** `on_accept`/`on_decline` carry the *entire* effect on ElectPlayer cards (SYN.CA.7, DIR.PA.8, SYN.PA.1) and `persistence_effect` does on card-as-condition PAs. Omitting them priced those cards at **0.00**. Fixed; tier changes dropped from 25 to 18. The `tier` column is an ENUM that cannot hold their names, so they record as the tier they resolve at with the source field prefixed onto `raw_expr` — the original table's own convention.
+2. **Bare list markers were being stored as components.** DIR.CA.5's `failcrit` is `[Discovery, ...]`; `Discovery` is a flag, not a mutation, and priced as one. Now filtered.
+
+**Result: 18 of 205 cards change tier; 164 are unchanged.** The rebuild is a better substrate — fresh, consistent, reproducible — but the resulting re-ratings are **not applied**, for two reasons that need a judgement call rather than a script:
+
+- **The 4 bare-prose PAs now price at 0.00** (NET.PA.4/5, SYN.PA.4/5). That is *honest* — the model cannot price English — but it means their existing tier-3/tier-4 ratings were derived from someone hand-parsing prose into components. They must not be re-rated to 1; they need real MutationExpr first (04-n218/n220).
+- **Including `persistence_effect` is my inference, not evidence.** The old table demonstrably included `on_accept` (a surviving row proves it); nothing proves it included `persistence_effect`. That single choice drives SYN.MOD.6 from tier 1 to tier 4. If card-as-condition PAs should be priced on their immediate effect only, that inclusion is wrong and several tiers move back.
+
+**14 CA/PA cards now report as drifted** by the sync's own check: NET.PA.4, NET.PA.5, SYN.PA.4, SYN.PA.5 (all prose-zero, hold), STD.CA.14, GHO.CA.6, GHO.CA.10, SYN.PA.3, DIR.CA.4, STD.CA.7, DIR.PA.8, GUI.CA.8, GUI.CA.7, NET.PA.1. Re-rating these is a separate decision → tracked for Andy.
+
+**Status: CLOSED S157** for the tooling gap it describes. The re-rating decision it exposed is live and gates Art 04 — `value_rating` prints on the card face.
+
+---
+
+---
+
+### 64. Category: `PositionalWager` categorisation was never derived corpus-wide — one confirmed miss, three open candidates
+
+**Surfaced by:** #59's fill (S157). Art 04 §6.3 carried the line "8 confirmed instances: STD.CA.6, STD.CA.7, STD.CA.10, GUI.CA.1/2/6/9, SYN.CA.6" — presented as a closed enumeration. It was not one. That list was derived at item #41 from cards that **had a `resolution_type` value**; the 46 cards with the field absent were structurally invisible to that pass and were never tested.
+
+**Confirmed miss — fixed S157:** **DIR.CA.8 Enhanced Scrutiny** (`beat = 2`, success applies a modifier to `game.resolution_grid.beat3(district)`) is a Beat 2 card modifying a Beat 3 slate that has not been declared at commitment. Structurally identical to STD.CA.6, a confirmed instance (`beat = 2`, `game.ops(beat=4, ...)`). Set to `PositionalWager`; corpus count is now 9, not 8.
+
+**Andy's ruling (S157) on the enumeration itself:** §6.3 should not have carried instance counts or lists at all — *"fix 6.3 to be specifications and schema, not analysis."* The `ResolutionType` block was rewritten to the three values and their discriminating definitions only; the derivation history, instance lists, "collapsed into the above" reasoning, and the "not formalized" case notes were removed. The removed tracking is not lost — it lives in #12, #41, #50 and PM05 04-n103. **General principle worth applying beyond this block:** §6 is a specification an author reads to pick a correct value, not a record of how the vocabulary was arrived at.
+
+**Open — three candidates currently marked `Transactional` that may fail the test:**
+- **GHO.CA.14 Ghost Protocol** — Beat 2, `arbiter.remove(resolution_grid.first_op(faction=named_opponent, beat=3))`. Removes an op that is not revealed at commitment.
+- **GHO.CA.15 Routing Override** — Beat 2, conditional on `resolution_grid.first_op(..., beat=3)`. §5a describes this card as *predict and rewrite*.
+- **SYN.CA.4** — the declared-amount bribe ("windfall or nullification — the Capital leaves either way"). A wager in the ordinary sense, but the effect is a standing immunity rather than something targeting a future submission slate. Genuinely arguable; the weakest of the three.
+
+**Explicitly NOT a candidate: GHO.CA.1.** It forward-references `faction(target).beat3_row`, but item #41 assessed it by name under the retired `"Predictive"` label and ruled it `Transactional` ("deterministic declare-then-verify check — not a distinct resolution mechanism"). Reversing that requires a new argument, not a re-derivation.
+
+**Scope warning for whoever runs this.** A query cannot complete this sweep. A syntactic scan for forward-beat references found 14 cards but **missed 4 of the 8 known instances** (GUI.CA.1/2/6/9), which wager semantically — paying at Beat 2 for an effect that only pays off if a rival demolishes, develops, or builds later in the Quarter, with no beat named in the code. Completing it means reading all 72 non-React `Automatic` card bodies against the definition. That is a real pass, not a query.
+
+**Andy's rulings (S157) — all three candidates resolved, all to `PositionalWager`:**
+- **GHO.CA.14, GHO.CA.15** — *"they are betting that an operation will be submitted by the named opponent — if they did not submit a CA this month then it fails… the wager is that an operation to impact exists."* The wager is on the **existence** of a target in an unrevealed slate, not merely on its identity. Applied.
+- **SYN.CA.4** — Andy leaned Transactional and asked to be checked. The card settles it against that lean: `cost = Capital * declared(N, min=1)` is committed at Beat 2 and distributed across *the target's Beat 3 ops targeting Syndicate, first-to-last, until exhausted*; declare too little → partial coverage + a −50 marker, target submits nothing → windfall. Its own `design_note` ends **"Wager structure: Syndicate bets positionally — wrong bet wastes Capital, correct bet nullifies threat."** There is no accept/decline path (`outcome_type = None`, no `on_accept`), so "whether the bribe is taken" is not the mechanism. Applied as `PositionalWager`.
+
+Corpus is now **12** `PositionalWager` (was 8 as enumerated, 9 after DIR.CA.8).
+
+**GHO.CA.1 — reopened by the same reasoning, needs a call.** Andy's existence-of-a-target test applies to it with *more* force than to CA.14/15: GHO.CA.1 (`beat = 2`) redirects `faction(target).beat3_row.op(district=target_district, name=target_freeform.operation)` — Ghost must name **both the district and the operation** in advance, and gets nothing if wrong. Item #41 ruled it `Transactional` under the retired `"Predictive"` label, reasoning it was a *"deterministic declare-then-verify check — not a distinct resolution mechanism."* **That reasoning does not survive scrutiny:** "deterministic once resolved" is part of the `PositionalWager` definition itself, not a disqualifier from it. Left as `Transactional` pending Andy, because reversing it overturns a logged decision rather than filling a blank.
+
+**Status:** Open. DIR.CA.8 + GHO.CA.14/15 + SYN.CA.4 fixed (4 recategorisations), plus SYN.CA.5 set to `PositionalWager` as part of its #61 rescope — corpus now 13. Remaining: the GHO.CA.1 call, **DIR.CA.1 (added S157** — blocks a named card list at Beat 2 against an unrevealed Beat 3 slate, currently `Transactional`; same shape as the rescoped SYN.CA.5, so it fails the existence test too), and the full 72-card re-derivation. **Two of the three known candidates were surfaced incidentally** — GHO.CA.1 while reading #41's history, DIR.CA.1 while rescoping a different card — which is further evidence that the sweep must be a read of all 72 bodies rather than a query. **Gates Art 04 sign-off** (same default as #59–#63; not deferred).
+
+---
+
+### 65. Category: Art 04 §6 carries decision provenance, audit vocabulary, and one retired field — spec-hygiene sweep
+
+**Surfaced by:** Andy's S157 ruling on §6.3 (*"fix 6.3 to be specifications and schema not analysis"*), extended at his request into a scan of all of §6 (lines 421–1004 of `Part1_Core.md`). §6.3's ResolutionType block was fixed in place; the same pattern runs through the rest of the section.
+
+**Claims validated — all three hold, no action:**
+- `threshold` **must be a multiple of 5** (L280) — **0 violations** corpus-wide.
+- `value_rating` **1–4** — **0 violations**.
+- `resolution_type` populated corpus-wide — closed by #59 this session.
+
+**Claim that is now false — §6 documents a retired field.** §6.1's `PortraitEntry` class still declares `flat: int | None  # fires on resolution regardless of submitter — faction-specific cards only (L131)`. Item **#7 closed at S150** with the finding that *"`flat` as a Portrait field is now fully retired, not just unused on these 4 cards"* — re-confirmed by query, **0 instances** remain anywhere in the corpus. #7's own closure note said the §6.1/§6.2 documentation *"should be reviewed for removal in a future schema pass if no future use case emerges — not done here, out of scope."* That pass never happened, so the schema still offers authors a field the design has retired. **This is the one item here with a live consequence** — a new card could legitimately be written using it.
+
+**Provenance and audit vocabulary inside the spec** (counts over §6):
+- **13** `schema_cleanup_log #N` citations · **10** `PM05 04-nNNN` citations · **3** `PM02 L###` citations · **2** session references (`S135–S138`).
+- **17** instances of "confirmed"/"Confirmed". This word is audit vocabulary: in a specification a value is either in the vocabulary or it isn't, and "confirmed" only carries meaning relative to a review pass the reader can't see.
+- Representative cases: *"`cost` is locked `None` for ModActionCard and ModBattleCard, but for two independently-arrived-at reasons (PM02 L256, L302), not one shared rationale"* — pure decision history. *"upkeep is a 4th, procedural cause, kept for completeness even though no confirmed instance uses it"* — analysis plus a usage claim. *"MutationExpr: confirmed helper symbols only (full grammar not yet enumerated — schema_cleanup_log #20/#22)"* — a spec citing tracking items to explain its own incompleteness.
+
+**Not cleanup — a genuinely open spec question worth tracking separately:** the §6.2 Data Dictionary's **"Displayed"** column (does this field print on the card face?) is `TBD` on **14** rows. That is unresolved specification, not stale analysis, and is gated on Art 04 §7 / Art 09's physical layout work. It should stay, but should be tracked rather than sitting as an unexplained TBD column.
+
+**Proposed scope:** strip provenance citations and audit vocabulary from §6 (the tracking they point at already exists in this log, PM05 and PM02 — nothing is lost); remove `flat` from `PortraitEntry`; keep the "Displayed" TBDs and register them against the Art 04 §7 / Art 09 gate. Deliberately **not** executed at scan time — §6 is 580 lines and Andy asked for a scan, not a rewrite.
+
+**Status:** Open, scanned not fixed. **Gates Art 04 sign-off** — the retired-`flat` documentation in particular, since it can generate new bad content.
+
+---

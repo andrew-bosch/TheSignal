@@ -654,7 +654,7 @@ Ghost's analysts have read enough of a rival's patterns to guess where they're h
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 GHO.CA.15 = Card(
@@ -672,7 +672,7 @@ GHO.CA.15 = Card(
     doctrine_mod    = None,
     value_rating    = 1,
     trigger         = None,
-    resolution_type = Transactional,
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
@@ -950,6 +950,7 @@ GHO.CA.11 = Card(
     threshold       = 30,
     ring_mod        = None,
     doctrine_mod    = None,
+    value_rating    = 4,
     trigger         = None,
     resolution_type = Probabilistic,
     outcome_type    = None,
@@ -1288,7 +1289,7 @@ Somewhere in a dispatch case, an operation that took a full Quarter to plan simp
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | |  | |
 
 ```python
 GHO.CA.14 = Card(
@@ -1306,7 +1307,7 @@ GHO.CA.14 = Card(
     doctrine_mod    = None,
     value_rating    = 2,
     trigger         = None,
-    resolution_type = Transactional,
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
