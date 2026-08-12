@@ -465,6 +465,28 @@ Every faction's drafting pool (Standard set + faction-specific set, `blocked=0`,
 
 ---
 
+## Schema-Section Discipline (Andy, S157)
+
+**Art 04 §6 is a specification an author reads to pick a correct value — not a record of how the vocabulary was arrived at.** Andy's ruling while fixing §6.3's `ResolutionType` block, which carried the field's derivation history, an "8 confirmed instances" enumeration, a "collapsed into the above" analysis of five retired values, and case notes on four non-conforming ones: *"why does 6.3 even need to specify how many instances exist? fix 6.3 to be specifications and schema not analysis."*
+
+Two consequences worth carrying:
+- **Instance counts and card lists do not belong in §6.** They go stale silently, and the §6.3 enumeration was worse than stale — it was **unsound**, having been derived only from cards that already carried a value, so the 46 cards with the field absent were structurally invisible to it. DIR.CA.8 sat in that blind spot and was a ninth `PositionalWager` all along.
+- **Provenance belongs in the tracking layer** (`schema_cleanup_log.md`, PM05, PM02), not in artifact prose — consistent with the artifact-hygiene rule. §6 still carries 13 `schema_cleanup_log` citations, 10 PM05, 3 PM02, 2 session references and 17 uses of "confirmed"; the sweep is **PM05 04-n226 / `schema_cleanup_log` #65**, deliberately sequenced after the open schema items so §6 is swept once rather than twice.
+
+**Retired from §6.1 (S157):** `PortraitEntry.flat` — item #7 retired the field at S150 with zero corpus instances but left its documentation standing, so the schema was still offering authors a field the design had abandoned.
+
+---
+
+## Design Pass Materiality Test (Andy, S157 — PM05 04-n225)
+
+**A change resets a card's Design Pass only when it changes what the card *does* or how it is *strategically classified* — not when it populates or corrects a value another field already determines.**
+
+Applied at S157: recategorising four cards to `PositionalWager` **reset** (strategic reclassification); correcting GUI.CA.2/GUI.CA.6's payout **reset** (changes what the card does); NET.MOD.3 going from a `TBD` stub to a real boost mechanism **reset**. The 43 derivable `resolution_type` fills and all 9 `value_rating` changes did **not** — a tier is computed from cost rather than chosen, so correcting one restores a locked scheme rather than altering a design.
+
+Apply the test at the point of change rather than re-litigating it per card. When a card's checklist is genuinely re-derived in the same session as the change, record the new pass rather than blanking it (SYN.CA.5, S157).
+
+---
+
 ## Design Flags for New Card Proposals
 
 Before writing any new card spec, check:

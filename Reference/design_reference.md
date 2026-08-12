@@ -75,6 +75,7 @@ Upkeep → Placement (2 markers, snake order) → Month 1/2/3 [§9.1 Covert Disp
 ## Always-Relevant Design Rules (Quick Checks)
 
 Before any card spec:
+0. **Cross-resource costs are desirable, not a defect** (Andy, S157). A card costing another faction's native resource drives trade and makes factions dependent on each other — that interdependence is the design intent, and the free-trade rule (Art 03 §11.0) exists to serve it. Do **not** treat a cross-cost as a "§9.2 inversion" to be corrected; the open question for any economy pass is whether interdependence is *well-distributed*, not whether a faction is mono. See PM05 04-n223.
 1. Duration: Immediate / Transient / Seasonal / Permanent only
 2. Cost: fungible resources only; partial = threshold penalty; zero = voided
 3. React trigger: publicly observable only
