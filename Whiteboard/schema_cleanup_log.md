@@ -894,6 +894,33 @@ The source turned out to be far cleaner than the derived table implied: today's 
 
 ---
 
+**S158 — the re-rating decision resolved (04-n228). Three of this entry's own claims did not survive re-derivation.**
+
+**`persistence_effect` counts toward `total_pair_cost` — Andy, S158.** The inclusion is not an inference; it is what the original model did, on two independent lines of evidence:
+
+1. **The pre-rebuild table contains it explicitly.** `card_effect_component_pre_S157_rebuild.sql` has five rows whose `raw_expr` opens with a literal `[persistence_effect]` prefix — DIR.PA.3, DIR.PA.5, DIR.PA.6, DIR.PA.11, DIR.MOD.9 — all `category='board_condition'`, `magnitude=NULL`. Same convention as the rebuilt extractor's `persistence_effect:` prefix, different punctuation. (`on_accept`/`on_decline` appear the same way, 13 rows.)
+2. **The existing corpus ratings only reconcile with inclusion.** DIR.PA.3 is rated 4, DIR.MOD.9 and DIR.PA.6 are 3, DIR.PA.11 is 2. Excluding persistence drops their computed costs to 4.78 / 2.28 / 2.28 / 2.28 — tiers 2/1/1/1. The S145 pass, working from the *old* table, demonstrably priced persistence in. For six further cards (DIR.MOD.6, DIR.PA.5, DIR.PA.7, GUI.PA.3, GUI.PA.8, NET.MOD.13) the persistence effect is the *entire* priceable content; excluding it leaves nothing to price at all.
+
+**Method.** The view's inner logic was rebuilt as a CTE and run in three regimes — **A** current extractor, **B** persistence excluded, **C** persistence forced to the old `board_condition`/NULL encoding. Mode A reproduces `v_card_pair_uvm_cost` row-for-row across all 199 shared cards, so the replication is faithful.
+
+**A vs C is tier-neutral corpus-wide.** Only DIR.PA.11 (4.56 → 4.28) and DIR.PA.5 (3.44 → 4.00) move at all, neither across a boundary. The re-encoding from `board_condition`/NULL to concrete category + magnitude changed *nothing* that reaches a card face; only inclusion-vs-exclusion matters.
+
+**Claim not upheld — "that single choice drives SYN.MOD.6 from tier 1 to tier 4."** SYN.MOD.6 computes tier 4 in *all three* regimes (A 12.00, B 7.00, C 8.00). Its tier is driven by `arbiter.modify(trigger.card, boost, delta=+20)` and the 2-Capital escrow, not by persistence. The claim fails a second time independently: SYN.MOD.6 is a MOD/React card, so it rates on the S132/S134 magnitude convention and is not UVM-tiered at all. The sensitivity argument that made question (2) look blocking rested on the one card that was never subject to it.
+
+**What the choice actually gated: one card.** Of the 10 re-derivable cards, only **SYN.PA.3** changes tier between regimes (2 including / 1 excluding). Resolved to 2.
+
+**Claim not upheld — "the four bare-prose PAs."** There are **five**. `NET.PA.6` has no priceable effect rows either, and its rating of 1 is unverifiable in exactly the same way as the other four — it stayed invisible only because 1 happens to equal what the tier scheme spuriously returns at cost 0.00. 04-n218 already scoped NET.PA.4/**PA.5**/**PA.6** together; this entry's enumeration was the incomplete one. All five hold their current ratings pending 04-n218/n220.
+
+**Claim not upheld — "14 CA/PA cards now report as drifted."** Independent re-derivation returns **16** drifted cards, of which 6 are MOD/React (GHO.MOD.1, GHO.MOD.7, NET.MOD.9, NET.MOD.14, STD.MOD.1, SYN.MOD.6) and correctly out of scope, and 10 are the re-derivable CA/PA list. That list matches this entry's exactly, card for card and direction for direction — the enumeration of the 10 was right; the framing around it was not.
+
+**MOD/React drift is expected, not a defect (Andy, S158).** Modifier cards rate on magnitude, not cost, so UVM drift on them is a category error rather than a finding. `sync_card_db.sh` already excludes `%.MOD.%` from its drift query; the six above are recorded here so they are not re-discovered as findings on a future sweep.
+
+**Applied S158:** all 10 re-ratings written to the Part files — STD.CA.14 2→1, GHO.CA.6 3→1, GHO.CA.10 3→1, SYN.PA.3 1→2, DIR.CA.4 1→2, STD.CA.7 1→2, DIR.PA.8 2→3, GUI.CA.8 2→3, GUI.CA.7 2→3, NET.PA.1 3→4. All 10 spot-verified against `uvm_pair_assumptions`: zero rate-table fallbacks, every rate `validated`. Two carry `has_boost`, so their costs are floors at N=1 — SYN.PA.3 (3.00 → tier 2 is a floor, could rate higher once N is known) and NET.PA.1 (12.78, floor, but already at the tier-4 ceiling, so safe). `sync_card_db.sh` now reports **✓ no drift**.
+
+**Tooling fix S158.** The drift check counted the bare-prose cards as drift, which would have made a permanent false positive that masks real drift. It now reports them in a separate bucket ("unpriceable — bare prose, rating held pending 04-n218/n220") rather than hiding or mis-classifying them. That split is what surfaced NET.PA.6.
+
+---
+
 ---
 
 ### 64. Category: `PositionalWager` categorisation was never derived corpus-wide — one confirmed miss, three open candidates

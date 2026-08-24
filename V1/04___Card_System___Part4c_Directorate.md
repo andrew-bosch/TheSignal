@@ -321,7 +321,7 @@ DIR.CA.4 = Card(
     perspectives = {Directorate: "Our presence is where it needs to be. This was always the plan. The redistribution was anticipated."},
     design_note  = "Replaces DIR.CA.4 Sealed Border (retired). Fills Territory — Move — Presence token gap; no other card in the full set uses this verb + subject combination. Most impactful before Battlefield Strength when district control margins are tight.",
     arbiter_note = "Move named Directorate presence tokens from source to destination. Adjacency confirmed against district adjacency table. Entry requirements rechecked at destination — if Directorate does not qualify for entry, card is discarded without effect (resources not refunded). Control flags and Established markers recalculated after move.",
-    value_rating = 1,
+    value_rating = 2,
 )
 ```
 
@@ -1428,7 +1428,7 @@ DIR.PA.8 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating    = 2,
+    value_rating    = 3,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = ElectPlayer,

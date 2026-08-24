@@ -116,6 +116,7 @@ SELECT CONCAT('  ', v.card_id, ': rated ', v.raw_value, ', cost ',
 FROM card_body v JOIN v_card_pair_uvm_cost u ON u.card_id = v.card_id
 WHERE v.field_name = 'value_rating' AND v.raw_value REGEXP '^[0-9]+$'
   AND v.card_id NOT LIKE '%.MOD.%'
+  AND EXISTS (SELECT 1 FROM card_effect_component e WHERE e.card_id = v.card_id)
   AND v.raw_value <> CASE WHEN u.total_pair_cost < 3 THEN 1 WHEN u.total_pair_cost < 5 THEN 2
                           WHEN u.total_pair_cost < 7 THEN 3 ELSE 4 END
 ORDER BY u.total_pair_cost;
@@ -127,6 +128,26 @@ if [[ -n "$DRIFT" ]]; then
     echo "  (advisory — re-derive the rating, or record why the card is a deliberate exception)"
 else
     echo "  ✓ no drift"
+fi
+
+# Bare-prose cards are reported separately, never as drift: the model cannot
+# price English, so their 0.00 is honest and the scheme's "say 1" is wrong.
+# Their ratings came from hand-parsing prose and are unverifiable, not incorrect
+# -- they must NOT be re-rated until real MutationExpr exists (04-n218/n220).
+# Folding them into the drift list above would make a permanent false positive
+# that hides genuine drift (S158, 04-n228).
+UNPRICEABLE=$(mariadb "$DB" -N -B <<'SQL' 2>/dev/null
+SELECT CONCAT('  ', v.card_id, ': rated ', v.raw_value, ', no priceable effect rows')
+FROM card_body v
+WHERE v.field_name = 'value_rating' AND v.raw_value REGEXP '^[0-9]+$'
+  AND v.card_id NOT LIKE '%.MOD.%'
+  AND NOT EXISTS (SELECT 1 FROM card_effect_component e WHERE e.card_id = v.card_id)
+ORDER BY v.card_id;
+SQL
+)
+if [[ -n "$UNPRICEABLE" ]]; then
+    echo "  · $(echo "$UNPRICEABLE" | wc -l) card(s) unpriceable — bare prose, rating held pending 04-n218/n220:"
+    echo "$UNPRICEABLE"
 fi
 
 UNRATED=$(mariadb "$DB" -N -B -e "SELECT COUNT(*) FROM v_card_pair_uvm_cost u LEFT JOIN card_body v ON v.card_id=u.card_id AND v.field_name='value_rating' WHERE v.raw_value IS NULL OR v.raw_value='None';" 2>/dev/null || echo 0)

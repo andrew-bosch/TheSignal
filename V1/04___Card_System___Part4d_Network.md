@@ -702,7 +702,7 @@ NET.PA.1 = Card(
     threshold       = 30 + (10 * count(intel_token(target=faction(target)).held)),  # +10 per token held naming target
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = 3,
+    value_rating = 4,
     trigger         = None,
     resolution_type = Probabilistic,
     outcome_type    = Unilateral,

@@ -1,9 +1,9 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.96 Draft  
+**Version:** 0.9.97 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
-**Last Updated:** 2026-08-04  
+**Last Updated:** 2026-08-24  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
 **Companion document:** 04b — Action Taxonomy & Design Analysis
 
@@ -2624,7 +2624,7 @@ STD.CA.7 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = 1,
+    value_rating = 2,
     trigger         = None,
     resolution_type = PositionalWager,
     outcome_type    = None,
@@ -3283,7 +3283,7 @@ C_Disprove = Card(
     threshold       = 45,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = 2,
+    value_rating = 1,
     trigger         = None,
     resolution_type = Probabilistic,
     outcome_type    = None,
@@ -16741,7 +16741,7 @@ GUI.CA.7 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating    = 2,
+    value_rating    = 3,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = None,
@@ -16839,7 +16839,7 @@ GUI.CA.8 = Card(
     threshold       = 60,
     ring_mod        = {0: -15, 1: -10, 2: 0, 3: +10},
     doctrine_mod    = None,
-    value_rating    = 2,
+    value_rating    = 3,
     trigger         = None,
     resolution_type = Probabilistic,
     outcome_type    = None,
@@ -21254,7 +21254,7 @@ GHO.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = 3,
+    value_rating = 1,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = None,
@@ -21435,7 +21435,7 @@ GHO.CA.6 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = 3,
+    value_rating = 1,
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -24936,7 +24936,7 @@ DIR.CA.4 = Card(
     perspectives = {Directorate: "Our presence is where it needs to be. This was always the plan. The redistribution was anticipated."},
     design_note  = "Replaces DIR.CA.4 Sealed Border (retired). Fills Territory — Move — Presence token gap; no other card in the full set uses this verb + subject combination. Most impactful before Battlefield Strength when district control margins are tight.",
     arbiter_note = "Move named Directorate presence tokens from source to destination. Adjacency confirmed against district adjacency table. Entry requirements rechecked at destination — if Directorate does not qualify for entry, card is discarded without effect (resources not refunded). Control flags and Established markers recalculated after move.",
-    value_rating = 1,
+    value_rating = 2,
 )
 ```
 
@@ -26043,7 +26043,7 @@ DIR.PA.8 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating    = 2,
+    value_rating    = 3,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = ElectPlayer,
@@ -29322,7 +29322,7 @@ NET.PA.1 = Card(
     threshold       = 30 + (10 * count(intel_token(target=faction(target)).held)),  # +10 per token held naming target
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = 3,
+    value_rating = 4,
     trigger         = None,
     resolution_type = Probabilistic,
     outcome_type    = Unilateral,
@@ -33745,7 +33745,7 @@ SYN.PA.3 = Card(
     threshold    = None,
     ring_mod     = None,
     doctrine_mod = None,
-    value_rating = 1,
+    value_rating = 2,
     resolution_type = Transactional,
     outcome_type = ElectPlayer,
 

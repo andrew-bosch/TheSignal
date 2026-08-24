@@ -1379,7 +1379,7 @@ SYN.PA.3 = Card(
     threshold    = None,
     ring_mod     = None,
     doctrine_mod = None,
-    value_rating = 1,
+    value_rating = 2,
     resolution_type = Transactional,
     outcome_type = ElectPlayer,
 
