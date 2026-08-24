@@ -11,6 +11,8 @@ Single-file schema reference for `the_signal_db`. Eliminates the need for Claude
 **Connection — Claude Code:** `mysql the_signal_db` (no flags; ~/.my.cnf configured for claude user)  
 **Connection — agy:** `mysql -u gemini -pgemini_password1 the_signal_db`
 
+**Scratch databases — use a `test_` prefix (S158).** The `claude` user holds `ALL PRIVILEGES ON the_signal_db.*` and **no global privileges**, so `CREATE DATABASE <anything>` fails with `ERROR 1044 (42000): Access denied`. MariaDB's default PUBLIC grant on `` `test\_%`.* `` covers CREATE/DROP/INDEX/etc., so **`CREATE DATABASE test_<name>` works with no privilege change** — verified end to end (create → load → query → drop). Reach for this whenever you need to load a **backup dump** for comparison: those dumps open with `DROP TABLE IF EXISTS <table>; CREATE TABLE ...`, so loading one into `the_signal_db` would destroy the live table of the same name. Load into `test_<name>` instead and drop it when finished. Do not request broader grants for this — the restriction is doing its job.
+
 ---
 
 ## 1. Critical FK Semantics — Read This First
