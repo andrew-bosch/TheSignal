@@ -29,7 +29,7 @@
 [↑ Covert Operations](#ghost-covert-operations)
 
 #### Design Rationale
-Ghost-exclusive intelligence-into-action card — resolves deterministically (`resolution_type = Transactional`; the earlier `"Predictive"` label was corrected, schema_cleanup_log #41 — the card's own perspective explicitly rejects the framing: "We are not predicting"). Ghost submits a declared guess at §9.1: target faction, target district, and the operation they believe that faction has dispatched. At Beat 2, ARBITER checks all three against the covert grid. A correct match causes ARBITER to move the matched operation from the target faction's Beat 3 lane into Ghost's lane. The target faction loses the operation entirely: their case returns empty, resources spent, Dispatch Token consumed.
+Ghost-exclusive intelligence-into-action card — Automatic, no roll, but committed at §9.1 against a Beat 3 slate nobody has seen (`resolution_type = PositionalWager`). Ghost declares all three elements in advance: target faction, target district, and the operation they believe that faction has dispatched. At Beat 2, ARBITER checks all three against the covert grid. A correct match causes ARBITER to move the matched operation from the target faction's Beat 3 lane into Ghost's lane. The target faction loses the operation's outcome entirely: resources spent, Dispatch Token consumed, nothing delivered. The operation card itself returns to its owner's case after it resolves — Ghost takes this Month's execution, not the card. Deterministic once resolved — what Ghost is buying is a position against information it does not hold, not a chance to fail a roll.
 
 This is not a copy. The operation executes once, for Ghost.
 
@@ -63,7 +63,7 @@ A faction submits their operation. Ghost, watching, named all three things in ad
 | Supported by game procedure | ⚠ | Beat 2 resolution; ARBITER checks prediction against covert grid; if match + executable: lane redirect. Art 03 gap: Pattern Match redirect procedure not yet written in Art 03 §9.4 — simpler than the prior copy-injection model but still unwritten. | Art 03 §9 |
 | Data schema validation | ✓ | 04-n70 closed S95 — stale "Pending" note corrected. `id`/`card_id`/`doctrine_mod`/`boost`/`ps_framing` all present. Audit-flagged base fields (`persistence_clearing_trigger`, `on_accept`, `on_decline`, `on_discard`) correctly resolve to `None`: Immediate persistence, `outcome_type` isn't `ElectPlayer`, not the evergreen card. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story present | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | `Automatic` (`resolution_type = Transactional`); single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`). | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | `Automatic` (`resolution_type = PositionalWager`); single deterministic outcome (`success` only; `successcrit`/`fail`/`failcrit` all `None`) — the uncertainty is the unrevealed Beat 3 slate at commitment, not the resolution. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Mono-resource (Findings only, typed correctly). | Art 00a §9.2 |
 
 #### Outstanding Issues
@@ -77,7 +77,7 @@ A faction submits their operation. Ghost, watching, named all three things in ad
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | | | |
 
 ```python
 GHO.CA.1 = Card(
@@ -95,7 +95,7 @@ GHO.CA.1 = Card(
     doctrine_mod    = None,
     value_rating = 1,
     trigger         = None,
-    resolution_type = Transactional,
+    resolution_type = PositionalWager,
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -127,8 +127,8 @@ GHO.CA.1 = Card(
     perspectives = {
         Ghost: "We are not predicting. We are recognising a pattern we have already seen. And then we are keeping it.",
     },
-    design_note  = "Steal not copy: matched op moves from target faction's Beat 3 lane to Ghost's. Original faction loses the op, the cost, and the Dispatch Token — no compensation. Ghost resolves the stolen op as faction(acting) at Beat 3; same target as originally submitted; Ghost receives all effects including off-faction resources. Executability check precedes the move: if Ghost cannot execute (restriction failure, wrong resource type), Pattern Match fizzles and the op stays in target's lane. Taxonomy: Submission|Redirect — Art 04b §5.1 L×F validity check pending (PM05 queued).",
-    arbiter_note = "At Beat 2: (1) Check Ghost's target_freeform (target faction + target district + operation name) against the Beat 3 grid. (2) If all three match: check whether Ghost can execute the matched op — if restriction or resource type blocks execution, Pattern Match fizzles (2 Findings spent; op stays in target lane; no notification). (3) If match AND executable: move the op and its Target Profile from target faction's Beat 3 lane to Ghost's Beat 3 lane. Target faction's committed cost resources and Dispatch Token are consumed — not returned. (4) At Beat 3: the moved op resolves in Ghost's lane with Ghost as faction(acting). The original Target Profile governs targeting (same district, same target faction as originally submitted). All effects referencing faction(acting) now reference Ghost.",
+    design_note  = "Steal not copy: matched op moves from target faction's Beat 3 lane to Ghost's. Original faction loses the op's outcome, the cost, and the Dispatch Token — no compensation; the operation card itself returns to their case once it has resolved, so Ghost gains this Month's execution, not the card. Ghost resolves the stolen op as faction(acting) at Beat 3; same target as originally submitted; Ghost receives all effects including off-faction resources. Executability check precedes the move: if Ghost cannot execute (restriction failure, wrong resource type), Pattern Match fizzles and the op stays in target's lane. Taxonomy: Submission|Redirect — Art 04b §5.1 L×F validity check pending (PM05 queued).",
+    arbiter_note = "At Beat 2: (1) Check Ghost's target_freeform (target faction + target district + operation name) against the Beat 3 grid. (2) If all three match: check whether Ghost can execute the matched op — if restriction or resource type blocks execution, Pattern Match fizzles (2 Findings spent; op stays in target lane; no notification). (3) If match AND executable: move the op and its Target Profile from target faction's Beat 3 lane to Ghost's Beat 3 lane. Target faction's committed cost resources and Dispatch Token are consumed — not returned. (4) At Beat 3: the moved op resolves in Ghost's lane with Ghost as faction(acting). The original Target Profile governs targeting (same district, same target faction as originally submitted). All effects referencing faction(acting) now reference Ghost. (5) After resolution: return the operation card to the original faction's Dispatch Case — it is theirs, and comes back with normal case return; Ghost does not keep it.",
 )
 ```
 
@@ -252,7 +252,7 @@ Targeting the unplayed hand directly would require physical access to the target
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | | | |
 
 ```python
 GHO.CA.3 = Card(
@@ -262,7 +262,7 @@ GHO.CA.3 = Card(
     type    = CovertOperation, subtype = FactionSpecific, faction = Ghost,
     layer   = Information, function = Reveal, subject = IntelDeliverySlip,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -405,7 +405,7 @@ None.
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 |  | |
+| Status | |  | |
 
 ```python
 GHO.CA.5 = Card(
@@ -416,7 +416,7 @@ GHO.CA.5 = Card(
     layer   = Information,  function = Corrupt,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 1,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,

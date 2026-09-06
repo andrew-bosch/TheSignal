@@ -60,7 +60,7 @@ Directorate's positional authority card — asserts institutional control over a
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | | | |
 
 ```python
 DIR.CA.1 = Card(
@@ -70,7 +70,7 @@ DIR.CA.1 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -218,7 +218,7 @@ An earlier model used a permanent passive feed with beat3_pre_resolution deliver
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | | | |
 
 ```python
 DIR.CA.3 = Card(
@@ -228,7 +228,7 @@ DIR.CA.3 = Card(
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
     layer   = Information, function = Reveal, subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,

@@ -1,7 +1,7 @@
 # 00c — Economy Manifest
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.5
+**Version:** 0.6
 **Status:** ⚠️ Future Analysis Stub — Not Canonical
 
 **Purpose:** Future economic calibration index — not yet active. Will aggregate resource generation rates, operation costs, and modifier thresholds from source artifacts into a single balance/playtesting reference. **Not canonical:** Art 02, Art 03, and Art 04 are the authoritative sources for all current economic values. Do not cite 00c for design decisions or ref files.
@@ -239,9 +239,13 @@ Amplifies all Public Standing changes for factions with presence in the Resident
 
 ## 5. Card Costs & Modifier Thresholds
 
-*Source: Art 04 §6 (`value_rating` field). Full derivation history, worked examples, and resolved outliers: PM05 04-n178, PM02 L277–L284; archived working detail: `Retired/Whiteboard_Archive/cost_baseline_recommendations.md`.*
+*Source: Art 04 §6 (`value_rating` field). Full derivation history, worked examples, and resolved outliers: PM05 04-n178, PM02 L277–L284, L367; archived working detail: `Retired/Whiteboard_Archive/cost_baseline_recommendations.md`.*
 
-**Status:** `value_rating` (1–4) assigned corpus-wide, locked S145 (PM02 L284). Hand size, deck construction economics, and Burst Play threshold remain unaddressed — out of scope for this model, still pending.
+**Status:** `value_rating` (1–4) assigned corpus-wide, locked S145 (PM02 L284); cost model closed S158 (PM02 L367), which settled the last open question in it — `persistence_effect` counts toward `total_pair_cost` — and applied 10 CA/PA re-ratings on that basis. The S157 caveat that every rating was provisional is **lifted**. Two standing qualifications remain: the ⚠ governing caveat below (calibration is self-consistency, not playtest), and five bare-prose PublicActs (NET.PA.4/PA.5/PA.6, SYN.PA.4/PA.5) whose ratings are held rather than derived, since their outcome fields are prose rather than MutationExpr and the model has nothing to price — they become computable when PM05 04-n218/04-n220 convert them, and must be re-derived at that point.
+
+**Scope of the model:** CA and PA cards only. Modifier/React cards are rated on the S132/S134 magnitude convention, not UVM-tiered, so a MOD card whose rating differs from its modeled tier is expected rather than defective.
+
+Hand size, deck construction economics, and Burst Play threshold remain unaddressed — out of scope for this model, still pending.
 
 ### Methodology — Universal Value Metric (UVM) pair-based pricing
 
@@ -251,11 +255,13 @@ A fixed per-Subject value × per-Function multiplier was tried first and rejecte
 
 ### value_rating Tier Boundaries (locked S145)
 
+Counts are the priced population — the 205 cards `v_card_pair_uvm_cost` returns a modeled value for — bucketed by that modeled value, not by assigned rating.
+
 | value_rating | Range (modeled value) | Count |
 |---|---|---|
-| 1 (floor) | < 3.0 | 107 |
-| 2 (standard) | 3.0–4.99 | 48 |
-| 3 (advanced) | 5.0–6.99 | 26 |
+| 1 (floor) | < 3.0 | 114 |
+| 2 (standard) | 3.0–4.99 | 49 |
+| 3 (advanced) | 5.0–6.99 | 23 |
 | 4 (ceiling) | ≥ 7.0 | 19 |
 
 Natural-break boundaries, not equal-population — a histogram of the full 201-card CA/PA/ModReact corpus thins going up (a clean pyramid), matching the intended 1=floor/basic, 4=end-game-ceiling design shape. Equal-population quartiles were checked and rejected — they'd force a ~50/50 floor/non-floor split, contradicting that intent.

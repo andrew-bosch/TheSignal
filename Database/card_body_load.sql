@@ -469,7 +469,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.CA.12', 'doctrine_mod', 'None', '04___Card_System___Part2_Standard.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.CA.12', 'trigger', 'None', '04___Card_System___Part2_Standard.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.CA.12', 'value_rating', '2', '04___Card_System___Part2_Standard.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.CA.12', 'resolution_type', 'Transactional', '04___Card_System___Part2_Standard.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.CA.12', 'resolution_type', 'PositionalWager', '04___Card_System___Part2_Standard.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.CA.12', 'outcome_type', 'None', '04___Card_System___Part2_Standard.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.CA.12', 'persistence', 'Immediate', '04___Card_System___Part2_Standard.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.CA.12', 'persistence_condition', 'None', '04___Card_System___Part2_Standard.md');
@@ -8703,7 +8703,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'doctrine_mod', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'value_rating', '1', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'trigger', 'None', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'resolution_type', 'Transactional', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'resolution_type', 'PositionalWager', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'outcome_type', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'persistence', 'Immediate', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'persistence_condition', 'None', '04___Card_System___Part4b_Ghost.md');
@@ -8724,8 +8724,8 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'ps_framing', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'narrative', '\"Ghost does not guess. Ghost identifies what is already in motion — and takes it.\"', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'perspectives', '{\n        Ghost: \"We are not predicting. We are recognising a pattern we have already seen. And then we are keeping it.\",\n    }', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'design_note', '\"Steal not copy: matched op moves from target faction\'s Beat 3 lane to Ghost\'s. Original faction loses the op, the cost, and the Dispatch Token — no compensation. Ghost resolves the stolen op as faction(acting) at Beat 3; same target as originally submitted; Ghost receives all effects including off-faction resources. Executability check precedes the move: if Ghost cannot execute (restriction failure, wrong resource type), Pattern Match fizzles and the op stays in target\'s lane. Taxonomy: Submission|Redirect — Art 04b §5.1 L×F validity check pending (PM05 queued).\"', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'arbiter_note', '\"At Beat 2: (1) Check Ghost\'s target_freeform (target faction + target district + operation name) against the Beat 3 grid. (2) If all three match: check whether Ghost can execute the matched op — if restriction or resource type blocks execution, Pattern Match fizzles (2 Findings spent; op stays in target lane; no notification). (3) If match AND executable: move the op and its Target Profile from target faction\'s Beat 3 lane to Ghost\'s Beat 3 lane. Target faction\'s committed cost resources and Dispatch Token are consumed — not returned. (4) At Beat 3: the moved op resolves in Ghost\'s lane with Ghost as faction(acting). The original Target Profile governs targeting (same district, same target faction as originally submitted). All effects referencing faction(acting) now reference Ghost.\"', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'design_note', '\"Steal not copy: matched op moves from target faction\'s Beat 3 lane to Ghost\'s. Original faction loses the op\'s outcome, the cost, and the Dispatch Token — no compensation; the operation card itself returns to their case once it has resolved, so Ghost gains this Month\'s execution, not the card. Ghost resolves the stolen op as faction(acting) at Beat 3; same target as originally submitted; Ghost receives all effects including off-faction resources. Executability check precedes the move: if Ghost cannot execute (restriction failure, wrong resource type), Pattern Match fizzles and the op stays in target\'s lane. Taxonomy: Submission|Redirect — Art 04b §5.1 L×F validity check pending (PM05 queued).\"', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.1', 'arbiter_note', '\"At Beat 2: (1) Check Ghost\'s target_freeform (target faction + target district + operation name) against the Beat 3 grid. (2) If all three match: check whether Ghost can execute the matched op — if restriction or resource type blocks execution, Pattern Match fizzles (2 Findings spent; op stays in target lane; no notification). (3) If match AND executable: move the op and its Target Profile from target faction\'s Beat 3 lane to Ghost\'s Beat 3 lane. Target faction\'s committed cost resources and Dispatch Token are consumed — not returned. (4) At Beat 3: the moved op resolves in Ghost\'s lane with Ghost as faction(acting). The original Target Profile governs targeting (same district, same target faction as originally submitted). All effects referencing faction(acting) now reference Ghost. (5) After resolution: return the operation card to the original faction\'s Dispatch Case — it is theirs, and comes back with normal case return; Ghost does not keep it.\"', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.2', 'id', '\"GHO.CA.2\"', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.2', 'card_id', '\"GHO.CA.2\"', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.2', 'version', '\"v1.2\"', '04___Card_System___Part4b_Ghost.md');
@@ -8780,7 +8780,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.3', 'threshold', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.3', 'ring_mod', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.3', 'trigger', 'None', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.3', 'resolution_type', 'Transactional', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.3', 'resolution_type', 'PositionalWager', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.3', 'outcome_type', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.3', 'persistence', 'Immediate', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.3', 'persistence_condition', 'None', '04___Card_System___Part4b_Ghost.md');
@@ -8861,7 +8861,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.5', 'doctrine_mod', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.5', 'trigger', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.5', 'value_rating', '1', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.5', 'resolution_type', 'Transactional', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.5', 'resolution_type', 'PositionalWager', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.5', 'outcome_type', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.5', 'persistence', 'Immediate', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.5', 'persistence_condition', 'None', '04___Card_System___Part4b_Ghost.md');
@@ -10671,7 +10671,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.1', 'threshold', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.1', 'ring_mod', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.1', 'trigger', 'None', '04___Card_System___Part4c_Directorate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.1', 'resolution_type', 'Transactional', '04___Card_System___Part4c_Directorate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.1', 'resolution_type', 'PositionalWager', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.1', 'outcome_type', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.1', 'persistence', 'Immediate', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.1', 'persistence_condition', 'None', '04___Card_System___Part4c_Directorate.md');
@@ -10747,7 +10747,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'threshold', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'ring_mod', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'trigger', 'None', '04___Card_System___Part4c_Directorate.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'resolution_type', 'Transactional', '04___Card_System___Part4c_Directorate.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'resolution_type', 'PositionalWager', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'outcome_type', 'None', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'persistence', 'Immediate', '04___Card_System___Part4c_Directorate.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('DIR.CA.3', 'persistence_condition', 'None', '04___Card_System___Part4c_Directorate.md');
@@ -12532,7 +12532,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.1', 'threshold', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.1', 'ring_mod', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.1', 'trigger', 'None', '04___Card_System___Part4d_Network.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.1', 'resolution_type', 'Transactional', '04___Card_System___Part4d_Network.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.1', 'resolution_type', 'PositionalWager', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.1', 'outcome_type', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.1', 'persistence', 'Immediate', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.1', 'persistence_condition', 'None', '04___Card_System___Part4d_Network.md');
@@ -12646,7 +12646,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.4', 'threshold', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.4', 'ring_mod', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.4', 'trigger', 'None', '04___Card_System___Part4d_Network.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.4', 'resolution_type', 'Transactional', '04___Card_System___Part4d_Network.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.4', 'resolution_type', 'PositionalWager', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.4', 'outcome_type', 'None', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.4', 'persistence', 'Immediate', '04___Card_System___Part4d_Network.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('NET.CA.4', 'persistence_condition', 'None', '04___Card_System___Part4d_Network.md');

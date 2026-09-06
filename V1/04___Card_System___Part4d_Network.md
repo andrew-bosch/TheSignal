@@ -59,7 +59,7 @@ Network's pre-execution discovery card — spends 1 Exposure + 1 Findings to exp
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | | | |
 
 ```python
 NET.CA.1 = Card(
@@ -69,7 +69,7 @@ NET.CA.1 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Information,  function = Reveal,  subject = CovertOperation,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
@@ -298,7 +298,7 @@ Network's signal propagation card — extends STD.CA.6 Broadcast Interference's 
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | | | |
 
 ```python
 NET.CA.4 = Card(
@@ -308,7 +308,7 @@ NET.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Submission,  function = Modify,  subject = PublicAct,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,

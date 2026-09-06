@@ -279,7 +279,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 
 **Easy-to-miss required fields:** `card_id` · `doctrine_mod` · `boost` · `ps_framing` — all must appear in the spec (as `None` if not used). Omitting them is a schema error.
 
-**resolution_type vocabulary (str, not enum):** Use `"Probabilistic"` for d100 cards. Use `"Transactional"` for Automatic cards only. Do not use `"Positional wager"` unless matching an established pattern.
+**resolution_type (enum, three values — Art 04 §6.3):** `Probabilistic` when `resolution = d100`. For `resolution = Automatic`, choose between `Transactional` and `PositionalWager`: a card is a **PositionalWager** when its effect is committed against a submission slate not revealed at the moment of commitment — either a specific operation in it, or the existence of one. The slate need not belong to a later beat, only to be unrevealed when the card is committed. It stays **Transactional** when it resolves against information available at commitment, and also when the contingency is carried by `persistence`/`persistence_effect`/`game.world_condition` or by a delivered instrument — there the card's own resolution was deterministic and the persistence fields already express what follows. Deterministic-once-resolved is true of both and does not discriminate.
 
 **fail=None means "No effect, cost spent."** Do not write the string `"No effect."` in the spec field — use `None`.
 
@@ -307,9 +307,9 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 **Metadata**
 | Field | Type | Notes |
 |-------|------|-------|
-| `beat` | int | 1–5; order within beat = submission order |
+| `beat` | int \| None | resolution beat: 2 \| 3 \| 4 (Art 03 §9.4); None on modifier subclasses; order within beat = submission order |
 | `resolution` | Resolution | `d100` or `Automatic` |
-| `resolution_type` | str | `"Probabilistic"` (d100) · `"Transactional"` (Automatic) — str, not enum |
+| `resolution_type` | ResolutionType | `Probabilistic` (d100) · `Transactional` \| `PositionalWager` (Automatic) — enum, see above |
 | `threshold` | int \| None | None when Automatic |
 | `ring_mod` | dict[Ring, int] \| None | Per-ring threshold adjustment; positive = easier |
 | `doctrine_mod` | dict[PentagramRelation, int] \| None | Per-doctrinal-relationship threshold adjustment; None when no faction target |

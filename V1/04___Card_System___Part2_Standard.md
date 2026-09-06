@@ -1133,7 +1133,7 @@ Design questions genuinely resolved (unaffected by the above): Scope is CA-inclu
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | | | |
 
 ```python
 STD.CA.12 = Card(
@@ -1144,7 +1144,7 @@ STD.CA.12 = Card(
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 2,
-    resolution_type = Transactional, outcome_type=None,
+    resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
     persistence_effect    = None,
