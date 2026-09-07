@@ -60,8 +60,13 @@ Art 04 → **v0.9.100**. Detail: PM02 L370–L376.
 
 **Zero drift across the CA/PA corpus.** The cost model is now internally consistent and its governing definition is written down. What remains on Art 04 is card-audit and content work.
 
-**Two calls still carried, both needing Andy — now second session running:**
-- **The Art 00c pointer conflict.** Art 04 §6.2 cites Art 00c §5 as authority for `value_rating` while 00c's header says not to cite it. **This got worse this session** — §5 is now also the canonical home of the `value_rating` definition, so the conflict is load-bearing in two places. Resolutions: move the methodology into Art 04 §6 or a Reference file, or lift the non-canonical status for that one section.
+### FIRST ON THE AGENDA — Art 00c's canonical status (Andy, S160). PM05 **00c-03**.
+
+Andy's framing, and it is sharper than the "pointer conflict" this was logged as for two sessions: **00c has become the de facto canon for the cost model.** Its header still reads *"Not canonical… Do not cite 00c for design decisions or ref files"* and *"does not define economic values — it indexes them."* §5 now contradicts all three — it is the only written home of the UVM methodology, it holds the locked tier boundaries (L284), and since S160 it holds the **definition of `value_rating`** (L376). Two documents already cite it as authority, one of them a Reference file the header explicitly forbids.
+
+This is not tidiness. A future session that reads the header will correctly conclude it must not rely on §5, and will then re-derive the tier scheme or treat `value_rating` as undefined — the exact failure S160 already demonstrated once. Three resolutions in 00c-03, all of which change an artifact's canonical status; **Andy's call, not to be absorbed into another pass.**
+
+**Also still carried, needing Andy:**
 - **GUI.CA.9 Works Guarantee** — possible over-inclusion in the original 13 `PositionalWager` cards. Tracked, not gating.
 
 **Card-audit backlog (front of the queue):** 04-n177 (schema scaffolding + §6 canonical sample) · `ref_board_narrative.md` sync · 04-n221's 95-card procedure list, **still carrying §18.1.1** (04-n227). *(The Add-vs-Redirect sweep and the `target`-field audit both closed this session.)*
