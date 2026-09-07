@@ -814,7 +814,7 @@ One Intel token, two of their resources. The target's reserves are untouched —
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Economic arm of Ghost's intelligence pipeline — converts faction-keyed Intel into target faction's native resource; unlock for higher-tier Ghost cards | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — resource redirection as intelligence exploitation | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — resource acquisition as intelligence exploitation, not diversion | Art 00 §7 |
 | Doctrine alignment | ✓ | Ghost only; IntelToken cost enforces intelligence pipeline dependency; quantity 2 confirmed (playtest calibration) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — intelligence-gated resource acquisition is Ghost-exclusive | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Economy/Add/FactionNativeResource — Layer = Economy per L175 confirmed; copy model, not transfer | Art 04b §4, §5 |
@@ -845,7 +845,7 @@ None.
 GHO.CA.10 = Card(
     card_id      = "GHO.CA.10",  version = "v1.1",
     name    = "Flip",
-    tagline = "Redirect a target faction's operational resources through Ghost supply channels.",
+    tagline = "Convert intelligence on a faction's supply lines into resources of their own type.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
 
     layer    = Economy,  function = Add,  subject = FactionNativeResource,
@@ -855,7 +855,7 @@ GHO.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = 1,
+    value_rating = 3,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = None,
@@ -882,7 +882,7 @@ GHO.CA.10 = Card(
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
 
-    narrative    = "Ghost does not steal. Ghost redirects what was already in motion.",
+    narrative    = "Ghost does not steal. Ghost finds where the supply comes from, and goes there first.",
     perspectives = {Ghost: "Their resource. Our pipeline. They built something worth taking."},
     design_note  = "Layer=Economy per L175 — primary effect is resource acquisition despite intelligence gating. Copy model confirmed: target faction does NOT lose resources. Quantity 2 confirmed working value; final calibration deferred to playtest. Adjacency restriction applies (combined with Intel token restriction). Resources dispatched to Ghost's Dispatch Case at Beat 3; returned at month-end. Higher-tier Ghost cards carry secondary cost = faction(target).native consumed on play (GHO.CA.2 model).",
     arbiter_note = "At Beat 3: consume IntelToken(faction=target) from Ghost's case. Dispatch 2 units of target faction's native resource type to Ghost's Dispatch Case. Target faction's resource pool is not reduced. Resources available to Ghost at month-end with normal case return.",
@@ -1036,7 +1036,7 @@ GHO.CA.6 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = 1,
+    value_rating = 3,
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,

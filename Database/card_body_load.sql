@@ -1,14 +1,14 @@
 DELETE FROM card_restriction_clause;
 DELETE FROM card_body;
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'id', '\"GD-01\"', '04___Card_System___Part1_Core.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'version', '\"v0.4\"', '04___Card_System___Part1_Core.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'version', '\"v0.5\"', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'name', '\"Grant Deed\"', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'tagline', '\"A registered claim. When someone else breaks ground, the deed fires.\"', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'type', 'ModReactCard', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'subtype', 'Standard', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'faction', 'All', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'layer', 'Territory', '04___Card_System___Part1_Core.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'function', 'Add', '04___Card_System___Part1_Core.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'function', 'Redirect', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'subject', 'StructureBlock', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'beat', 'None', '04___Card_System___Part1_Core.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GD-01', 'resolution', 'Automatic', '04___Card_System___Part1_Core.md');
@@ -5614,7 +5614,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'card_id', '\"STD.MOD.104\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'version', '\"v0.1\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'name', '\"Budget Reallocated\"', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'tagline', '\"New construction means new permits, and permits mean a cut for whoever processes them.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'tagline', '\"One department\'s construction is another department\'s revised forecast.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'type', 'ModReactCard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'subtype', 'Standard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'faction', 'All', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5644,7 +5644,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'on_accept', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'on_decline', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'portrait', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'narrative', '\"Every structure that goes up in Core passes through an office with its hand out.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'narrative', '\"Core doesn\'t build in isolation. A new structure re-opens every budget in the district, and the forecasts get revised in the same currency that raised the walls.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'perspectives', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'design_note', '\"`NativeResource(faction)` parameterizes the existing bare `NativeResource` subject symbol (Art 04 §6.1 line ~1559 usage) to resolve dynamically per triggering faction — needed because this card, unlike faction-specific precedent (GUI.MOD.2/3/4\'s hardcoded Capacity), doesn\'t have a single fixed faction context. Flagged for reconciliation.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.104', 'arbiter_note', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5652,7 +5652,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'card_id', '\"STD.MOD.105\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'version', '\"v0.1\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'name', '\"Audit Trail\"', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'tagline', '\"Reaching Established status means an audit — and audits find things.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'tagline', '\"Every institution that reaches Established files its first real disclosure.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'type', 'ModReactCard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'subtype', 'Standard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'faction', 'All', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -5682,7 +5682,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'on_accept', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'on_decline', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'portrait', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'narrative', '\"Core\'s institutions track every faction\'s climb. The audit itself has a price, paid to whoever runs it.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'narrative', '\"Established status means the paperwork becomes public. Anyone who reads it carefully learns exactly where the money in this district is going next.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'perspectives', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'design_note', '\"Same NativeResource(faction) generalization as STD.MOD.104. Shares its trigger event with GUI.MOD.9 Field Supervisor\'s established_marker.placed precedent — multiple cards firing on the same confirmed event is standard practice (e.g. presence_chip.placed already triggers several Ghost cards independently).\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.105', 'arbiter_note', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6069,8 +6069,8 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'id', '\"STD.MOD.116\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'card_id', '\"STD.MOD.116\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'version', '\"v0.1\"', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'name', '\"Toll Collected\"', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'tagline', '\"Every structure that goes up in Mid crosses a toll line somewhere.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'name', '\"Freight Booked\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'tagline', '\"Freight follows construction. The lines through Mid carry more than they did yesterday.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'type', 'ModReactCard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'subtype', 'Standard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'faction', 'All', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6100,7 +6100,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'on_accept', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'on_decline', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'portrait', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'narrative', '\"Nothing gets built in Mid without crossing a toll line somebody controls.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'narrative', '\"Nothing gets built in Mid without the corridors running hotter for a season. The traffic is theirs. The lines it runs on aren\'t.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'perspectives', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'design_note', '\"Ring 2 duplicate of STD.MOD.104 Budget Reallocated — same NativeResource(trigger.faction) generalization, ring=2.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.116', 'arbiter_note', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6108,7 +6108,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'card_id', '\"STD.MOD.117\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'version', '\"v0.1\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'name', '\"Overtime Billed\"', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'tagline', '\"Reaching Established in Mid means someone\'s books get reconciled — at a cost.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'tagline', '\"Somebody\'s expansion is somebody else\'s second shift.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'type', 'ModReactCard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'subtype', 'Standard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'faction', 'All', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6138,7 +6138,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'on_accept', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'on_decline', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'portrait', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'narrative', '\"Every climb to Established in Mid triggers a reconciliation somewhere down the line.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'narrative', '\"Reaching Established in Mid means the schedules downstream get rewritten. The extra hours are real, and they get billed to the job — not to the faction that created it.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'perspectives', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'design_note', '\"Ring 2 duplicate of STD.MOD.105 Audit Trail — same NativeResource(trigger.faction) generalization, ring=2.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.117', 'arbiter_note', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6525,8 +6525,8 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'id', '\"STD.MOD.128\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'card_id', '\"STD.MOD.128\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'version', '\"v0.1\"', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'name', '\"Informal Toll\"', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'tagline', '\"Nothing crosses Baryo without somebody taking a cut.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'name', '\"Side Work\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'tagline', '\"A crew has to eat, and they eat where they work.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'type', 'ModReactCard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'subtype', 'Standard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'faction', 'All', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6556,15 +6556,15 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'on_accept', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'on_decline', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'portrait', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'narrative', '\"There\'s no filing cabinet for it, but everyone knows the toll gets paid regardless.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'narrative', '\"Nothing goes up in the Baryo without a hundred small arrangements around it. None of them appear on the invoice, and none of them come out of it.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'perspectives', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'design_note', '\"Ring 3 duplicate of STD.MOD.104/STD.MOD.116 — same NativeResource(trigger.faction) generalization, ring=3.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.128', 'arbiter_note', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'id', '\"STD.MOD.129\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'card_id', '\"STD.MOD.129\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'version', '\"v0.1\"', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'name', '\"Cut of the Action\"', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'tagline', '\"Reaching Established in Baryo means somebody local wants a piece.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'name', '\"Rents Adjust\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'tagline', '\"The Baryo prices every climb, and it prices fast.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'type', 'ModReactCard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'subtype', 'Standard', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'faction', 'All', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6594,7 +6594,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'on_accept', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'on_decline', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'portrait', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'narrative', '\"The gray economy notices every climb — and it always finds a way in.\"', '04___Card_System___Part3_Ring_Modifiers.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'narrative', '\"Somebody reaching Established changes what the block is worth. Nobody standing on it takes a thing from them — they just stop being cheap.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'perspectives', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'design_note', '\"Ring 3 duplicate of STD.MOD.105/STD.MOD.117 — same NativeResource(trigger.faction) generalization, ring=3.\"', '04___Card_System___Part3_Ring_Modifiers.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('STD.MOD.129', 'arbiter_note', 'None', '04___Card_System___Part3_Ring_Modifiers.md');
@@ -6988,7 +6988,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.7', 'threshold', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.7', 'ring_mod', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.7', 'doctrine_mod', 'None', '04___Card_System___Part4a_Guild.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.7', 'value_rating', '3', '04___Card_System___Part4a_Guild.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.7', 'value_rating', '4', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.7', 'trigger', 'None', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.7', 'resolution_type', 'Transactional', '04___Card_System___Part4a_Guild.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GUI.CA.7', 'outcome_type', 'None', '04___Card_System___Part4a_Guild.md');
@@ -9044,7 +9044,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'card_id', '\"GHO.CA.10\"', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'version', '\"v1.1\"', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'name', '\"Flip\"', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'tagline', '\"Redirect a target faction\'s operational resources through Ghost supply channels.\"', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'tagline', '\"Convert intelligence on a faction\'s supply lines into resources of their own type.\"', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'type', 'CovertOperation', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'subtype', 'FactionSpecific', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'faction', 'Ghost', '04___Card_System___Part4b_Ghost.md');
@@ -9056,7 +9056,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'threshold', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'ring_mod', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'doctrine_mod', 'None', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'value_rating', '1', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'value_rating', '3', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'trigger', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'resolution_type', 'Transactional', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'outcome_type', 'None', '04___Card_System___Part4b_Ghost.md');
@@ -9075,7 +9075,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'fail', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'failcrit', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'portrait', '{Ghost: PortraitEntry(submitter=+1)}', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'narrative', '\"Ghost does not steal. Ghost redirects what was already in motion.\"', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'narrative', '\"Ghost does not steal. Ghost finds where the supply comes from, and goes there first.\"', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'perspectives', '{Ghost: \"Their resource. Our pipeline. They built something worth taking.\"}', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'design_note', '\"Layer=Economy per L175 — primary effect is resource acquisition despite intelligence gating. Copy model confirmed: target faction does NOT lose resources. Quantity 2 confirmed working value; final calibration deferred to playtest. Adjacency restriction applies (combined with Intel token restriction). Resources dispatched to Ghost\'s Dispatch Case at Beat 3; returned at month-end. Higher-tier Ghost cards carry secondary cost = faction(target).native consumed on play (GHO.CA.2 model).\"', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.10', 'arbiter_note', '\"At Beat 3: consume IntelToken(faction=target) from Ghost\'s case. Dispatch 2 units of target faction\'s native resource type to Ghost\'s Dispatch Case. Target faction\'s resource pool is not reduced. Resources available to Ghost at month-end with normal case return.\"', '04___Card_System___Part4b_Ghost.md');
@@ -9135,7 +9135,7 @@ INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.6', 'ring_mod', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.6', 'doctrine_mod', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.6', 'trigger', 'None', '04___Card_System___Part4b_Ghost.md');
-INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.6', 'value_rating', '1', '04___Card_System___Part4b_Ghost.md');
+INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.6', 'value_rating', '3', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.6', 'resolution_type', 'Transactional', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.6', 'outcome_type', 'None', '04___Card_System___Part4b_Ghost.md');
 INSERT INTO card_body (card_id, field_name, raw_value, source_file) VALUES ('GHO.CA.6', 'persistence', 'Immediate', '04___Card_System___Part4b_Ghost.md');

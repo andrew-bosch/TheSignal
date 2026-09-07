@@ -98,6 +98,9 @@ FAIL=0
 # CA/PA cards ONLY. Modifier cards rate on the separate S132/S134
 # "mirrors magnitude" convention and are deliberately NOT tiered by cost --
 # auditing them against these boundaries produces false positives.
+# S160: exclusion keys on card_status.card_type, not on the card_id string. The
+# old `card_id NOT LIKE '%.MOD.%'` test leaked exactly one card -- GD-01 Grant Deed,
+# a ModReactCard whose id carries no '.MOD.' -- into the CA/PA tier audit.
 # Drift accumulates silently when a card edit moves total_pair_cost without
 # the rating being re-derived (e.g. DIR.PA.8, rewritten S150, caught S157).
 # Advisory only: reports, never edits, and never fails the sync.
@@ -114,9 +117,17 @@ SELECT CONCAT('  ', v.card_id, ': rated ', v.raw_value, ', cost ',
               CASE WHEN u.total_pair_cost < 3 THEN 1 WHEN u.total_pair_cost < 5 THEN 2
                    WHEN u.total_pair_cost < 7 THEN 3 ELSE 4 END)
 FROM card_body v JOIN v_card_pair_uvm_cost u ON u.card_id = v.card_id
+JOIN card_status cs ON cs.card_id = v.card_id
 WHERE v.field_name = 'value_rating' AND v.raw_value REGEXP '^[0-9]+$'
-  AND v.card_id NOT LIKE '%.MOD.%'
+  AND cs.card_type <> 'MOD'
   AND EXISTS (SELECT 1 FROM card_effect_component e WHERE e.card_id = v.card_id)
+  AND NOT (EXISTS (SELECT 1 FROM card_effect_component e WHERE e.card_id = v.card_id
+                   AND e.magnitude IS NULL AND e.tier IN ('success','successcrit'))
+       AND EXISTS (SELECT 1 FROM card_effect_component e2 WHERE e2.card_id = v.card_id
+                   AND e2.tier IN ('success','successcrit') AND e2.magnitude IS NOT NULL
+                   AND (e2.target = 'acting') <> (SELECT MAX(e3.target = 'acting')
+                        FROM card_effect_component e3 WHERE e3.card_id = v.card_id
+                        AND e3.tier IN ('success','successcrit') AND e3.magnitude IS NULL)))
   AND v.raw_value <> CASE WHEN u.total_pair_cost < 3 THEN 1 WHEN u.total_pair_cost < 5 THEN 2
                           WHEN u.total_pair_cost < 7 THEN 3 ELSE 4 END
 ORDER BY u.total_pair_cost;
@@ -139,8 +150,9 @@ fi
 UNPRICEABLE=$(mariadb "$DB" -N -B <<'SQL' 2>/dev/null
 SELECT CONCAT('  ', v.card_id, ': rated ', v.raw_value, ', no priceable effect rows')
 FROM card_body v
+JOIN card_status cs ON cs.card_id = v.card_id
 WHERE v.field_name = 'value_rating' AND v.raw_value REGEXP '^[0-9]+$'
-  AND v.card_id NOT LIKE '%.MOD.%'
+  AND cs.card_type <> 'MOD'
   AND NOT EXISTS (SELECT 1 FROM card_effect_component e WHERE e.card_id = v.card_id)
 ORDER BY v.card_id;
 SQL
@@ -148,6 +160,40 @@ SQL
 if [[ -n "$UNPRICEABLE" ]]; then
     echo "  · $(echo "$UNPRICEABLE" | wc -l) card(s) unpriceable — bare prose, rating held pending 04-n218/n220:"
     echo "$UNPRICEABLE"
+fi
+
+# Cards mixing an UNQUANTIFIED gain with a QUANTIFIED payment are reported separately,
+# never as drift -- same reasoning as the bare-prose bucket above (S158). Since S160 the
+# model signs each effect row by who it acts on, but a `count=n` gain still prices at 1
+# unit regardless of n while the payment counts in full, so the net skews negative for
+# reasons that are an artefact, not a design signal. Their ratings are unverifiable, not
+# wrong, and must not be re-rated until the variable-gain flooring is fixed (04-n234).
+ASYMMETRIC=$(mariadb "$DB" -N -B <<'SQL' 2>/dev/null
+SELECT CONCAT('  ', v.card_id, ': rated ', v.raw_value, ', modelled ',
+              ROUND(u.total_pair_cost,2), ' -- mixed quantification across the ledger')
+FROM card_body v
+JOIN v_card_pair_uvm_cost u ON u.card_id = v.card_id
+JOIN card_status cs ON cs.card_id = v.card_id
+WHERE v.field_name = 'value_rating' AND v.raw_value REGEXP '^[0-9]+$'
+  AND cs.card_type <> 'MOD'
+  AND EXISTS (SELECT 1 FROM card_effect_component e WHERE e.card_id = v.card_id
+              AND e.magnitude IS NULL AND e.tier IN ('success','successcrit'))
+  AND EXISTS (SELECT 1 FROM card_effect_component e2 WHERE e2.card_id = v.card_id
+              AND e2.tier IN ('success','successcrit') AND e2.magnitude IS NOT NULL
+              AND (e2.target = 'acting') <> (SELECT MAX(e3.target = 'acting')
+                   FROM card_effect_component e3 WHERE e3.card_id = v.card_id
+                   AND e3.tier IN ('success','successcrit') AND e3.magnitude IS NULL))
+  -- only hold cards that would OTHERWISE READ AS DRIFT. A card whose rating already
+  -- agrees with the scheme needs no caveat, and listing it is the same noise the
+  -- bare-prose split above exists to prevent.
+  AND v.raw_value <> CASE WHEN u.total_pair_cost < 3 THEN 1 WHEN u.total_pair_cost < 5 THEN 2
+                          WHEN u.total_pair_cost < 7 THEN 3 ELSE 4 END
+ORDER BY u.total_pair_cost;
+SQL
+)
+if [[ -n "$ASYMMETRIC" ]]; then
+    echo "  · $(echo "$ASYMMETRIC" | wc -l) card(s) held — mixed quantification across the ledger (04-n235):"
+    echo "$ASYMMETRIC"
 fi
 
 UNRATED=$(mariadb "$DB" -N -B -e "SELECT COUNT(*) FROM v_card_pair_uvm_cost u LEFT JOIN card_body v ON v.card_id=u.card_id AND v.field_name='value_rating' WHERE v.raw_value IS NULL OR v.raw_value='None';" 2>/dev/null || echo 0)

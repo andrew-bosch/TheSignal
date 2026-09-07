@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.99 Draft  
+**Version:** 0.9.100 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-08-24  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -1285,7 +1285,7 @@ Card specifications (all Card IDs, full schema instances) are physically split i
 | STD.MOD.113 | Grid Anomaly Logged | 📝 | Information | Public | Add | Intel Token | — |
 | STD.MOD.114 | Service Level Breach | 📝 | Information | Public | Add | Public Standing | — |
 | STD.MOD.115 | Routine Inspection | 📝 | Submission | Public | Modify | Public Act | — |
-| STD.MOD.116 | Toll Collected | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.116 | Freight Booked | 📝 | Economy | Public | Add | Native Resource | — |
 | STD.MOD.117 | Overtime Billed | 📝 | Economy | Public | Add | Native Resource | — |
 | STD.MOD.118 | Backup Generator | 📝 | Economy | Public | Add | Native Resource | — |
 | STD.MOD.119 | Union Statement | 📝 | Standing | Public | Add | Public Standing | — |
@@ -1297,8 +1297,8 @@ Card specifications (all Card IDs, full schema instances) are physically split i
 | STD.MOD.125 | Word Travels | 📝 | Information | Public | Add | Intel Token | — |
 | STD.MOD.126 | Quietly Rewritten | 📝 | Information | Public | Add | Public Standing | — |
 | STD.MOD.127 | Someone's Watching | 📝 | Submission | Public | Modify | Public Act | — |
-| STD.MOD.128 | Informal Toll | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.129 | Cut of the Action | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.128 | Side Work | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.129 | Rents Adjust | 📝 | Economy | Public | Add | Native Resource | — |
 | STD.MOD.130 | Vendor Credit Called | 📝 | Economy | Public | Add | Native Resource | — |
 | STD.MOD.131 | Neighborhood Notices | 📝 | Standing | Public | Add | Public Standing | — |
 | STD.MOD.132 | Sides Are Taken | 📝 | Standing | Public | Add | Public Standing | — |
@@ -1642,12 +1642,12 @@ Produced by any CA that delivers a Grant Deed (currently SYN.CA.8 Land Title and
 
 ```python
 GD01 = Card(
-    id      = "GD-01",  version = "v0.4",
+    id      = "GD-01",  version = "v0.5",
     name    = "Grant Deed",
     tagline = "A registered claim. When someone else breaks ground, the deed fires.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
 
-    layer    = Territory,  function = Add,  subject = StructureBlock,
+    layer    = Territory,  function = Redirect,  subject = StructureBlock,
 
     beat            = None,
     resolution      = Automatic,
@@ -4528,7 +4528,7 @@ A quiet envelope arrives with no return address — just a blank form and the un
 
 #### Outstanding Issues
 
-- **Taxonomy assignment:** `layer/function/subject=None` — the comparison used to justify this was incorrect (compared against GD-01, which does carry real taxonomy: Territory/Add/StructureBlock). Open — candidate if assigned: Information/Add/AccordAgreement (a confirmed registered subject per ref_taxonomy.md §5.2), paralleling how SYN.CA.11 Redline and SYN.MOD.1 carry real Accord-manipulation taxonomy.
+- **Taxonomy assignment:** `layer/function/subject=None` — the comparison used to justify this was incorrect (compared against GD-01, which does carry real taxonomy: Territory/Redirect/StructureBlock). Open — candidate if assigned: Information/Add/AccordAgreement (a confirmed registered subject per ref_taxonomy.md §5.2), paralleling how SYN.CA.11 Redline and SYN.MOD.1 carry real Accord-manipulation taxonomy.
 - **Perspectives:** TBD — deferred to modifier card voice pass (D-04-08)
 - **Card ID:** TBD — pending 04-n1 numbering pass
 - **Value rating:** N/A. ModReactCard carries `value_rating` in general, but it's a deck-drawn/Splay-scoring field; Overture's Issued acquisition means it's never drawn or scored, so the field doesn't apply. Set to `value_rating = None` in the spec below.
@@ -13558,16 +13558,16 @@ STD.MOD.103 = Card(
 ### STD.MOD.104 — BUDGET REALLOCATED
 
 #### Design Rationale
-Economy reaction: a rival's structure placement in Core is skimmed for a cut — generalized to whatever resource is native to the triggering faction, not hardcoded. This is a Standard card, usable by any faction, so the resource type must key off the rival who caused the trigger, not a fixed type like Capacity.
+Economy reaction: a rival's structure placement in Core generates district activity denominated in that rival's own native resource, which the holder is positioned to capture — the rival's pool is not reduced. Generalized to whatever resource is native to the triggering faction rather than hardcoded: this is a Standard card usable by any faction, so the resource type must key off the rival who caused the trigger, not a fixed type like Capacity.
 
 #### Card Story
-Every structure that goes up in Core passes through an office with its hand out.
+Core doesn't build in isolation. A new structure re-opens every budget in the district, and the forecasts get revised in the same currency that raised the walls.
 
 **Design checklist:**
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Skimming a cut from new construction is a grounded institutional-graft premise. | Art 00 §7 |
+| Action fit | ✓ | Capturing revenue generated by a rival's new construction is a grounded institutional premise — the district's activity pays, not the builder. | Art 00 §7 |
 | Voice fit | ✓ | Same open `perspectives=None` note as STD.MOD.98. | Art 00 §6.7 |
 | Doctrine alignment | ✓ | `target_faction=trigger.faction` set, `doctrine_mod=None` justified — Automatic/no threshold-roll (same basis as STD.MOD.99). | Art 04 §6.5 |
 | Card type fit | ✓ | Same classification basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
@@ -13576,7 +13576,7 @@ Every structure that goes up in Core passes through an office with its hand out.
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open item as STD.MOD.98. | Art 04 §6.2 |
 | Trigger validity | ✓ | `structure_block.placed(faction=X, ring=Z)` matches confirmed §6.3 signature. | Art 04 §6.3 |
-| Portrait validity | ✓ | Same grey-area basis as STD.MOD.99 (minor, automatic skim on a rival's move) — modest single-unit resource gain, no faction's doctrine strongly expressed. | Art 04 §6.2 P11 |
+| Portrait validity | ✓ | Same grey-area basis as STD.MOD.99 (minor, automatic gain off a rival's move) — modest single-unit resource gain, no faction's doctrine strongly expressed. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | Same basis as STD.MOD.98. | Art 01 §6–7 |
 | Supported by components | ✓ | Native resource tokens are existing components. | Art 02 §6–8 |
 | Supported by game procedure | ✓ | Same basis as STD.MOD.98. | Art 03; GR 6.1 |
@@ -13604,7 +13604,7 @@ None
 STD.MOD.104 = Card(
     id      = "STD.MOD.104",  card_id = "STD.MOD.104",  version = "v0.1",
     name    = "Budget Reallocated",
-    tagline = "New construction means new permits, and permits mean a cut for whoever processes them.",
+    tagline = "One department's construction is another department's revised forecast.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
@@ -13630,7 +13630,7 @@ STD.MOD.104 = Card(
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    narrative    = "Every structure that goes up in Core passes through an office with its hand out.",
+    narrative    = "Core doesn't build in isolation. A new structure re-opens every budget in the district, and the forecasts get revised in the same currency that raised the walls.",
     perspectives = None,
     design_note  = "`NativeResource(faction)` parameterizes the existing bare `NativeResource` subject symbol (Art 04 §6.1 line ~1559 usage) to resolve dynamically per triggering faction — needed because this card, unlike faction-specific precedent (GUI.MOD.2/3/4's hardcoded Capacity), doesn't have a single fixed faction context. Flagged for reconciliation.",
     arbiter_note = None,
@@ -13642,10 +13642,10 @@ STD.MOD.104 = Card(
 ### STD.MOD.105 — AUDIT TRAIL
 
 #### Design Rationale
-Economy reaction: a rival reaching Established status in Core triggers an audit — same `NativeResource(faction)` generalization as STD.MOD.104.
+Economy reaction: a rival reaching Established status in Core forces its first real disclosure, and the holder reads it — same `NativeResource(faction)` generalization as STD.MOD.104, and the same capture-not-transfer basis: the rival's pool is not reduced.
 
 #### Card Story
-Reaching Established status means an audit — and audits find things.
+Established status means the paperwork becomes public. Anyone who reads it carefully learns exactly where the money in this district is going next.
 
 **Design checklist:**
 
@@ -13688,7 +13688,7 @@ None
 STD.MOD.105 = Card(
     id      = "STD.MOD.105",  card_id = "STD.MOD.105",  version = "v0.1",
     name    = "Audit Trail",
-    tagline = "Reaching Established status means an audit — and audits find things.",
+    tagline = "Every institution that reaches Established files its first real disclosure.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
@@ -13714,7 +13714,7 @@ STD.MOD.105 = Card(
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    narrative    = "Core's institutions track every faction's climb. The audit itself has a price, paid to whoever runs it.",
+    narrative    = "Established status means the paperwork becomes public. Anyone who reads it carefully learns exactly where the money in this district is going next.",
     perspectives = None,
     design_note  = "Same NativeResource(faction) generalization as STD.MOD.104. Shares its trigger event with GUI.MOD.9 Field Supervisor's established_marker.placed precedent — multiple cards firing on the same confirmed event is standard practice (e.g. presence_chip.placed already triggers several Ghost cards independently).",
     arbiter_note = None,
@@ -14563,20 +14563,20 @@ STD.MOD.115 = Card(
 
 ---
 
-### STD.MOD.116 — TOLL COLLECTED
+### STD.MOD.116 — FREIGHT BOOKED
 
 #### Design Rationale
-Direct Ring 2 duplicate of STD.MOD.104 Budget Reallocated — same mechanic, renamed to Mid's toll/chokepoint voice.
+Direct Ring 2 duplicate of STD.MOD.104 Budget Reallocated — same mechanic, renamed to Mid's freight/corridor voice.
 
 #### Card Story
-Nothing gets built in Mid without crossing a toll line somebody controls.
+Nothing gets built in Mid without the corridors running hotter for a season. The traffic is theirs. The lines it runs on aren't.
 
 **Design checklist:** verified against STD.MOD.104's basis — same `NativeResource(trigger.faction)` generalization (04-n171), same Economy×Add pairing, same grey-area Portrait basis.
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Same basis as STD.MOD.104. | Art 00 §7 |
-| Voice fit | ✓ | Mid toll/chokepoint register. Same open `perspectives=None` note. | Art 00 §6.7 |
+| Voice fit | ✓ | Mid freight/corridor register. Same open `perspectives=None` note. | Art 00 §6.7 |
 | Doctrine alignment | ✓ | Same basis as STD.MOD.104. | Art 04 §6.5 |
 | Card type fit | ✓ | Same basis as STD.MOD.98. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Economy/Add/NativeResource — same verified pairing as STD.MOD.104. | Art 04b §4; ref_taxonomy.md §5.1 |
@@ -14611,8 +14611,8 @@ None
 ```python
 STD.MOD.116 = Card(
     id      = "STD.MOD.116",  card_id = "STD.MOD.116",  version = "v0.1",
-    name    = "Toll Collected",
-    tagline = "Every structure that goes up in Mid crosses a toll line somewhere.",
+    name    = "Freight Booked",
+    tagline = "Freight follows construction. The lines through Mid carry more than they did yesterday.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
@@ -14638,7 +14638,7 @@ STD.MOD.116 = Card(
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    narrative    = "Nothing gets built in Mid without crossing a toll line somebody controls.",
+    narrative    = "Nothing gets built in Mid without the corridors running hotter for a season. The traffic is theirs. The lines it runs on aren't.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.104 Budget Reallocated — same NativeResource(trigger.faction) generalization, ring=2.",
     arbiter_note = None,
@@ -14650,10 +14650,10 @@ STD.MOD.116 = Card(
 ### STD.MOD.117 — OVERTIME BILLED
 
 #### Design Rationale
-Direct Ring 2 duplicate of STD.MOD.105 Audit Trail — same mechanic, renamed to Mid's reconciliation voice.
+Direct Ring 2 duplicate of STD.MOD.105 Audit Trail — same mechanic, renamed to Mid's scheduling/reconciliation voice.
 
 #### Card Story
-Every climb to Established in Mid triggers a reconciliation somewhere down the line.
+Reaching Established in Mid means the schedules downstream get rewritten. The extra hours are real, and they get billed to the job — not to the faction that created it.
 
 **Design checklist:** verified against STD.MOD.105's basis — same `NativeResource(trigger.faction)` generalization, same Economy×Add pairing, same grey-area Portrait basis.
 
@@ -14696,7 +14696,7 @@ None
 STD.MOD.117 = Card(
     id      = "STD.MOD.117",  card_id = "STD.MOD.117",  version = "v0.1",
     name    = "Overtime Billed",
-    tagline = "Reaching Established in Mid means someone's books get reconciled — at a cost.",
+    tagline = "Somebody's expansion is somebody else's second shift.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
@@ -14722,7 +14722,7 @@ STD.MOD.117 = Card(
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    narrative    = "Every climb to Established in Mid triggers a reconciliation somewhere down the line.",
+    narrative    = "Reaching Established in Mid means the schedules downstream get rewritten. The extra hours are real, and they get billed to the job — not to the faction that created it.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.105 Audit Trail — same NativeResource(trigger.faction) generalization, ring=2.",
     arbiter_note = None,
@@ -15571,13 +15571,13 @@ STD.MOD.127 = Card(
 
 ---
 
-### STD.MOD.128 — INFORMAL TOLL
+### STD.MOD.128 — SIDE WORK
 
 #### Design Rationale
 Direct Ring 3 duplicate of STD.MOD.104/116 — same mechanic, renamed to Baryo's informal-economy voice.
 
 #### Card Story
-There's no filing cabinet for it, but everyone knows the toll gets paid regardless.
+Nothing goes up in the Baryo without a hundred small arrangements around it. None of them appear on the invoice, and none of them come out of it.
 
 **Design checklist:** verified against STD.MOD.104's basis — same `NativeResource(trigger.faction)` generalization (04-n171), same grey-area Portrait basis.
 
@@ -15619,8 +15619,8 @@ None
 ```python
 STD.MOD.128 = Card(
     id      = "STD.MOD.128",  card_id = "STD.MOD.128",  version = "v0.1",
-    name    = "Informal Toll",
-    tagline = "Nothing crosses Baryo without somebody taking a cut.",
+    name    = "Side Work",
+    tagline = "A crew has to eat, and they eat where they work.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
@@ -15646,7 +15646,7 @@ STD.MOD.128 = Card(
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    narrative    = "There's no filing cabinet for it, but everyone knows the toll gets paid regardless.",
+    narrative    = "Nothing goes up in the Baryo without a hundred small arrangements around it. None of them appear on the invoice, and none of them come out of it.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.104/STD.MOD.116 — same NativeResource(trigger.faction) generalization, ring=3.",
     arbiter_note = None,
@@ -15655,13 +15655,13 @@ STD.MOD.128 = Card(
 
 ---
 
-### STD.MOD.129 — CUT OF THE ACTION
+### STD.MOD.129 — RENTS ADJUST
 
 #### Design Rationale
-Direct Ring 3 duplicate of STD.MOD.105/117 — same mechanic, renamed to Baryo's voice.
+Direct Ring 3 duplicate of STD.MOD.105/117 — same mechanic, renamed to Baryo's repricing voice.
 
 #### Card Story
-The gray economy notices every climb — and it always finds a way in.
+Somebody reaching Established changes what the block is worth. Nobody standing on it takes a thing from them — they just stop being cheap.
 
 **Design checklist:** verified against STD.MOD.105's basis — same `NativeResource(trigger.faction)` generalization, same grey-area Portrait basis.
 
@@ -15703,8 +15703,8 @@ None
 ```python
 STD.MOD.129 = Card(
     id      = "STD.MOD.129",  card_id = "STD.MOD.129",  version = "v0.1",
-    name    = "Cut of the Action",
-    tagline = "Reaching Established in Baryo means somebody local wants a piece.",
+    name    = "Rents Adjust",
+    tagline = "The Baryo prices every climb, and it prices fast.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
@@ -15730,7 +15730,7 @@ STD.MOD.129 = Card(
     on_accept   = None,  on_decline = None,
 
     portrait     = None,
-    narrative    = "The gray economy notices every climb — and it always finds a way in.",
+    narrative    = "Somebody reaching Established changes what the block is worth. Nobody standing on it takes a thing from them — they just stop being cheap.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.105/STD.MOD.117 — same NativeResource(trigger.faction) generalization, ring=3.",
     arbiter_note = None,
@@ -16733,7 +16733,7 @@ GUI.CA.7 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating    = 3,
+    value_rating    = 4,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = None,
@@ -17001,7 +17001,7 @@ The Guild files the development order before a single wall goes up. The district
 | Voice fit | ⚠ | Perspectives pending | Art 00 §7 |
 | Doctrine alignment | ✓ | Capacity + district-native cost addresses 04-n119 §9.2 ceiling gap; construction rights framing is Guild-exclusive | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Territory / Add / StructureBlock — ultimate effect is Guild structure + Presence Token via GD-01 fire. The card's own code declares this taxonomy correctly and it's a valid Territory+Add cell, but `card_status` (DB) shows `layer`/`function`/`subject` all `NULL` for GUI.CA.10, flagged `Abstract / No Subject` in `v_card_mechanical_alignment` — a DB/MD sync gap (per `feedback_card_status_sync.md`), not a card content defect. | Art 04b §4 |
+| Taxonomy fit | ✓ | Territory / Add / StructureBlock — ultimate effect is Guild structure + Presence Token via the GD-01 fire. Valid Territory+Add cell; the card delivers the deed instrument, and the deed's own Redirect classification does not propagate to the card that issues it. | Art 04b §4 |
 | Balance | ⚠ | Payback contingent on any faction building in named district; district-native cost throttles casual play — playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Permanent — Grant Deed held until fired or game end | — |
 | Persistence | ✓ | Card persistence = Immediate; GD-01 persists in hand | Art 04 §6 |
@@ -21205,7 +21205,7 @@ One Intel token, two of their resources. The target's reserves are untouched —
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Economic arm of Ghost's intelligence pipeline — converts faction-keyed Intel into target faction's native resource; unlock for higher-tier Ghost cards | Art 00 §7 |
-| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — resource redirection as intelligence exploitation | Art 00 §7 |
+| Voice fit | ✓ | Faction-specific; single Ghost perspective by design — resource acquisition as intelligence exploitation, not diversion | Art 00 §7 |
 | Doctrine alignment | ✓ | Ghost only; IntelToken cost enforces intelligence pipeline dependency; quantity 2 confirmed (playtest calibration) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Ghost) — intelligence-gated resource acquisition is Ghost-exclusive | Art 04 §6.2; Art 04b §5 |
 | Taxonomy fit | ✓ | Economy/Add/FactionNativeResource — Layer = Economy per L175 confirmed; copy model, not transfer | Art 04b §4, §5 |
@@ -21236,7 +21236,7 @@ None.
 GHO.CA.10 = Card(
     card_id      = "GHO.CA.10",  version = "v1.1",
     name    = "Flip",
-    tagline = "Redirect a target faction's operational resources through Ghost supply channels.",
+    tagline = "Convert intelligence on a faction's supply lines into resources of their own type.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
 
     layer    = Economy,  function = Add,  subject = FactionNativeResource,
@@ -21246,7 +21246,7 @@ GHO.CA.10 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating = 1,
+    value_rating = 3,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = None,
@@ -21273,7 +21273,7 @@ GHO.CA.10 = Card(
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
 
-    narrative    = "Ghost does not steal. Ghost redirects what was already in motion.",
+    narrative    = "Ghost does not steal. Ghost finds where the supply comes from, and goes there first.",
     perspectives = {Ghost: "Their resource. Our pipeline. They built something worth taking."},
     design_note  = "Layer=Economy per L175 — primary effect is resource acquisition despite intelligence gating. Copy model confirmed: target faction does NOT lose resources. Quantity 2 confirmed working value; final calibration deferred to playtest. Adjacency restriction applies (combined with Intel token restriction). Resources dispatched to Ghost's Dispatch Case at Beat 3; returned at month-end. Higher-tier Ghost cards carry secondary cost = faction(target).native consumed on play (GHO.CA.2 model).",
     arbiter_note = "At Beat 3: consume IntelToken(faction=target) from Ghost's case. Dispatch 2 units of target faction's native resource type to Ghost's Dispatch Case. Target faction's resource pool is not reduced. Resources available to Ghost at month-end with normal case return.",
@@ -21427,7 +21427,7 @@ GHO.CA.6 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Ghost,
     layer   = Economy,  function = Add,  subject = IntelToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
-    value_rating = 1,
+    value_rating = 3,
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,

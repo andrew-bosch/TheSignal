@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.99 Draft  
+**Version:** 0.9.100 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-08-24  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -1285,7 +1285,7 @@ Card specifications (all Card IDs, full schema instances) are physically split i
 | STD.MOD.113 | Grid Anomaly Logged | 📝 | Information | Public | Add | Intel Token | — |
 | STD.MOD.114 | Service Level Breach | 📝 | Information | Public | Add | Public Standing | — |
 | STD.MOD.115 | Routine Inspection | 📝 | Submission | Public | Modify | Public Act | — |
-| STD.MOD.116 | Toll Collected | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.116 | Freight Booked | 📝 | Economy | Public | Add | Native Resource | — |
 | STD.MOD.117 | Overtime Billed | 📝 | Economy | Public | Add | Native Resource | — |
 | STD.MOD.118 | Backup Generator | 📝 | Economy | Public | Add | Native Resource | — |
 | STD.MOD.119 | Union Statement | 📝 | Standing | Public | Add | Public Standing | — |
@@ -1297,8 +1297,8 @@ Card specifications (all Card IDs, full schema instances) are physically split i
 | STD.MOD.125 | Word Travels | 📝 | Information | Public | Add | Intel Token | — |
 | STD.MOD.126 | Quietly Rewritten | 📝 | Information | Public | Add | Public Standing | — |
 | STD.MOD.127 | Someone's Watching | 📝 | Submission | Public | Modify | Public Act | — |
-| STD.MOD.128 | Informal Toll | 📝 | Economy | Public | Add | Native Resource | — |
-| STD.MOD.129 | Cut of the Action | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.128 | Side Work | 📝 | Economy | Public | Add | Native Resource | — |
+| STD.MOD.129 | Rents Adjust | 📝 | Economy | Public | Add | Native Resource | — |
 | STD.MOD.130 | Vendor Credit Called | 📝 | Economy | Public | Add | Native Resource | — |
 | STD.MOD.131 | Neighborhood Notices | 📝 | Standing | Public | Add | Public Standing | — |
 | STD.MOD.132 | Sides Are Taken | 📝 | Standing | Public | Add | Public Standing | — |
@@ -1642,12 +1642,12 @@ Produced by any CA that delivers a Grant Deed (currently SYN.CA.8 Land Title and
 
 ```python
 GD01 = Card(
-    id      = "GD-01",  version = "v0.4",
+    id      = "GD-01",  version = "v0.5",
     name    = "Grant Deed",
     tagline = "A registered claim. When someone else breaks ground, the deed fires.",
     type    = ModReactCard,  subtype = Standard,  faction = All,
 
-    layer    = Territory,  function = Add,  subject = StructureBlock,
+    layer    = Territory,  function = Redirect,  subject = StructureBlock,
 
     beat            = None,
     resolution      = Automatic,

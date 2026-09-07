@@ -100,6 +100,10 @@ Key assignment rules:
 6. Corrupt applies only to physically written/recorded values. Invalid targets: printed card text, marker positions, Chronicle, Intel Token round-number field (7.2b). Intel Tokens must be in public-placement window to be reachable (L222).
 6b. InfluenceTier is not a targetable component — it is derived from token counts. Only board state changes (add/remove tokens) affect tier (L223).
 7. Portrait is ARBITER-sole-mover — player cards affect Public Standing only (Standing/Shift/StandingMarker).
+7b. **Add vs. Redirect — the discriminating test (S160).** `Add` is strictly *new element from supply*. `Redirect` is a cross-faction transfer: the same subject leaves one faction's holdings and enters another's, in one operation. Two traps:
+   - `faction(target)` appears in most cards as a **type/currency qualifier**, not a possessive — `IntelToken(faction=faction(target))`, `native(faction=trigger.faction)`, `arbiter.deliver(faction(holder), IntelToken(faction=trigger.faction))`. ARBITER supplies these from stock and the named faction loses nothing. These are genuine `Add`.
+   - A transfer does **not** need to be a single atomic call. `GHO.MOD.7`, `NET.MOD.10` and `GD-01` implement theirs as separate `arbiter.remove(...)` + `arbiter.place(...)` in one effect list, and all three are `Redirect`. Direction is also unconstrained — a gift (acting pays, target gains) is as much a Transfer as a seizure.
+
 8. Card effects use exactly one of four valid duration types: **Immediate** (resolved at beat; no lingering marker) · **Transient** (removed at end of current Month) · **Seasonal** (removed at end of current Quarter / Phase 21) · **Permanent** (persists until a named action or condition removes it). No card creates a state that expires after a defined number of Quarters. *(Art 04b §4.7)*
 
 ---

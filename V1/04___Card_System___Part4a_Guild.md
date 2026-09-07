@@ -656,7 +656,7 @@ GUI.CA.7 = Card(
     threshold       = None,
     ring_mod        = None,
     doctrine_mod    = None,
-    value_rating    = 3,
+    value_rating    = 4,
     trigger         = None,
     resolution_type = Transactional,
     outcome_type    = None,
@@ -924,7 +924,7 @@ The Guild files the development order before a single wall goes up. The district
 | Voice fit | ⚠ | Perspectives pending | Art 00 §7 |
 | Doctrine alignment | ✓ | Capacity + district-native cost addresses 04-n119 §9.2 ceiling gap; construction rights framing is Guild-exclusive | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Guild) | Art 04 §6.2 |
-| Taxonomy fit | ✓ | Territory / Add / StructureBlock — ultimate effect is Guild structure + Presence Token via GD-01 fire. The card's own code declares this taxonomy correctly and it's a valid Territory+Add cell, but `card_status` (DB) shows `layer`/`function`/`subject` all `NULL` for GUI.CA.10, flagged `Abstract / No Subject` in `v_card_mechanical_alignment` — a DB/MD sync gap (per `feedback_card_status_sync.md`), not a card content defect. | Art 04b §4 |
+| Taxonomy fit | ✓ | Territory / Add / StructureBlock — ultimate effect is Guild structure + Presence Token via the GD-01 fire. Valid Territory+Add cell; the card delivers the deed instrument, and the deed's own Redirect classification does not propagate to the card that issues it. | Art 04b §4 |
 | Balance | ⚠ | Payback contingent on any faction building in named district; district-native cost throttles casual play — playtesting required | Art 02 §6–§7 |
 | Effect duration | ✓ | Permanent — Grant Deed held until fired or game end | — |
 | Persistence | ✓ | Card persistence = Immediate; GD-01 persists in hand | Art 04 §6 |

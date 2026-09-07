@@ -50,13 +50,149 @@ def classify(expr):
                 return cat
     return 'other'
 
-def find_target(expr):
-    if re.search(r'faction\(target|target_faction|\(target\)|faction\(trigger', expr):
-        return 'target'
-    if re.search(r'faction\(acting|\bacting\b|faction\(holding|\bholder\b', expr):
+FACTIONS = ('Syndicate', 'Guild', 'Ghost', 'Network', 'Directorate')
+
+# --- `target` semantics (rewritten S160, PM05 04-n234) --------------------------
+# `target` names THE ENTITY WHOSE HOLDINGS THIS ROW CHANGES.
+#
+# It used to name "whichever entity a four-rule regex cascade mentioned first",
+# which is a different question and disagreed with this one on 108 of 355 rows
+# (30%). Four defect classes, all fixed here: `faction(Syndicate)`-style hardcoded
+# names were invisible to the acting test; the `district` test fired before
+# anything read `faction=`; type/currency qualifiers (`IntelToken(faction=X)`,
+# `source=faction(X).supply`) read as possession; and there was no value at all
+# for a named faction that is neither acting nor the target.
+#
+# Vocabulary: acting | target | third_party | district | none | other.
+# Downstream, value-to-acting derives as  magnitude x (+1 if acting else -1).
+
+# Calls whose ARGUMENTS name a type/currency/key rather than a possessor. Only the
+# arguments are blanked -- the accessor survives, so `faction(holder).native(...).add(1)`
+# still exposes `faction(holder)...add(` as the receiver.
+_QUAL_CALLS = [
+    r'IntelToken\s*\(', r'PhantomRecord\s*\(',
+    r'AccordForm\s*\(', r'GrantDeed\s*\(', r'DebriefActionCard\s*\(',
+    r'\.native\s*\(', r'\.resource\s*\(', r'presence_count\s*\(',
+    r'count_attributed_actions\s*\(', r'resource_generation\s*\(',
+    r'active_permanents\s*\(',
+]
+
+def _blank_args(expr):
+    for pat in _QUAL_CALLS:
+        rx, pos = re.compile(pat), 0
+        while True:
+            m = rx.search(expr, pos)
+            if not m:
+                break
+            i = m.end() - 1                       # the '('
+            depth, j = 0, i
+            while j < len(expr):
+                if expr[j] == '(':
+                    depth += 1
+                elif expr[j] == ')':
+                    depth -= 1
+                    if depth == 0:
+                        break
+                j += 1
+            if j >= len(expr):                    # unbalanced — leave it alone
+                pos = m.end()
+                continue
+            expr = expr[:i + 1] + '_' + expr[j:]
+            pos = i + 3
+    # a source/origin is never the beneficiary (STD.CA.15: source=faction(target).supply)
+    expr = re.sub(r'\bsource\s*=\s*[\w().\[\]]+', ' ', expr)
+    expr = re.sub(r'\bfrom_?\s*=\s*[\w().\[\]]+', ' ', expr)
+    return expr
+
+# Ordered: an explicit destination outranks a mutation receiver, which outranks a
+# bare `faction=` argument.
+_RECEIVER = [
+    r'\btransfer\s*\(\s*faction\(\s*(\w+)\s*\)',
+    r'game\.transfer\s*\([^,]*,[^,]*,\s*faction\(\s*(\w+)\s*\)',
+    r'\b(?:to|recipient|with_faction)\s*=\s*faction\(\s*(\w+)\s*\)',
+    r'\b(?:to|recipient|with_faction)\s*=\s*(\w+)',
+    r'faction\(\s*([\w.]+)\s*\)[\w.\[\]()]*\.(?:add|remove|sub|gain|lose)\s*\(',
+    r'\bfaction\s*=\s*(\w+)',
+    r'(?:arbiter|game)\.(?:deliver|dispatch|grant)\s*\(\s*faction\(\s*(\w+)\s*\)',
+    r'(?:arbiter|game)\.(?:deliver|dispatch|grant)\s*\(\s*(\w+)',
+    r'(?:arbiter|game)\.(?:deliver|dispatch|discard_hand)\s*\(.*,\s*(\w+)\s*\)',
+    r'\brecipient\s*=\s*faction\(\s*([\w.]+)\s*\)',
+    r'faction\(\s*([\w.]+)\s*\)',
+]
+
+def _role_of(tok, card_faction):
+    if not tok:
+        return None
+    t = tok.strip()
+    if t in ('acting', 'holder', 'holding', 'submitter'):
         return 'acting'
-    if re.search(r'district', expr):
+    if t in ('target_district', 'trigger.district'):
         return 'district'
+    if t.startswith('target') or t.startswith('trigger') or t == 'named_opponent':
+        return 'target'
+    if t in FACTIONS:
+        # On a faction card the card's own name IS the acting faction. On a
+        # Standard/Ring card (faction=All) a named faction can only be someone else.
+        return 'acting' if t == card_faction else 'third_party'
+    if t.startswith('district') or t in ('board', 'target_district'):
+        return 'district'
+    return None
+
+# Rows that change nobody's holdings: pure information, flag- and threshold-setting.
+_NO_HOLDINGS = re.compile(
+    r'\breveal|announce\(|set_flag|\.threshold|apply_modifier|\bblocked_at\(|'
+    r'board_condition\(|world_condition\(', re.I)
+
+_IS_MOVE = re.compile(r'\btransfer\s*\(|\.move\s*\(|\bredirect\s*\(')
+
+def _move_destination(e, card_faction):
+    """For a transfer/move, `target` names WHERE THE THING ENDS UP -- so a single-row
+    transfer says whether the acting faction received it or gave it away. An explicit
+    `to=` wins, but only when it names a faction: `to=district(target)` is a place,
+    not a holder (DIR.CA.4 relocates its OWN presence), so that falls through to the
+    last faction reference, which is the mover."""
+    m = re.search(r'\b(?:to|recipient)\s*=\s*(?:faction\(\s*(\w+)\s*\)|(\w+))', e)
+    if m:
+        role = _role_of(next((g for g in m.groups() if g), None), card_faction)
+        if role and role != 'district':
+            return role
+    fac = re.findall(r'faction\(\s*(\w+)\s*\)', e)
+    if fac:
+        role = _role_of(fac[-1], card_faction)
+        if role:
+            return role
+    eq = re.findall(r'\bfaction\s*=\s*(\w+)', e)
+    if eq:
+        role = _role_of(eq[-1], card_faction)
+        if role:
+            return role
+    return None
+
+
+def find_target(expr, card_faction=None):
+    e = _blank_args(expr)
+    if _IS_MOVE.search(e):
+        role = _move_destination(e, card_faction)
+        if role:
+            return role
+    for pat in _RECEIVER:
+        m = re.search(pat, e)
+        if m:
+            role = _role_of(m.group(1), card_faction)
+            if role:
+                return role
+    if re.search(r'\bdistrict\b', e):
+        return 'district'
+    if _NO_HOLDINGS.search(e):
+        return 'none'
+    # Corpus convention: an unattributed GAIN (`IntelToken(...).add(1)`) is the acting
+    # faction receiving. Deliberately not extended to removals — an unresolved
+    # `arbiter.remove(X, from=...)` is the acting faction acting ON something else, and
+    # defaulting it to 'acting' would flip the value sign. Those stay 'other'.
+    if re.search(r'\.add\s*\(', e):
+        return 'acting'
+    if re.search(r'\b(?:remove|discard|cancel|destroy)\b', e):
+        return 'target' if re.search(r'\btarget|\btrigger', e) else 'other'
     return 'other'
 
 def find_magnitude(expr):
@@ -66,6 +202,15 @@ def find_magnitude(expr):
     neg = bool(re.search(r'\.remove\(|\bremove\(|\bcancel\(|\bblock\(', expr))
     m = (re.search(r'\.(?:add|remove)\(\s*(\d+)', expr)
          or re.search(r'count\s*=\s*(\d+)', expr)
+         # S160 (04-n235): a fixed multiplier on a TYPE reference is a real magnitude
+         # that was being read as the 1-unit floor. Restricted to `.native * N` and
+         # `IntelToken(...) * N` on purpose — `structure * 1` (GUI.PA.4) and
+         # `trigger.amount * 2` (GHO.MOD.5) multiply a *counted* thing, so reading
+         # those would hide genuine variability rather than recover a magnitude.
+         or re.search(r'\.native\s*\*\s*(\d+)', expr)
+         or re.search(r'IntelToken\([^()]*\)\s*\*\s*(\d+)', expr)
+         # a `min(N, ...)` cap is the designed ceiling, not a variable (STD.PA.6)
+         or re.search(r'\bmin\(\s*(\d+)\s*,', expr)
          or re.search(r'\.(?:add|remove)\([^,)]*,\s*(\d+)\s*\)', expr)
          or re.search(r'[-+]?\s*(\d+)\s*$', expr.strip()))
     if not m:
@@ -107,6 +252,16 @@ def q(v):
         return 'NULL'
     return "'" + str(v).replace('\\', '\\\\').replace("'", "\\'") + "'"
 
+def fetch_factions():
+    """card_id -> faction, from card_body (.md is SOT). find_target needs it to tell
+    a card naming its OWN faction (the acting faction) from one naming another's."""
+    out = subprocess.run(['mariadb', 'the_signal_db', '-N', '-B', '-e',
+                          "SELECT card_id, raw_value FROM card_body "
+                          "WHERE field_name = 'faction';"],
+                         capture_output=True, text=True).stdout
+    return dict(l.split('\t', 1) for l in out.splitlines() if '\t' in l)
+
+
 def fetch_rows():
     # on_accept/on_decline carry the whole effect on ElectPlayer cards (SYN.CA.7,
     # DIR.PA.8, SYN.PA.1 ...), and persistence_effect carries it on card-as-condition
@@ -130,6 +285,7 @@ AUX_FIELDS = {'on_accept': 'success', 'on_decline': 'fail', 'persistence_effect'
 
 def build():
     comps, prose = [], []
+    factions = fetch_factions()
     for card_id, field, raw in fetch_rows():
         if raw.lstrip().startswith('"'):
             prose.append((card_id, field))      # bare-prose outcome — 04-n218/n220
@@ -137,7 +293,8 @@ def build():
         tier = AUX_FIELDS.get(field, field)
         prefix = f'{field}: ' if field in AUX_FIELDS else ''
         for expr in split_components(raw):
-            comps.append((card_id, tier, classify(expr), find_target(expr),
+            comps.append((card_id, tier, classify(expr),
+                          find_target(expr, factions.get(card_id)),
                           find_magnitude(expr), prefix + expr))
     return comps, prose
 
