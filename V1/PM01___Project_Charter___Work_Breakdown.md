@@ -1,7 +1,7 @@
 # PM01 — Project Charter & Work Breakdown
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 1.6  
+**Version:** 1.7  
 **Status:** 🔄 Updated — Active  
 **Type:** Project Epic — all design artifacts are Features of this Epic
 
@@ -131,7 +131,7 @@ The following are explicitly excluded from the Tier 1 Paper Prototype:
 - Digital terminals, ESP32 hardware, or any electronics
 - Computer vision or board projection
 - Tier 2–5 mechanics (social, wireless/communications, web/data, Chorus)
-- AI-generated narrative
+- Agent-generated narrative produced **during a session** — ARBITER speech, Chronicle entries, or any player-facing output generated while the game is being played. This does not exclude agent-generated design artifacts, which are authored under project-lead review and approval and are how this project is built. Assigning the ARBITER role to an AI agent is a future electronic-tier direction (PM02 FD-07), out of scope for Tier 1.
 - Legacy or Covenant persistence between sessions
 - Website or between-session content
 - Full card library (366 cards) — prototype uses a minimum viable card set
@@ -220,6 +220,25 @@ Production does not begin until relevant design artifacts are signed off. Items 
 | 3.03 | Post-session debrief script | 10 | ⬜ |
 | 3.04 | Session 1 simplified configuration guide | 09, 10 | ⬜ |
 | 3.05 | Getting Started walkthrough | All design artifacts | ⬜ |
+
+### WBS 4 — World Engine (Canon Tooling)
+
+Design-time tooling for canon governance and world expansion: a structured canon store, consistency and gap analysis over it, and a candidate-generation loop that keeps the world growing without drifting. Not a prototype deliverable and not on the playtest path. Nothing in WBS 4 blocks WBS 1–3, and no WBS 4 work displaces Art 04 sign-off (PM02 L377).
+
+The engine only proposes. Canon changes through the existing path — `Creative/` evaluation → PM02 decision → artifact edit under §3 change governance — and the project lead remains the sole approver. Generation volume is paced to review capacity: proposals are surfaced as batched approval packets, not a continuous stream into an unreviewed queue.
+
+Source proposal: `Whiteboard/world_engine_proposal.md`.
+
+| # | Deliverable | Requires | Owner | Status |
+|---|-------------|---------|-------|--------|
+| 4.01 | Design doc — scope, canon schema, truth-layer model, promotion path, open question of separate database vs. `the_signal_db`. **Start from PM05 WE-01, which supersedes the source proposal's assumptions** (corpus size, vector store, which work runs locally, scoring). | Art 04 sign-off | Claude | ⬜ |
+| 4.02 | Local inference groundwork — embedding model on yakko, Ollama API reachable from wakko, MariaDB vector index proven | — | lev | ⬜ |
+| 4.03 | Canon inventory — entities, relationships and claims extracted to structured storage, every row carrying source section and truth layer | 4.01, 4.02 | Claude (schema) · lev (pipeline) | ⬜ |
+| 4.04 | Consistency and drift checker — contradiction detection across canon and card narrative; first run on the `Creative/` submissions standing at Under Review | 4.03 | Claude verifies | ⬜ |
+| 4.05 | Gap analysis and canon expansion loop — coverage queries, candidate generation, stress test, approval packet | 4.04 | Claude · Andy | ⬜ |
+| 4.06 | Two-index split — player-facing retrieval (Layers A/B) separated from designer retrieval (Layer C); disclosure enforced by index partition, not by prompt | 4.03 | Claude | ⬜ |
+| 4.07 | ARBITER voice corpus — register examples at volume; Art 07 §9/§11 built out from placeholder | Art 07 work | Claude · Andy | ⬜ |
+| 4.08 | ARBITER voice appliance — Andy's LLM curriculum capstone with lev (Ollama API, prompting, RAG). Personal learning project; not a prototype deliverable and not expected at a play session. Consumes 4.06 + 4.07. | 4.06, 4.07 | Andy · lev | ⬜ |
 
 ---
 
