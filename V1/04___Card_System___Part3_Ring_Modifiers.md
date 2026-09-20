@@ -63,6 +63,7 @@ Overture = Card(
     name    = "Overture",
     tagline = "Extend a formal invitation to negotiate — attached to any public act you declare.",
     type    = ModReactCard,  faction = All,
+    subtype = Standard,
 
     layer   = None,  function = None,  subject = None,  # per-card choice — Overture isn't an action-taxonomy category
 
@@ -78,6 +79,7 @@ Overture = Card(
     trigger         = public_act.resolved(pa=overture.assigned_pa),  # NEW trigger form — pending §6.3 vocab extension
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -96,6 +98,9 @@ Overture = Card(
     # Fires when the assigned host PA resolves (any outcome: success or fail)
     success = arbiter.deliver(faction(acting), AccordForm(blank)),
     successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     # Faction fills form per Art 06 §9.3; places in Accord Placement Area during Beat 4 or Debrief.
     # Art 06 §9.4 formation procedure applies from placement forward.
 
@@ -2377,6 +2382,8 @@ STD.MOD.26 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2384,6 +2391,8 @@ STD.MOD.26 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2464,6 +2473,8 @@ STD.MOD.27 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2471,6 +2482,8 @@ STD.MOD.27 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2551,6 +2564,8 @@ STD.MOD.28 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2558,6 +2573,8 @@ STD.MOD.28 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2638,6 +2655,8 @@ STD.MOD.29 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2645,6 +2664,8 @@ STD.MOD.29 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2725,6 +2746,8 @@ STD.MOD.30 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2732,6 +2755,8 @@ STD.MOD.30 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2812,6 +2837,8 @@ STD.MOD.31 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2819,6 +2846,8 @@ STD.MOD.31 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2899,6 +2928,8 @@ STD.MOD.32 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2906,6 +2937,8 @@ STD.MOD.32 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2986,6 +3019,8 @@ STD.MOD.33 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2993,6 +3028,8 @@ STD.MOD.33 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3073,6 +3110,8 @@ STD.MOD.34 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3080,6 +3119,8 @@ STD.MOD.34 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3160,6 +3201,8 @@ STD.MOD.35 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3167,6 +3210,8 @@ STD.MOD.35 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3247,6 +3292,8 @@ STD.MOD.36 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3254,6 +3301,8 @@ STD.MOD.36 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3334,6 +3383,8 @@ STD.MOD.37 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3341,6 +3392,8 @@ STD.MOD.37 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3421,6 +3474,8 @@ STD.MOD.38 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3428,6 +3483,8 @@ STD.MOD.38 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3508,6 +3565,8 @@ STD.MOD.39 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3515,6 +3574,8 @@ STD.MOD.39 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3595,6 +3656,8 @@ STD.MOD.40 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3602,6 +3665,8 @@ STD.MOD.40 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3682,6 +3747,8 @@ STD.MOD.41 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3689,6 +3756,8 @@ STD.MOD.41 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3769,6 +3838,8 @@ STD.MOD.42 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3776,6 +3847,8 @@ STD.MOD.42 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3856,6 +3929,8 @@ STD.MOD.43 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3863,6 +3938,8 @@ STD.MOD.43 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3943,6 +4020,8 @@ STD.MOD.44 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3950,6 +4029,8 @@ STD.MOD.44 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4030,6 +4111,8 @@ STD.MOD.45 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4037,6 +4120,8 @@ STD.MOD.45 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4117,6 +4202,8 @@ STD.MOD.46 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4124,6 +4211,8 @@ STD.MOD.46 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4204,6 +4293,8 @@ STD.MOD.47 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4211,6 +4302,8 @@ STD.MOD.47 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4291,6 +4384,8 @@ STD.MOD.48 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4298,6 +4393,8 @@ STD.MOD.48 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4378,6 +4475,8 @@ STD.MOD.49 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4385,6 +4484,8 @@ STD.MOD.49 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4465,6 +4566,8 @@ STD.MOD.50 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4472,6 +4575,8 @@ STD.MOD.50 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4552,6 +4657,8 @@ STD.MOD.51 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4559,6 +4666,8 @@ STD.MOD.51 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4639,6 +4748,8 @@ STD.MOD.52 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4646,6 +4757,8 @@ STD.MOD.52 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4726,6 +4839,8 @@ STD.MOD.53 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4733,6 +4848,8 @@ STD.MOD.53 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4813,6 +4930,8 @@ STD.MOD.54 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4820,6 +4939,8 @@ STD.MOD.54 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4900,6 +5021,8 @@ STD.MOD.55 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4907,6 +5030,8 @@ STD.MOD.55 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4987,6 +5112,8 @@ STD.MOD.56 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4994,6 +5121,8 @@ STD.MOD.56 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5074,6 +5203,8 @@ STD.MOD.57 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5081,6 +5212,8 @@ STD.MOD.57 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5161,6 +5294,8 @@ STD.MOD.58 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5168,6 +5303,8 @@ STD.MOD.58 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5248,6 +5385,8 @@ STD.MOD.59 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5255,6 +5394,8 @@ STD.MOD.59 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5335,6 +5476,8 @@ STD.MOD.60 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5342,6 +5485,8 @@ STD.MOD.60 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5422,6 +5567,8 @@ STD.MOD.61 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5429,6 +5576,8 @@ STD.MOD.61 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5509,6 +5658,8 @@ STD.MOD.62 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5516,6 +5667,8 @@ STD.MOD.62 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5596,6 +5749,8 @@ STD.MOD.63 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5603,6 +5758,8 @@ STD.MOD.63 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5683,6 +5840,8 @@ STD.MOD.64 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5690,6 +5849,8 @@ STD.MOD.64 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5770,6 +5931,8 @@ STD.MOD.65 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5777,6 +5940,8 @@ STD.MOD.65 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5857,6 +6022,8 @@ STD.MOD.66 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5864,6 +6031,8 @@ STD.MOD.66 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -5944,6 +6113,8 @@ STD.MOD.67 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -5951,6 +6122,8 @@ STD.MOD.67 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6031,6 +6204,8 @@ STD.MOD.68 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6038,6 +6213,8 @@ STD.MOD.68 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6118,6 +6295,8 @@ STD.MOD.69 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6125,6 +6304,8 @@ STD.MOD.69 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6205,6 +6386,8 @@ STD.MOD.70 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6212,6 +6395,8 @@ STD.MOD.70 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6292,6 +6477,8 @@ STD.MOD.71 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6299,6 +6486,8 @@ STD.MOD.71 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6379,6 +6568,8 @@ STD.MOD.72 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6386,6 +6577,8 @@ STD.MOD.72 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6466,6 +6659,8 @@ STD.MOD.73 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6473,6 +6668,8 @@ STD.MOD.73 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6553,6 +6750,8 @@ STD.MOD.74 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6560,6 +6759,8 @@ STD.MOD.74 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6640,6 +6841,8 @@ STD.MOD.75 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6647,6 +6850,8 @@ STD.MOD.75 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6727,6 +6932,8 @@ STD.MOD.76 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6734,6 +6941,8 @@ STD.MOD.76 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6814,6 +7023,8 @@ STD.MOD.77 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6821,6 +7032,8 @@ STD.MOD.77 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6901,6 +7114,8 @@ STD.MOD.78 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6908,6 +7123,8 @@ STD.MOD.78 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6988,6 +7205,8 @@ STD.MOD.79 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6995,6 +7214,8 @@ STD.MOD.79 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7075,6 +7296,8 @@ STD.MOD.80 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7082,6 +7305,8 @@ STD.MOD.80 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7162,6 +7387,8 @@ STD.MOD.81 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7169,6 +7396,8 @@ STD.MOD.81 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7249,6 +7478,8 @@ STD.MOD.82 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7256,6 +7487,8 @@ STD.MOD.82 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7336,6 +7569,8 @@ STD.MOD.83 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7343,6 +7578,8 @@ STD.MOD.83 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7423,6 +7660,8 @@ STD.MOD.84 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7430,6 +7669,8 @@ STD.MOD.84 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7510,6 +7751,8 @@ STD.MOD.85 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7517,6 +7760,8 @@ STD.MOD.85 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7597,6 +7842,8 @@ STD.MOD.86 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7604,6 +7851,8 @@ STD.MOD.86 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7684,6 +7933,8 @@ STD.MOD.87 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7691,6 +7942,8 @@ STD.MOD.87 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7771,6 +8024,8 @@ STD.MOD.88 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7778,6 +8033,8 @@ STD.MOD.88 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7858,6 +8115,8 @@ STD.MOD.89 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7865,6 +8124,8 @@ STD.MOD.89 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7945,6 +8206,8 @@ STD.MOD.90 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7952,6 +8215,8 @@ STD.MOD.90 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8032,6 +8297,8 @@ STD.MOD.91 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8039,6 +8306,8 @@ STD.MOD.91 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8119,6 +8388,8 @@ STD.MOD.92 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8126,6 +8397,8 @@ STD.MOD.92 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8206,6 +8479,8 @@ STD.MOD.93 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8213,6 +8488,8 @@ STD.MOD.93 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8293,6 +8570,8 @@ STD.MOD.94 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8300,6 +8579,8 @@ STD.MOD.94 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8380,6 +8661,8 @@ STD.MOD.95 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8387,6 +8670,8 @@ STD.MOD.95 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8467,6 +8752,8 @@ STD.MOD.96 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8474,6 +8761,8 @@ STD.MOD.96 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8554,6 +8843,8 @@ STD.MOD.97 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8561,6 +8852,8 @@ STD.MOD.97 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8628,19 +8921,28 @@ STD.MOD.98 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Core doesn't miss a new arrival. Word reaches the right desk before the ink dries.",
     perspectives = None,
     design_note  = "Ring ModReactCard pattern-setter (04-53 direction). A rival's presence placement in Core is met with an immediate matching reinforcement from whoever holds this card. Deliberately modest (single-unit, at or below faction-specific power) — mirrors DIR.MOD.7 Eminent Domain's flat presence-yield template.",
@@ -8712,19 +9014,28 @@ STD.MOD.99 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Core paperwork moves fast when it wants to. An objection on record costs someone their footing.",
     perspectives = None,
     design_note  = "Removes 1 presence chip from the triggering faction in the same district as their new structure — a bureaucratic cost, not a reversal of the structure placement itself (GR 7.2b compliant).",
@@ -8796,19 +9107,28 @@ STD.MOD.100 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "The building doesn't stay empty long. Core fills what's vacated before the news spreads.",
     perspectives = None,
     design_note  = "Fires on any presence removal in Core; narrative frames it as claiming a vacated district. ARBITER confirms narrative fit case-by-case — no distinct 'last chip' filter exists in confirmed TriggerExpr vocabulary.",
@@ -8880,19 +9200,28 @@ STD.MOD.101 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.deliver(faction(holder), IntelToken(faction=trigger.faction)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Dominance in Core isn't quiet. The commissary knows before the announcement is official.",
     perspectives = None,
     design_note  = "Mirrors GHO.MOD.2 Perimeter Sensors' Intel Token delivery template. Reward changed from an initial 'draw 1 modifier card' (circular — a modifier card's reward shouldn't itself be another modifier card, with no thematic tie to 'overheard information') — Intel Token on the triggering faction ties the reward to what the card is actually about.",
@@ -8964,19 +9293,28 @@ STD.MOD.102 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "An Accord anywhere in the city passes through institutional record-keeping. Core's clerks note who's tied to whom.",
     perspectives = None,
     design_note  = "Not ring-scoped by design — Accords have no ring dimension, so 'Core flavor' comes from doctrine/theme (institutional paperwork), not a mechanical filter. Ring ModReact triggers don't require ring-scoping.",
@@ -9048,19 +9386,28 @@ STD.MOD.103 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = trigger.card,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.modify(trigger.card, threshold, delta=-5),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Core's review process exists to slow things down. It works exactly as designed, on whoever it's aimed at.",
     perspectives = None,
     design_note  = "Hinders the flagged PA (−5 threshold — makes success harder), not a self-benefit. `arbiter.modify(target, field, delta)` is a new mutation form, not yet in confirmed vocabulary; flagged for reconciliation. Procedurally grounded in the existing BM-xx/M-11 threshold-modifier-accumulation pipeline (Art 03 §9.4.1.1/§9.4.3.1.3), not new ARBITER behavior.",
@@ -9132,19 +9479,28 @@ STD.MOD.104 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Core doesn't build in isolation. A new structure re-opens every budget in the district, and the forecasts get revised in the same currency that raised the walls.",
     perspectives = None,
     design_note  = "`NativeResource(faction)` parameterizes the existing bare `NativeResource` subject symbol (Art 04 §6.1 line ~1559 usage) to resolve dynamically per triggering faction — needed because this card, unlike faction-specific precedent (GUI.MOD.2/3/4's hardcoded Capacity), doesn't have a single fixed faction context. Flagged for reconciliation.",
@@ -9216,19 +9572,28 @@ STD.MOD.105 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Established status means the paperwork becomes public. Anyone who reads it carefully learns exactly where the money in this district is going next.",
     perspectives = None,
     design_note  = "Same NativeResource(faction) generalization as STD.MOD.104. Shares its trigger event with GUI.MOD.9 Field Supervisor's established_marker.placed precedent — multiple cards firing on the same confirmed event is standard practice (e.g. presence_chip.placed already triggers several Ghost cards independently).",
@@ -9300,19 +9665,28 @@ STD.MOD.106 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Losing a foothold in Core isn't the end — there's always a contingency line item for exactly this.",
     perspectives = None,
     design_note  = "Distinct from the existing Floor Act mechanic (PM02 VE-01) — this is a Core-specific, presence-loss-triggered reserve, not a general insufficient-resource safety net. NativeResource(holder) keys to the holder's own faction, not a rival's.",
@@ -9384,19 +9758,28 @@ STD.MOD.107 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Standing shifts in Core get logged, cross-referenced, and answered — Core doesn't let a change go unremarked.",
     perspectives = None,
     design_note  = "Straightforward capitalize-on-rival's-gain template — `faction(holder).standing.add(1)` stands on its own precedent within the Ring set, STD.MOD.102.",
@@ -9468,19 +9851,28 @@ STD.MOD.108 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Core keeps records of every dispute. A district turning contested opens the door to citing precedent from somewhere else.",
     perspectives = None,
     design_note  = "Reframed from an earlier seed concept (originally 'an Accord involving a Core-based faction forms') — Accords aren't ring-scoped, so a Core-specific version couldn't distinguish itself from the other rings' copies. Tension Marker placement is a genuinely ring-scoped, confirmed-vocabulary substitute with the same 'formal/procedural response' character.",
@@ -9552,19 +9944,28 @@ STD.MOD.109 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "A reprimand doesn't need to be loud to be effective. Core specializes in the quiet kind.",
     perspectives = None,
     design_note  = "Mirrors STD.MOD.107's template, opposite trigger direction. Closes Ring 1 (Core): 12 cards, STD.MOD.98–109 — first Ring ModReactCard set shipped (04-53/09-06).",
@@ -9636,19 +10037,28 @@ STD.MOD.110 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Mid's routing systems don't tolerate a new obstruction quietly. Whoever's watching the reroute gets there first.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.98 Notified of Encroachment — same mechanic, ring=2.",
@@ -9720,19 +10130,28 @@ STD.MOD.111 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Mid's throughput has a hard limit. Building past it costs whoever built.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.99 Structural Objection — same mechanic, ring=2.",
@@ -9804,19 +10223,28 @@ STD.MOD.112 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Nothing sits idle in Mid's infrastructure for long. Someone always moves in on the leftovers.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.100 Escort Withdrawn — same mechanic, ring=2.",
@@ -9888,19 +10316,28 @@ STD.MOD.113 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.deliver(faction(holder), IntelToken(faction=trigger.faction)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "A district locked down draws load like a failing relay. The grid logs it before anyone announces it.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.101 Overheard in the Commissary — same mechanic, ring=2. Name drawn from the Mid seed pool's 'Grid Anomaly Logged' entry (originally a covert-op-discovery concept, not buildable — repurposed for the confirmed dominant_marker.placed mechanic).",
@@ -9972,19 +10409,28 @@ STD.MOD.114 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "An Accord's dissolution isn't just paperwork — whatever it was propping up now needs a new arrangement.",
     perspectives = None,
     design_note  = "Not ring-scoped, same as STD.MOD.102 (Accords have no ring dimension) — Mid flavor comes from doctrine (infrastructure-dependency framing), not a mechanical filter. `accord.removed` chosen over `.corrupted` — dissolution/breach fits Mid's operational-consequence voice better than data-tampering (which reads more Ghost/Information-doctrine).",
@@ -10056,19 +10502,28 @@ STD.MOD.115 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = trigger.card,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.modify(trigger.card, threshold, delta=-5),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Mid's inspectors don't announce a visit. They just show up when it's least convenient.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.103 Flagged for Review — same mechanic (−5 threshold, hinders the flagged PA), ring=2.",
@@ -10140,19 +10595,28 @@ STD.MOD.116 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Nothing gets built in Mid without the corridors running hotter for a season. The traffic is theirs. The lines it runs on aren't.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.104 Budget Reallocated — same NativeResource(trigger.faction) generalization, ring=2.",
@@ -10224,19 +10688,28 @@ STD.MOD.117 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Reaching Established in Mid means the schedules downstream get rewritten. The extra hours are real, and they get billed to the job — not to the faction that created it.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.105 Audit Trail — same NativeResource(trigger.faction) generalization, ring=2.",
@@ -10308,19 +10781,28 @@ STD.MOD.118 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Losing ground in Mid trips a contingency that's always been sitting there, waiting.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.106 Emergency Reserve — same NativeResource(holder) generalization, ring=2. Distinct from the existing Floor Act mechanic (PM02 VE-01), same as its Ring 1 counterpart.",
@@ -10392,19 +10874,28 @@ STD.MOD.119 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Mid's labor apparatus doesn't let a shift in standing pass without a formal word on it.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.107 On the Docket — same mechanic, ring=2.",
@@ -10476,19 +10967,28 @@ STD.MOD.120 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Mid keeps a file on every dispute. A contested line gets a citation before it gets resolved.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.108 Precedent Cited — same mechanic, ring=2.",
@@ -10560,19 +11060,28 @@ STD.MOD.121 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "A formal notice doesn't need drama. Mid's bureaucracy just needs the paper trail.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.109 Quiet Reprimand — same mechanic, ring=2. Closes Ring 2 (Mid): 12 cards, STD.MOD.110–121. Ring 3 (Baryo) is the last open leg of 09-06's Ring ModReactCard pass.",
@@ -10644,19 +11153,28 @@ STD.MOD.122 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Baryo doesn't wait for paperwork. Word moves faster than any filing ever could.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.98/STD.MOD.110 — same mechanic, ring=3. Name drawn directly from the Baryo seed pool's matching Territory entry.",
@@ -10728,19 +11246,28 @@ STD.MOD.123 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Something goes up in Baryo, and somebody else finds themselves priced out of the corner they held.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.99/STD.MOD.111 — same mechanic, ring=3.",
@@ -10812,19 +11339,28 @@ STD.MOD.124 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "The moment a foothold disappears, someone else is already moving their things in.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.100/STD.MOD.112 — same mechanic, ring=3.",
@@ -10896,19 +11432,28 @@ STD.MOD.125 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.deliver(faction(holder), IntelToken(faction=trigger.faction)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "When someone locks down a piece of Baryo, the street knows before the ink's even dry — if there was any ink to begin with.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.101/STD.MOD.113 — same mechanic, ring=3.",
@@ -10980,19 +11525,28 @@ STD.MOD.126 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Baryo's agreements aren't filed anywhere official. That's exactly what makes them so easy to quietly renegotiate.",
     perspectives = None,
     design_note  = "Not ring-scoped, same as STD.MOD.102/STD.MOD.114 (Accords have no ring dimension) — Baryo flavor comes from doctrine (informal/unfiled agreements), not a mechanical filter. `accord.corrupted` rather than `.removed` — Baryo's version of the unscoped card reacts to terms being falsified, not a formal breach.",
@@ -11064,19 +11618,28 @@ STD.MOD.127 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = trigger.card,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.modify(trigger.card, threshold, delta=-5),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "An operation through Baryo draws attention before it ever gets a chance to land clean.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.103/STD.MOD.115 — same mechanic (−5 threshold, hinders the flagged PA), ring=3.",
@@ -11148,19 +11711,28 @@ STD.MOD.128 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Nothing goes up in the Baryo without a hundred small arrangements around it. None of them appear on the invoice, and none of them come out of it.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.104/STD.MOD.116 — same NativeResource(trigger.faction) generalization, ring=3.",
@@ -11232,19 +11804,28 @@ STD.MOD.129 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Somebody reaching Established changes what the block is worth. Nobody standing on it takes a thing from them — they just stop being cheap.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.105/STD.MOD.117 — same NativeResource(trigger.faction) generalization, ring=3.",
@@ -11316,19 +11897,28 @@ STD.MOD.130 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Baryo runs on favors owed. This is one finally getting called in.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.106/STD.MOD.118 — same NativeResource(holder) generalization, ring=3.",
@@ -11400,19 +11990,28 @@ STD.MOD.131 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "The neighborhood keeps its own ledger, and it's not shy about updating it out loud.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.107/STD.MOD.119 — same mechanic, ring=3.",
@@ -11484,19 +12083,28 @@ STD.MOD.132 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Baryo doesn't wait for an official ruling. The neighborhood picks its side the moment the tension shows.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.108/STD.MOD.120 — same mechanic, ring=3.",
@@ -11568,19 +12176,28 @@ STD.MOD.133 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "A slip in standing here doesn't fade quietly — the block holds onto it.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.109/STD.MOD.121 — same mechanic, ring=3. Closes Ring 3 (Baryo): 12 cards, STD.MOD.122–133. Closes 09-06's full Ring ModReactCard pass: 36 cards, all 3 rings (STD.MOD.98–133).",

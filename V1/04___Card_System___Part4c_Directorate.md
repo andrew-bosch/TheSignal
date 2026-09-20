@@ -70,6 +70,7 @@ DIR.CA.1 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -87,6 +88,12 @@ DIR.CA.1 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -142,6 +149,7 @@ DIR.CA.2 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Territory,  function = Redirect,  subject = DeploymentMarker,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10},
+    doctrine_mod = None,
     trigger=None,
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
@@ -166,6 +174,12 @@ DIR.CA.2 = Card(
     design_note  = "Marker moved to Directorate public tableau Detention zone — Governing Rule 8.3a compliant (moved, not removed from play). Permanent: marker remains in Detention for remainder of session. No NotificationSlip — detention is publicly visible on Directorate tableau. Faction Terminals may be unique per faction.",
     arbiter_note = "Consume Intel token. Move named faction's deployment marker from target district to Directorate public tableau Detention zone. Physically place on Detention area — visible to all players. No separate notification. Crit success: return 3 Mandate to Directorate. Crit fail: no marker move; −1 PS to Directorate only.",
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -228,6 +242,7 @@ DIR.CA.3 = Card(
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
     layer   = Information, function = Reveal, subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -245,6 +260,12 @@ DIR.CA.3 = Card(
     design_note  = "Redesigned v2.0: original permanent passive feed with beat3_pre_resolution delivery invalidated — Governing Rule 7.2a prohibits covert board markers; ARBITER holds no log in L1. Episodic model: Directorate watches one district one month. ARBITER reads existing Beat 3 grid row at Beat 2 resolution — no new tracking. Op type only, no faction. Multiple copies in Directorate deck flagged for deck design pass.",
     arbiter_note = "During Beat 2 resolution of this card: check the Beat 3 resolution grid for covert operations targeting district(target). For each operation present, write the operation type on an IntelDeliverySlip and deliver privately to Directorate. Do not include faction identity. If no Beat 3 operations target the district, deliver nothing — Directorate's resources are spent. Procedure pending Art 03 Beat 2 addition.",
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -300,6 +321,7 @@ DIR.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Territory,  function = Redirect,  subject = PresenceToken,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -322,6 +344,12 @@ DIR.CA.4 = Card(
     design_note  = "Replaces DIR.CA.4 Sealed Border (retired). Fills Territory — Move — Presence token gap; no other card in the full set uses this verb + subject combination. Most impactful before Battlefield Strength when district control margins are tight.",
     arbiter_note = "Move named Directorate presence tokens from source to destination. Adjacency confirmed against district adjacency table. Entry requirements rechecked at destination — if Directorate does not qualify for entry, card is discarded without effect (resources not refunded). Control flags and Established markers recalculated after move.",
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -390,6 +418,7 @@ DIR.PA.4 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -404,6 +433,7 @@ DIR.PA.4 = Card(
     success     = arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -511,6 +541,7 @@ DIR.PA.5 = Card(
     success     = None,  # card placement IS the effect — card-as-condition pattern
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -588,6 +619,7 @@ DIR.CA.5 = Card(
     resolution_type = Probabilistic, outcome_type = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district = district.named, target_faction = faction(named_opponent), target_object = PresenceToken,
     target_freeform=None,
@@ -603,7 +635,11 @@ DIR.CA.5 = Card(
     successcrit = faction(acting).standing.add(1 + n_boost),
     fail      = game.dispatch(faction(target), NotificationSlip),
     failcrit  = [Discovery, faction(acting).standing.remove(1 + n_boost)],
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait  = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative = "The Directorate does not ask permission. It records the action and moves on.",
     perspectives = {Directorate: "The intelligence warranted the action. The action was authorised. There is nothing further to say."},
     design_note  = "Boost model: base cost (faction×1 + native×1 + IntelToken) covers removal of 1 token (threshold 65). Each boost unit = 1 BM-xx = 1 additional token removed, threshold −10. PS scales symmetrically with (1+n): success = −(1+n), successcrit = +(1+n), failcrit = Discovery + −(1+n). Modifier clear = target faction's cards only. A Network modifier card auto-triggers off this sweep.",
@@ -669,11 +705,13 @@ DIR.CA.6 = Card(
     resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
+    persistence_clearing_trigger = None,
     target_district = district.named,
     target_faction=None, target_object=None, target_freeform=None,
     affinity=None,
     restriction = faction(acting).presence_count(district(target)) > 1,
     cost    = Mandate * 1,
+    boost = None,
     success = faction(acting).mandate.add(
                 count(game.active_permanents(faction=acting,
                       ring=district(target).ring))),
@@ -681,7 +719,9 @@ DIR.CA.6 = Card(
     fail        = None,
     failcrit    = faction(acting).mandate.remove(1),
     on_accept=None, on_decline=None,
+    on_discard = None,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "The Directorate does not improvise. The allocation exists because the framework exists. The framework is intact. The allocation is approved.",
     perspectives = {Directorate: "The standing record in this ring is clean. What was ordered is being carried out. Resources are allocated accordingly."},
     design_note  = "No floor — 0 active Permanents in target ring yields 0 Mandate on success. Count: face-up Directorate Permanent cards in Directorate play area where card.target_district.ring == district(target).ring. Pairs with DIR.CA.7 (same mechanism, PS yield).",
@@ -748,11 +788,13 @@ DIR.CA.7 = Card(
     resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
+    persistence_clearing_trigger = None,
     target_district = district.named,
     target_faction=None, target_object=None, target_freeform=None,
     affinity=None,
     restriction = faction(acting).presence_count(district(target)) > 1,
     cost    = Mandate * 2,
+    boost = None,
     success = faction(acting).standing.add(
                 count(game.active_permanents(faction=acting,
                       ring=district(target).ring))),
@@ -760,7 +802,9 @@ DIR.CA.7 = Card(
     fail        = None,
     failcrit    = faction(acting).standing.remove(1),
     on_accept=None, on_decline=None,
+    on_discard = None,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "The Directorate does not announce competence. It demonstrates it — quietly, through the record, through the channels that matter. The public receives the signal without knowing its source.",
     perspectives = {Directorate: "The active directives in this ring speak for themselves. We are not making a claim. We are presenting a record."},
     design_note  = "PS yield = count of active Directorate Permanents in same ring as target district. 0 Permanents → +0 PS on success. Same counting mechanism as DIR.CA.6 (Mandate yield). Failcrit PS−1: brief traced to Directorate — institutional embarrassment.",
@@ -827,17 +871,21 @@ DIR.CA.8 = Card(
     resolution_type = PositionalWager,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
+    persistence_clearing_trigger = None,
     target_district = district.named,
     target_faction=None, target_object=None, target_freeform=None,
     affinity=None,
     restriction=None,
     cost    = Mandate * 2,
+    boost = None,
     success = game.apply_modifier(
                 ops=game.resolution_grid.beat3(district=district(target)),
                 threshold_mod=-15),
     successcrit=None, fail=None, failcrit=None,
     on_accept=None, on_decline=None,
+    on_discard = None,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "Enhanced scrutiny has been authorised for this district. All activity here is subject to review. All activity. Including ours.",
     perspectives = {Directorate: "The district is under review. Scrutiny means something only when it applies uniformly."},
     design_note  = "Applies to all factions including Directorate. Beat 2 ops in district (DIR.CA.1/CA.3/CA.4) unaffected — only Beat 3 rows. Uses existing Modifier tokens (−15) placed by ARBITER per row, not a district-column flag.",
@@ -932,6 +980,7 @@ DIR.PA.1 = Card(
     outcome_type    = Unilateral,
     persistence     = Seasonal,  # DIR.PA.1 card / RegulatoryOverrideMarker stays on district until Phase 21
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -960,6 +1009,9 @@ DIR.PA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1038,6 +1090,7 @@ DIR.PA.2 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1062,6 +1115,9 @@ DIR.PA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1132,6 +1188,7 @@ EntryExitControls = Card(
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Territory,  function = Block,  subject = DeploymentMarker,
     beat=4,  resolution=Automatic,  threshold=None,  ring_mod=None,
+    doctrine_mod = None,
     trigger=None,
     resolution_type = Transactional,  outcome_type=Unilateral,
     persistence           = Permanent,
@@ -1162,6 +1219,10 @@ EntryExitControls = Card(
     design_note  = "Persistent PA. Card sits in Directorate's active PA area on the Overview (not on district tile). Immediate: non-Directorate deployment markers in named district displaced to any district where owning faction has presence, flipped to Blocked. Persistent: non-Directorate deployment marker placement blocked in named district. persistence_condition auto-discards card if Directorate falls below Established. PS −1 at resolution (public backlash). Counter-card removal TBD.",
     arbiter_note = "Name the district. Each non-Directorate deployment marker there: owning faction moves it to any district where they have presence, flip to Blocked.",
     value_rating = 4,
+    persistence_clearing_trigger = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -1250,6 +1311,9 @@ P_StandingInjunction = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1355,6 +1419,7 @@ DIR.PA.7 = Card(
     success     = None,  # card-as-condition — effect lives in persistence_effect
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1434,6 +1499,7 @@ DIR.PA.8 = Card(
     outcome_type    = ElectPlayer,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = None,
     target_faction  = faction.opponent,
@@ -1448,6 +1514,7 @@ DIR.PA.8 = Card(
     success = None,  successcrit = None,  fail = None,  failcrit = None,
     on_accept  = faction(target_faction).native.remove(2),   # target elects to pay the fine
     on_decline = faction(target_faction).standing.remove(2),  # target elects to refuse and take the PS hit
+    on_discard = None,
 
     portrait   = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1529,6 +1596,7 @@ DIR.PA.9 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -1551,6 +1619,7 @@ DIR.PA.9 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -1630,6 +1699,7 @@ DIR.PA.10 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1649,6 +1719,7 @@ DIR.PA.10 = Card(
     failcrit     = faction(Directorate).standing.remove(
                       count(district.where(faction(Directorate).influence_tier >= Established)) + 1),
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -1728,6 +1799,7 @@ DIR.PA.11 = Card(
     outcome_type    = Unilateral,
     persistence     = Permanent,
     persistence_condition = None,  # standing institution, once established — no clearing condition; not tied to a single district or faction
+    persistence_clearing_trigger = None,
     persistence_effect = game.board_condition(
         scope  = game.all_districts,
         effect = "Any faction may petition to remove any currently active Directorate-owned standing Public Act "
@@ -1748,6 +1820,7 @@ DIR.PA.11 = Card(
     success     = faction(Directorate).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -1817,6 +1890,7 @@ DIR.MOD.1 = Card(
     name    = "Riot Squad",
     tagline = "Presence placed without Directorate approval can be removed with Directorate authority.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Remove,  subject = PresenceToken,  # arbiter.remove(presence_chip,...)
 
     trigger         = presence_chip.placed(faction=Any),
@@ -1827,10 +1901,16 @@ DIR.MOD.1 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,  # mechanical per schema (Automatic → Transactional); not a design blank
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Directorate).influence >= Established,  # jurisdictional authority requires Established presence
     cost            = None,  # card consumed; cost TBD (possibly 1 Mandate)
@@ -1839,6 +1919,7 @@ DIR.MOD.1 = Card(
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -1904,6 +1985,7 @@ DIR.MOD.2 = Card(
     name    = "Capital Suppression",
     tagline = "Syndicate presence in regulated territory draws immediate institutional response.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Remove,  subject = PresenceToken,
 
     trigger         = presence_chip.placed(faction=Syndicate),
@@ -1914,10 +1996,16 @@ DIR.MOD.2 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = Syndicate,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Directorate).influence >= Established,
     cost            = None,
@@ -1926,6 +2014,7 @@ DIR.MOD.2 = Card(
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=Syndicate, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -1991,6 +2080,7 @@ DIR.MOD.3 = Card(
     name    = "City Council Loyalist",
     tagline = "In the Core, the Directorate's authority does not require a justification.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Remove,  subject = PresenceToken,
 
     trigger         = presence_chip.placed(faction=Any, ring=1),
@@ -2001,10 +2091,16 @@ DIR.MOD.3 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,  # Core ring: no Established requirement — blanket institutional authority
     cost            = None,
@@ -2013,6 +2109,7 @@ DIR.MOD.3 = Card(
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2078,6 +2175,7 @@ DIR.MOD.4 = Card(
     name    = "Administrative Overhead",
     tagline = "Every Accord formed is a Directorate administrative event.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,  # mandate.add(1)
 
     trigger         = accord.placed,
@@ -2088,10 +2186,16 @@ DIR.MOD.4 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -2100,6 +2204,7 @@ DIR.MOD.4 = Card(
     success     = faction(Directorate).mandate.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2165,6 +2270,7 @@ DIR.MOD.5 = Card(
     name    = "Emergency Appropriation",
     tagline = "Institutional scale requires institutional funding.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = public_act.placed_on_frg(faction=Directorate, persistence=Permanent),
@@ -2175,10 +2281,15 @@ DIR.MOD.5 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -2187,6 +2298,7 @@ DIR.MOD.5 = Card(
     success     = faction(Directorate).mandate.add(2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2252,6 +2364,7 @@ DIR.MOD.6 = Card(
     name    = "State of Emergency",
     tagline = "The world changes. The Directorate dictates how.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Modify,  subject = PublicAct,
 
     trigger         = world_event.played,
@@ -2271,10 +2384,12 @@ DIR.MOD.6 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Mandate * 1 + Exposure * 1,
@@ -2283,6 +2398,7 @@ DIR.MOD.6 = Card(
     success     = None,
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2348,6 +2464,7 @@ DIR.MOD.7 = Card(
     name    = "Eminent Domain",
     tagline = "Private development is subject to institutional oversight.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = structure_block.placed(faction=opponent),
@@ -2358,10 +2475,16 @@ DIR.MOD.7 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -2370,6 +2493,7 @@ DIR.MOD.7 = Card(
     success     = arbiter.place(presence_chip, district=target_district, faction=Directorate, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2435,6 +2559,7 @@ DIR.MOD.8 = Card(
     name    = "Asset Seizure",
     tagline = "Unlicensed public operations are subject to immediate fines.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Remove,  subject = NativeResource,  # impounds a resource off an already-submitted PA; Submission (interferes with a submitted card), not plain Economy
 
     trigger         = public_act.placed_on_frg(target_district=district.where(faction(Directorate).influence >= Established)),
@@ -2445,10 +2570,16 @@ DIR.MOD.8 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Mandate * 1 + Capital * 1,
@@ -2457,6 +2588,7 @@ DIR.MOD.8 = Card(
     success     = arbiter.remove(resource_token, target=trigger.card, count=1, to=Reservoir),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2520,6 +2652,7 @@ DIR.MOD.9 = Card(
     name    = "Fiscal Sanction",
     tagline = "The public already turned on them. Directorate just needed the opening.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Block,  subject = PublicAct,  # dominant identity is blocking PA submission from the sanctioned faction; the +1 PS is the secondary effect, not the primary one
 
     trigger         = standing_marker.decreased(faction=Any, except=Directorate),  # except=Directorate — self-fire here would be actively harmful (blocks own PA channel for +1 PS), not a no-op; intent was always opponent-only ("holding tokens on rivals")
@@ -2530,6 +2663,7 @@ DIR.MOD.9 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     persistence = Permanent,
     persistence_condition = None,
@@ -2542,6 +2676,7 @@ DIR.MOD.9 = Card(
     target_district = None,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = IntelToken(about=trigger.faction, status=[Fresh, Stale]) * 1,
@@ -2550,6 +2685,7 @@ DIR.MOD.9 = Card(
     success     = faction(Directorate).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -3012,6 +3148,8 @@ DIR.MOD.14 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3019,6 +3157,8 @@ DIR.MOD.14 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3101,6 +3241,8 @@ DIR.MOD.15 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3108,6 +3250,8 @@ DIR.MOD.15 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3190,6 +3334,8 @@ DIR.MOD.16 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3197,6 +3343,8 @@ DIR.MOD.16 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3279,6 +3427,8 @@ DIR.MOD.17 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3286,6 +3436,8 @@ DIR.MOD.17 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3368,6 +3520,8 @@ DIR.MOD.18 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3375,6 +3529,8 @@ DIR.MOD.18 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3457,6 +3613,8 @@ DIR.MOD.19 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3464,6 +3622,8 @@ DIR.MOD.19 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3546,6 +3706,8 @@ DIR.MOD.20 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3553,6 +3715,8 @@ DIR.MOD.20 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3635,6 +3799,8 @@ DIR.MOD.21 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3642,6 +3808,8 @@ DIR.MOD.21 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3724,6 +3892,8 @@ DIR.MOD.22 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3731,6 +3901,8 @@ DIR.MOD.22 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3813,6 +3985,8 @@ DIR.MOD.23 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3820,6 +3994,8 @@ DIR.MOD.23 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3902,6 +4078,8 @@ DIR.MOD.24 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3909,6 +4087,8 @@ DIR.MOD.24 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3991,6 +4171,8 @@ DIR.MOD.25 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3998,6 +4180,8 @@ DIR.MOD.25 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 

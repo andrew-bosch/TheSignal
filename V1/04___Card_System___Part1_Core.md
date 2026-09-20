@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.101 Draft  
+**Version:** 0.9.102 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-09-20  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -992,6 +992,320 @@ Design guidance for `ring_mod` and `doctrine_mod`. Not locked — adjust based o
 
 ---
 
+
+### 6.6 Canonical Card Blocks
+
+One reference block per card class. These are **synthetic exemplars, not real cards** — they exist to be diffed against. No card spec should cite one, and no card should be edited to match one's *content*. What they govern is form: which fields appear, in what order, grouped how.
+
+Three rules the blocks encode:
+
+1. **Every §6.1 field appears, explicit, even at its default.** Absence is a schema defect, not a shorthand. Two fields are exempt, and only these two: `acquisition` and `generating_card` carry the omit-unless-`Issued` default stated in §6.2's Modifier Subclass Fields table.
+2. **Field order follows §6.1's class order,** with a blank line between field groups. Packing several short fields onto one line is permitted and used throughout §7 — the order is what matters, not one-field-per-line.
+3. **No inline `#` comments.** A finished card carries none; neither do these blocks. Anything that would need a comment to be understood belongs in `design_note` or in the prose Design Rationale.
+
+`is_unique` and `deck_limit` are absent from every block below. Both are defined in §6.1 and §6.2 but are not yet carried on any card — they are held pending the deck copy-count decision (PM05 04-n136), and the blocks reflect the corpus as it stands rather than pre-empting that ruling.
+
+For which fields are always `None` on a given modifier subclass, §6.2's Modifier Subclass Field Constraints table remains authoritative — the blocks below show one valid realisation of it, not a substitute for it.
+
+---
+
+#### 6.6.1 CovertOperation
+
+```python
+ExampleOp = Card(
+    card_id = "EXAMPLE",  id = "0",  version = "v1.0",
+    name    = "Example Operation",
+    tagline = "A one-line in-world description of what the card does.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
+
+    layer   = Tactical,  function = Acquire,  subject = PresenceChip,
+
+    beat            = 2,
+    resolution      = d100,
+    threshold       = 45,
+    ring_mod        = {1: -10, 2: 0, 3: 10},
+    doctrine_mod    = None,
+    value_rating    = 2,
+    trigger         = None,
+    resolution_type = Probabilistic,
+    outcome_type    = None,
+
+    persistence                  = Immediate,
+    persistence_condition        = None,
+    persistence_clearing_trigger = None,
+    persistence_effect           = None,
+
+    target_district = district.any(),
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = faction.acting.native * 2,
+    boost       = None,
+
+    success     = arbiter.place(presence_chip, district=target_district, faction=acting, count=1),
+    successcrit = arbiter.place(presence_chip, district=target_district, faction=acting, count=1),
+    fail        = None,
+    failcrit    = None,
+    on_accept   = None,
+    on_decline  = None,
+    on_discard  = None,
+
+    portrait   = None,
+    ps_framing = None,
+
+    narrative    = "One sentence. Neutral observer on a Standard card; owning-faction voice on a FactionSpecific one.",
+    perspectives = {Ghost: "...", Network: "...", Syndicate: "...", Guild: "...", Directorate: "..."},
+    design_note  = None,
+    arbiter_note = None,
+)
+```
+
+---
+
+#### 6.6.2 PublicAct
+
+`outcome_type` is live and required here — it is the field that distinguishes a public act's resolution process. `on_accept`/`on_decline` are set only when `outcome_type = ElectPlayer`; `ps_framing` is where a public act's Public Standing consequence lives.
+
+```python
+ExampleAct = Card(
+    card_id = "EXAMPLE",  id = "0",  version = "v1.0",
+    name    = "Example Public Act",
+    tagline = "A one-line in-world description of what the card does.",
+    type    = PublicAct,  subtype = Standard,  faction = All,
+
+    layer   = Strategic,  function = Establish,  subject = Accord,
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 3,
+    trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = ElectPlayer,
+
+    persistence                  = Seasonal,
+    persistence_condition        = None,
+    persistence_clearing_trigger = None,
+    persistence_effect           = None,
+
+    target_district = None,
+    target_faction  = faction.opponent,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = faction.acting.native * 3,
+    boost       = None,
+
+    success     = None,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+    on_accept   = arbiter.place(accord, faction=acting, target=target_faction),
+    on_decline  = None,
+    on_discard  = None,
+
+    portrait   = None,
+    ps_framing = PSFraming(type="fixed", trigger="resolution", ps_target="acting",
+                           threshold=None, on_success=[PSShift(faction="acting", delta=1)],
+                           on_fail=None),
+
+    narrative    = "One sentence, in the register the card's subtype calls for.",
+    perspectives = {Ghost: "...", Network: "...", Syndicate: "...", Guild: "...", Directorate: "..."},
+    design_note  = None,
+    arbiter_note = None,
+)
+```
+
+---
+
+#### 6.6.3 ModActionCard
+
+Bundled with a host operation at Covert Dispatch and fires with it. The long `None` run is not padding — per §6.2 this subclass carries no resolution of its own, no targeting, no cost (it folds into the host's packet) and no effects beyond `effect`. `affinity`, `restriction`, `perspectives` and `design_note` are live and set per card. `perspectives` is typed `dict[Faction, str]` and takes a real dict — it has no `None` form. The 132 ModActionCards currently carrying `perspectives = None` are a content debt tracked at PM05 04-n239, not a pattern to copy.
+
+```python
+ExampleActionMod = Card(
+    card_id = "EXAMPLE",  id = "0",  version = "v1.0",
+    name    = "Example Action Modifier",
+    tagline = "A one-line in-world description of what the card does.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=5),
+    beat            = None,
+    resolution      = None,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 1,
+    trigger         = None,
+    resolution_type = None,
+    outcome_type    = None,
+
+    persistence                  = None,
+    persistence_condition        = None,
+    persistence_clearing_trigger = None,
+    persistence_effect           = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = None,
+    boost       = None,
+
+    success     = None,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+    on_accept   = None,
+    on_decline  = None,
+    on_discard  = None,
+
+    portrait        = None,
+    ps_framing      = None,
+    ring_constraint = None,
+    ring_origin     = 1,
+
+    narrative    = "One sentence describing the advantage the card confers.",
+    perspectives = {Ghost: "...", Network: "...", Syndicate: "...", Guild: "...", Directorate: "..."},
+    design_note  = None,
+    arbiter_note = None,
+)
+```
+
+---
+
+#### 6.6.4 ModBattleCard
+
+Committed during Battlefield Strength resolution (Art 03 §10.1.2). The most constrained subclass: `affinity`, `restriction`, `perspectives` and `design_note` are `None` here as well, since the commit sequence has no payment step and no submitting-faction variation to express.
+
+```python
+ExampleBattleMod = Card(
+    card_id = "EXAMPLE",  id = "0",  version = "v1.0",
+    name    = "Example Battle Modifier",
+    tagline = "A one-line in-world description of what the card does.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    beat            = None,
+    resolution      = None,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 1,
+    trigger         = None,
+    resolution_type = None,
+    outcome_type    = None,
+
+    persistence                  = None,
+    persistence_condition        = None,
+    persistence_clearing_trigger = None,
+    persistence_effect           = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = None,
+    boost       = None,
+
+    success     = None,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+    on_accept   = None,
+    on_decline  = None,
+    on_discard  = None,
+
+    portrait        = None,
+    ps_framing      = None,
+    ring_constraint = None,
+    ring_origin     = 1,
+
+    narrative    = "One sentence describing the advantage the card confers.",
+    perspectives = None,
+    design_note  = None,
+    arbiter_note = None,
+)
+```
+
+---
+
+#### 6.6.5 ModReactCard
+
+The least constrained subclass — only `beat` is always `None`. `trigger` is **required and never `None`**: it is what activates the card. Taxonomy, persistence, cost and `ps_framing` are all live and set per card.
+
+```python
+ExampleReactMod = Card(
+    card_id = "EXAMPLE",  id = "0",  version = "v1.0",
+    name    = "Example React Modifier",
+    tagline = "A one-line in-world description of what the card does.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+
+    layer   = Tactical,  function = Deny,  subject = PresenceChip,
+
+    beat            = None,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 2,
+    trigger         = presence_chip.placed(faction=Any, ring=1),
+    resolution_type = Transactional,
+    outcome_type    = None,
+
+    persistence                  = Immediate,
+    persistence_condition        = None,
+    persistence_clearing_trigger = None,
+    persistence_effect           = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = faction.acting.native * 1,
+    boost       = None,
+
+    success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+    on_accept   = None,
+    on_decline  = None,
+    on_discard  = None,
+
+    portrait        = None,
+    ps_framing      = None,
+    ring_constraint = None,
+    ring_origin     = 1,
+
+    narrative    = "One sentence describing what the reaction looks like in world.",
+    perspectives = {Ghost: "...", Network: "...", Syndicate: "...", Guild: "...", Directorate: "..."},
+    design_note  = None,
+    arbiter_note = None,
+)
+```
+
+---
 
 ## 7. Card Specifications
 

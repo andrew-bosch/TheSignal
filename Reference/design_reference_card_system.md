@@ -273,11 +273,15 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 
 ## Card Data Schema (Art 04 §6)
 
-*Condensed field reference. Full definitions: Art 04 §6.1–§6.3.*
+*Condensed field reference. Full definitions: Art 04 §6.1–§6.3. Worked exemplars: Art 04 §6.6.*
 
 **Schema first-pass discipline:** Before drafting any card spec, read §6.1–§6.3 and verify: all required fields are present, all enum values are valid. Do not draft and correct later — catch at spec time. The design checklist "Data schema validation" row confirms this was done; it should pass on first draft, not be deferred.
 
-**Easy-to-miss required fields:** `card_id` · `doctrine_mod` · `boost` · `ps_framing` — all must appear in the spec (as `None` if not used). Omitting them is a schema error.
+**Every §6.1 field is written out, explicit, even at its default (S163, PM02 L381).** Absence is a schema defect, not a shorthand — there is no "omit when unused" allowance. The corpus was swept to this standard at S163 (339 cards, 1,820 fields); a card block missing any §6.1 field is now a genuine finding, not an authoring style. **Two exemptions, and only these two:** `acquisition` and `generating_card` carry the omit-unless-`Issued` default stated in §6.2's Modifier Subclass Fields table (S133) — they are also modifier-subclass fields only, so a CA or PA has no business carrying them at all.
+
+**Start from the canonical block, not from a neighbouring card.** Art 04 **§6.6** holds five synthetic exemplars — one per card class (CovertOperation, PublicAct, ModActionCard, ModBattleCard, ModReactCard) — showing the full field set in §6.1 class order. They are reference form, not reference content: diff a new spec's *shape* against them, never copy their values, and never cite one in a card spec. Field order follows §6.1's class order with a blank line between groups; packing several short fields onto one line is permitted and normal. A finished card block carries **zero** inline `#` comments, so neither do the exemplars.
+
+**Held, deliberately absent (PM05 04-n238):** `is_unique` and `deck_limit` are defined in §6.1/§6.2 but carried on no card, and are excluded from §6.6 as well — both are blocked on the deck copy-count ruling at 04-n136. Do not add them to a card spec on the strength of the schema alone.
 
 **resolution_type (enum, three values — Art 04 §6.3):** `Probabilistic` when `resolution = d100`. For `resolution = Automatic`, choose between `Transactional` and `PositionalWager`: a card is a **PositionalWager** when its effect is committed against a submission slate not revealed at the moment of commitment — either a specific operation in it, or the existence of one. The slate need not belong to a later beat, only to be unrevealed when the card is committed. It stays **Transactional** when it resolves against information available at commitment, and also when the contingency is carried by `persistence`/`persistence_effect`/`game.world_condition` or by a delivered instrument — there the card's own resolution was deterministic and the persistence fields already express what follows. Deterministic-once-resolved is true of both and does not discriminate.
 
@@ -352,7 +356,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 `portrait: dict[Faction, PortraitEntry] | None` — `None` = no portrait effect — valid params: `flat` · `submitter` · `where` · `modifier` · `mod_where` — `failcrit=` is NOT a valid PortraitEntry parameter
 
 **Public Standing**
-`ps_framing: PSFraming | None` — required field; `None` = card produces no PS shift. Do not omit.
+`ps_framing: PSFraming | None` — required field; `None` = card produces no PS shift. Do not omit. (Like every §6.1 field — see the schema-discipline note above.)
 
 **Narrative**
 `narrative` · `perspectives` · `design_note` · `arbiter_note`

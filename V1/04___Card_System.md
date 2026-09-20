@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.101 Draft  
+**Version:** 0.9.102 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-09-20  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -992,6 +992,320 @@ Design guidance for `ring_mod` and `doctrine_mod`. Not locked — adjust based o
 
 ---
 
+
+### 6.6 Canonical Card Blocks
+
+One reference block per card class. These are **synthetic exemplars, not real cards** — they exist to be diffed against. No card spec should cite one, and no card should be edited to match one's *content*. What they govern is form: which fields appear, in what order, grouped how.
+
+Three rules the blocks encode:
+
+1. **Every §6.1 field appears, explicit, even at its default.** Absence is a schema defect, not a shorthand. Two fields are exempt, and only these two: `acquisition` and `generating_card` carry the omit-unless-`Issued` default stated in §6.2's Modifier Subclass Fields table.
+2. **Field order follows §6.1's class order,** with a blank line between field groups. Packing several short fields onto one line is permitted and used throughout §7 — the order is what matters, not one-field-per-line.
+3. **No inline `#` comments.** A finished card carries none; neither do these blocks. Anything that would need a comment to be understood belongs in `design_note` or in the prose Design Rationale.
+
+`is_unique` and `deck_limit` are absent from every block below. Both are defined in §6.1 and §6.2 but are not yet carried on any card — they are held pending the deck copy-count decision (PM05 04-n136), and the blocks reflect the corpus as it stands rather than pre-empting that ruling.
+
+For which fields are always `None` on a given modifier subclass, §6.2's Modifier Subclass Field Constraints table remains authoritative — the blocks below show one valid realisation of it, not a substitute for it.
+
+---
+
+#### 6.6.1 CovertOperation
+
+```python
+ExampleOp = Card(
+    card_id = "EXAMPLE",  id = "0",  version = "v1.0",
+    name    = "Example Operation",
+    tagline = "A one-line in-world description of what the card does.",
+    type    = CovertOperation,  subtype = Standard,  faction = All,
+
+    layer   = Tactical,  function = Acquire,  subject = PresenceChip,
+
+    beat            = 2,
+    resolution      = d100,
+    threshold       = 45,
+    ring_mod        = {1: -10, 2: 0, 3: 10},
+    doctrine_mod    = None,
+    value_rating    = 2,
+    trigger         = None,
+    resolution_type = Probabilistic,
+    outcome_type    = None,
+
+    persistence                  = Immediate,
+    persistence_condition        = None,
+    persistence_clearing_trigger = None,
+    persistence_effect           = None,
+
+    target_district = district.any(),
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = faction.acting.native * 2,
+    boost       = None,
+
+    success     = arbiter.place(presence_chip, district=target_district, faction=acting, count=1),
+    successcrit = arbiter.place(presence_chip, district=target_district, faction=acting, count=1),
+    fail        = None,
+    failcrit    = None,
+    on_accept   = None,
+    on_decline  = None,
+    on_discard  = None,
+
+    portrait   = None,
+    ps_framing = None,
+
+    narrative    = "One sentence. Neutral observer on a Standard card; owning-faction voice on a FactionSpecific one.",
+    perspectives = {Ghost: "...", Network: "...", Syndicate: "...", Guild: "...", Directorate: "..."},
+    design_note  = None,
+    arbiter_note = None,
+)
+```
+
+---
+
+#### 6.6.2 PublicAct
+
+`outcome_type` is live and required here — it is the field that distinguishes a public act's resolution process. `on_accept`/`on_decline` are set only when `outcome_type = ElectPlayer`; `ps_framing` is where a public act's Public Standing consequence lives.
+
+```python
+ExampleAct = Card(
+    card_id = "EXAMPLE",  id = "0",  version = "v1.0",
+    name    = "Example Public Act",
+    tagline = "A one-line in-world description of what the card does.",
+    type    = PublicAct,  subtype = Standard,  faction = All,
+
+    layer   = Strategic,  function = Establish,  subject = Accord,
+
+    beat            = 4,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 3,
+    trigger         = None,
+    resolution_type = Transactional,
+    outcome_type    = ElectPlayer,
+
+    persistence                  = Seasonal,
+    persistence_condition        = None,
+    persistence_clearing_trigger = None,
+    persistence_effect           = None,
+
+    target_district = None,
+    target_faction  = faction.opponent,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = faction.acting.native * 3,
+    boost       = None,
+
+    success     = None,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+    on_accept   = arbiter.place(accord, faction=acting, target=target_faction),
+    on_decline  = None,
+    on_discard  = None,
+
+    portrait   = None,
+    ps_framing = PSFraming(type="fixed", trigger="resolution", ps_target="acting",
+                           threshold=None, on_success=[PSShift(faction="acting", delta=1)],
+                           on_fail=None),
+
+    narrative    = "One sentence, in the register the card's subtype calls for.",
+    perspectives = {Ghost: "...", Network: "...", Syndicate: "...", Guild: "...", Directorate: "..."},
+    design_note  = None,
+    arbiter_note = None,
+)
+```
+
+---
+
+#### 6.6.3 ModActionCard
+
+Bundled with a host operation at Covert Dispatch and fires with it. The long `None` run is not padding — per §6.2 this subclass carries no resolution of its own, no targeting, no cost (it folds into the host's packet) and no effects beyond `effect`. `affinity`, `restriction`, `perspectives` and `design_note` are live and set per card. `perspectives` is typed `dict[Faction, str]` and takes a real dict — it has no `None` form. The 132 ModActionCards currently carrying `perspectives = None` are a content debt tracked at PM05 04-n239, not a pattern to copy.
+
+```python
+ExampleActionMod = Card(
+    card_id = "EXAMPLE",  id = "0",  version = "v1.0",
+    name    = "Example Action Modifier",
+    tagline = "A one-line in-world description of what the card does.",
+    type    = ModActionCard,  subtype = Standard,  faction = All,
+
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModActionExpr.threshold_delta(n=5),
+    beat            = None,
+    resolution      = None,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 1,
+    trigger         = None,
+    resolution_type = None,
+    outcome_type    = None,
+
+    persistence                  = None,
+    persistence_condition        = None,
+    persistence_clearing_trigger = None,
+    persistence_effect           = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = None,
+    boost       = None,
+
+    success     = None,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+    on_accept   = None,
+    on_decline  = None,
+    on_discard  = None,
+
+    portrait        = None,
+    ps_framing      = None,
+    ring_constraint = None,
+    ring_origin     = 1,
+
+    narrative    = "One sentence describing the advantage the card confers.",
+    perspectives = {Ghost: "...", Network: "...", Syndicate: "...", Guild: "...", Directorate: "..."},
+    design_note  = None,
+    arbiter_note = None,
+)
+```
+
+---
+
+#### 6.6.4 ModBattleCard
+
+Committed during Battlefield Strength resolution (Art 03 §10.1.2). The most constrained subclass: `affinity`, `restriction`, `perspectives` and `design_note` are `None` here as well, since the commit sequence has no payment step and no submitting-faction variation to express.
+
+```python
+ExampleBattleMod = Card(
+    card_id = "EXAMPLE",  id = "0",  version = "v1.0",
+    name    = "Example Battle Modifier",
+    tagline = "A one-line in-world description of what the card does.",
+    type    = ModBattleCard,  subtype = Standard,  faction = All,
+
+    layer   = None,  function = None,  subject = None,
+
+    effect          = ModBattleExpr(direction=Boost, target=None, magnitude=1),
+    beat            = None,
+    resolution      = None,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 1,
+    trigger         = None,
+    resolution_type = None,
+    outcome_type    = None,
+
+    persistence                  = None,
+    persistence_condition        = None,
+    persistence_clearing_trigger = None,
+    persistence_effect           = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = None,
+    boost       = None,
+
+    success     = None,
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+    on_accept   = None,
+    on_decline  = None,
+    on_discard  = None,
+
+    portrait        = None,
+    ps_framing      = None,
+    ring_constraint = None,
+    ring_origin     = 1,
+
+    narrative    = "One sentence describing the advantage the card confers.",
+    perspectives = None,
+    design_note  = None,
+    arbiter_note = None,
+)
+```
+
+---
+
+#### 6.6.5 ModReactCard
+
+The least constrained subclass — only `beat` is always `None`. `trigger` is **required and never `None`**: it is what activates the card. Taxonomy, persistence, cost and `ps_framing` are all live and set per card.
+
+```python
+ExampleReactMod = Card(
+    card_id = "EXAMPLE",  id = "0",  version = "v1.0",
+    name    = "Example React Modifier",
+    tagline = "A one-line in-world description of what the card does.",
+    type    = ModReactCard,  subtype = Standard,  faction = All,
+
+    layer   = Tactical,  function = Deny,  subject = PresenceChip,
+
+    beat            = None,
+    resolution      = Automatic,
+    threshold       = None,
+    ring_mod        = None,
+    doctrine_mod    = None,
+    value_rating    = 2,
+    trigger         = presence_chip.placed(faction=Any, ring=1),
+    resolution_type = Transactional,
+    outcome_type    = None,
+
+    persistence                  = Immediate,
+    persistence_condition        = None,
+    persistence_clearing_trigger = None,
+    persistence_effect           = None,
+
+    target_district = None,
+    target_faction  = None,
+    target_object   = None,
+    target_freeform = None,
+
+    affinity    = None,
+    restriction = None,
+    cost        = faction.acting.native * 1,
+    boost       = None,
+
+    success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+    successcrit = None,
+    fail        = None,
+    failcrit    = None,
+    on_accept   = None,
+    on_decline  = None,
+    on_discard  = None,
+
+    portrait        = None,
+    ps_framing      = None,
+    ring_constraint = None,
+    ring_origin     = 1,
+
+    narrative    = "One sentence describing what the reaction looks like in world.",
+    perspectives = {Ghost: "...", Network: "...", Syndicate: "...", Guild: "...", Directorate: "..."},
+    design_note  = None,
+    arbiter_note = None,
+)
+```
+
+---
 
 ## 7. Card Specifications
 
@@ -2040,6 +2354,7 @@ STD.CA.1 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -2053,17 +2368,22 @@ STD.CA.1 = Card(
         district(target).faction(acting).structure == 0
     ),
     cost = faction.acting.native * 1 + district.target.native * 1,
+    boost = None,
 
     success     = arbiter.place(structure_block, district=target, faction=acting, count=1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild: PortraitEntry(submitter=+1),
         Ghost: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "Every faction that wants to matter in New Meridian eventually has to build something.",
     perspectives = {
         Guild:       "This is what we do. Every structure we build is an argument that permanence is possible here.",
@@ -2072,6 +2392,8 @@ STD.CA.1 = Card(
         Ghost:       "A structure is a commitment. Commitments are data points.",
         Syndicate:   "Every structure generates value. The question is who captures it.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -2139,6 +2461,7 @@ STD.CA.2 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -2152,11 +2475,15 @@ STD.CA.2 = Card(
         district(target).faction(target).structure > 0
     ),
     cost = faction.acting.native * 1 + district.target.native * 1,
+    boost = None,
 
     success     = arbiter.remove(structure_block, district=target, faction=target, count=1),
     successcrit = faction(acting).native.add(1),
     fail        = None,
     failcrit    = faction(acting).standing.remove(1),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild:       PortraitEntry(submitter=-1),
@@ -2164,6 +2491,7 @@ STD.CA.2 = Card(
         Directorate: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "Not everything built in New Meridian was meant to last.",
     perspectives = {
         Guild:       "We build. We do not unmake. Every time we perform this action something has gone badly wrong.",
@@ -2172,6 +2500,8 @@ STD.CA.2 = Card(
         Ghost:       "A demolished structure tells us as much as a standing one. We note the absence.",
         Syndicate:   "Assets change hands. Sometimes the most efficient transfer is removal.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -2239,6 +2569,7 @@ STD.CA.3 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -2249,13 +2580,18 @@ STD.CA.3 = Card(
     affinity    = faction(acting) == Network: cost.district.target.native = 0,
     restriction = district(target).faction(acting).presence > 0,
     cost        = faction.acting.native * 1 + district.target.native * 1,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Network: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Presence without roots is just occupation.",
     perspectives = {
@@ -2265,6 +2601,8 @@ STD.CA.3 = Card(
         Ghost:       "Presence creates exposure. We expand only when the intelligence justifies the risk.",
         Syndicate:   "Market position requires footprint. We place ourselves where the returns justify it.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -2332,6 +2670,7 @@ STD.CA.4 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -2345,11 +2684,15 @@ STD.CA.4 = Card(
         district(target).faction(target).presence > 0
     ),
     cost        = faction.acting.native * 1 + district.target.native * 1,
+    boost = None,
 
     success     = arbiter.remove(presence_chip, district=target, faction=target, count=1),
     successcrit = arbiter.remove(presence_chip, district=target, faction=target, count=1),
     fail        = None,
     failcrit    = faction(acting).standing.remove(1),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild:       PortraitEntry(submitter=-1),
@@ -2357,6 +2700,7 @@ STD.CA.4 = Card(
         Network:     PortraitEntry(submitter=+1),
     },
 
+    ps_framing = None,
     narrative    = "The most effective opposition leaves no visible wound.",
     perspectives = {
         Guild:       "We do not erase what others have built. Even our enemies.",
@@ -2365,6 +2709,8 @@ STD.CA.4 = Card(
         Ghost:       "Disruption without intelligence purpose is noise. We prefer signal.",
         Syndicate:   "If their presence can be eroded, it was never well-positioned to begin with.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -2432,6 +2778,7 @@ STD.CA.5 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -2445,13 +2792,18 @@ STD.CA.5 = Card(
         faction(acting) == Ghost
     ),
     cost        = faction.acting.native * 1,
+    boost = None,
 
     success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     fail        = None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "In New Meridian, knowing is the first form of power.",
     perspectives = {
@@ -2461,6 +2813,8 @@ STD.CA.5 = Card(
         Ghost:       "This is what we are here for. Everything else follows from understanding.",
         Syndicate:   "Information has market value. We acquire it when the return justifies the cost.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -2528,6 +2882,7 @@ STD.CA.6 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -2538,11 +2893,15 @@ STD.CA.6 = Card(
     affinity    = faction(acting) == Network: cost.Exposure -= 1,
     restriction = None,
     cost        = Exposure * 2,
+    boost = None,
 
     success     = game.ops(beat=4, type=PublicAct, at=district(target)).cost.native.add(1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Network:     PortraitEntry(submitter=+1),
@@ -2550,6 +2909,7 @@ STD.CA.6 = Card(
         Directorate: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "People don't act naturally when they know they're being watched.",
     perspectives = {
         Guild:       "Disrupting communications delays approvals, permits, agreements. We feel this more than most.",
@@ -2558,6 +2918,8 @@ STD.CA.6 = Card(
         Ghost:       "Interference creates analytical cover. We appreciate the quiet.",
         Syndicate:   "Disrupted communications create market inefficiencies. Those can be profitable.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -2625,6 +2987,7 @@ STD.CA.7 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -2635,17 +2998,22 @@ STD.CA.7 = Card(
     affinity    = faction(acting) == Network: cost.Exposure -= 1,
     restriction = None,
     cost        = Exposure * 2,
+    boost = None,
 
     success     = faction(acting).op(beat=4, type=PublicAct).standing_impact *= 2,
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Network: PortraitEntry(submitter=+1),
         Ghost:   PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "A message worth sending is worth sending loudly.",
     perspectives = {
         Guild:       "We let our structures speak. Amplification is for those who lack physical evidence.",
@@ -2654,6 +3022,8 @@ STD.CA.7 = Card(
         Ghost:       "Amplification is the opposite of what we do. Volume attracts attention. Attention ends operations.",
         Syndicate:   "Leverage applied at the right moment can move markets. This is that tool.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -2721,6 +3091,7 @@ STD.CA.8 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -2731,11 +3102,15 @@ STD.CA.8 = Card(
     affinity    = faction(acting) == Syndicate: threshold += 25,
     restriction = None,
     cost        = Capital * 3,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=target, faction=acting, count=2),
     successcrit = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     fail        = None,
     failcrit    = faction(acting).standing.remove(2),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild:       PortraitEntry(submitter=-1),
@@ -2745,6 +3120,7 @@ STD.CA.8 = Card(
         Syndicate:   PortraitEntry(submitter=+1),
     },
 
+    ps_framing = None,
     narrative    = "In New Meridian, capital is a language everyone understands.",
     perspectives = {
         Guild:       "Presence earned through investment rather than community is fragile. We have seen it collapse.",
@@ -2753,6 +3129,8 @@ STD.CA.8 = Card(
         Ghost:       "Bought presence is noisier than earned presence. It draws the wrong kind of attention.",
         Syndicate:   "Capital does not just open doors. It determines which doors exist in the first place.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -2822,6 +3200,7 @@ STD.CA.9 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -2832,6 +3211,7 @@ STD.CA.9 = Card(
     affinity    = faction(acting) == Syndicate: threshold += 25,
     restriction = None,
     cost        = Capital * 2,
+    boost = None,
 
     success     = (
         faction(target).capital.add(2),
@@ -2840,12 +3220,16 @@ STD.CA.9 = Card(
     successcrit = faction(acting).standing.add(1),
     fail        = None,
     failcrit    = faction(acting).standing.remove(1),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Directorate: PortraitEntry(submitter=-1),
         Syndicate:   PortraitEntry(submitter=+1),
     },
 
+    ps_framing = None,
     narrative    = "Every alliance in New Meridian begins with someone extending a hand.",
     perspectives = {
         Guild:       "Investment in relationships is as important as investment in structures.",
@@ -2854,6 +3238,8 @@ STD.CA.9 = Card(
         Ghost:       "Resources flowing between factions change the operational landscape. We note the direction.",
         Syndicate:   "Capital in motion creates relationships. Relationships create opportunities.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -2922,6 +3308,7 @@ STD.CA.10 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -2932,11 +3319,15 @@ STD.CA.10 = Card(
     affinity    = faction(acting) IN [Guild, Directorate]: threshold_protection = 45,
     restriction = district(target).faction(acting).presence > 0,
     cost        = district.target.native * 1,
+    boost = None,
 
     success     = game.ops(beat=3, at=district(target), targeting=faction(acting).assets).threshold.remove(threshold_protection if affinity else 25),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild:       PortraitEntry(submitter=+1),
@@ -2944,6 +3335,7 @@ STD.CA.10 = Card(
         Ghost:       PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "What you build is only worth as much as your willingness to defend it.",
     perspectives = {
         Guild:       "We protect what we build. This is not optional.",
@@ -2952,6 +3344,8 @@ STD.CA.10 = Card(
         Ghost:       "The best protection is not being found in the first place.",
         Syndicate:   "Protected assets retain value. Unprotected assets invite acquisition.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -3014,15 +3408,21 @@ STD.CA.11 = Card(
     resolution_type = Transactional, outcome_type=None,
     persistence     = Permanent,
     persistence_condition = not (game.end OR Accord(named).breach_by_party),
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None, target_faction=None, target_object=Accord(executed, on_table),
     target_freeform=None,
     affinity=None,
     restriction = Accord(named).is_executed == True AND Accord(named).on_table == True,
     cost        = Mandate * 1 + faction.acting.native * 1,
+    boost = None,
     success     = game.lock(Accord(named), until=game.end OR Accord(named).breach_by_party),
     successcrit=None, fail=None, failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = None,
+    ps_framing = None,
     narrative   = "The agreement stands. Whatever your reasons for wanting out, the record disagrees.",
     perspectives = {
         Directorate: "The agreement is now a matter of institutional record. Dissolution would require a filing no one is prepared to make.",
@@ -3099,15 +3499,21 @@ STD.CA.12 = Card(
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=district.named, target_faction=None, target_object=Beat2BlockOrProtectCard,
     target_freeform=None,
     affinity=None,
     restriction = district(target).beat2_row.has_block_or_protect_card == True,
     cost        = IntelToken() * 1,
+    boost = None,
     success     = game.discard(target_card, district(target).beat2_row),
     successcrit=None, fail=None, failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = None,
+    ps_framing = None,
     narrative   = "There are no walls. There are only varying degrees of access.",
     perspectives = {},
     design_note  = "Scope: CA-inclusive — targets Block/Protect plays in both the Faction Resolution Grid (Type A CMs, Protect/Fortify modifier plays) and ARBITER's covert resolution grid (Beat 2 CA cards with function=Block or function=Protect). Cannot target Type B Countermeasures (faction defense — reduces difficulty, not a Block/Protect play). Intel token consumed is any held token.",
@@ -3179,6 +3585,7 @@ C_DisinformationCampaign = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -3192,6 +3599,7 @@ C_DisinformationCampaign = Card(
     ),
     restriction = faction(acting).presence(target_district) > 0,
     cost        = faction.acting.native * 2,
+    boost = None,
 
     success     = (faction(target).standing.remove(2), faction(acting).standing.add(1)),
     successcrit = None,
@@ -3201,12 +3609,16 @@ C_DisinformationCampaign = Card(
         arbiter.dispatch(NotificationSlip(type="Disinformation Campaign", district=target_district), target_faction),
     ),
 
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait = {
         Network:     PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
         Directorate: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "The city's opinion is infrastructure. It can be built. It can be demolished.",
     perspectives = {
         Guild:       "Narrative operations are not our toolset. We notice the shift after the quarter closes.",
@@ -3284,6 +3696,7 @@ C_Disprove = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -3294,18 +3707,23 @@ C_Disprove = Card(
     affinity    = None,
     restriction = None,
     cost        = faction.acting.native * 2,
+    boost = None,
 
     success     = arbiter.draw_random(IntelToken, source=faction(target).supply,
                       count=1, action=destroy),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Ghost:   PortraitEntry(submitter=+1),
         Network: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "What the record does not contain cannot be verified.",
     perspectives = {
         Guild:       "Operational evidence is a fact of the city. We account for what we do. Who removes the accounting is who fears it.",
@@ -3385,6 +3803,7 @@ C_IntelExtraction = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -3397,12 +3816,16 @@ C_IntelExtraction = Card(
     ),
     restriction = None,
     cost        = faction.acting.native * 1,
+    boost = None,
 
     success     = arbiter.draw_random(IntelToken, source=faction(target).supply,
                       count=1, action=transfer(faction(acting).case, face_down=True)),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Syndicate:   PortraitEntry(submitter=+1),
@@ -3410,6 +3833,7 @@ C_IntelExtraction = Card(
         Directorate: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "Information doesn't belong to anyone. It belongs to whoever holds it.",
     perspectives = {
         Guild:       "We do not take what others have built. The intelligence they gathered represents real work.",
@@ -3487,6 +3911,7 @@ C_ModifierRaid = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -3499,12 +3924,16 @@ C_ModifierRaid = Card(
     ),
     restriction = None,
     cost        = faction.acting.native * 2,
+    boost = None,
 
     success     = arbiter.draw_random(ModifierCard, source=faction(target).hand,
                       count=1, action=transfer(faction(acting).case, face_down=True)),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Syndicate:   PortraitEntry(submitter=+1),
@@ -3512,6 +3941,7 @@ C_ModifierRaid = Card(
         Directorate: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "They packed for an operation they will never run.",
     perspectives = {
         Guild:       "Tools are built for a purpose. Taking them from someone who made them is not the same as earning them.",
@@ -3615,6 +4045,7 @@ STD.PA.1 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -3631,6 +4062,9 @@ STD.PA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Directorate: PortraitEntry(submitter=+1),
@@ -3714,6 +4148,7 @@ STD.PA.2 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -3738,6 +4173,9 @@ STD.PA.2 = Card(
     successcrit = None,
     fail        = faction(acting).standing.remove(1),
     failcrit    = faction(acting).standing.remove(2),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Network:     PortraitEntry(submitter=+1),
@@ -3822,6 +4260,7 @@ STD.PA.3 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -3841,6 +4280,9 @@ STD.PA.3 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild: PortraitEntry(submitter=+1),
@@ -3924,6 +4366,7 @@ STD.PA.4 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -3944,6 +4387,9 @@ STD.PA.4 = Card(
     successcrit = None,
     fail        = faction(acting).standing.remove(1),
     failcrit    = faction(acting).standing.remove(2),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Network:     PortraitEntry(submitter=+1),
@@ -4029,6 +4475,7 @@ STD.PA.5 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -4052,6 +4499,9 @@ STD.PA.5 = Card(
     successcrit = None,
     fail        = faction(acting).standing.remove(1),
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Network: PortraitEntry(submitter=+1),
@@ -4135,6 +4585,7 @@ STD.PA.6 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -4155,6 +4606,9 @@ STD.PA.6 = Card(
     successcrit = None,
     fail        = faction(acting).standing.remove(1),
     failcrit    = faction(acting).standing.remove(2),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Syndicate: PortraitEntry(submitter=+1),
@@ -4238,6 +4692,7 @@ STD.PA.7 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -4254,6 +4709,9 @@ STD.PA.7 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Directorate: PortraitEntry(submitter=+1),
@@ -4339,6 +4797,7 @@ STD.PA.8 = Card(
     outcome_type    = BilateralAgreement,
     persistence     = Immediate,  # AccordForm delivery resolves at Beat 4; form lifecycle governed by Art 06 §9.4
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -4362,6 +4821,9 @@ STD.PA.8 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Directorate: PortraitEntry(submitter=+1),
@@ -4445,6 +4907,7 @@ STD.PA.9 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -4551,6 +5014,7 @@ Overture = Card(
     name    = "Overture",
     tagline = "Extend a formal invitation to negotiate — attached to any public act you declare.",
     type    = ModReactCard,  faction = All,
+    subtype = Standard,
 
     layer   = None,  function = None,  subject = None,  # per-card choice — Overture isn't an action-taxonomy category
 
@@ -4566,6 +5030,7 @@ Overture = Card(
     trigger         = public_act.resolved(pa=overture.assigned_pa),  # NEW trigger form — pending §6.3 vocab extension
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -4584,6 +5049,9 @@ Overture = Card(
     # Fires when the assigned host PA resolves (any outcome: success or fail)
     success = arbiter.deliver(faction(acting), AccordForm(blank)),
     successcrit = None,  fail = None,  failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     # Faction fills form per Art 06 §9.3; places in Accord Placement Area during Beat 4 or Debrief.
     # Art 06 §9.4 formation procedure applies from placement forward.
 
@@ -6865,6 +7333,8 @@ STD.MOD.26 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6872,6 +7342,8 @@ STD.MOD.26 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -6952,6 +7424,8 @@ STD.MOD.27 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -6959,6 +7433,8 @@ STD.MOD.27 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7039,6 +7515,8 @@ STD.MOD.28 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7046,6 +7524,8 @@ STD.MOD.28 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7126,6 +7606,8 @@ STD.MOD.29 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7133,6 +7615,8 @@ STD.MOD.29 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7213,6 +7697,8 @@ STD.MOD.30 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7220,6 +7706,8 @@ STD.MOD.30 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7300,6 +7788,8 @@ STD.MOD.31 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7307,6 +7797,8 @@ STD.MOD.31 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7387,6 +7879,8 @@ STD.MOD.32 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7394,6 +7888,8 @@ STD.MOD.32 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7474,6 +7970,8 @@ STD.MOD.33 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7481,6 +7979,8 @@ STD.MOD.33 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7561,6 +8061,8 @@ STD.MOD.34 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7568,6 +8070,8 @@ STD.MOD.34 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7648,6 +8152,8 @@ STD.MOD.35 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7655,6 +8161,8 @@ STD.MOD.35 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7735,6 +8243,8 @@ STD.MOD.36 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7742,6 +8252,8 @@ STD.MOD.36 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7822,6 +8334,8 @@ STD.MOD.37 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7829,6 +8343,8 @@ STD.MOD.37 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7909,6 +8425,8 @@ STD.MOD.38 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -7916,6 +8434,8 @@ STD.MOD.38 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -7996,6 +8516,8 @@ STD.MOD.39 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8003,6 +8525,8 @@ STD.MOD.39 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8083,6 +8607,8 @@ STD.MOD.40 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8090,6 +8616,8 @@ STD.MOD.40 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8170,6 +8698,8 @@ STD.MOD.41 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8177,6 +8707,8 @@ STD.MOD.41 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8257,6 +8789,8 @@ STD.MOD.42 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8264,6 +8798,8 @@ STD.MOD.42 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8344,6 +8880,8 @@ STD.MOD.43 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8351,6 +8889,8 @@ STD.MOD.43 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8431,6 +8971,8 @@ STD.MOD.44 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8438,6 +8980,8 @@ STD.MOD.44 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8518,6 +9062,8 @@ STD.MOD.45 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8525,6 +9071,8 @@ STD.MOD.45 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8605,6 +9153,8 @@ STD.MOD.46 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8612,6 +9162,8 @@ STD.MOD.46 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8692,6 +9244,8 @@ STD.MOD.47 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8699,6 +9253,8 @@ STD.MOD.47 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8779,6 +9335,8 @@ STD.MOD.48 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8786,6 +9344,8 @@ STD.MOD.48 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8866,6 +9426,8 @@ STD.MOD.49 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8873,6 +9435,8 @@ STD.MOD.49 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -8953,6 +9517,8 @@ STD.MOD.50 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -8960,6 +9526,8 @@ STD.MOD.50 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9040,6 +9608,8 @@ STD.MOD.51 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9047,6 +9617,8 @@ STD.MOD.51 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9127,6 +9699,8 @@ STD.MOD.52 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9134,6 +9708,8 @@ STD.MOD.52 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9214,6 +9790,8 @@ STD.MOD.53 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9221,6 +9799,8 @@ STD.MOD.53 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9301,6 +9881,8 @@ STD.MOD.54 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9308,6 +9890,8 @@ STD.MOD.54 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9388,6 +9972,8 @@ STD.MOD.55 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9395,6 +9981,8 @@ STD.MOD.55 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9475,6 +10063,8 @@ STD.MOD.56 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9482,6 +10072,8 @@ STD.MOD.56 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9562,6 +10154,8 @@ STD.MOD.57 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9569,6 +10163,8 @@ STD.MOD.57 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9649,6 +10245,8 @@ STD.MOD.58 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9656,6 +10254,8 @@ STD.MOD.58 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9736,6 +10336,8 @@ STD.MOD.59 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9743,6 +10345,8 @@ STD.MOD.59 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9823,6 +10427,8 @@ STD.MOD.60 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9830,6 +10436,8 @@ STD.MOD.60 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9910,6 +10518,8 @@ STD.MOD.61 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -9917,6 +10527,8 @@ STD.MOD.61 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -9997,6 +10609,8 @@ STD.MOD.62 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10004,6 +10618,8 @@ STD.MOD.62 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10084,6 +10700,8 @@ STD.MOD.63 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10091,6 +10709,8 @@ STD.MOD.63 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10171,6 +10791,8 @@ STD.MOD.64 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10178,6 +10800,8 @@ STD.MOD.64 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10258,6 +10882,8 @@ STD.MOD.65 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10265,6 +10891,8 @@ STD.MOD.65 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10345,6 +10973,8 @@ STD.MOD.66 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10352,6 +10982,8 @@ STD.MOD.66 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10432,6 +11064,8 @@ STD.MOD.67 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10439,6 +11073,8 @@ STD.MOD.67 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10519,6 +11155,8 @@ STD.MOD.68 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10526,6 +11164,8 @@ STD.MOD.68 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10606,6 +11246,8 @@ STD.MOD.69 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10613,6 +11255,8 @@ STD.MOD.69 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10693,6 +11337,8 @@ STD.MOD.70 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10700,6 +11346,8 @@ STD.MOD.70 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10780,6 +11428,8 @@ STD.MOD.71 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10787,6 +11437,8 @@ STD.MOD.71 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10867,6 +11519,8 @@ STD.MOD.72 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10874,6 +11528,8 @@ STD.MOD.72 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -10954,6 +11610,8 @@ STD.MOD.73 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -10961,6 +11619,8 @@ STD.MOD.73 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11041,6 +11701,8 @@ STD.MOD.74 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11048,6 +11710,8 @@ STD.MOD.74 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11128,6 +11792,8 @@ STD.MOD.75 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11135,6 +11801,8 @@ STD.MOD.75 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11215,6 +11883,8 @@ STD.MOD.76 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11222,6 +11892,8 @@ STD.MOD.76 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11302,6 +11974,8 @@ STD.MOD.77 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11309,6 +11983,8 @@ STD.MOD.77 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11389,6 +12065,8 @@ STD.MOD.78 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11396,6 +12074,8 @@ STD.MOD.78 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11476,6 +12156,8 @@ STD.MOD.79 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11483,6 +12165,8 @@ STD.MOD.79 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11563,6 +12247,8 @@ STD.MOD.80 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11570,6 +12256,8 @@ STD.MOD.80 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11650,6 +12338,8 @@ STD.MOD.81 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11657,6 +12347,8 @@ STD.MOD.81 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11737,6 +12429,8 @@ STD.MOD.82 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11744,6 +12438,8 @@ STD.MOD.82 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11824,6 +12520,8 @@ STD.MOD.83 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11831,6 +12529,8 @@ STD.MOD.83 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11911,6 +12611,8 @@ STD.MOD.84 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -11918,6 +12620,8 @@ STD.MOD.84 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -11998,6 +12702,8 @@ STD.MOD.85 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12005,6 +12711,8 @@ STD.MOD.85 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12085,6 +12793,8 @@ STD.MOD.86 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12092,6 +12802,8 @@ STD.MOD.86 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12172,6 +12884,8 @@ STD.MOD.87 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12179,6 +12893,8 @@ STD.MOD.87 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12259,6 +12975,8 @@ STD.MOD.88 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12266,6 +12984,8 @@ STD.MOD.88 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12346,6 +13066,8 @@ STD.MOD.89 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12353,6 +13075,8 @@ STD.MOD.89 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12433,6 +13157,8 @@ STD.MOD.90 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12440,6 +13166,8 @@ STD.MOD.90 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12520,6 +13248,8 @@ STD.MOD.91 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12527,6 +13257,8 @@ STD.MOD.91 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12607,6 +13339,8 @@ STD.MOD.92 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12614,6 +13348,8 @@ STD.MOD.92 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12694,6 +13430,8 @@ STD.MOD.93 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12701,6 +13439,8 @@ STD.MOD.93 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12781,6 +13521,8 @@ STD.MOD.94 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12788,6 +13530,8 @@ STD.MOD.94 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12868,6 +13612,8 @@ STD.MOD.95 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12875,6 +13621,8 @@ STD.MOD.95 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -12955,6 +13703,8 @@ STD.MOD.96 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -12962,6 +13712,8 @@ STD.MOD.96 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -13042,6 +13794,8 @@ STD.MOD.97 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -13049,6 +13803,8 @@ STD.MOD.97 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -13116,19 +13872,28 @@ STD.MOD.98 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Core doesn't miss a new arrival. Word reaches the right desk before the ink dries.",
     perspectives = None,
     design_note  = "Ring ModReactCard pattern-setter (04-53 direction). A rival's presence placement in Core is met with an immediate matching reinforcement from whoever holds this card. Deliberately modest (single-unit, at or below faction-specific power) — mirrors DIR.MOD.7 Eminent Domain's flat presence-yield template.",
@@ -13200,19 +13965,28 @@ STD.MOD.99 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Core paperwork moves fast when it wants to. An objection on record costs someone their footing.",
     perspectives = None,
     design_note  = "Removes 1 presence chip from the triggering faction in the same district as their new structure — a bureaucratic cost, not a reversal of the structure placement itself (GR 7.2b compliant).",
@@ -13284,19 +14058,28 @@ STD.MOD.100 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "The building doesn't stay empty long. Core fills what's vacated before the news spreads.",
     perspectives = None,
     design_note  = "Fires on any presence removal in Core; narrative frames it as claiming a vacated district. ARBITER confirms narrative fit case-by-case — no distinct 'last chip' filter exists in confirmed TriggerExpr vocabulary.",
@@ -13368,19 +14151,28 @@ STD.MOD.101 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.deliver(faction(holder), IntelToken(faction=trigger.faction)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Dominance in Core isn't quiet. The commissary knows before the announcement is official.",
     perspectives = None,
     design_note  = "Mirrors GHO.MOD.2 Perimeter Sensors' Intel Token delivery template. Reward changed from an initial 'draw 1 modifier card' (circular — a modifier card's reward shouldn't itself be another modifier card, with no thematic tie to 'overheard information') — Intel Token on the triggering faction ties the reward to what the card is actually about.",
@@ -13452,19 +14244,28 @@ STD.MOD.102 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "An Accord anywhere in the city passes through institutional record-keeping. Core's clerks note who's tied to whom.",
     perspectives = None,
     design_note  = "Not ring-scoped by design — Accords have no ring dimension, so 'Core flavor' comes from doctrine/theme (institutional paperwork), not a mechanical filter. Ring ModReact triggers don't require ring-scoping.",
@@ -13536,19 +14337,28 @@ STD.MOD.103 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = trigger.card,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.modify(trigger.card, threshold, delta=-5),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Core's review process exists to slow things down. It works exactly as designed, on whoever it's aimed at.",
     perspectives = None,
     design_note  = "Hinders the flagged PA (−5 threshold — makes success harder), not a self-benefit. `arbiter.modify(target, field, delta)` is a new mutation form, not yet in confirmed vocabulary; flagged for reconciliation. Procedurally grounded in the existing BM-xx/M-11 threshold-modifier-accumulation pipeline (Art 03 §9.4.1.1/§9.4.3.1.3), not new ARBITER behavior.",
@@ -13620,19 +14430,28 @@ STD.MOD.104 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Core doesn't build in isolation. A new structure re-opens every budget in the district, and the forecasts get revised in the same currency that raised the walls.",
     perspectives = None,
     design_note  = "`NativeResource(faction)` parameterizes the existing bare `NativeResource` subject symbol (Art 04 §6.1 line ~1559 usage) to resolve dynamically per triggering faction — needed because this card, unlike faction-specific precedent (GUI.MOD.2/3/4's hardcoded Capacity), doesn't have a single fixed faction context. Flagged for reconciliation.",
@@ -13704,19 +14523,28 @@ STD.MOD.105 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Established status means the paperwork becomes public. Anyone who reads it carefully learns exactly where the money in this district is going next.",
     perspectives = None,
     design_note  = "Same NativeResource(faction) generalization as STD.MOD.104. Shares its trigger event with GUI.MOD.9 Field Supervisor's established_marker.placed precedent — multiple cards firing on the same confirmed event is standard practice (e.g. presence_chip.placed already triggers several Ghost cards independently).",
@@ -13788,19 +14616,28 @@ STD.MOD.106 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Losing a foothold in Core isn't the end — there's always a contingency line item for exactly this.",
     perspectives = None,
     design_note  = "Distinct from the existing Floor Act mechanic (PM02 VE-01) — this is a Core-specific, presence-loss-triggered reserve, not a general insufficient-resource safety net. NativeResource(holder) keys to the holder's own faction, not a rival's.",
@@ -13872,19 +14709,28 @@ STD.MOD.107 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Standing shifts in Core get logged, cross-referenced, and answered — Core doesn't let a change go unremarked.",
     perspectives = None,
     design_note  = "Straightforward capitalize-on-rival's-gain template — `faction(holder).standing.add(1)` stands on its own precedent within the Ring set, STD.MOD.102.",
@@ -13956,19 +14802,28 @@ STD.MOD.108 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Core keeps records of every dispute. A district turning contested opens the door to citing precedent from somewhere else.",
     perspectives = None,
     design_note  = "Reframed from an earlier seed concept (originally 'an Accord involving a Core-based faction forms') — Accords aren't ring-scoped, so a Core-specific version couldn't distinguish itself from the other rings' copies. Tension Marker placement is a genuinely ring-scoped, confirmed-vocabulary substitute with the same 'formal/procedural response' character.",
@@ -14040,19 +14895,28 @@ STD.MOD.109 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "A reprimand doesn't need to be loud to be effective. Core specializes in the quiet kind.",
     perspectives = None,
     design_note  = "Mirrors STD.MOD.107's template, opposite trigger direction. Closes Ring 1 (Core): 12 cards, STD.MOD.98–109 — first Ring ModReactCard set shipped (04-53/09-06).",
@@ -14124,19 +14988,28 @@ STD.MOD.110 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Mid's routing systems don't tolerate a new obstruction quietly. Whoever's watching the reroute gets there first.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.98 Notified of Encroachment — same mechanic, ring=2.",
@@ -14208,19 +15081,28 @@ STD.MOD.111 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Mid's throughput has a hard limit. Building past it costs whoever built.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.99 Structural Objection — same mechanic, ring=2.",
@@ -14292,19 +15174,28 @@ STD.MOD.112 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Nothing sits idle in Mid's infrastructure for long. Someone always moves in on the leftovers.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.100 Escort Withdrawn — same mechanic, ring=2.",
@@ -14376,19 +15267,28 @@ STD.MOD.113 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.deliver(faction(holder), IntelToken(faction=trigger.faction)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "A district locked down draws load like a failing relay. The grid logs it before anyone announces it.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.101 Overheard in the Commissary — same mechanic, ring=2. Name drawn from the Mid seed pool's 'Grid Anomaly Logged' entry (originally a covert-op-discovery concept, not buildable — repurposed for the confirmed dominant_marker.placed mechanic).",
@@ -14460,19 +15360,28 @@ STD.MOD.114 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "An Accord's dissolution isn't just paperwork — whatever it was propping up now needs a new arrangement.",
     perspectives = None,
     design_note  = "Not ring-scoped, same as STD.MOD.102 (Accords have no ring dimension) — Mid flavor comes from doctrine (infrastructure-dependency framing), not a mechanical filter. `accord.removed` chosen over `.corrupted` — dissolution/breach fits Mid's operational-consequence voice better than data-tampering (which reads more Ghost/Information-doctrine).",
@@ -14544,19 +15453,28 @@ STD.MOD.115 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = trigger.card,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.modify(trigger.card, threshold, delta=-5),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Mid's inspectors don't announce a visit. They just show up when it's least convenient.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.103 Flagged for Review — same mechanic (−5 threshold, hinders the flagged PA), ring=2.",
@@ -14628,19 +15546,28 @@ STD.MOD.116 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Nothing gets built in Mid without the corridors running hotter for a season. The traffic is theirs. The lines it runs on aren't.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.104 Budget Reallocated — same NativeResource(trigger.faction) generalization, ring=2.",
@@ -14712,19 +15639,28 @@ STD.MOD.117 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Reaching Established in Mid means the schedules downstream get rewritten. The extra hours are real, and they get billed to the job — not to the faction that created it.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.105 Audit Trail — same NativeResource(trigger.faction) generalization, ring=2.",
@@ -14796,19 +15732,28 @@ STD.MOD.118 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Losing ground in Mid trips a contingency that's always been sitting there, waiting.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.106 Emergency Reserve — same NativeResource(holder) generalization, ring=2. Distinct from the existing Floor Act mechanic (PM02 VE-01), same as its Ring 1 counterpart.",
@@ -14880,19 +15825,28 @@ STD.MOD.119 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Mid's labor apparatus doesn't let a shift in standing pass without a formal word on it.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.107 On the Docket — same mechanic, ring=2.",
@@ -14964,19 +15918,28 @@ STD.MOD.120 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Mid keeps a file on every dispute. A contested line gets a citation before it gets resolved.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.108 Precedent Cited — same mechanic, ring=2.",
@@ -15048,19 +16011,28 @@ STD.MOD.121 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "A formal notice doesn't need drama. Mid's bureaucracy just needs the paper trail.",
     perspectives = None,
     design_note  = "Ring 2 duplicate of STD.MOD.109 Quiet Reprimand — same mechanic, ring=2. Closes Ring 2 (Mid): 12 cards, STD.MOD.110–121. Ring 3 (Baryo) is the last open leg of 09-06's Ring ModReactCard pass.",
@@ -15132,19 +16104,28 @@ STD.MOD.122 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Baryo doesn't wait for paperwork. Word moves faster than any filing ever could.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.98/STD.MOD.110 — same mechanic, ring=3. Name drawn directly from the Baryo seed pool's matching Territory entry.",
@@ -15216,19 +16197,28 @@ STD.MOD.123 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Something goes up in Baryo, and somebody else finds themselves priced out of the corner they held.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.99/STD.MOD.111 — same mechanic, ring=3.",
@@ -15300,19 +16290,28 @@ STD.MOD.124 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=trigger.district, faction=holder, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "The moment a foothold disappears, someone else is already moving their things in.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.100/STD.MOD.112 — same mechanic, ring=3.",
@@ -15384,19 +16383,28 @@ STD.MOD.125 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.deliver(faction(holder), IntelToken(faction=trigger.faction)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "When someone locks down a piece of Baryo, the street knows before the ink's even dry — if there was any ink to begin with.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.101/STD.MOD.113 — same mechanic, ring=3.",
@@ -15468,19 +16476,28 @@ STD.MOD.126 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Baryo's agreements aren't filed anywhere official. That's exactly what makes them so easy to quietly renegotiate.",
     perspectives = None,
     design_note  = "Not ring-scoped, same as STD.MOD.102/STD.MOD.114 (Accords have no ring dimension) — Baryo flavor comes from doctrine (informal/unfiled agreements), not a mechanical filter. `accord.corrupted` rather than `.removed` — Baryo's version of the unscoped card reacts to terms being falsified, not a formal breach.",
@@ -15552,19 +16569,28 @@ STD.MOD.127 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = trigger.card,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = arbiter.modify(trigger.card, threshold, delta=-5),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "An operation through Baryo draws attention before it ever gets a chance to land clean.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.103/STD.MOD.115 — same mechanic (−5 threshold, hinders the flagged PA), ring=3.",
@@ -15636,19 +16662,28 @@ STD.MOD.128 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Nothing goes up in the Baryo without a hundred small arrangements around it. None of them appear on the invoice, and none of them come out of it.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.104/STD.MOD.116 — same NativeResource(trigger.faction) generalization, ring=3.",
@@ -15720,19 +16755,28 @@ STD.MOD.129 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native(faction=trigger.faction).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Somebody reaching Established changes what the block is worth. Nobody standing on it takes a thing from them — they just stop being cheap.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.105/STD.MOD.117 — same NativeResource(trigger.faction) generalization, ring=3.",
@@ -15804,19 +16848,28 @@ STD.MOD.130 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).native.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Baryo runs on favors owed. This is one finally getting called in.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.106/STD.MOD.118 — same NativeResource(holder) generalization, ring=3.",
@@ -15888,19 +16941,28 @@ STD.MOD.131 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "The neighborhood keeps its own ledger, and it's not shy about updating it out loud.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.107/STD.MOD.119 — same mechanic, ring=3.",
@@ -15972,19 +17034,28 @@ STD.MOD.132 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "Baryo doesn't wait for an official ruling. The neighborhood picks its side the moment the tension shows.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.108/STD.MOD.120 — same mechanic, ring=3.",
@@ -16056,19 +17127,28 @@ STD.MOD.133 = Card(
     resolution = Automatic,  threshold = None,
     resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
+    boost = None,
 
     success     = faction(holder).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
+    ps_framing = None,
     narrative    = "A slip in standing here doesn't fade quietly — the block holds onto it.",
     perspectives = None,
     design_note  = "Ring 3 duplicate of STD.MOD.109/STD.MOD.121 — same mechanic, ring=3. Closes Ring 3 (Baryo): 12 cards, STD.MOD.122–133. Closes 09-06's full Ring ModReactCard pass: 36 cards, all 3 rings (STD.MOD.98–133).",
@@ -16162,6 +17242,7 @@ GUI.CA.1 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -16172,13 +17253,18 @@ GUI.CA.1 = Card(
     affinity    = None,
     restriction = district(target).faction(acting).structure > 0,
     cost        = Capacity * 1,
+    boost = None,
 
     success     = district(target).faction(acting).structure.set_flag(immune_to_demolish=True),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Guild does not abandon what it has built.",
     perspectives = {
@@ -16186,6 +17272,8 @@ GUI.CA.1 = Card(
         Network:     "Hardened walls are preparation. What's inside them decides whether the cost was worth it.",
         Directorate: "A structure immune to demolition is a structure immune to code review. We notice these arrangements.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -16255,6 +17343,7 @@ GUI.CA.2 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -16265,6 +17354,7 @@ GUI.CA.2 = Card(
     affinity    = None,
     restriction = None,
     cost        = None,
+    boost = None,
 
     success     = (
         faction(acting).native.add(1),
@@ -16273,8 +17363,12 @@ GUI.CA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "In New Meridian, even demolition is a Guild service.",
     perspectives = {
@@ -16282,6 +17376,8 @@ GUI.CA.2 = Card(
         Syndicate: "Positioning to profit from someone else's action before they take it. The instinct is sound. We simply call it by a different name.",
         Ghost:     "A faction that announces it expects demolition before demolition happens has already told us what it knows.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -16352,6 +17448,7 @@ GUI.CA.3 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -16362,13 +17459,18 @@ GUI.CA.3 = Card(
     affinity    = None,
     restriction = district(target).presence.total == 0,
     cost        = Capacity * 1,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     successcrit = arbiter.place(structure_block, district=target, faction=acting, count=1),
     fail        = None,
     failcrit    = game.dispatch(Directorate, IntelToken(faction=acting, quarter=game.quarter)),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Guild was here before the city had a name.",
     perspectives = {
@@ -16376,6 +17478,8 @@ GUI.CA.3 = Card(
         Network:     "The Guild's records go back further than ours. What they do with that history is what we watch.",
         Directorate: "Precedence is established through legal process, not through whoever kept the longer archive.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -16444,6 +17548,7 @@ GUI.CA.4 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -16454,6 +17559,7 @@ GUI.CA.4 = Card(
     affinity    = None,
     restriction = district(target).faction(acting).structure == 0,
     cost        = Capacity * 2 + Findings * 1,
+    boost = None,
 
     success     = (
         arbiter.place(presence_chip, district=target, faction=acting, count=1),
@@ -16466,7 +17572,11 @@ GUI.CA.4 = Card(
         game.transfer(district(target).native, 1, faction(Syndicate))
     ),
 
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Guild does not always wait for permission.",
     perspectives = {
@@ -16475,6 +17585,7 @@ GUI.CA.4 = Card(
         Ghost:    "Establishing presence before authorization is requested — the Guild is better at covert operations than they admit.",
     },
     design_note  = "Cost reasoning: 2 Capacity + 1 Findings (Mid-tier). Findings identify the un-zoned loopholes necessary to bypass prerequisites and break ground immediately.",
+    arbiter_note = None,
 )
 ```
 
@@ -16543,6 +17654,7 @@ GUI.CA.5 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -16553,13 +17665,18 @@ GUI.CA.5 = Card(
     affinity    = None,
     restriction = district(target).faction(acting).control_tier IN [Established, Dominant],
     cost        = None,
+    boost = None,
 
     success     = faction(acting).native.add(1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Guild built New Meridian's infrastructure. Drawing from it is not theft. It is dividend.",
     perspectives = {
@@ -16567,6 +17684,8 @@ GUI.CA.5 = Card(
         Syndicate:   "The Guild built the pipes. They are billing us for the water. We respect the position even if we resent the rate.",
         Directorate: "Infrastructure built under city contract belongs to New Meridian, not to the builder. We have the original agreements.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -16633,6 +17752,10 @@ GUI.CA.6 = Card(
     trigger         = faction(target).completes(CovertOp, id=STD.CA.1),
     resolution_type = PositionalWager,
     outcome_type    = None,
+    persistence  = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = faction.opponent,
@@ -16642,6 +17765,7 @@ GUI.CA.6 = Card(
     affinity    = None,
     restriction = None,
     cost        = None,
+    boost = None,
 
     success     = (
         faction(acting).native.add(1),
@@ -16650,8 +17774,12 @@ GUI.CA.6 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "In New Meridian, every foundation poured is a Guild invoice.",
     perspectives = {
@@ -16742,6 +17870,7 @@ GUI.CA.7 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.any,
     target_faction  = faction.opponent,
@@ -16759,6 +17888,7 @@ GUI.CA.7 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -16840,6 +17970,7 @@ GUI.CA.8 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.any,
     target_faction  = faction.opponent,
@@ -16857,6 +17988,7 @@ GUI.CA.8 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -16941,11 +18073,13 @@ GUI.CA.9 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,       # district B — second fire location
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     target_ca       = ca.guild.beat3.d100,  # named Guild Beat 3 d100 CA (declared in target profile)
 
     affinity    = None,
@@ -16954,6 +18088,7 @@ GUI.CA.9 = Card(
         and target_ca.restriction(district=target_district) == True  # district B satisfies CA's own restriction
     ),
     cost = Capacity * 2
+    boost = None,
          + district.target_district.native * 1,
 
     success = (
@@ -16965,8 +18100,12 @@ GUI.CA.9 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = None,
     perspectives = {
@@ -17049,6 +18188,7 @@ GUI.CA.10 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -17067,6 +18207,9 @@ GUI.CA.10 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
 
@@ -17142,6 +18285,7 @@ GUI.PA.1 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.two,  # both named at Phase B
@@ -17167,6 +18311,9 @@ GUI.PA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+2)},
     ps_framing = None,
@@ -17246,6 +18393,7 @@ GUI.PA.2 = Card(
     outcome_type    = BilateralAgreement,
     persistence     = Immediate,  # resource delivery and AccordForm delivery resolve at Beat 4; form lifecycle governed by Art 06 §9.4
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -17269,6 +18417,9 @@ GUI.PA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -17374,6 +18525,7 @@ GUI.PA.3 = Card(
     success     = None,  # card-as-condition — effect lives in persistence_effect
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -17453,6 +18605,7 @@ GUI.PA.4 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.any,
     target_faction  = None,
@@ -17467,6 +18620,7 @@ GUI.PA.4 = Card(
     success     = faction(Guild).standing.add(district(target_district).faction(Guild).structure * 1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -17547,6 +18701,7 @@ GUI.PA.5 = Card(
     persistence     = Seasonal,
     persistence_condition = None,  persistence_effect = None,
 
+    persistence_clearing_trigger = None,
     target_district = district.any,
     target_faction  = None,
     target_object   = None,
@@ -17565,6 +18720,7 @@ GUI.PA.5 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -17645,6 +18801,7 @@ GUI.PA.6 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.named,
     target_faction  = faction.opponent,
@@ -17662,6 +18819,7 @@ GUI.PA.6 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -17741,6 +18899,7 @@ GUI.PA.7 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.named,
     target_faction  = None,
@@ -17755,6 +18914,7 @@ GUI.PA.7 = Card(
     success     = arbiter.place(presence_chip, district=target_district, faction=Guild, count=2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -17834,6 +18994,7 @@ GUI.PA.8 = Card(
     outcome_type    = Unilateral,
     persistence     = Seasonal,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect = game.board_condition(
         scope  = district(target_district),
         effect = on(structure_block.placed(faction=Any, district=target_district)):
@@ -17854,6 +19015,7 @@ GUI.PA.8 = Card(
     success     = None,  # card-as-condition — effect lives in persistence_effect
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -17934,6 +19096,7 @@ GUI.PA.9 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -17964,6 +19127,9 @@ GUI.PA.9 = Card(
                    count(d in ([district(target)] + district(target).adjacent)
                          where d.faction(Guild).structure > 0)),
 
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait = {Guild: PortraitEntry(submitter=+2)},
     ps_framing = None,
 
@@ -18047,6 +19213,7 @@ GUI.PA.10 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -18075,6 +19242,9 @@ GUI.PA.10 = Card(
     failcrit = [arbiter.remove(presence_chip, district=target, faction=Guild, count=1),
                 arbiter.remove(presence_chip, district=target, faction=target, count=1)],
 
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait = {Guild: PortraitEntry(submitter=+1)},
 
     ps_framing = "Public cooperation between Guild and allied faction is visible to New Meridian; Guild leads (+2 PS) as acting faction bearing roll risk; target faction participates (+1 PS).",
@@ -18139,6 +19309,7 @@ GUI.MOD.1 = Card(
     name    = "Night Shift Crew",
     tagline = "Established communities don't abandon positions — they return.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
 
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
@@ -18147,11 +19318,16 @@ GUI.MOD.1 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = None,  # reflexive return, not a planned play — playtest-flagged, not final
     boost           = None,
@@ -18159,6 +19335,7 @@ GUI.MOD.1 = Card(
     success     = arbiter.place(presence_chip, district=target_district, faction=acting, count=1),
     successcrit = None,  fail = None,  failcrit = None,  # no dice under Automatic resolution — deterministic reflex, not a probabilistic outcome
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -18221,6 +19398,7 @@ GUI.MOD.2 = Card(
     name    = "Union Representative",
     tagline = "Other factions build with Guild labor. Guild gets paid.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.placed(faction=opponent),  # any non-Guild faction places structure
@@ -18231,10 +19409,16 @@ GUI.MOD.2 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,  # no presence requirement — Guild workforce is citywide
     cost            = None,
@@ -18243,6 +19427,7 @@ GUI.MOD.2 = Card(
     success     = faction(Guild).capacity.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -18306,6 +19491,7 @@ GUI.MOD.3 = Card(
     name    = "Institutional Contract",
     tagline = "Directorate builds. Guild crews and invoices.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.placed(faction=Directorate),
@@ -18316,10 +19502,16 @@ GUI.MOD.3 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -18328,6 +19520,7 @@ GUI.MOD.3 = Card(
     success     = faction(Guild).capacity.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -18391,6 +19584,7 @@ GUI.MOD.4 = Card(
     name    = "Core Premium",
     tagline = "Core construction pays Guild at institutional rates.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.placed(faction=opponent, ring=1),
@@ -18401,10 +19595,16 @@ GUI.MOD.4 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -18413,6 +19613,7 @@ GUI.MOD.4 = Card(
     success     = faction(Guild).capacity.add(2),  # double rate for Core ring
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -18476,6 +19677,7 @@ GUI.MOD.5 = Card(
     name    = "Company Town",
     tagline = "Our people built the walls. We hear who whispers behind them.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = ModifierCard,  # first "draw a card" ModReactCard effect; no existing taxonomy precedent for this shape, treating a drawn card as an acquired asset
 
     trigger         = presence_chip.placed(faction=opponent, district=district.where(faction(Guild).structure > 0)),
@@ -18486,10 +19688,16 @@ GUI.MOD.5 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -18498,6 +19706,7 @@ GUI.MOD.5 = Card(
     success     = arbiter.draw_modifier(faction=Guild, count=1),  # balance flag: count=1 is a null effect unless the drawn card has independent value — recommend count=2
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -18561,6 +19770,7 @@ GUI.MOD.6 = Card(
     name    = "Emergency Reconstruction",
     tagline = "You can knock down the building, but you can't erase the blueprint.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = StructureBlock,
 
     trigger         = structure_block.removed(faction=Guild),
@@ -18571,10 +19781,16 @@ GUI.MOD.6 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = faction(Guild).district.adjacent_to(trigger.district).acting_choice,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Guild).presence_in(target_district),
     cost            = list([Resource(Capacity, 1), Resource(Capital, 1)]),
@@ -18583,6 +19799,7 @@ GUI.MOD.6 = Card(
     success     = arbiter.place(structure_block, district=target_district, faction=Guild, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -18646,6 +19863,7 @@ GUI.MOD.7 = Card(
     name    = "Worker Retaliation",
     tagline = "The site is clear, but the workers are still here.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = structure_block.removed(faction=Guild),
@@ -18656,10 +19874,16 @@ GUI.MOD.7 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Resource(Capacity, 1),
@@ -18668,6 +19892,7 @@ GUI.MOD.7 = Card(
     success     = arbiter.place(presence_chip, district=target_district, faction=Guild, count=2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -18731,6 +19956,7 @@ GUI.MOD.8 = Card(
     name    = "Site Clearance",
     tagline = "We built it, we get paid. You blew it up, we get paid to clean it up.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.removed(faction=Any),
@@ -18741,10 +19967,16 @@ GUI.MOD.8 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -18753,6 +19985,7 @@ GUI.MOD.8 = Card(
     success     = faction(Guild).native(district=trigger.district).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -18829,9 +20062,11 @@ GUI.MOD.9 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     persistence = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = trigger.district,
@@ -18846,6 +20081,7 @@ GUI.MOD.9 = Card(
     success     = faction(Guild).capacity.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -18868,7 +20104,7 @@ GUI.MOD.9 = Card(
 [↑ Guild](#guild)
 
 #### Design Rationale
-Guild's only mechanic that reaches into Contested District Resolution (Art 03 §10) without Guild itself being a contesting faction. When a district goes Contested, Guild — already present or adjacent, already the district's contractor of record — commits its crews and material schedule to favor one side. That commitment is registered immediately (Guild doesn't wait for the battle to declare it) and stands as a Seasonal condition until §10 actually resolves that district, whenever in the Quarter that happens.
+Guild's only mechanic that reaches into Contested District Resolution (Art 03 §10) without Guild itself being a contesting faction. When a district goes Contested, Guild — already present or adjacent, already the district's contractor of record — commits its crews and material schedule to favor one side. The favor only ever adds — Guild speeds one faction's delivery, it never sabotages another's; choosing whom to help is the whole of the decision, since helping an ally and hindering a rival are the same move seen from opposite ends of the contest. That commitment is registered immediately (Guild doesn't wait for the battle to declare it) and stands as a Seasonal condition until §10 actually resolves that district, whenever in the Quarter that happens.
 
 This is new mechanical ground: the existing ModBattleCard subclass lets a *contesting* faction modify its own or a *named opponent's* total, played live during §10.1.2. Contractor's Favor is a *ModReactCard* — it fires earlier, off a different trigger (`tension_marker.placed`, not the Battlefield Strength declaration step), and its effect targets a named faction's total regardless of whether Guild itself is contesting that district. The tradeoff for committing early is fizzle risk: if the named faction is no longer a contesting (Dominant) faction by the time §10.1.1 actually identifies contestants, Guild's condition has no effect — the political ground shifted out from under an early bet. This is the narrative engine of the card, not a bug: Guild reads the room the moment it goes tense, and sometimes reads it wrong.
 
@@ -18876,12 +20112,12 @@ Restriction (Guild Present in the district or an adjacent district) keeps this t
 
 **Outstanding Issue:** Applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — check for active Guild Seasonal conditions on the contested district and apply the registered delta to the named faction's total, alongside Step 1.2.2 (Commit) and Step 1.2.3 (Reveal & Validate), where Battlefield Modifier Cards and Intel Tokens are now handled. No such step currently exists. Per Governing Rule 6.1 / Design Pillar 4.7b, this must be defined as a generalizable Art 03 procedure before the card is fully executable at the table — tracked as new PM05 item 04-n148. The registered condition is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions will know a Guild condition is active on the district before they declare their own totals; this is intended, not an oversight.
 
-**Deeper issue (04-n176):** No Layer/Function/Subject assignment was attempted here, and not because tagging was skipped — `arbiter.register_battlefield_modifier(...)` doesn't correspond to any effect shape the taxonomy system (Territory/Economy/Information/Submission/Standing × the Layer×Function matrix) actually supports. This is a level deeper than 04-n148's gap (missing Art 03 procedure): even once §10.1.2 knows how to apply a registered modifier, the card's fundamental mechanic — a third-party faction pre-committing a Battlefield Strength delta to a named contesting faction, off-cycle from the battle itself — has no home in the current taxonomy at all. Direction: this needs redesign, not a new taxonomy category invented to fit it. See 04-n176.
+**Taxonomy (resolved):** `layer = Resolution`, `function = Modify`, `subject = BattlefieldStrength`. The Resolution layer explicitly governs Battlefield Strength, and `Modify` is the matrix-valid function for altering a value without changing fundamental state — `Shift` is scoped to the Public Standing and Portrait tracks specifically and does not apply. `BattlefieldStrength` is a Subject registration this card prompted: no prior card acts on a contest total, so the vocabulary had no name for it. The earlier reading — that the mechanic had no taxonomy home and needed redesign rather than a new category — was superseded once the card's effect was simplified to a single upward direction, which removed the part that resisted classification.
 
 #### Card Story
-Tension breaks out over a contested block, and every material order in the district suddenly has two delivery dates — one for the faction Guild's crews like working with, one for everyone else. By the time the district actually goes to the wire, one side got their scaffolding early.
+Tension breaks out over a contested block, and one faction's material orders quietly move to the front of the queue. Nobody else's slip — Guild doesn't work that way, and says so. By the time the district actually goes to the wire, one side got their scaffolding early.
 
-04-n148 (missing Art 03 procedure) and 04-n176 (no taxonomy home) are structurally serious: this card fails Card type fit/Taxonomy fit outright (not just "pending"), and Supported by game procedure is a real Governing Rule 6.1/Design Pillar 4.7b violation as currently drafted (new ARBITER behavior used before being defined as a generalizable procedure). Flagged in full, not force-closed.
+One blocker remains: Art 03 §10.1.2 still has no step that reads a registered condition and applies it to a contesting faction's total, so *Supported by game procedure* is a genuine Governing Rule 6.1 / Design Pillar 4.7b gap — new ARBITER behavior used before being defined as a generalizable procedure (04-n148). The taxonomy question that previously sat alongside it is closed.
 
 **Design checklist:**
 
@@ -18890,9 +20126,9 @@ Tension breaks out over a contested block, and every material order in the distr
 | Action fit | ✓ | Guild committing construction priority to a contesting faction, transactionally rather than doctrinally, is a coherent, distinct mechanic from anything else in the set. | Art 00 §7 |
 | Voice fit | ✓ | tagline and all 5 perspectives read correctly in-voice. | Art 00 §6.7 |
 | Doctrine alignment | ✓ | Guild submitter=+1 only, no doctrine_mod — correctly reflects "transactional, not political." | Art 04 §6.5 |
-| Card type fit | ⚠ | ModReactCard/FactionSpecific is the right subclass, but `layer=None, function=None, subject=None` isn't a taxonomy gap to close later — it's a symptom of the deeper problem below. | Art 04 §6.1, §6.2 |
-| Taxonomy fit | ⚠ **(blocker, 04-n176)** | `arbiter.register_battlefield_modifier(...)` doesn't correspond to any Layer×Function pairing the taxonomy system supports. Direction: redesign, not a new category invented to fit it. This is the card's core blocker. | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n176 |
-| Balance | ⚠ | Fizzle risk (named faction may not still be contesting at §10) is a deliberate design tension, not a flaw — but genuinely hard to finalize while the taxonomy/mechanic itself is unresolved. | Art 02 §6–7; Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/FactionSpecific is the right subclass, and the taxonomy is now assigned — a Resolution-layer effect fired from a public board event. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | `Resolution / Modify / BattlefieldStrength` — the Resolution layer governs Battlefield Strength, `Modify` is matrix-valid for altering a value without changing fundamental state, and the Subject names the contest total the card acts on. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Fizzle risk (the named faction may not still be contesting at §10) is deliberate design tension, not a flaw. Whether Capacity×1 correctly prices a +2 Battlefield Strength swing is a cost-model question, not a card defect. | Art 02 §6–7; Art 04c |
 | Effect duration | ✓ | Seasonal correctly fits "ongoing condition across multiple subsequent actions." | Art 04 §5 P19 |
 | Persistence | ✓ | Explicitly declared (`persistence=Seasonal`) — ahead of the rest of the corpus on this field. | Art 04 §6.2 |
 | Trigger validity | ✓ | `tension_marker.placed` confirmed §6.3 vocabulary. | Art 04 §6.3 |
@@ -18900,10 +20136,10 @@ Tension breaks out over a contested block, and every material order in the distr
 | Supported by zones | ✓ | district + adjacency-based restriction ties this to real territorial investment. | Art 01 §6–7 |
 | Supported by components | ⚠ | No physical marker/component represents the "registered condition" on the board beyond the card itself — tied to the same gap as the row below. | Art 02 §6–8 |
 | Supported by game procedure | ⚠ **(blocker, 04-n148)** | Art 03 §10.1.2 has no step that reads a registered Guild condition and applies it. Per Governing Rule 6.1/Design Pillar 4.7b, new ARBITER behavior must be defined as a generalizable procedure *before* the card is finalized — as currently drafted, the card's `arbiter_note` describes behavior that doesn't yet exist as a defined procedure. | Art 03 §10.1.2; GR 6.1; Design Pillar 4.7b; PM05 04-n148 |
-| Data schema validation | ⚠ | `layer/function/subject=None` (deliberate, tied to 04-n176) plus missing `resolution_type` (added as scaffolding). | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | All §6.1 fields present and typed; taxonomy assigned; `target_freeform` correctly `None` now that no declaration beyond the named faction is required. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story is concrete and well-formed — the fizzle-risk narrative tension is genuinely the point, not a gap. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic; the fizzle-risk contingency is a real-world board-state dependency, not a hidden or probabilistic outcome — doesn't violate P27. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Real cost specified (Capacity×1) — not gated on 04-n178 the way cost-less cards are, but whether 1 Capacity is correctly priced for a ±2 Battlefield Strength swing can't be finalized while the mechanic itself is blocked on 04-n176. | Art 00a §9.2 |
+| Resource cost positioning | ⚠ | Real cost specified (Capacity×1). Whether that is correctly priced against a +2 contest swing cannot be settled until the cost model carries magnitude guidance. | Art 00a §9.2; Art 04c 04c-01 |
 | Trigger frequency (ModReactCard) | ✓ | Contested is a specific, less-common board state — low-moderate frequency holds up. |  |
 | Firing window (ModReactCard) | ✓ | no race with other Guild MODs. |  |
 | Automatic vs. d100 (ModReactCard) | ✓ | Guild's registration action is unconditional; the eventual d10 battle roll is untouched. |  |
@@ -18913,7 +20149,8 @@ Tension breaks out over a contested block, and every material order in the distr
 #### Outstanding Issues
 
 - **BLOCKER (04-n148):** applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — no such step currently exists. Card is not fully executable at the table until this procedure is defined (Governing Rule 6.1 / Design Pillar 4.7b).
-- **BLOCKER (04-n176):** `arbiter.register_battlefield_modifier(...)` has no home in the current taxonomy (Territory/Economy/Information/Submission/Standing × Layer×Function) — a level deeper than 04-n148, since even a defined procedure wouldn't give this mechanic a taxonomy assignment. Needs redesign, not a new category invented to fit it.
+- **Supported by components:** no physical marker represents the registered condition on the board beyond the card itself; tied to the same gap as 04-n148.
+- **Stack behavior (ModReactCard):** same open corpus-wide question.
 
 #### Status
 
@@ -18927,7 +20164,7 @@ GUI.MOD.10 = Card(
     name    = "Contractor's Favor",
     tagline = "We don't pick sides. We pick delivery dates.",
     type    = ModReactCard,  subtype = FactionSpecific,  faction = Guild,
-    layer   = None,  function = None,  subject = None,
+    layer   = Resolution,  function = Modify,  subject = BattlefieldStrength,
 
     trigger         = tension_marker.placed(),
     beat            = None,
@@ -18937,6 +20174,7 @@ GUI.MOD.10 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     persistence = Seasonal,
     persistence_condition = None,
@@ -18946,7 +20184,7 @@ GUI.MOD.10 = Card(
     target_district = trigger.district,
     target_faction  = faction.named,   # declared at trigger — must be a Dominant (contesting) faction in target_district at time of declaration
     target_object   = None,
-    target_freeform = direction.named, # "Support" (+2 to target_faction's Battlefield Strength total) or "Withhold" (−2); declared alongside target_faction — this is a ModReactCard using a Target-Profile-scoped field ModReactCards shouldn't have access to — flagged as an open schema question, not yet resolved
+    target_freeform = None,
     affinity        = None,
     restriction     = (
         faction(Guild).presence_in(target_district)
@@ -18958,13 +20196,14 @@ GUI.MOD.10 = Card(
     success = arbiter.register_battlefield_modifier(
         district=target_district,
         faction=target_faction,
-        magnitude=magnitude_from(target_freeform),  # Support = +2, Withhold = −2
+        magnitude=2,
     ),
     # Applied at Art 03 §10.1.2 (Calculate and Declare Totals) if target_faction is still a contesting
     # (Dominant) faction in target_district when §10.1.1 identifies contestants; otherwise the condition
     # lapses with no effect. Condition clears at Phase 21 (End of Quarter) regardless of outcome.
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -18977,7 +20216,7 @@ GUI.MOD.10 = Card(
         Syndicate:   "Guild's monetizing uncertainty before the dice even get picked up. Professionally, we approve.",
     },
     design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Requires new Art 03 §10.1.2 procedure step — see Outstanding Issues below. `persistence_clearing_trigger` is None — the card clears at Phase 21 (End of Quarter) regardless of outcome, the default Seasonal expiry already implied by `persistence`; no discrete clearing event exists for this card.",
-    arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and direction (Support +2 / Withhold −2), and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization still open — see Outstanding Issues.",
+    arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization still open — see Outstanding Issues.",
 )
 ```
 
@@ -19422,6 +20661,8 @@ GUI.MOD.15 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -19429,6 +20670,8 @@ GUI.MOD.15 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -19509,6 +20752,8 @@ GUI.MOD.16 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -19516,6 +20761,8 @@ GUI.MOD.16 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -19596,6 +20843,8 @@ GUI.MOD.17 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -19603,6 +20852,8 @@ GUI.MOD.17 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -19683,6 +20934,8 @@ GUI.MOD.18 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -19690,6 +20943,8 @@ GUI.MOD.18 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -19770,6 +21025,8 @@ GUI.MOD.19 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -19777,6 +21034,8 @@ GUI.MOD.19 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -19857,6 +21116,8 @@ GUI.MOD.20 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -19864,6 +21125,8 @@ GUI.MOD.20 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -19944,6 +21207,8 @@ GUI.MOD.21 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -19951,6 +21216,8 @@ GUI.MOD.21 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -20031,6 +21298,8 @@ GUI.MOD.22 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -20038,6 +21307,8 @@ GUI.MOD.22 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -20118,6 +21389,8 @@ GUI.MOD.23 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -20125,6 +21398,8 @@ GUI.MOD.23 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -20205,6 +21480,8 @@ GUI.MOD.24 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -20212,6 +21489,8 @@ GUI.MOD.24 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -20293,6 +21572,8 @@ GUI.MOD.25 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -20300,6 +21581,8 @@ GUI.MOD.25 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -20380,6 +21663,8 @@ GUI.MOD.26 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -20387,6 +21672,8 @@ GUI.MOD.26 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -20493,6 +21780,7 @@ GHO.CA.1 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -20513,6 +21801,9 @@ GHO.CA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1, modifier=+1, mod_where=game.outcome == Success)},
     ps_framing = None,
@@ -20582,19 +21873,26 @@ GHO.CA.2 = Card(
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction(named_opponent), target_object=CovertOperation,
     target_freeform=None,
     affinity=None,
     restriction=None,
     cost        = IntelToken(about=faction(target)) * 1,
+    boost = None,
     success     = game.dispatch(faction(acting), IntelDeliverySlip(faction=faction(target), op_type=faction(target).op(beat=3).type, district=faction(target).op(beat=3).district)),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     fail        = game.dispatch(faction(target), NotificationSlip),
     failcrit    = faction(acting).standing.remove(2),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "To know what they are doing while they are doing it — that is the only intelligence that matters.",
     perspectives = {Ghost: "We do not wait for the after-action report. We read the operation as it happens."},
+    design_note = None,
     arbiter_note = "Crit success: deliver IntelToken (faction=target) to acting faction's case. Success: write target faction's first submitted op type and district on Intel Delivery Slip; deliver to acting faction's case. Fail: deliver Notification Slip to target faction's case. Crit fail: apply PS −2.",
 )
 ```
@@ -20656,6 +21954,7 @@ GHO.CA.3 = Card(
     type    = CovertOperation, subtype = FactionSpecific, faction = Ghost,
     layer   = Information, function = Reveal, subject = IntelDeliverySlip,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -20673,6 +21972,12 @@ GHO.CA.3 = Card(
     design_note  = "SIGINT tap model: Ghost taps faction X's dispatch channel at Beat 2. ARBITER reads faction X's Beat 3 grid column at Beat 2 resolution (name + declared target only; modifier cards excluded). IntelDeliverySlip delivered to Ghost at Beat 2 resolution. Beat 2 commitment is the risk. Empty case = empty slip — resources spent. DR-xx (DispatchReport) collapsed into IS-xx — column read is IntelDeliverySlip with list content.",
     arbiter_note = "During Beat 2 resolution of this card: read faction X's Beat 3 resolution grid column. Write an IntelDeliverySlip listing each operation by name and declared target (district, faction, or object). Modifier cards not included. Deliver privately to Ghost at Beat 2 resolution. Do not notify faction X. If faction X has no Beat 3 operations, deliver an empty slip — Ghost's resources are spent. Procedure pending Art 03 Beat 2 addition.",
     value_rating = 1,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -20732,6 +22037,7 @@ GHO.CA.4 = Card(
     resolution_type = Probabilistic, outcome_type=None,
     persistence           = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None,
     target_faction=faction(named_opponent),  # declared at Art 03 §9.1 Covert Dispatch
@@ -20745,6 +22051,9 @@ GHO.CA.4 = Card(
     # If token was PA cost payment: PA is voided (auto-fail at Beat 4, Dispatch Token returned)
     # If token was PA modifier: PA loses modifier, resolves at Beat 4 without it
     successcrit=None,  fail=None,  failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = None,
     ps_framing  = None,
     narrative   = "The act has no foundation once the intelligence beneath it is removed.",
@@ -20813,6 +22122,7 @@ GHO.CA.5 = Card(
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction.named, target_object=IntelToken,
     target_freeform = FactionName,
@@ -20822,6 +22132,9 @@ GHO.CA.5 = Card(
     boost       = None,
     success     = game.corrupt(field=faction_name, target=faction(target).FRG.active_PA.intel_token, new_value=target_freeform.faction),
     successcrit=None, fail=None, failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing  = None,
     narrative   = "Ghost has been considering what the record says. It is never quite right.",
@@ -20894,6 +22207,7 @@ GHO.CA.7 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -20904,17 +22218,23 @@ GHO.CA.7 = Card(
     affinity        = None,
     restriction     = district(self|adjacent).faction(acting).presence > 0,
     cost            = Findings * 2,
+    boost = None,
 
     success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * 2,
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),  # +1 = 3 total
     fail        = None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Every asset leaves a signal. Ghost listens until the signal becomes a pattern.",
     perspectives = {Ghost: "A station does not move. It waits until the target walks past it again."},
     design_note  = "Ghost's dedicated gather platform. Higher yield than STD.CA.5 (2 tokens vs 1 on success) at double Findings cost. Threshold 55 calibrated above STD.CA.5 base (50) — Station is a reliable sustained platform. Adjacency restriction: deployed node requires Ghost presence in target district or adjacent. Cards stack: STD.CA.5 and Station may both target same faction in same Quarter.",
+    arbiter_note = None,
 )
 ```
 
@@ -20981,6 +22301,7 @@ GHO.CA.8 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -20997,8 +22318,12 @@ GHO.CA.8 = Card(
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * (1 + n_boost),   # additive delta; 3×(1+n_boost) total
     fail        = None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Some intelligence is gathered patiently. Some is taken all at once.",
     perspectives = {Ghost: "The take was complete. Everything they transmitted this Quarter. We have it."},
@@ -21070,6 +22395,7 @@ GHO.CA.15 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.named,  # Ghost's guess at the district the target's first Beat 3 op will name
     target_faction  = faction(named_opponent),
@@ -21087,6 +22413,7 @@ GHO.CA.15 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -21167,6 +22494,7 @@ GHO.CA.9 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -21177,13 +22505,18 @@ GHO.CA.9 = Card(
     affinity    = None,
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 1,
     cost        = IntelToken(about=faction(target)) * 1,
+    boost = None,
 
     success     = DebriefActionCard(subtype=SCIFRecord, target=faction(target)),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The structure count is the number of ways they have committed themselves. Ghost counts carefully.",
     perspectives = {Ghost: "We do not need to be inside their operation. We need to know how large it is."},
@@ -21255,6 +22588,7 @@ GHO.CA.10 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -21268,13 +22602,18 @@ GHO.CA.10 = Card(
         district(self|adjacent).faction(acting).presence > 0
     ),
     cost            = IntelToken(about=faction(target)) * 1,
+    boost = None,
 
     success     = game.dispatch(faction(acting), faction(target).native * 2),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Ghost does not steal. Ghost finds where the supply comes from, and goes there first.",
     perspectives = {Ghost: "Their resource. Our pipeline. They built something worth taking."},
@@ -21350,6 +22689,7 @@ GHO.CA.11 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -21360,6 +22700,7 @@ GHO.CA.11 = Card(
     affinity    = None,
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 2,
     cost        = IntelToken(about=faction(target)) * 2 + Findings * 3,
+    boost = None,
 
     success     = game.reveal_private(
                     faction(target).classified_directive,
@@ -21369,8 +22710,12 @@ GHO.CA.11 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1, modifier=+1, mod_where=game.outcome==Success)},
+    ps_framing = None,
 
     narrative    = "The Directive is not a secret. It is a pattern. Ghost reads patterns.",
     perspectives = {Ghost: "We are not guessing. We have read enough of their decisions to know what they are trying to protect."},
@@ -21434,6 +22779,7 @@ GHO.CA.6 = Card(
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None, target_faction=None, target_object=IntelToken,
     target_freeform=None,
@@ -21443,6 +22789,9 @@ GHO.CA.6 = Card(
     boost       = None,
     success     = game.dispatch(faction(acting), IntelToken(faction=consumed_token.faction) * 3),
     successcrit=None, fail=None, failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing  = None,
     narrative   = "Raw surveillance is noise. What Ghost does to it — that is signal.",
@@ -21517,6 +22866,7 @@ GHO.CA.12 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -21527,6 +22877,7 @@ GHO.CA.12 = Card(
     affinity        = None,
     restriction     = faction(acting).intel_tokens() >= 1,
     cost            = None,
+    boost = None,
 
     success     = arbiter.corrupt(target_object, field=faction_name, value=faction(target)),
     successcrit = None,
@@ -21535,8 +22886,10 @@ GHO.CA.12 = Card(
 
     on_accept  = None,
     on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The record says what Ghost needs it to say.",
     perspectives = {Ghost: "The attribution is wrong. It will stay wrong. What matters is what Ghost does with it next."},
@@ -21608,6 +22961,7 @@ GHO.CA.13 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.named,
     target_faction  = faction(named_opponent),
@@ -21626,6 +22980,7 @@ GHO.CA.13 = Card(
     )),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -21705,6 +23060,7 @@ GHO.CA.14 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = None,
     target_faction  = faction(named_opponent),
@@ -21719,6 +23075,7 @@ GHO.CA.14 = Card(
     success     = arbiter.remove(resolution_grid.first_op(faction=named_opponent, beat=3)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -21807,6 +23164,7 @@ GHO.PA.1 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -21840,6 +23198,9 @@ GHO.PA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -21918,6 +23279,7 @@ GHO.PA.2 = Card(
     outcome_type    = Unilateral,
     persistence     = Transient,  # card stays on table with district marker until Close Month next Month
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -21941,6 +23303,9 @@ GHO.PA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -22019,6 +23384,7 @@ GHO.PA.3 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -22038,6 +23404,7 @@ GHO.PA.3 = Card(
 
     on_accept  = None,
     on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -22116,6 +23483,7 @@ GHO.PA.4 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -22138,6 +23506,7 @@ GHO.PA.4 = Card(
 
     on_accept  = None,
     on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -22216,6 +23585,7 @@ GHO.PA.5 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any(resource_type=Findings),
@@ -22235,6 +23605,7 @@ GHO.PA.5 = Card(
 
     on_accept  = None,
     on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -22309,6 +23680,7 @@ GHO.MOD.1 = Card(
     name    = "Sleeper Analyst",
     tagline = "Name the faction on the Intel token. If correct: the attribution ends here.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Information,  function = Remove,  subject = IntelToken,
 
     trigger = public_act.placed_on_frg(faction=opponent, uses_intel_token=True),
@@ -22319,6 +23691,11 @@ GHO.MOD.1 = Card(
     resolution = Automatic,
     threshold  = None,
     ring_mod   = None,  doctrine_mod = None,  resolution_type = Transactional,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
@@ -22338,6 +23715,7 @@ GHO.MOD.1 = Card(
     fail        = None,   # card consumed; no board effect; PA proceeds normally
     failcrit    = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -22403,6 +23781,7 @@ GHO.MOD.2 = Card(
     name    = "Perimeter Sensors",
     tagline = "Faction activity near Ghost presence generates automatic intelligence.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Information,  function = Add,  subject = IntelToken,
 
     trigger         = presence_chip.placed(faction=Any, district=district.where(faction(Ghost).presence > 0)),
@@ -22413,10 +23792,16 @@ GHO.MOD.2 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,  # Ghost must be present in triggered district
     cost            = None,  # card consumed on fire
@@ -22425,6 +23810,7 @@ GHO.MOD.2 = Card(
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=trigger.faction)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -22488,6 +23874,7 @@ GHO.MOD.3 = Card(
     name    = "Institutional Trace",
     tagline = "Directorate expansion near Ghost presence generates targeted intelligence.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Information,  function = Add,  subject = IntelToken,
 
     trigger         = presence_chip.placed(faction=Directorate, district=district.where(faction(Ghost).presence > 0)),
@@ -22498,10 +23885,16 @@ GHO.MOD.3 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = Directorate,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,
     cost            = None,
@@ -22510,6 +23903,7 @@ GHO.MOD.3 = Card(
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=Directorate)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -22573,6 +23967,7 @@ GHO.MOD.4 = Card(
     name    = "Signal Bleed",
     tagline = "Network expansion near Ghost presence generates exposure intelligence.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Information,  function = Add,  subject = IntelToken,
 
     trigger         = presence_chip.placed(faction=Network, district=district.where(faction(Ghost).presence > 0)),
@@ -22583,10 +23978,16 @@ GHO.MOD.4 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = Network,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,
     cost            = None,
@@ -22595,6 +23996,7 @@ GHO.MOD.4 = Card(
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=Network)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -22658,6 +24060,7 @@ GHO.MOD.5 = Card(
     name    = "False Flag",
     tagline = "Let them claim the victory, then rewrite the headline.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
 
     trigger         = standing_marker.increased(faction=Any),
@@ -22668,10 +24071,16 @@ GHO.MOD.5 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Findings * 1 + Exposure * 1,
@@ -22680,6 +24089,7 @@ GHO.MOD.5 = Card(
     success     = arbiter.shift(standing_marker, faction=trigger.faction, amount=-(trigger.amount * 2)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -22743,6 +24153,7 @@ GHO.MOD.6 = Card(
     name    = "Supply Chain Tap",
     tagline = "Their infrastructure is our logistics.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Copy,  subject = NativeResource,
 
     trigger         = resource.drawn_from_reservoir(faction=Any),
@@ -22753,10 +24164,16 @@ GHO.MOD.6 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Resource(faction(trigger.faction).native, 1),
@@ -22765,6 +24182,7 @@ GHO.MOD.6 = Card(
     success     = arbiter.deliver(faction(Ghost), trigger.resources),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -22828,6 +24246,7 @@ GHO.MOD.7 = Card(
     name    = "Sleeper Cell",
     tagline = "Total control is just a convenient illusion.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Redirect,  subject = PresenceToken,
 
     trigger         = dominant_marker.placed(faction=Any),
@@ -22838,10 +24257,16 @@ GHO.MOD.7 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Findings * 1 + Capacity * 1 + Capital * 1,
@@ -22850,6 +24275,7 @@ GHO.MOD.7 = Card(
     success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Ghost, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -22913,6 +24339,7 @@ GHO.MOD.8 = Card(
     name    = "Local Sympathizers",
     tagline = "They thought this neighborhood belonged to them.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Remove,  subject = PresenceToken,
 
     trigger         = established_marker.placed(faction=Any),
@@ -22923,10 +24350,16 @@ GHO.MOD.8 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Resource(faction(trigger.faction).native, 1),
@@ -22935,6 +24368,7 @@ GHO.MOD.8 = Card(
     success     = arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -23001,6 +24435,7 @@ GHO.MOD.9 = Card(
     name    = "Burn Notice",
     tagline = "Incinerate an opponent's intelligence assets as they try to use them.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
 
     layer   = Submission,  function = Remove,  subject = ModifierCard,  # confirmed registered pairing — ref_taxonomy.md §5.2 (Modifier Card: Economy/Submission)
 
@@ -23009,11 +24444,16 @@ GHO.MOD.9 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = None,
     target_faction  = None,  # not needed — trigger.public_act uniquely identifies the target PA regardless of which faction(s) attached modifiers to it
     target_object   = trigger.public_act,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = Findings(1),
     boost           = None,
@@ -23021,6 +24461,7 @@ GHO.MOD.9 = Card(
     success     = arbiter.remove(ModifierCard, attached_to=trigger.public_act),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -23084,6 +24525,7 @@ GHO.MOD.10 = Card(
     name    = "Data Wipe",
     tagline = "A devastating cyber-attack that cripples a faction's operational hand.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
 
     layer   = Information,  function = Remove,  subject = FactionHand,
 
@@ -23092,11 +24534,16 @@ GHO.MOD.10 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 2,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = None,
     target_faction  = faction(trigger.public_act.submitter),
     target_object   = None,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = Findings(2) + IntelToken(1),
     boost           = None,
@@ -23104,6 +24551,7 @@ GHO.MOD.10 = Card(
     success     = arbiter.discard_hand(target_faction, card_types=[CovertOperation, PublicAct]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -23167,6 +24615,7 @@ GHO.MOD.11 = Card(
     name    = "Manufactured Evidence",
     tagline = "Hijack a public act before the ink dries.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
 
     layer   = Information,  function = Corrupt,  subject = TargetProfile,  # confirmed Corrupt target — ref_taxonomy.md §5.2 ("Corrupt targets are strictly: ... Target Profile")
 
@@ -23175,11 +24624,16 @@ GHO.MOD.11 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = None,
     target_faction  = None,  # not declared — the swap is anonymous even to the table until Beat 4
     target_object   = trigger.public_act,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = Findings(1) + Exposure(1),
     boost           = None,
@@ -23187,6 +24641,7 @@ GHO.MOD.11 = Card(
     success     = arbiter.swap_target_profile(pa=trigger.public_act, new_profile=declared_profile),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -23637,6 +25092,8 @@ GHO.MOD.16 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -23644,6 +25101,8 @@ GHO.MOD.16 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -23724,6 +25183,8 @@ GHO.MOD.17 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -23731,6 +25192,8 @@ GHO.MOD.17 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -23811,6 +25274,8 @@ GHO.MOD.18 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -23818,6 +25283,8 @@ GHO.MOD.18 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -23898,6 +25365,8 @@ GHO.MOD.19 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -23905,6 +25374,8 @@ GHO.MOD.19 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -23985,6 +25456,8 @@ GHO.MOD.20 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -23992,6 +25465,8 @@ GHO.MOD.20 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -24072,6 +25547,8 @@ GHO.MOD.21 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -24079,6 +25556,8 @@ GHO.MOD.21 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -24159,6 +25638,8 @@ GHO.MOD.22 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -24166,6 +25647,8 @@ GHO.MOD.22 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -24246,6 +25729,8 @@ GHO.MOD.23 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -24253,6 +25738,8 @@ GHO.MOD.23 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -24333,6 +25820,8 @@ GHO.MOD.24 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -24340,6 +25829,8 @@ GHO.MOD.24 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -24420,6 +25911,8 @@ GHO.MOD.25 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -24427,6 +25920,8 @@ GHO.MOD.25 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -24508,6 +26003,8 @@ GHO.MOD.26 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -24515,6 +26012,8 @@ GHO.MOD.26 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -24595,6 +26094,8 @@ GHO.MOD.27 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -24602,6 +26103,8 @@ GHO.MOD.27 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -24680,6 +26183,7 @@ DIR.CA.1 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -24697,6 +26201,12 @@ DIR.CA.1 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -24752,6 +26262,7 @@ DIR.CA.2 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Territory,  function = Redirect,  subject = DeploymentMarker,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10},
+    doctrine_mod = None,
     trigger=None,
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
@@ -24776,6 +26287,12 @@ DIR.CA.2 = Card(
     design_note  = "Marker moved to Directorate public tableau Detention zone — Governing Rule 8.3a compliant (moved, not removed from play). Permanent: marker remains in Detention for remainder of session. No NotificationSlip — detention is publicly visible on Directorate tableau. Faction Terminals may be unique per faction.",
     arbiter_note = "Consume Intel token. Move named faction's deployment marker from target district to Directorate public tableau Detention zone. Physically place on Detention area — visible to all players. No separate notification. Crit success: return 3 Mandate to Directorate. Crit fail: no marker move; −1 PS to Directorate only.",
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -24838,6 +26355,7 @@ DIR.CA.3 = Card(
     type    = CovertOperation, subtype = FactionSpecific, faction = Directorate,
     layer   = Information, function = Reveal, subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -24855,6 +26373,12 @@ DIR.CA.3 = Card(
     design_note  = "Redesigned v2.0: original permanent passive feed with beat3_pre_resolution delivery invalidated — Governing Rule 7.2a prohibits covert board markers; ARBITER holds no log in L1. Episodic model: Directorate watches one district one month. ARBITER reads existing Beat 3 grid row at Beat 2 resolution — no new tracking. Op type only, no faction. Multiple copies in Directorate deck flagged for deck design pass.",
     arbiter_note = "During Beat 2 resolution of this card: check the Beat 3 resolution grid for covert operations targeting district(target). For each operation present, write the operation type on an IntelDeliverySlip and deliver privately to Directorate. Do not include faction identity. If no Beat 3 operations target the district, deliver nothing — Directorate's resources are spent. Procedure pending Art 03 Beat 2 addition.",
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -24910,6 +26434,7 @@ DIR.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Territory,  function = Redirect,  subject = PresenceToken,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -24932,6 +26457,12 @@ DIR.CA.4 = Card(
     design_note  = "Replaces DIR.CA.4 Sealed Border (retired). Fills Territory — Move — Presence token gap; no other card in the full set uses this verb + subject combination. Most impactful before Battlefield Strength when district control margins are tight.",
     arbiter_note = "Move named Directorate presence tokens from source to destination. Adjacency confirmed against district adjacency table. Entry requirements rechecked at destination — if Directorate does not qualify for entry, card is discarded without effect (resources not refunded). Control flags and Established markers recalculated after move.",
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -25000,6 +26531,7 @@ DIR.PA.4 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -25014,6 +26546,7 @@ DIR.PA.4 = Card(
     success     = arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -25121,6 +26654,7 @@ DIR.PA.5 = Card(
     success     = None,  # card placement IS the effect — card-as-condition pattern
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -25198,6 +26732,7 @@ DIR.CA.5 = Card(
     resolution_type = Probabilistic, outcome_type = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district = district.named, target_faction = faction(named_opponent), target_object = PresenceToken,
     target_freeform=None,
@@ -25213,7 +26748,11 @@ DIR.CA.5 = Card(
     successcrit = faction(acting).standing.add(1 + n_boost),
     fail      = game.dispatch(faction(target), NotificationSlip),
     failcrit  = [Discovery, faction(acting).standing.remove(1 + n_boost)],
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait  = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative = "The Directorate does not ask permission. It records the action and moves on.",
     perspectives = {Directorate: "The intelligence warranted the action. The action was authorised. There is nothing further to say."},
     design_note  = "Boost model: base cost (faction×1 + native×1 + IntelToken) covers removal of 1 token (threshold 65). Each boost unit = 1 BM-xx = 1 additional token removed, threshold −10. PS scales symmetrically with (1+n): success = −(1+n), successcrit = +(1+n), failcrit = Discovery + −(1+n). Modifier clear = target faction's cards only. A Network modifier card auto-triggers off this sweep.",
@@ -25279,11 +26818,13 @@ DIR.CA.6 = Card(
     resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
+    persistence_clearing_trigger = None,
     target_district = district.named,
     target_faction=None, target_object=None, target_freeform=None,
     affinity=None,
     restriction = faction(acting).presence_count(district(target)) > 1,
     cost    = Mandate * 1,
+    boost = None,
     success = faction(acting).mandate.add(
                 count(game.active_permanents(faction=acting,
                       ring=district(target).ring))),
@@ -25291,7 +26832,9 @@ DIR.CA.6 = Card(
     fail        = None,
     failcrit    = faction(acting).mandate.remove(1),
     on_accept=None, on_decline=None,
+    on_discard = None,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "The Directorate does not improvise. The allocation exists because the framework exists. The framework is intact. The allocation is approved.",
     perspectives = {Directorate: "The standing record in this ring is clean. What was ordered is being carried out. Resources are allocated accordingly."},
     design_note  = "No floor — 0 active Permanents in target ring yields 0 Mandate on success. Count: face-up Directorate Permanent cards in Directorate play area where card.target_district.ring == district(target).ring. Pairs with DIR.CA.7 (same mechanism, PS yield).",
@@ -25358,11 +26901,13 @@ DIR.CA.7 = Card(
     resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
+    persistence_clearing_trigger = None,
     target_district = district.named,
     target_faction=None, target_object=None, target_freeform=None,
     affinity=None,
     restriction = faction(acting).presence_count(district(target)) > 1,
     cost    = Mandate * 2,
+    boost = None,
     success = faction(acting).standing.add(
                 count(game.active_permanents(faction=acting,
                       ring=district(target).ring))),
@@ -25370,7 +26915,9 @@ DIR.CA.7 = Card(
     fail        = None,
     failcrit    = faction(acting).standing.remove(1),
     on_accept=None, on_decline=None,
+    on_discard = None,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "The Directorate does not announce competence. It demonstrates it — quietly, through the record, through the channels that matter. The public receives the signal without knowing its source.",
     perspectives = {Directorate: "The active directives in this ring speak for themselves. We are not making a claim. We are presenting a record."},
     design_note  = "PS yield = count of active Directorate Permanents in same ring as target district. 0 Permanents → +0 PS on success. Same counting mechanism as DIR.CA.6 (Mandate yield). Failcrit PS−1: brief traced to Directorate — institutional embarrassment.",
@@ -25437,17 +26984,21 @@ DIR.CA.8 = Card(
     resolution_type = PositionalWager,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
+    persistence_clearing_trigger = None,
     target_district = district.named,
     target_faction=None, target_object=None, target_freeform=None,
     affinity=None,
     restriction=None,
     cost    = Mandate * 2,
+    boost = None,
     success = game.apply_modifier(
                 ops=game.resolution_grid.beat3(district=district(target)),
                 threshold_mod=-15),
     successcrit=None, fail=None, failcrit=None,
     on_accept=None, on_decline=None,
+    on_discard = None,
     portrait    = {Directorate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "Enhanced scrutiny has been authorised for this district. All activity here is subject to review. All activity. Including ours.",
     perspectives = {Directorate: "The district is under review. Scrutiny means something only when it applies uniformly."},
     design_note  = "Applies to all factions including Directorate. Beat 2 ops in district (DIR.CA.1/CA.3/CA.4) unaffected — only Beat 3 rows. Uses existing Modifier tokens (−15) placed by ARBITER per row, not a district-column flag.",
@@ -25542,6 +27093,7 @@ DIR.PA.1 = Card(
     outcome_type    = Unilateral,
     persistence     = Seasonal,  # DIR.PA.1 card / RegulatoryOverrideMarker stays on district until Phase 21
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -25570,6 +27122,9 @@ DIR.PA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -25648,6 +27203,7 @@ DIR.PA.2 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -25672,6 +27228,9 @@ DIR.PA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -25742,6 +27301,7 @@ EntryExitControls = Card(
     type    = PublicAct,  subtype = FactionSpecific,  faction = Directorate,
     layer   = Territory,  function = Block,  subject = DeploymentMarker,
     beat=4,  resolution=Automatic,  threshold=None,  ring_mod=None,
+    doctrine_mod = None,
     trigger=None,
     resolution_type = Transactional,  outcome_type=Unilateral,
     persistence           = Permanent,
@@ -25772,6 +27332,10 @@ EntryExitControls = Card(
     design_note  = "Persistent PA. Card sits in Directorate's active PA area on the Overview (not on district tile). Immediate: non-Directorate deployment markers in named district displaced to any district where owning faction has presence, flipped to Blocked. Persistent: non-Directorate deployment marker placement blocked in named district. persistence_condition auto-discards card if Directorate falls below Established. PS −1 at resolution (public backlash). Counter-card removal TBD.",
     arbiter_note = "Name the district. Each non-Directorate deployment marker there: owning faction moves it to any district where they have presence, flip to Blocked.",
     value_rating = 4,
+    persistence_clearing_trigger = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 )
 ```
 
@@ -25860,6 +27424,9 @@ P_StandingInjunction = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -25965,6 +27532,7 @@ DIR.PA.7 = Card(
     success     = None,  # card-as-condition — effect lives in persistence_effect
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -26044,6 +27612,7 @@ DIR.PA.8 = Card(
     outcome_type    = ElectPlayer,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = None,
     target_faction  = faction.opponent,
@@ -26058,6 +27627,7 @@ DIR.PA.8 = Card(
     success = None,  successcrit = None,  fail = None,  failcrit = None,
     on_accept  = faction(target_faction).native.remove(2),   # target elects to pay the fine
     on_decline = faction(target_faction).standing.remove(2),  # target elects to refuse and take the PS hit
+    on_discard = None,
 
     portrait   = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -26139,6 +27709,7 @@ DIR.PA.9 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -26161,6 +27732,7 @@ DIR.PA.9 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -26240,6 +27812,7 @@ DIR.PA.10 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -26259,6 +27832,7 @@ DIR.PA.10 = Card(
     failcrit     = faction(Directorate).standing.remove(
                       count(district.where(faction(Directorate).influence_tier >= Established)) + 1),
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -26338,6 +27912,7 @@ DIR.PA.11 = Card(
     outcome_type    = Unilateral,
     persistence     = Permanent,
     persistence_condition = None,  # standing institution, once established — no clearing condition; not tied to a single district or faction
+    persistence_clearing_trigger = None,
     persistence_effect = game.board_condition(
         scope  = game.all_districts,
         effect = "Any faction may petition to remove any currently active Directorate-owned standing Public Act "
@@ -26358,6 +27933,7 @@ DIR.PA.11 = Card(
     success     = faction(Directorate).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -26427,6 +28003,7 @@ DIR.MOD.1 = Card(
     name    = "Riot Squad",
     tagline = "Presence placed without Directorate approval can be removed with Directorate authority.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Remove,  subject = PresenceToken,  # arbiter.remove(presence_chip,...)
 
     trigger         = presence_chip.placed(faction=Any),
@@ -26437,10 +28014,16 @@ DIR.MOD.1 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,  # mechanical per schema (Automatic → Transactional); not a design blank
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Directorate).influence >= Established,  # jurisdictional authority requires Established presence
     cost            = None,  # card consumed; cost TBD (possibly 1 Mandate)
@@ -26449,6 +28032,7 @@ DIR.MOD.1 = Card(
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -26514,6 +28098,7 @@ DIR.MOD.2 = Card(
     name    = "Capital Suppression",
     tagline = "Syndicate presence in regulated territory draws immediate institutional response.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Remove,  subject = PresenceToken,
 
     trigger         = presence_chip.placed(faction=Syndicate),
@@ -26524,10 +28109,16 @@ DIR.MOD.2 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = Syndicate,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Directorate).influence >= Established,
     cost            = None,
@@ -26536,6 +28127,7 @@ DIR.MOD.2 = Card(
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=Syndicate, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -26601,6 +28193,7 @@ DIR.MOD.3 = Card(
     name    = "City Council Loyalist",
     tagline = "In the Core, the Directorate's authority does not require a justification.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Remove,  subject = PresenceToken,
 
     trigger         = presence_chip.placed(faction=Any, ring=1),
@@ -26611,10 +28204,16 @@ DIR.MOD.3 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,  # Core ring: no Established requirement — blanket institutional authority
     cost            = None,
@@ -26623,6 +28222,7 @@ DIR.MOD.3 = Card(
     success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -26688,6 +28288,7 @@ DIR.MOD.4 = Card(
     name    = "Administrative Overhead",
     tagline = "Every Accord formed is a Directorate administrative event.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,  # mandate.add(1)
 
     trigger         = accord.placed,
@@ -26698,10 +28299,16 @@ DIR.MOD.4 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -26710,6 +28317,7 @@ DIR.MOD.4 = Card(
     success     = faction(Directorate).mandate.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -26775,6 +28383,7 @@ DIR.MOD.5 = Card(
     name    = "Emergency Appropriation",
     tagline = "Institutional scale requires institutional funding.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = public_act.placed_on_frg(faction=Directorate, persistence=Permanent),
@@ -26785,10 +28394,15 @@ DIR.MOD.5 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -26797,6 +28411,7 @@ DIR.MOD.5 = Card(
     success     = faction(Directorate).mandate.add(2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -26862,6 +28477,7 @@ DIR.MOD.6 = Card(
     name    = "State of Emergency",
     tagline = "The world changes. The Directorate dictates how.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Modify,  subject = PublicAct,
 
     trigger         = world_event.played,
@@ -26881,10 +28497,12 @@ DIR.MOD.6 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Mandate * 1 + Exposure * 1,
@@ -26893,6 +28511,7 @@ DIR.MOD.6 = Card(
     success     = None,
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -26958,6 +28577,7 @@ DIR.MOD.7 = Card(
     name    = "Eminent Domain",
     tagline = "Private development is subject to institutional oversight.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = structure_block.placed(faction=opponent),
@@ -26968,10 +28588,16 @@ DIR.MOD.7 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -26980,6 +28606,7 @@ DIR.MOD.7 = Card(
     success     = arbiter.place(presence_chip, district=target_district, faction=Directorate, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -27045,6 +28672,7 @@ DIR.MOD.8 = Card(
     name    = "Asset Seizure",
     tagline = "Unlicensed public operations are subject to immediate fines.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Remove,  subject = NativeResource,  # impounds a resource off an already-submitted PA; Submission (interferes with a submitted card), not plain Economy
 
     trigger         = public_act.placed_on_frg(target_district=district.where(faction(Directorate).influence >= Established)),
@@ -27055,10 +28683,16 @@ DIR.MOD.8 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Mandate * 1 + Capital * 1,
@@ -27067,6 +28701,7 @@ DIR.MOD.8 = Card(
     success     = arbiter.remove(resource_token, target=trigger.card, count=1, to=Reservoir),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -27130,6 +28765,7 @@ DIR.MOD.9 = Card(
     name    = "Fiscal Sanction",
     tagline = "The public already turned on them. Directorate just needed the opening.",
     type    = ModReactCard,  faction = Directorate,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Block,  subject = PublicAct,  # dominant identity is blocking PA submission from the sanctioned faction; the +1 PS is the secondary effect, not the primary one
 
     trigger         = standing_marker.decreased(faction=Any, except=Directorate),  # except=Directorate — self-fire here would be actively harmful (blocks own PA channel for +1 PS), not a no-op; intent was always opponent-only ("holding tokens on rivals")
@@ -27140,6 +28776,7 @@ DIR.MOD.9 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     persistence = Permanent,
     persistence_condition = None,
@@ -27152,6 +28789,7 @@ DIR.MOD.9 = Card(
     target_district = None,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = IntelToken(about=trigger.faction, status=[Fresh, Stale]) * 1,
@@ -27160,6 +28798,7 @@ DIR.MOD.9 = Card(
     success     = faction(Directorate).standing.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -27622,6 +29261,8 @@ DIR.MOD.14 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -27629,6 +29270,8 @@ DIR.MOD.14 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -27711,6 +29354,8 @@ DIR.MOD.15 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -27718,6 +29363,8 @@ DIR.MOD.15 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -27800,6 +29447,8 @@ DIR.MOD.16 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -27807,6 +29456,8 @@ DIR.MOD.16 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -27889,6 +29540,8 @@ DIR.MOD.17 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -27896,6 +29549,8 @@ DIR.MOD.17 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -27978,6 +29633,8 @@ DIR.MOD.18 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -27985,6 +29642,8 @@ DIR.MOD.18 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -28067,6 +29726,8 @@ DIR.MOD.19 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -28074,6 +29735,8 @@ DIR.MOD.19 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -28156,6 +29819,8 @@ DIR.MOD.20 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -28163,6 +29828,8 @@ DIR.MOD.20 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -28245,6 +29912,8 @@ DIR.MOD.21 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -28252,6 +29921,8 @@ DIR.MOD.21 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -28334,6 +30005,8 @@ DIR.MOD.22 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -28341,6 +30014,8 @@ DIR.MOD.22 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -28423,6 +30098,8 @@ DIR.MOD.23 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -28430,6 +30107,8 @@ DIR.MOD.23 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -28512,6 +30191,8 @@ DIR.MOD.24 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -28519,6 +30200,8 @@ DIR.MOD.24 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -28601,6 +30284,8 @@ DIR.MOD.25 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -28608,6 +30293,8 @@ DIR.MOD.25 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -28684,6 +30371,7 @@ NET.CA.1 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Information,  function = Reveal,  subject = CovertOperation,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -28704,6 +30392,12 @@ NET.CA.1 = Card(
     design_note  = "Pre-execution discovery + cancellation model: target op cancelled, resources lost, PS reduction applies. Cross-resource cost 1 Exposure + 1 Findings by design to force trade dependency. Beat 3 initiative incentive: Network benefits from going first; fizzle risk if target ops resolve before Leak fires. ps_framing for target PS reduction pending finalization. Subject is CovertOperation, not District: DistrictTile has no Reveal in comp_verb_phase — the card reveals and cancels the operation, not the district itself.",
     arbiter_note = "Among target faction's unresolved covert operations in the Beat 3 grid, identify the operation with the highest total resource cost submitted. Publicly announce: operation name, acting faction, target district. Cancel the operation — it does not resolve; resources submitted are lost. Target faction PS reduction applies (discovery consequence — ps_framing pending finalization). If no unresolved operations remain for target faction at time of Leak's resolution, operation has no effect — Network's resources spent. Network's acting faction identity is not announced at resolution.",
     value_rating = 4,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -28759,6 +30453,7 @@ NET.CA.2 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Economy,  function = Add,  subject = Exposure,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -28776,6 +30471,12 @@ NET.CA.2 = Card(
     design_note  = "Replaces NET.CA.2 Source Protection (retired S51). Source Protection was doctrinally misaligned — protecting attribution is Ghost's register, not Network's. Pairs with NET.CA.1 Leak and NET.CA.3 Breaking News.",
     arbiter_note = "At Beat 3 cleanup, check whether any Network Reveal card resolved successfully this round. If yes, deliver 1 Exposure to Network's resource pool. If no Reveal resolved, card takes effect but produces nothing — the slot cost was the investment.",
     value_rating = 1,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -28839,6 +30540,7 @@ NET.CA.3 = Card(
     type    = CovertOperation, subtype = FactionSpecific, faction = Network,
     layer   = Information, function = Reveal, subject = CovertOperation,
     beat=2, resolution=d100, threshold=50, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -28868,6 +30570,12 @@ NET.CA.3 = Card(
     design_note  = "Point-in-time forced reveal, avoiding the cross-beat state tracking a notification-redirect model would require (Governing Rule 6.1). Fills Network's forced-transparency FactionSpecific slot at L1. Beat 2: ARBITER announces target's first Beat 3 queue entry to all players; VM-xx placed to flag public Beat 3 resolution. Distinct from NET.CA.1 Leak (Beat 3 cancel + reveal) and GHO.CA.2 Intercept (private IS-xx to Ghost). Fizzle: if target has no committed Beat 3 ops at Beat 2, announce fizzle; cost spent. Second Beat 2 d100 card alongside GHO.CA.2 — procedure gap in Art 03, not yet formalized.",
     arbiter_note = "Network has played Breaking News targeting faction X. Roll d100 (threshold 50 + PS modifier). Success: check faction X's Beat 3 queue. If empty: announce 'No operations queued for faction X — Breaking News fizzles'; cost spent, no further effect. Otherwise: identify faction X's first entry in Beat 3 resolution order; announce to all players: card name, type, declared targets; place VM-xx on that card in the grid. VM-xx procedure at Beat 3: when this card is reached, announce it publicly, roll d100 visibly, announce outcome to table, then remove VM-xx. Do not announce Network as acting faction. Crit success: reveal and place VM-xx on ALL of faction X's Beat 3 queue entries. Fail: cost spent, no announcement. Crit fail: dispatch NotificationSlip to faction X only. Do not announce Network.",
     value_rating = 4,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -28923,6 +30631,7 @@ NET.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Submission,  function = Modify,  subject = PublicAct,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -28940,6 +30649,12 @@ NET.CA.4 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 1,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -28995,6 +30710,7 @@ NET.CA.5 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Territory,  function = Add,  subject = PresenceToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -29012,6 +30728,12 @@ NET.CA.5 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 1,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -29070,15 +30792,21 @@ NET.CA.6 = Card(
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction.any, target_object=None,
     target_freeform=None,
     affinity=None,
     restriction=None,
     cost        = None,
+    boost = None,
     success     = (faction(acting).standing.remove(2), IntelToken(target_faction).add(1)),
     successcrit=None, fail=None, failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = None,
+    ps_framing = None,
     narrative   = "The Network knows: sometimes you spend credibility like currency. This is one of those times.",
     perspectives = {Network: "What we have built is not a goal. It is a tool. And sometimes a tool must be spent."},
     design_note  = "PS −2 is a success effect, not a cost — PS is non-fungible and cannot appear in the cost field (Art 04 §6.2). target_faction required: tokens must be keyed at Dispatch. Single use per play; 2:1 ratio prevents cheap IntelToken arbitrage.",
@@ -29150,18 +30878,22 @@ NET.CA.7 = Card(
     resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
+    persistence_clearing_trigger = None,
     target_district = district.named,
     target_faction=None, target_object=None, target_freeform=None,
     affinity=None,
     restriction = faction(acting).influence_level(district(target)) <= InfluenceLevel.Established,
     cost    = Exposure * 1,
+    boost = None,
     success = faction(acting).standing.add(1),
     successcrit = (arbiter.place(presence_chip, district=target, faction=acting, count=1),
                    faction(acting).standing.add(1)),
     fail=None,
     failcrit    = faction(acting).standing.remove(1),
     on_accept=None, on_decline=None,
+    on_discard = None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "No one announces this. The message moves because the people carrying it are already there, already part of the district's daily traffic. The signal is readable only to those who know how to read it.",
     perspectives = {Network: "We're not running outreach. We're making our existing presence legible to people who've been ignoring it."},
     design_note  = "Restriction: Network IL in target district ≤ Established (Dominant excluded — at Dominant, the street already knows). Successcrit delta: +1 chip in target district + +1 PS additional on top of success's +1 PS (total on successcrit: +2 PS, +1 chip placed).",
@@ -29225,6 +30957,8 @@ NET.CA.8 = Card(
 
     beat    = 2,
     resolution = d100,  threshold = 50,
+    ring_mod = None,
+    doctrine_mod = None,
     resolution_type = Probabilistic,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
@@ -29248,6 +30982,15 @@ NET.CA.8 = Card(
     design_note = "Network fabricates a story pointing to a destination district with no strategic value. The target faction's DeploymentMarker follows — their deployment is wasted. TargetProfile: target_faction and target_district identify the marker and its current location; freeform field specifies destination district. ARBITER executes the move and flips marker to Unconverted status. Chain play: Beat 2 covert move → same Quarter Leak or Live Coverage exposing the displaced position.",
     arbiter_note = "Read TargetProfile: target_faction and target_district identify whose marker and from which district. Freeform field specifies destination. Beat 2: move marker from source to destination; flip to Unconverted face. Announce marker has moved — do not announce acting faction. Fail: no effect, cost spent.",
     value_rating = 4,
+    trigger = None,
+    outcome_type = None,
+    persistence_clearing_trigger = None,
+    target_freeform = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -29323,6 +31066,7 @@ NET.PA.1 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -29345,6 +31089,9 @@ NET.PA.1 = Card(
         faction(Network).standing.remove(1),
     ),
     failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Network: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -29423,6 +31170,7 @@ NET.PA.2 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.up_to_three,  # 1–3 districts named at Phase B; each must be Established+
@@ -29443,6 +31191,9 @@ NET.PA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Network: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -29538,6 +31289,9 @@ NET.PA.3 = Card(
     ),
     fail        = None,
     failcrit    = faction(acting).standing.remove(1),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
     ps_framing  = None,
     narrative   = "The story is already written. The only question is whether the subject chooses the cameras or the consequences.",
@@ -29612,17 +31366,28 @@ NET.MOD.2 = Card(
     name    = "Troll Farm",  # placeholder name — confirm before sign-off
     tagline = "The narrative was already moving. We just changed where it was going.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
     trigger = standing_marker.increased(faction=Any, except=Network),
               # fires when any other faction's standing marker increases (publicly observable)
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     beat    = None,  resolution = Automatic,  resolution_type = Transactional,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     target_district = None,  target_faction = trigger.faction,  target_object = None,  target_freeform = None,
+    affinity = None,
     cost    = Exposure * 1 + Capital * 1,
     boost   = None,
     success = faction(trigger.faction).standing.remove(1),
     successcrit = None,  fail = None,  failcrit = None,  on_accept = None,  on_decline = None,
     restriction = None,
+    on_discard = None,
     portrait = {Network: PortraitEntry(submitter=+1)},
     ps_framing = None,
     narrative = None,  perspectives = None,  arbiter_note = None,
@@ -29689,6 +31454,7 @@ NET.PA.4 = Card(
     resolution_type = Probabilistic,  outcome_type = None,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
     target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Exposure * 1 + district.target_district.native * 1,
@@ -29696,6 +31462,7 @@ NET.PA.4 = Card(
     success = "Remove 1 target_faction's Presence Token from target_district. Target faction loses 1 PS. Network gains +1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
+    on_discard = None,
     portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
@@ -29761,6 +31528,7 @@ NET.PA.5 = Card(
     resolution_type = Transactional,  outcome_type = None,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
     target_district = None,  target_faction = faction.opponent,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Exposure * 2 + faction.target.native * 1,
@@ -29768,6 +31536,7 @@ NET.PA.5 = Card(
     success = "Target faction loses 3 Public Standing. Network gains +1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
+    on_discard = None,
     portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
@@ -29833,6 +31602,7 @@ NET.PA.6 = Card(
     resolution_type = Transactional,  outcome_type = None,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
     target_district = None,  target_faction = None,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Exposure * 1,
@@ -29840,6 +31610,7 @@ NET.PA.6 = Card(
     success = "Network names a resource type. Network gains 1 of that resource type for every 4 points of positive Public Standing they currently have.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
+    on_discard = None,
     portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
@@ -29901,6 +31672,7 @@ NET.MOD.1 = Card(
     name    = "Pirate Transmitter",
     tagline = "A public action changes the district. The signal finds the opening.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
     trigger = board_state.changed(component=[presence_chip, structure_block], change=Any, cause=public_act, faction=Any),
               # fires on any influence chip or structure block placed/removed in any district,
@@ -29911,15 +31683,21 @@ NET.MOD.1 = Card(
     ring_mod=None,  doctrine_mod=None,  outcome_type=None,
     value_rating = 1,
     persistence=Immediate,  persistence_condition=None,  persistence_effect=None,
+    persistence_clearing_trigger = None,
     target_faction=None,  target_object=None,  target_freeform=None,
     affinity=None,  restriction=None,
     cost    = Exposure * 1,
+    boost = None,
     success = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     successcrit = faction(acting).standing.add(1),
     fail    = None,
     failcrit = faction(acting).standing.remove(1),
     on_accept=None,  on_decline=None,
+    on_discard = None,
     portrait = {Network: PortraitEntry(submitter=+1)},
+    ps_framing = None,
+    ring_constraint = None,
+    ring_origin = None,
     narrative   = "The district was already moving. Network didn't start the change — it arrived at the same time the change did. Two signals crossing in the open.",
     perspectives = {Network: "We don't need to create the disruption. We need to be in position when it happens."},
     design_note  = "Trigger: any PA success that causes a board state change (influence chip or structure block placed or removed in district). Target district fixed by trigger — not a free choice. No restriction on Network existing presence. Modifier card schema fields are CA-convention placeholders pending reconciliation.",
@@ -29953,7 +31731,7 @@ Network's standing takes a public hit. Before the damage settles, the redundant 
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; not a territory effect. | Art 01 §6–7 |
 | Supported by components | ✓ | Standard PS/standing-marker mechanism, once the magnitude is resolved. | Art 02 §6–8 |
-| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Reuses existing PS-decrease event; no new ARBITER behavior. | Art 03; GR 6.1 |
+| Supported by game procedure | ✓ | Card carries no `arbiter_note` and no inline comments. Its cost and boost are charged by the general React payment step, which validates the submitted resources and places the resulting BoostMarkers — no card-specific ARBITER handling. | Art 03 §18.2; GR 6.1 |
 | Data schema validation | ⚠ | `success` magnitude is a literal `TBD` — not a schema-format issue (the field is present and correctly typed as a mutation call), but a genuine unresolved content gap. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch (once the magnitude is resolved). | Art 04 §5 P27 |
@@ -29981,6 +31759,7 @@ NET.MOD.3 = Card(
     name    = "Backup Server Racks",
     tagline = "When Network loses standing, redirect the narrative before it lands.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
 
     trigger         = standing_marker.decreased(faction=Network),
@@ -29991,10 +31770,16 @@ NET.MOD.3 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = Network,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Exposure * 1,
@@ -30003,6 +31788,7 @@ NET.MOD.3 = Card(
     success     = faction(Network).standing.add(1 + n_boost),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -30066,6 +31852,7 @@ NET.MOD.4 = Card(
     name    = "Amplification Array",
     tagline = "When news breaks publicly, the Network's signal extends.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = broadcast_card.placed,  # db25 — SitRep card placed in Situation Report Zone
@@ -30076,10 +31863,16 @@ NET.MOD.4 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = faction(Network).district.any,  # any district where Network has presence
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Network).any_presence,  # must have at least 1 district with presence
     cost            = None,
@@ -30088,6 +31881,7 @@ NET.MOD.4 = Card(
     success     = arbiter.place(presence_chip, district=faction(Network).district.acting_choice, faction=Network, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -30151,6 +31945,7 @@ NET.MOD.5 = Card(
     name    = "Infrastructure Signal",
     tagline = "Public broadcasts amplify Network reach in established infrastructure districts.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = broadcast_card.placed,  # db25
@@ -30161,10 +31956,16 @@ NET.MOD.5 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = faction(Network).district.ring(2).any,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Network).presence_in_ring(2),
     cost            = None,
@@ -30173,6 +31974,7 @@ NET.MOD.5 = Card(
     success     = arbiter.place(presence_chip, district=faction(Network).district.ring(2).acting_choice, faction=Network, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -30236,6 +32038,7 @@ NET.MOD.6 = Card(
     name    = "Street-level Agitator",
     tagline = "When anyone moves in the Baryo, Network's voice follows.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = presence_chip.placed(faction=Any, ring=3),
@@ -30246,10 +32049,16 @@ NET.MOD.6 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = faction(Network).district.ring(3).adjacent_to(trigger.district),
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Network).any_presence,
     cost            = None,
@@ -30258,6 +32067,7 @@ NET.MOD.6 = Card(
     success     = arbiter.place(presence_chip, district=faction(Network).district.ring(3).acting_choice, faction=Network, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -30321,6 +32131,7 @@ NET.MOD.7 = Card(
     name    = "Community Amplifiers",
     tagline = "The louder the city gets, the more they listen.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = ModifierCard,
 
     trigger         = public_act.resolved(faction=Any),
@@ -30331,10 +32142,16 @@ NET.MOD.7 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -30343,6 +32160,7 @@ NET.MOD.7 = Card(
     success     = arbiter.draw_modifier(faction=Network, count=2, if_acting_faction=Network, then_count=3),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -30406,6 +32224,7 @@ NET.MOD.8 = Card(
     name    = "Frequency Splitter",
     tagline = "A single broadcast splinters into a dozen channels.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = board_state.changed(component=modifier_card, change=placed, faction=Network),
@@ -30416,10 +32235,16 @@ NET.MOD.8 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = faction(Network).district.ring(3).acting_choice,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Network).any_presence,
     cost            = None,
@@ -30428,6 +32253,7 @@ NET.MOD.8 = Card(
     success     = list([arbiter.draw_modifier(faction=Network, count=1), arbiter.place(presence_chip, district=target_district, faction=Network, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -30491,6 +32317,7 @@ NET.MOD.9 = Card(
     name    = "Bandwidth Override",
     tagline = "Conflict creates the ultimate engagement metric.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = ModifierCard,
 
     trigger         = tension_marker.placed(),
@@ -30501,10 +32328,16 @@ NET.MOD.9 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Exposure * 1 + Findings * 1,
@@ -30513,6 +32346,7 @@ NET.MOD.9 = Card(
     success     = arbiter.draw_modifier(faction=Network, count=4),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -30576,6 +32410,7 @@ NET.MOD.10 = Card(
     name    = "Local Organizers",
     tagline = "They sent operatives. We sent neighbors.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Redirect,  subject = PresenceToken,
 
     trigger         = presence_chip.placed(faction=Any, ring=3),
@@ -30586,10 +32421,16 @@ NET.MOD.10 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Resource(Exposure, 1),
@@ -30598,6 +32439,7 @@ NET.MOD.10 = Card(
     success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Network, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -30664,6 +32506,7 @@ NET.MOD.11 = Card(
     name    = "Cancel Campaign",
     tagline = "Hijack the narrative of an opponent's public action.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
 
     layer   = Standing,  function = Shift,  subject = StandingMarker,  # confirmed registered pairing — ref_taxonomy.md §5.2 (Standing Marker: Standing)
 
@@ -30672,11 +32515,16 @@ NET.MOD.11 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 4,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = None,
     target_faction  = faction(trigger.public_act.submitter),
     target_object   = None,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = Exposure(1),
     boost           = None,
@@ -30684,6 +32532,7 @@ NET.MOD.11 = Card(
     success     = (faction(target_faction).standing.remove(2), faction(Network).exposure.add(1)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Network: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -30747,6 +32596,7 @@ NET.MOD.12 = Card(
     name    = "Forced Transparency",
     tagline = "Broadcast their intended target before they are ready.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
 
     layer   = Information,  function = Reveal,  subject = TargetProfile,
 
@@ -30755,11 +32605,16 @@ NET.MOD.12 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = None,
     target_faction  = None,  # not declared — targets whichever PA the trigger identifies
     target_object   = trigger.public_act,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = Exposure(1),
     boost           = None,
@@ -30767,6 +32622,7 @@ NET.MOD.12 = Card(
     success     = arbiter.reveal(TargetProfile, on=trigger.public_act),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Network: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -30829,6 +32685,7 @@ NET.MOD.13 = Card(
     name    = "Press Credentials",
     tagline = "The broadcast is live. No one pulls a credentialed signal off the air.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Protect,  subject = PublicAct,
 
     trigger         = public_act.placed_on_frg(faction=Network),
@@ -30837,6 +32694,7 @@ NET.MOD.13 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
@@ -30850,10 +32708,12 @@ NET.MOD.13 = Card(
     persistence_condition = not trigger.card.resolved,
     persistence_clearing_trigger = None,  # clears via persistence_condition going False when the protected PA resolves
     persistence_effect = arbiter.protect(trigger.card, from=targeting),
+    target_freeform = None,
 
     success     = None,
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Network: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -30916,6 +32776,7 @@ NET.MOD.14 = Card(
     name    = "Subscriber Network",
     tagline = "The audience grows. So does the signal.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = ModifierCard,
 
     trigger         = standing_marker.increased(faction=Network),
@@ -30924,6 +32785,7 @@ NET.MOD.14 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
@@ -30935,10 +32797,13 @@ NET.MOD.14 = Card(
 
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
+    target_freeform = None,
 
     success     = arbiter.draw_modifier(faction=Network, count=2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -31389,6 +33254,8 @@ NET.MOD.19 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -31396,6 +33263,8 @@ NET.MOD.19 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -31476,6 +33345,8 @@ NET.MOD.20 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -31483,6 +33354,8 @@ NET.MOD.20 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -31563,6 +33436,8 @@ NET.MOD.21 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -31570,6 +33445,8 @@ NET.MOD.21 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -31650,6 +33527,8 @@ NET.MOD.22 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -31657,6 +33536,8 @@ NET.MOD.22 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -31737,6 +33618,8 @@ NET.MOD.23 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -31744,6 +33627,8 @@ NET.MOD.23 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -31824,6 +33709,8 @@ NET.MOD.24 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -31831,6 +33718,8 @@ NET.MOD.24 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -31911,6 +33800,8 @@ NET.MOD.25 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -31918,6 +33809,8 @@ NET.MOD.25 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -31998,6 +33891,8 @@ NET.MOD.26 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -32005,6 +33900,8 @@ NET.MOD.26 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -32085,6 +33982,8 @@ NET.MOD.27 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -32092,6 +33991,8 @@ NET.MOD.27 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -32172,6 +34073,8 @@ NET.MOD.28 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -32179,6 +34082,8 @@ NET.MOD.28 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -32260,6 +34165,8 @@ NET.MOD.29 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -32267,6 +34174,8 @@ NET.MOD.29 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -32347,6 +34256,8 @@ NET.MOD.30 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -32354,6 +34265,8 @@ NET.MOD.30 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -32444,6 +34357,7 @@ SYN.CA.1 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -32462,8 +34376,12 @@ SYN.CA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Syndicate does not need to be somewhere to profit from it. Ownership and presence are different things.",
     perspectives = {Syndicate: "We own the revenue stream. Whether we are physically present is irrelevant."},
@@ -32524,6 +34442,7 @@ SYN.CA.2 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Economy,  function = Remove,  subject = NativeResource,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10},
+    doctrine_mod = None,
     trigger=None,
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
@@ -32544,6 +34463,12 @@ SYN.CA.2 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -32599,6 +34524,7 @@ SYN.CA.3 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Territory,  function = Redirect,  subject = StructureBlock,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10},
+    doctrine_mod = None,
     trigger=None,
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
@@ -32625,6 +34551,12 @@ SYN.CA.3 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 4,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -32679,6 +34611,7 @@ SYN.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Economy,  function = Protect,  subject = NativeResource,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -32696,6 +34629,12 @@ SYN.CA.4 = Card(
     design_note     = "Capital declared at Dispatch on target profile. Beat 0: retained (not drained). Beat 2: distributed across target_faction Beat 3 ops targeting Syndicate, first-to-last, until exhausted. Beat 3: full coverage = void + Capital to submitter case; partial = −50 marker + Capital to submitter case. No ops from target_faction = windfall to return case. Wager structure: Syndicate bets positionally — wrong bet wastes Capital, correct bet nullifies threat.",
     arbiter_note = None,
     value_rating = 1,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -32754,6 +34693,7 @@ SYN.CA.5 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -32775,6 +34715,12 @@ SYN.CA.5 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -32845,6 +34791,7 @@ LandTitle = Card(
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=district.named, target_faction=None, target_object=None,
     target_freeform=None,
@@ -32854,9 +34801,14 @@ LandTitle = Card(
         AND district(target) != ChorusNode
     ),
     cost        = Capital * 6,
+    boost = None,
     success     = arbiter.dispatch(GrantDeed(district=district(target)), faction(acting).case),
     successcrit = None,  fail=None,  failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "The deed was filed before the foundation was poured. That is how the Syndicate prefers it.",
     perspectives = {Syndicate: "We don't need to be there. We just need to be on the paperwork."},
     design_note  = "Delivers Grant Deed (GD-01) component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire Issued ModReactCard (acquisition=Issued) held in faction hand; fires when any faction places a structure block in the named district. Fire effect: +1 Presence Token and +1 Structure Block for deed holder in named district, and removal of 1 Structure Block belonging to the triggering faction — the registered deed displaces the unauthorized build that fired it. GR 8.2 governs the holder's structure placement (blocked if holder already has structure there; Presence Token still placed). No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds on same district permitted; cost-governed.",
@@ -32922,6 +34874,7 @@ HostileTakeover = Card(
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=district.named, target_faction=faction(named_opponent), target_object=PresenceToken,
     target_freeform=None,
@@ -32931,6 +34884,7 @@ HostileTakeover = Card(
         AND faction(acting).intel_tokens(faction=faction(target)) >= 1
     ),
     cost        = Capital * 2 + Mandate * 1,
+    boost = None,
     success     = game.replace_presence(
         faction(target), district(target),
         with_faction=faction(acting),
@@ -32939,7 +34893,11 @@ HostileTakeover = Card(
     successcrit = faction(acting).capital.add(1),
     fail=None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "The Syndicate does not displace people. It acquires their positions. There is a difference, legally speaking.",
     perspectives = {Syndicate: "We purchased the relationship. The people can stay. Their affiliation is now ours."},
     design_note  = "Distinct from SYN.CA.3 Hostile Acquisition (StructureBlock). Replaces ALL target presence in district with Syndicate presence at same count (same control tier — neutral effect on tier, swing in ownership). Requires Ghost-sourced faction-keyed Intel token. Intel token creates structural link between Ghost and Syndicate — neither faction announces it publicly.",
@@ -33007,6 +34965,8 @@ SYN.CA.10 = Card(
     ring_mod     = None,
     doctrine_mod = None,
     value_rating = 3,
+    trigger = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = faction(outgoing_party),
@@ -33054,9 +35014,12 @@ SYN.CA.10 = Card(
 
     persistence           = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
+    on_discard         = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative = "The form in the Accord Placement Area is updated. The parties to the original agreement learn about it at the same time as everyone else.",
 
@@ -33136,6 +35099,7 @@ SYN.CA.6 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -33146,14 +35110,21 @@ SYN.CA.6 = Card(
     affinity    = None,
     restriction = None,
     cost        = Capital * 2,
+    boost = None,
 
     success     = arbiter.dispatch(
                     IntelToken(faction=game.ops(beat=3, at=district(target)).first(resolution_order).submitter),
                     faction(acting).case
                   ),
     successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Syndicate does not steal from the river. They build a weir.",
     perspectives = {Syndicate: "We invested in the district's infrastructure. Why shouldn't we see what moves through it?"},
@@ -33227,6 +35198,7 @@ SYN.CA.7 = Card(
     resolution_type = Transactional, outcome_type=ElectPlayer,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district = district.named,
     target_faction  = faction(named_opponent),
@@ -33235,6 +35207,7 @@ SYN.CA.7 = Card(
     affinity        = None,
     restriction     = faction(target).presence(district(target_district)) > 0,
     cost            = IntelToken() * 1,
+    boost = None,
 
     success     = None,
     successcrit = None,
@@ -33249,7 +35222,9 @@ SYN.CA.7 = Card(
     ),
     # always: faction(acting).standing -= 1 regardless of outcome (encoded in portrait flat=-1)
 
+    on_discard = None,
     portrait    = {Syndicate: PortraitEntry(submitter=-1)},
+    ps_framing = None,
     narrative   = "The information was gathered properly. What is done with it is simply business.",
     perspectives = {Syndicate: "We don't call it blackmail. We call it an incentive structure with consequences attached."},
     design_note  = "Covert submission; private notification at Beat 3 (ARBITER whispers to target — not public). Target elects comply or resist. Comply: pay resources (amount TBD). Resist: presence tier −1 at target district + PS −1. Syndicate PS −1 always. Covert ElectPlayer procedure required in Art 03 before Issues Resolved.",
@@ -33321,6 +35296,8 @@ SYN.CA.11 = Card(
     ring_mod     = None,
     doctrine_mod = None,
     value_rating = 2,
+    trigger = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
@@ -33342,9 +35319,13 @@ SYN.CA.11 = Card(
 
     persistence           = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
+    target_freeform    = None,
+    on_discard      = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative = "The document in the placement area is a public record. It has always been a public record. The number in the third clause has always been that number. If it seems different from what you remember — you're probably misremembering.",
 
@@ -33426,6 +35407,8 @@ SYN.CA.12 = Card(
     ring_mod     = None,
     doctrine_mod = None,
     value_rating = 1,
+    trigger = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
@@ -33443,9 +35426,14 @@ SYN.CA.12 = Card(
 
     persistence           = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
+    target_freeform    = None,
+    boost           = None,
+    on_discard = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = None,
     perspectives = None,
@@ -33526,6 +35514,7 @@ SYN.PA.1 = Card(
     outcome_type    = ElectPlayer,  # target accepts or declines at Beat 4
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -33557,6 +35546,7 @@ SYN.PA.1 = Card(
         faction(target).standing.remove(1),
     ),
 
+    on_discard = None,
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing = None,
 
@@ -33634,6 +35624,7 @@ SYN.PA.2 = Card(
     outcome_type    = Unilateral,
     persistence     = Seasonal,  # DividendMarker stays on district until claimed, withdrawn, or Phase 21
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -33660,6 +35651,9 @@ SYN.PA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -33741,6 +35735,7 @@ SYN.PA.3 = Card(
     ring_mod     = None,
     doctrine_mod = None,
     value_rating = 2,
+    trigger = None,
     resolution_type = Transactional,
     outcome_type = ElectPlayer,
 
@@ -33780,6 +35775,7 @@ SYN.PA.3 = Card(
     # terms_accepted: target completes trade OR reveals all tokens face-down (count public)
     # at any point while card is active — either clears card
 
+    persistence_clearing_trigger = None,
     persistence_effect    = React(
         trigger = faction(target).PA(target_profile != None).placed_at("Art 03 §9.2.0"),
         effect  = target_profile.replace(Syndicate.written),
@@ -33791,6 +35787,11 @@ SYN.PA.3 = Card(
     # Table enforces; no ARBITER tracking required.
     # If target submits no PA with Target Profile this Quarter: card expires Quarter end.
 
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_discard = None,
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing = None,
 
@@ -33867,6 +35868,7 @@ SYN.PA.4 = Card(
     resolution_type = Transactional,  outcome_type = None,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
     target_district = None,  target_faction = None,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Capital * 2,
@@ -33874,6 +35876,7 @@ SYN.PA.4 = Card(
     success = "Syndicate gains +2 PS. Every opponent must either pay 1 Capital to the supply or immediately lose 1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
+    on_discard = None,
     portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
@@ -33940,6 +35943,7 @@ SYN.PA.5 = Card(
     resolution_type = Transactional,  outcome_type = None,
     persistence = Seasonal,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
+    persistence_clearing_trigger = None,
     target_district = district.named,  target_faction = None,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Capital * 2 + Mandate * 1,
@@ -33947,6 +35951,7 @@ SYN.PA.5 = Card(
     success = "Places a Standing Condition on target_district for the remainder of the Quarter: whenever a Structure Block or Presence Token is placed here, the faction that owns it must pay 1 Capital to Syndicate. If they do not, the structure or token is immediately removed.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
+    on_discard = None,
     portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
@@ -34014,6 +36019,7 @@ SYN.MOD.1 = Card(
     name    = "The Fixer",
     tagline = "That clause was always going to be a problem. Now it isn't.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
 
     layer   = Information,  function = Remove,  subject = AccordAgreement,
 
@@ -34022,10 +36028,15 @@ SYN.MOD.1 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,  # clause removal doesn't require naming a party — the Accord document itself is the target
     target_object   = AccordAgreement(state=active, clause_declared=True),
+    target_freeform = None,
     affinity        = None,
     restriction     = IntelToken(about=faction(accord.party_a)) in faction(Syndicate).hand
                        or IntelToken(about=faction(accord.party_b)) in faction(Syndicate).hand,
@@ -34038,6 +36049,7 @@ SYN.MOD.1 = Card(
     success     = target_object.alter(type=TermRemoval, clause=declared_clause),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -34101,6 +36113,7 @@ SYN.MOD.2 = Card(
     name    = "Shell Corporation",
     tagline = "Every Accord is a market event. Syndicate responds accordingly.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,  # capital.add(1)
 
     trigger         = accord.placed,
@@ -34111,10 +36124,16 @@ SYN.MOD.2 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -34123,6 +36142,7 @@ SYN.MOD.2 = Card(
     success     = faction(Syndicate).capital.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -34186,6 +36206,7 @@ SYN.MOD.3 = Card(
     name    = "Offshore Slush Fund",
     tagline = "When an Accord fails, Syndicate had a clause for that.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = accord.removed,
@@ -34196,10 +36217,16 @@ SYN.MOD.3 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -34208,6 +36235,7 @@ SYN.MOD.3 = Card(
     success     = faction(Syndicate).capital.add(2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -34271,6 +36299,7 @@ SYN.MOD.4 = Card(
     name    = "Insider Trading",
     tagline = "Public success always creates private wealth.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = standing_marker.increased(faction=opponent),
@@ -34281,10 +36310,16 @@ SYN.MOD.4 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -34293,6 +36328,7 @@ SYN.MOD.4 = Card(
     success     = faction(Syndicate).capital.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -34356,6 +36392,7 @@ SYN.MOD.5 = Card(
     name    = "Short Squeeze",
     tagline = "A reputation in freefall is just an undervalued asset.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = standing_marker.decreased(faction=opponent),
@@ -34366,10 +36403,16 @@ SYN.MOD.5 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Capital * 2 + Findings * 1,
@@ -34378,6 +36421,7 @@ SYN.MOD.5 = Card(
     success     = faction(Syndicate).capital.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -34441,6 +36485,7 @@ SYN.MOD.6 = Card(
     name    = "Bounty Contract",
     tagline = "If someone wants them gone, I am willing to subsidize the effort.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Modify,  subject = PublicAct,
 
     trigger         = public_act.placed_on_frg(faction=opponent),
@@ -34458,10 +36503,12 @@ SYN.MOD.6 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -34473,6 +36520,7 @@ SYN.MOD.6 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -34536,6 +36584,7 @@ SYN.MOD.7 = Card(
     name    = "Renegotiation Fee",
     tagline = "When the fine print changes, the lawyers get paid.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = accord.corrupted,
@@ -34546,10 +36595,16 @@ SYN.MOD.7 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -34558,6 +36613,7 @@ SYN.MOD.7 = Card(
     success     = faction(Syndicate).capital.add(2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -34621,6 +36677,7 @@ SYN.MOD.8 = Card(
     name    = "Vulture Fund",
     tagline = "Buy when there's blood in the streets.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = StructureBlock,  # dual-effect with presence chip, structure treated as primary
 
     trigger         = structure_block.removed(faction=opponent),
@@ -34631,10 +36688,16 @@ SYN.MOD.8 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Syndicate).resources.has(2, Capital),
     cost            = Capital * 2 + Exposure * 1,
@@ -34643,6 +36706,7 @@ SYN.MOD.8 = Card(
     success     = list([arbiter.place(presence_chip, district=target_district, faction=Syndicate, count=1), arbiter.place(structure_block, district=target_district, faction=Syndicate, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -34656,7 +36720,7 @@ SYN.MOD.8 = Card(
 ### SYN.MOD.9 — GOODWILL
 
 #### Design Rationale
-Standing floor + boost card: fires whenever Syndicate's own PS decreases, letting Syndicate declare a variable N and pay Capital×N to gain +N PS (N=1 negates the drop, N>1 nets a gain). `success = faction(Syndicate).standing.add(N)` — corrected from invalid statement syntax. The card's original design_note claimed it "does not discard — remains active for further triggers"; per Art 03 §18.2.2, React cards are permanently removed from the game by default once resolved unless card text says otherwise, and Goodwill isn't meant to be an exception — corrected to fire once and discard like any other React, matching the default. The design_note also self-admits two open questions (N-cap, ElectPlayer-vs-Automatic-payment) — cited directly, not re-derived.
+Standing floor + boost card: fires whenever Syndicate's own PS decreases, letting Syndicate declare a variable N and pay Capital×N to gain +N PS (N=1 negates the drop, N>1 nets a gain). `success = faction(Syndicate).standing.add(N)` — corrected from invalid statement syntax. The card's original design_note claimed it "does not discard — remains active for further triggers"; per Art 03 §18.3.2, React cards are permanently removed from the game by default once resolved unless card text says otherwise, and Goodwill isn't meant to be an exception — corrected to fire once and discard like any other React, matching the default. The design_note also self-admits two open questions (N-cap, ElectPlayer-vs-Automatic-payment) — cited directly, not re-derived.
 
 #### Card Story
 Syndicate's reputation takes a hit — anywhere, any cause. Before the news finishes circulating, a public-goodwill campaign is already funded and running, buying back exactly as much standing as Syndicate is willing to spend on it.
@@ -34671,7 +36735,7 @@ Syndicate's reputation takes a hit — anywhere, any cause. Before the news fini
 | Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Standing/Shift/StandingMarker, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Standing×Shift valid per the matrix (04-n173 precedent). | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Scalable N with an admitted-open cap question — could this be abused as unlimited PS-buying if N is uncapped? Design_note flags this itself as unresolved. | Art 02 §6–7; Art 04 §6.5 |
-| Effect duration | ✓ | Immediate — fires once at trigger, discards per default React behavior (Art 03 §18.2.2). | Art 04 §5 P19 |
+| Effect duration | ✓ | Immediate — fires once at trigger, discards per default React behavior (Art 03 §18.3.2). | Art 04 §5 P19 |
 | Persistence | ✓ | `persistence` field not applicable — this is a hand-held React, not a board-placed Standing Condition. No exception to the default discard-on-fire behavior. | Art 04 §6.2 |
 | Trigger validity | ✓ | `standing_marker.decreased(Syndicate)` — confirmed vocabulary, self-scoped, no ambiguity. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
@@ -34704,6 +36768,7 @@ SYN.MOD.9 = Card(
     name    = "Goodwill",
     tagline = "Reputation is a line item. We budget for it accordingly.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Standing,  function = Shift,  subject = StandingMarker,  # standing += N
 
     trigger         = standing_marker.decreased(Syndicate),
@@ -34714,10 +36779,16 @@ SYN.MOD.9 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Capital * N,  # N declared at trigger (min 1)
@@ -34726,12 +36797,13 @@ SYN.MOD.9 = Card(
     success     = faction(Syndicate).standing.add(N),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
     narrative    = None,
     perspectives = None,
-    design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card discards after firing, per default React behavior (Art 03 §18.2.2). Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger.",
+    design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card discards after firing, per default React behavior (Art 03 §18.3.2). Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger.",
     arbiter_note = "On trigger (Syndicate's standing marker moved down for any reason): Syndicate declares N (min 1) and pays Capital×N. Apply faction(Syndicate).standing.add(N). If Capital unavailable or Syndicate declines: decrease stands. Card is discarded after resolution.",
 )
 ```
@@ -34789,6 +36861,7 @@ SYN.MOD.10 = Card(
     name    = "Lobby",
     tagline = "We don't oppose your agenda. We make it expensive to execute.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Modify,  subject = PublicAct,
 
     trigger         = public_act.placed_on_frg(faction(target)),
@@ -34799,10 +36872,16 @@ SYN.MOD.10 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = faction(named_opponent),
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Capital * 1,
@@ -34811,6 +36890,7 @@ SYN.MOD.10 = Card(
     success     = arbiter.apply_modifier(op=trigger.card, modifier=-15),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -34874,6 +36954,7 @@ SYN.MOD.11 = Card(
     name    = "Signature on File",
     tagline = "We already have what we need. The form is a formality.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Information,  function = Corrupt,  subject = Accord,
 
     trigger         = accord.tabled,  # PENDING: confirm trigger expression — fires at draft tabling stage (before party signatures), not accord.placed (which fires when Accord is already active)
@@ -34884,10 +36965,16 @@ SYN.MOD.11 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = faction(accord.party_b),
     target_object   = AccordForm(state=drafted),  # AccordForm is the established term (Art 06 §9.2, Overture's AccordForm(blank))
+    target_freeform = None,
     affinity        = None,
     restriction     = IntelToken(about=faction(accord.party_b)) in faction(Syndicate).hand,
     cost            = Capital * 2 + Findings * 1 + Mandate * 1 + IntelToken(about=faction(accord.party_b)),
@@ -34896,6 +36983,7 @@ SYN.MOD.11 = Card(
     success     = arbiter.mark_acceptance(accord=trigger.accord, party=faction(accord.party_b), state=signed),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+2)},
     ps_framing   = None,
@@ -35347,6 +37435,8 @@ SYN.MOD.16 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -35354,6 +37444,8 @@ SYN.MOD.16 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -35434,6 +37526,8 @@ SYN.MOD.17 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -35441,6 +37535,8 @@ SYN.MOD.17 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -35521,6 +37617,8 @@ SYN.MOD.18 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -35528,6 +37626,8 @@ SYN.MOD.18 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -35608,6 +37708,8 @@ SYN.MOD.19 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -35615,6 +37717,8 @@ SYN.MOD.19 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -35695,6 +37799,8 @@ SYN.MOD.20 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -35702,6 +37808,8 @@ SYN.MOD.20 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -35782,6 +37890,8 @@ SYN.MOD.21 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -35789,6 +37899,8 @@ SYN.MOD.21 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -35869,6 +37981,8 @@ SYN.MOD.22 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -35876,6 +37990,8 @@ SYN.MOD.22 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -35956,6 +38072,8 @@ SYN.MOD.23 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -35963,6 +38081,8 @@ SYN.MOD.23 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -36043,6 +38163,8 @@ SYN.MOD.24 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -36050,6 +38172,8 @@ SYN.MOD.24 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -36130,6 +38254,8 @@ SYN.MOD.25 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -36137,6 +38263,8 @@ SYN.MOD.25 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -36218,6 +38346,8 @@ SYN.MOD.26 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -36225,6 +38355,8 @@ SYN.MOD.26 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -36305,6 +38437,8 @@ SYN.MOD.27 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -36312,6 +38446,8 @@ SYN.MOD.27 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 

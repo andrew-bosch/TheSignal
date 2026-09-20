@@ -99,6 +99,7 @@ GHO.CA.1 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -119,6 +120,9 @@ GHO.CA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1, modifier=+1, mod_where=game.outcome == Success)},
     ps_framing = None,
@@ -188,19 +192,26 @@ GHO.CA.2 = Card(
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction(named_opponent), target_object=CovertOperation,
     target_freeform=None,
     affinity=None,
     restriction=None,
     cost        = IntelToken(about=faction(target)) * 1,
+    boost = None,
     success     = game.dispatch(faction(acting), IntelDeliverySlip(faction=faction(target), op_type=faction(target).op(beat=3).type, district=faction(target).op(beat=3).district)),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     fail        = game.dispatch(faction(target), NotificationSlip),
     failcrit    = faction(acting).standing.remove(2),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "To know what they are doing while they are doing it — that is the only intelligence that matters.",
     perspectives = {Ghost: "We do not wait for the after-action report. We read the operation as it happens."},
+    design_note = None,
     arbiter_note = "Crit success: deliver IntelToken (faction=target) to acting faction's case. Success: write target faction's first submitted op type and district on Intel Delivery Slip; deliver to acting faction's case. Fail: deliver Notification Slip to target faction's case. Crit fail: apply PS −2.",
 )
 ```
@@ -262,6 +273,7 @@ GHO.CA.3 = Card(
     type    = CovertOperation, subtype = FactionSpecific, faction = Ghost,
     layer   = Information, function = Reveal, subject = IntelDeliverySlip,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -279,6 +291,12 @@ GHO.CA.3 = Card(
     design_note  = "SIGINT tap model: Ghost taps faction X's dispatch channel at Beat 2. ARBITER reads faction X's Beat 3 grid column at Beat 2 resolution (name + declared target only; modifier cards excluded). IntelDeliverySlip delivered to Ghost at Beat 2 resolution. Beat 2 commitment is the risk. Empty case = empty slip — resources spent. DR-xx (DispatchReport) collapsed into IS-xx — column read is IntelDeliverySlip with list content.",
     arbiter_note = "During Beat 2 resolution of this card: read faction X's Beat 3 resolution grid column. Write an IntelDeliverySlip listing each operation by name and declared target (district, faction, or object). Modifier cards not included. Deliver privately to Ghost at Beat 2 resolution. Do not notify faction X. If faction X has no Beat 3 operations, deliver an empty slip — Ghost's resources are spent. Procedure pending Art 03 Beat 2 addition.",
     value_rating = 1,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -338,6 +356,7 @@ GHO.CA.4 = Card(
     resolution_type = Probabilistic, outcome_type=None,
     persistence           = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None,
     target_faction=faction(named_opponent),  # declared at Art 03 §9.1 Covert Dispatch
@@ -351,6 +370,9 @@ GHO.CA.4 = Card(
     # If token was PA cost payment: PA is voided (auto-fail at Beat 4, Dispatch Token returned)
     # If token was PA modifier: PA loses modifier, resolves at Beat 4 without it
     successcrit=None,  fail=None,  failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = None,
     ps_framing  = None,
     narrative   = "The act has no foundation once the intelligence beneath it is removed.",
@@ -419,6 +441,7 @@ GHO.CA.5 = Card(
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction.named, target_object=IntelToken,
     target_freeform = FactionName,
@@ -428,6 +451,9 @@ GHO.CA.5 = Card(
     boost       = None,
     success     = game.corrupt(field=faction_name, target=faction(target).FRG.active_PA.intel_token, new_value=target_freeform.faction),
     successcrit=None, fail=None, failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing  = None,
     narrative   = "Ghost has been considering what the record says. It is never quite right.",
@@ -500,6 +526,7 @@ GHO.CA.7 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -510,17 +537,23 @@ GHO.CA.7 = Card(
     affinity        = None,
     restriction     = district(self|adjacent).faction(acting).presence > 0,
     cost            = Findings * 2,
+    boost = None,
 
     success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * 2,
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),  # +1 = 3 total
     fail        = None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Every asset leaves a signal. Ghost listens until the signal becomes a pattern.",
     perspectives = {Ghost: "A station does not move. It waits until the target walks past it again."},
     design_note  = "Ghost's dedicated gather platform. Higher yield than STD.CA.5 (2 tokens vs 1 on success) at double Findings cost. Threshold 55 calibrated above STD.CA.5 base (50) — Station is a reliable sustained platform. Adjacency restriction: deployed node requires Ghost presence in target district or adjacent. Cards stack: STD.CA.5 and Station may both target same faction in same Quarter.",
+    arbiter_note = None,
 )
 ```
 
@@ -587,6 +620,7 @@ GHO.CA.8 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -603,8 +637,12 @@ GHO.CA.8 = Card(
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)) * (1 + n_boost),   # additive delta; 3×(1+n_boost) total
     fail        = None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Some intelligence is gathered patiently. Some is taken all at once.",
     perspectives = {Ghost: "The take was complete. Everything they transmitted this Quarter. We have it."},
@@ -676,6 +714,7 @@ GHO.CA.15 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.named,  # Ghost's guess at the district the target's first Beat 3 op will name
     target_faction  = faction(named_opponent),
@@ -693,6 +732,7 @@ GHO.CA.15 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -773,6 +813,7 @@ GHO.CA.9 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -783,13 +824,18 @@ GHO.CA.9 = Card(
     affinity    = None,
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 1,
     cost        = IntelToken(about=faction(target)) * 1,
+    boost = None,
 
     success     = DebriefActionCard(subtype=SCIFRecord, target=faction(target)),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The structure count is the number of ways they have committed themselves. Ghost counts carefully.",
     perspectives = {Ghost: "We do not need to be inside their operation. We need to know how large it is."},
@@ -861,6 +907,7 @@ GHO.CA.10 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -874,13 +921,18 @@ GHO.CA.10 = Card(
         district(self|adjacent).faction(acting).presence > 0
     ),
     cost            = IntelToken(about=faction(target)) * 1,
+    boost = None,
 
     success     = game.dispatch(faction(acting), faction(target).native * 2),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Ghost does not steal. Ghost finds where the supply comes from, and goes there first.",
     perspectives = {Ghost: "Their resource. Our pipeline. They built something worth taking."},
@@ -956,6 +1008,7 @@ GHO.CA.11 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -966,6 +1019,7 @@ GHO.CA.11 = Card(
     affinity    = None,
     restriction = faction(acting).intel_tokens(faction=faction(target)) >= 2,
     cost        = IntelToken(about=faction(target)) * 2 + Findings * 3,
+    boost = None,
 
     success     = game.reveal_private(
                     faction(target).classified_directive,
@@ -975,8 +1029,12 @@ GHO.CA.11 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1, modifier=+1, mod_where=game.outcome==Success)},
+    ps_framing = None,
 
     narrative    = "The Directive is not a secret. It is a pattern. Ghost reads patterns.",
     perspectives = {Ghost: "We are not guessing. We have read enough of their decisions to know what they are trying to protect."},
@@ -1040,6 +1098,7 @@ GHO.CA.6 = Card(
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None, target_faction=None, target_object=IntelToken,
     target_freeform=None,
@@ -1049,6 +1108,9 @@ GHO.CA.6 = Card(
     boost       = None,
     success     = game.dispatch(faction(acting), IntelToken(faction=consumed_token.faction) * 3),
     successcrit=None, fail=None, failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing  = None,
     narrative   = "Raw surveillance is noise. What Ghost does to it — that is signal.",
@@ -1123,6 +1185,7 @@ GHO.CA.12 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1133,6 +1196,7 @@ GHO.CA.12 = Card(
     affinity        = None,
     restriction     = faction(acting).intel_tokens() >= 1,
     cost            = None,
+    boost = None,
 
     success     = arbiter.corrupt(target_object, field=faction_name, value=faction(target)),
     successcrit = None,
@@ -1141,8 +1205,10 @@ GHO.CA.12 = Card(
 
     on_accept  = None,
     on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The record says what Ghost needs it to say.",
     perspectives = {Ghost: "The attribution is wrong. It will stay wrong. What matters is what Ghost does with it next."},
@@ -1214,6 +1280,7 @@ GHO.CA.13 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.named,
     target_faction  = faction(named_opponent),
@@ -1232,6 +1299,7 @@ GHO.CA.13 = Card(
     )),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1311,6 +1379,7 @@ GHO.CA.14 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = None,
     target_faction  = faction(named_opponent),
@@ -1325,6 +1394,7 @@ GHO.CA.14 = Card(
     success     = arbiter.remove(resolution_grid.first_op(faction=named_opponent, beat=3)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1413,6 +1483,7 @@ GHO.PA.1 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1446,6 +1517,9 @@ GHO.PA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1524,6 +1598,7 @@ GHO.PA.2 = Card(
     outcome_type    = Unilateral,
     persistence     = Transient,  # card stays on table with district marker until Close Month next Month
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -1547,6 +1622,9 @@ GHO.PA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1625,6 +1703,7 @@ GHO.PA.3 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1644,6 +1723,7 @@ GHO.PA.3 = Card(
 
     on_accept  = None,
     on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1722,6 +1802,7 @@ GHO.PA.4 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1744,6 +1825,7 @@ GHO.PA.4 = Card(
 
     on_accept  = None,
     on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1822,6 +1904,7 @@ GHO.PA.5 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any(resource_type=Findings),
@@ -1841,6 +1924,7 @@ GHO.PA.5 = Card(
 
     on_accept  = None,
     on_decline = None,
+    on_discard = None,
 
     portrait   = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1915,6 +1999,7 @@ GHO.MOD.1 = Card(
     name    = "Sleeper Analyst",
     tagline = "Name the faction on the Intel token. If correct: the attribution ends here.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Information,  function = Remove,  subject = IntelToken,
 
     trigger = public_act.placed_on_frg(faction=opponent, uses_intel_token=True),
@@ -1925,6 +2010,11 @@ GHO.MOD.1 = Card(
     resolution = Automatic,
     threshold  = None,
     ring_mod   = None,  doctrine_mod = None,  resolution_type = Transactional,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
@@ -1944,6 +2034,7 @@ GHO.MOD.1 = Card(
     fail        = None,   # card consumed; no board effect; PA proceeds normally
     failcrit    = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2009,6 +2100,7 @@ GHO.MOD.2 = Card(
     name    = "Perimeter Sensors",
     tagline = "Faction activity near Ghost presence generates automatic intelligence.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Information,  function = Add,  subject = IntelToken,
 
     trigger         = presence_chip.placed(faction=Any, district=district.where(faction(Ghost).presence > 0)),
@@ -2019,10 +2111,16 @@ GHO.MOD.2 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,  # Ghost must be present in triggered district
     cost            = None,  # card consumed on fire
@@ -2031,6 +2129,7 @@ GHO.MOD.2 = Card(
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=trigger.faction)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2094,6 +2193,7 @@ GHO.MOD.3 = Card(
     name    = "Institutional Trace",
     tagline = "Directorate expansion near Ghost presence generates targeted intelligence.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Information,  function = Add,  subject = IntelToken,
 
     trigger         = presence_chip.placed(faction=Directorate, district=district.where(faction(Ghost).presence > 0)),
@@ -2104,10 +2204,16 @@ GHO.MOD.3 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = Directorate,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,
     cost            = None,
@@ -2116,6 +2222,7 @@ GHO.MOD.3 = Card(
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=Directorate)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2179,6 +2286,7 @@ GHO.MOD.4 = Card(
     name    = "Signal Bleed",
     tagline = "Network expansion near Ghost presence generates exposure intelligence.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Information,  function = Add,  subject = IntelToken,
 
     trigger         = presence_chip.placed(faction=Network, district=district.where(faction(Ghost).presence > 0)),
@@ -2189,10 +2297,16 @@ GHO.MOD.4 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = Network,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Ghost).presence > 0,
     cost            = None,
@@ -2201,6 +2315,7 @@ GHO.MOD.4 = Card(
     success     = arbiter.deliver(faction(Ghost), IntelToken(faction=Network)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2264,6 +2379,7 @@ GHO.MOD.5 = Card(
     name    = "False Flag",
     tagline = "Let them claim the victory, then rewrite the headline.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
 
     trigger         = standing_marker.increased(faction=Any),
@@ -2274,10 +2390,16 @@ GHO.MOD.5 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Findings * 1 + Exposure * 1,
@@ -2286,6 +2408,7 @@ GHO.MOD.5 = Card(
     success     = arbiter.shift(standing_marker, faction=trigger.faction, amount=-(trigger.amount * 2)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2349,6 +2472,7 @@ GHO.MOD.6 = Card(
     name    = "Supply Chain Tap",
     tagline = "Their infrastructure is our logistics.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Copy,  subject = NativeResource,
 
     trigger         = resource.drawn_from_reservoir(faction=Any),
@@ -2359,10 +2483,16 @@ GHO.MOD.6 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Resource(faction(trigger.faction).native, 1),
@@ -2371,6 +2501,7 @@ GHO.MOD.6 = Card(
     success     = arbiter.deliver(faction(Ghost), trigger.resources),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2434,6 +2565,7 @@ GHO.MOD.7 = Card(
     name    = "Sleeper Cell",
     tagline = "Total control is just a convenient illusion.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Redirect,  subject = PresenceToken,
 
     trigger         = dominant_marker.placed(faction=Any),
@@ -2444,10 +2576,16 @@ GHO.MOD.7 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Findings * 1 + Capacity * 1 + Capital * 1,
@@ -2456,6 +2594,7 @@ GHO.MOD.7 = Card(
     success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Ghost, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2519,6 +2658,7 @@ GHO.MOD.8 = Card(
     name    = "Local Sympathizers",
     tagline = "They thought this neighborhood belonged to them.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Remove,  subject = PresenceToken,
 
     trigger         = established_marker.placed(faction=Any),
@@ -2529,10 +2669,16 @@ GHO.MOD.8 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Resource(faction(trigger.faction).native, 1),
@@ -2541,6 +2687,7 @@ GHO.MOD.8 = Card(
     success     = arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2607,6 +2754,7 @@ GHO.MOD.9 = Card(
     name    = "Burn Notice",
     tagline = "Incinerate an opponent's intelligence assets as they try to use them.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
 
     layer   = Submission,  function = Remove,  subject = ModifierCard,  # confirmed registered pairing — ref_taxonomy.md §5.2 (Modifier Card: Economy/Submission)
 
@@ -2615,11 +2763,16 @@ GHO.MOD.9 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = None,
     target_faction  = None,  # not needed — trigger.public_act uniquely identifies the target PA regardless of which faction(s) attached modifiers to it
     target_object   = trigger.public_act,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = Findings(1),
     boost           = None,
@@ -2627,6 +2780,7 @@ GHO.MOD.9 = Card(
     success     = arbiter.remove(ModifierCard, attached_to=trigger.public_act),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2690,6 +2844,7 @@ GHO.MOD.10 = Card(
     name    = "Data Wipe",
     tagline = "A devastating cyber-attack that cripples a faction's operational hand.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
 
     layer   = Information,  function = Remove,  subject = FactionHand,
 
@@ -2698,11 +2853,16 @@ GHO.MOD.10 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 2,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = None,
     target_faction  = faction(trigger.public_act.submitter),
     target_object   = None,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = Findings(2) + IntelToken(1),
     boost           = None,
@@ -2710,6 +2870,7 @@ GHO.MOD.10 = Card(
     success     = arbiter.discard_hand(target_faction, card_types=[CovertOperation, PublicAct]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2773,6 +2934,7 @@ GHO.MOD.11 = Card(
     name    = "Manufactured Evidence",
     tagline = "Hijack a public act before the ink dries.",
     type    = ModReactCard,  faction = Ghost,
+    subtype = FactionSpecific,
 
     layer   = Information,  function = Corrupt,  subject = TargetProfile,  # confirmed Corrupt target — ref_taxonomy.md §5.2 ("Corrupt targets are strictly: ... Target Profile")
 
@@ -2781,11 +2943,16 @@ GHO.MOD.11 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = None,
     target_faction  = None,  # not declared — the swap is anonymous even to the table until Beat 4
     target_object   = trigger.public_act,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = Findings(1) + Exposure(1),
     boost           = None,
@@ -2793,6 +2960,7 @@ GHO.MOD.11 = Card(
     success     = arbiter.swap_target_profile(pa=trigger.public_act, new_profile=declared_profile),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Ghost: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -3243,6 +3411,8 @@ GHO.MOD.16 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3250,6 +3420,8 @@ GHO.MOD.16 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3330,6 +3502,8 @@ GHO.MOD.17 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3337,6 +3511,8 @@ GHO.MOD.17 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3417,6 +3593,8 @@ GHO.MOD.18 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3424,6 +3602,8 @@ GHO.MOD.18 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3504,6 +3684,8 @@ GHO.MOD.19 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3511,6 +3693,8 @@ GHO.MOD.19 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3591,6 +3775,8 @@ GHO.MOD.20 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3598,6 +3784,8 @@ GHO.MOD.20 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3678,6 +3866,8 @@ GHO.MOD.21 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3685,6 +3875,8 @@ GHO.MOD.21 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3765,6 +3957,8 @@ GHO.MOD.22 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3772,6 +3966,8 @@ GHO.MOD.22 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3852,6 +4048,8 @@ GHO.MOD.23 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3859,6 +4057,8 @@ GHO.MOD.23 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3939,6 +4139,8 @@ GHO.MOD.24 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3946,6 +4148,8 @@ GHO.MOD.24 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4026,6 +4230,8 @@ GHO.MOD.25 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4033,6 +4239,8 @@ GHO.MOD.25 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4114,6 +4322,8 @@ GHO.MOD.26 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4121,6 +4331,8 @@ GHO.MOD.26 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4201,6 +4413,8 @@ GHO.MOD.27 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4208,6 +4422,8 @@ GHO.MOD.27 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 

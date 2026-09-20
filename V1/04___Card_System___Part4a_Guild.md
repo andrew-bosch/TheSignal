@@ -82,6 +82,7 @@ GUI.CA.1 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -92,13 +93,18 @@ GUI.CA.1 = Card(
     affinity    = None,
     restriction = district(target).faction(acting).structure > 0,
     cost        = Capacity * 1,
+    boost = None,
 
     success     = district(target).faction(acting).structure.set_flag(immune_to_demolish=True),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Guild does not abandon what it has built.",
     perspectives = {
@@ -106,6 +112,8 @@ GUI.CA.1 = Card(
         Network:     "Hardened walls are preparation. What's inside them decides whether the cost was worth it.",
         Directorate: "A structure immune to demolition is a structure immune to code review. We notice these arrangements.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -175,6 +183,7 @@ GUI.CA.2 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -185,6 +194,7 @@ GUI.CA.2 = Card(
     affinity    = None,
     restriction = None,
     cost        = None,
+    boost = None,
 
     success     = (
         faction(acting).native.add(1),
@@ -193,8 +203,12 @@ GUI.CA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "In New Meridian, even demolition is a Guild service.",
     perspectives = {
@@ -202,6 +216,8 @@ GUI.CA.2 = Card(
         Syndicate: "Positioning to profit from someone else's action before they take it. The instinct is sound. We simply call it by a different name.",
         Ghost:     "A faction that announces it expects demolition before demolition happens has already told us what it knows.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -272,6 +288,7 @@ GUI.CA.3 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -282,13 +299,18 @@ GUI.CA.3 = Card(
     affinity    = None,
     restriction = district(target).presence.total == 0,
     cost        = Capacity * 1,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     successcrit = arbiter.place(structure_block, district=target, faction=acting, count=1),
     fail        = None,
     failcrit    = game.dispatch(Directorate, IntelToken(faction=acting, quarter=game.quarter)),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Guild was here before the city had a name.",
     perspectives = {
@@ -296,6 +318,8 @@ GUI.CA.3 = Card(
         Network:     "The Guild's records go back further than ours. What they do with that history is what we watch.",
         Directorate: "Precedence is established through legal process, not through whoever kept the longer archive.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -364,6 +388,7 @@ GUI.CA.4 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -374,6 +399,7 @@ GUI.CA.4 = Card(
     affinity    = None,
     restriction = district(target).faction(acting).structure == 0,
     cost        = Capacity * 2 + Findings * 1,
+    boost = None,
 
     success     = (
         arbiter.place(presence_chip, district=target, faction=acting, count=1),
@@ -386,7 +412,11 @@ GUI.CA.4 = Card(
         game.transfer(district(target).native, 1, faction(Syndicate))
     ),
 
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Guild does not always wait for permission.",
     perspectives = {
@@ -395,6 +425,7 @@ GUI.CA.4 = Card(
         Ghost:    "Establishing presence before authorization is requested — the Guild is better at covert operations than they admit.",
     },
     design_note  = "Cost reasoning: 2 Capacity + 1 Findings (Mid-tier). Findings identify the un-zoned loopholes necessary to bypass prerequisites and break ground immediately.",
+    arbiter_note = None,
 )
 ```
 
@@ -463,6 +494,7 @@ GUI.CA.5 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -473,13 +505,18 @@ GUI.CA.5 = Card(
     affinity    = None,
     restriction = district(target).faction(acting).control_tier IN [Established, Dominant],
     cost        = None,
+    boost = None,
 
     success     = faction(acting).native.add(1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Guild built New Meridian's infrastructure. Drawing from it is not theft. It is dividend.",
     perspectives = {
@@ -487,6 +524,8 @@ GUI.CA.5 = Card(
         Syndicate:   "The Guild built the pipes. They are billing us for the water. We respect the position even if we resent the rate.",
         Directorate: "Infrastructure built under city contract belongs to New Meridian, not to the builder. We have the original agreements.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -553,6 +592,10 @@ GUI.CA.6 = Card(
     trigger         = faction(target).completes(CovertOp, id=STD.CA.1),
     resolution_type = PositionalWager,
     outcome_type    = None,
+    persistence  = None,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = faction.opponent,
@@ -562,6 +605,7 @@ GUI.CA.6 = Card(
     affinity    = None,
     restriction = None,
     cost        = None,
+    boost = None,
 
     success     = (
         faction(acting).native.add(1),
@@ -570,8 +614,12 @@ GUI.CA.6 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "In New Meridian, every foundation poured is a Guild invoice.",
     perspectives = {
@@ -662,6 +710,7 @@ GUI.CA.7 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.any,
     target_faction  = faction.opponent,
@@ -679,6 +728,7 @@ GUI.CA.7 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -760,6 +810,7 @@ GUI.CA.8 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.any,
     target_faction  = faction.opponent,
@@ -777,6 +828,7 @@ GUI.CA.8 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -861,11 +913,13 @@ GUI.CA.9 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,       # district B — second fire location
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     target_ca       = ca.guild.beat3.d100,  # named Guild Beat 3 d100 CA (declared in target profile)
 
     affinity    = None,
@@ -874,6 +928,7 @@ GUI.CA.9 = Card(
         and target_ca.restriction(district=target_district) == True  # district B satisfies CA's own restriction
     ),
     cost = Capacity * 2
+    boost = None,
          + district.target_district.native * 1,
 
     success = (
@@ -885,8 +940,12 @@ GUI.CA.9 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = None,
     perspectives = {
@@ -969,6 +1028,7 @@ GUI.CA.10 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -987,6 +1047,9 @@ GUI.CA.10 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
 
@@ -1062,6 +1125,7 @@ GUI.PA.1 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.two,  # both named at Phase B
@@ -1087,6 +1151,9 @@ GUI.PA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+2)},
     ps_framing = None,
@@ -1166,6 +1233,7 @@ GUI.PA.2 = Card(
     outcome_type    = BilateralAgreement,
     persistence     = Immediate,  # resource delivery and AccordForm delivery resolve at Beat 4; form lifecycle governed by Art 06 §9.4
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1189,6 +1257,9 @@ GUI.PA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1294,6 +1365,7 @@ GUI.PA.3 = Card(
     success     = None,  # card-as-condition — effect lives in persistence_effect
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1373,6 +1445,7 @@ GUI.PA.4 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.any,
     target_faction  = None,
@@ -1387,6 +1460,7 @@ GUI.PA.4 = Card(
     success     = faction(Guild).standing.add(district(target_district).faction(Guild).structure * 1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1467,6 +1541,7 @@ GUI.PA.5 = Card(
     persistence     = Seasonal,
     persistence_condition = None,  persistence_effect = None,
 
+    persistence_clearing_trigger = None,
     target_district = district.any,
     target_faction  = None,
     target_object   = None,
@@ -1485,6 +1560,7 @@ GUI.PA.5 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1565,6 +1641,7 @@ GUI.PA.6 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.named,
     target_faction  = faction.opponent,
@@ -1582,6 +1659,7 @@ GUI.PA.6 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1661,6 +1739,7 @@ GUI.PA.7 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
 
     target_district = district.named,
     target_faction  = None,
@@ -1675,6 +1754,7 @@ GUI.PA.7 = Card(
     success     = arbiter.place(presence_chip, district=target_district, faction=Guild, count=2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1754,6 +1834,7 @@ GUI.PA.8 = Card(
     outcome_type    = Unilateral,
     persistence     = Seasonal,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect = game.board_condition(
         scope  = district(target_district),
         effect = on(structure_block.placed(faction=Any, district=target_district)):
@@ -1774,6 +1855,7 @@ GUI.PA.8 = Card(
     success     = None,  # card-as-condition — effect lives in persistence_effect
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait   = {Guild: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1854,6 +1936,7 @@ GUI.PA.9 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -1884,6 +1967,9 @@ GUI.PA.9 = Card(
                    count(d in ([district(target)] + district(target).adjacent)
                          where d.faction(Guild).structure > 0)),
 
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait = {Guild: PortraitEntry(submitter=+2)},
     ps_framing = None,
 
@@ -1967,6 +2053,7 @@ GUI.PA.10 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -1995,6 +2082,9 @@ GUI.PA.10 = Card(
     failcrit = [arbiter.remove(presence_chip, district=target, faction=Guild, count=1),
                 arbiter.remove(presence_chip, district=target, faction=target, count=1)],
 
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait = {Guild: PortraitEntry(submitter=+1)},
 
     ps_framing = "Public cooperation between Guild and allied faction is visible to New Meridian; Guild leads (+2 PS) as acting faction bearing roll risk; target faction participates (+1 PS).",
@@ -2059,6 +2149,7 @@ GUI.MOD.1 = Card(
     name    = "Night Shift Crew",
     tagline = "Established communities don't abandon positions — they return.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
 
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
@@ -2067,11 +2158,16 @@ GUI.MOD.1 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = None,  # reflexive return, not a planned play — playtest-flagged, not final
     boost           = None,
@@ -2079,6 +2175,7 @@ GUI.MOD.1 = Card(
     success     = arbiter.place(presence_chip, district=target_district, faction=acting, count=1),
     successcrit = None,  fail = None,  failcrit = None,  # no dice under Automatic resolution — deterministic reflex, not a probabilistic outcome
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2141,6 +2238,7 @@ GUI.MOD.2 = Card(
     name    = "Union Representative",
     tagline = "Other factions build with Guild labor. Guild gets paid.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.placed(faction=opponent),  # any non-Guild faction places structure
@@ -2151,10 +2249,16 @@ GUI.MOD.2 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,  # no presence requirement — Guild workforce is citywide
     cost            = None,
@@ -2163,6 +2267,7 @@ GUI.MOD.2 = Card(
     success     = faction(Guild).capacity.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2226,6 +2331,7 @@ GUI.MOD.3 = Card(
     name    = "Institutional Contract",
     tagline = "Directorate builds. Guild crews and invoices.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.placed(faction=Directorate),
@@ -2236,10 +2342,16 @@ GUI.MOD.3 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -2248,6 +2360,7 @@ GUI.MOD.3 = Card(
     success     = faction(Guild).capacity.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2311,6 +2424,7 @@ GUI.MOD.4 = Card(
     name    = "Core Premium",
     tagline = "Core construction pays Guild at institutional rates.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.placed(faction=opponent, ring=1),
@@ -2321,10 +2435,16 @@ GUI.MOD.4 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -2333,6 +2453,7 @@ GUI.MOD.4 = Card(
     success     = faction(Guild).capacity.add(2),  # double rate for Core ring
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2396,6 +2517,7 @@ GUI.MOD.5 = Card(
     name    = "Company Town",
     tagline = "Our people built the walls. We hear who whispers behind them.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = ModifierCard,  # first "draw a card" ModReactCard effect; no existing taxonomy precedent for this shape, treating a drawn card as an acquired asset
 
     trigger         = presence_chip.placed(faction=opponent, district=district.where(faction(Guild).structure > 0)),
@@ -2406,10 +2528,16 @@ GUI.MOD.5 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -2418,6 +2546,7 @@ GUI.MOD.5 = Card(
     success     = arbiter.draw_modifier(faction=Guild, count=1),  # balance flag: count=1 is a null effect unless the drawn card has independent value — recommend count=2
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2481,6 +2610,7 @@ GUI.MOD.6 = Card(
     name    = "Emergency Reconstruction",
     tagline = "You can knock down the building, but you can't erase the blueprint.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = StructureBlock,
 
     trigger         = structure_block.removed(faction=Guild),
@@ -2491,10 +2621,16 @@ GUI.MOD.6 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = faction(Guild).district.adjacent_to(trigger.district).acting_choice,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Guild).presence_in(target_district),
     cost            = list([Resource(Capacity, 1), Resource(Capital, 1)]),
@@ -2503,6 +2639,7 @@ GUI.MOD.6 = Card(
     success     = arbiter.place(structure_block, district=target_district, faction=Guild, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2566,6 +2703,7 @@ GUI.MOD.7 = Card(
     name    = "Worker Retaliation",
     tagline = "The site is clear, but the workers are still here.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = structure_block.removed(faction=Guild),
@@ -2576,10 +2714,16 @@ GUI.MOD.7 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Resource(Capacity, 1),
@@ -2588,6 +2732,7 @@ GUI.MOD.7 = Card(
     success     = arbiter.place(presence_chip, district=target_district, faction=Guild, count=2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2651,6 +2796,7 @@ GUI.MOD.8 = Card(
     name    = "Site Clearance",
     tagline = "We built it, we get paid. You blew it up, we get paid to clean it up.",
     type    = ModReactCard,  faction = Guild,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = structure_block.removed(faction=Any),
@@ -2661,10 +2807,16 @@ GUI.MOD.8 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -2673,6 +2825,7 @@ GUI.MOD.8 = Card(
     success     = faction(Guild).native(district=trigger.district).add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2749,9 +2902,11 @@ GUI.MOD.9 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     persistence = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = trigger.district,
@@ -2766,6 +2921,7 @@ GUI.MOD.9 = Card(
     success     = faction(Guild).capacity.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2788,7 +2944,7 @@ GUI.MOD.9 = Card(
 [↑ Guild](#guild)
 
 #### Design Rationale
-Guild's only mechanic that reaches into Contested District Resolution (Art 03 §10) without Guild itself being a contesting faction. When a district goes Contested, Guild — already present or adjacent, already the district's contractor of record — commits its crews and material schedule to favor one side. That commitment is registered immediately (Guild doesn't wait for the battle to declare it) and stands as a Seasonal condition until §10 actually resolves that district, whenever in the Quarter that happens.
+Guild's only mechanic that reaches into Contested District Resolution (Art 03 §10) without Guild itself being a contesting faction. When a district goes Contested, Guild — already present or adjacent, already the district's contractor of record — commits its crews and material schedule to favor one side. The favor only ever adds — Guild speeds one faction's delivery, it never sabotages another's; choosing whom to help is the whole of the decision, since helping an ally and hindering a rival are the same move seen from opposite ends of the contest. That commitment is registered immediately (Guild doesn't wait for the battle to declare it) and stands as a Seasonal condition until §10 actually resolves that district, whenever in the Quarter that happens.
 
 This is new mechanical ground: the existing ModBattleCard subclass lets a *contesting* faction modify its own or a *named opponent's* total, played live during §10.1.2. Contractor's Favor is a *ModReactCard* — it fires earlier, off a different trigger (`tension_marker.placed`, not the Battlefield Strength declaration step), and its effect targets a named faction's total regardless of whether Guild itself is contesting that district. The tradeoff for committing early is fizzle risk: if the named faction is no longer a contesting (Dominant) faction by the time §10.1.1 actually identifies contestants, Guild's condition has no effect — the political ground shifted out from under an early bet. This is the narrative engine of the card, not a bug: Guild reads the room the moment it goes tense, and sometimes reads it wrong.
 
@@ -2796,12 +2952,12 @@ Restriction (Guild Present in the district or an adjacent district) keeps this t
 
 **Outstanding Issue:** Applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — check for active Guild Seasonal conditions on the contested district and apply the registered delta to the named faction's total, alongside Step 1.2.2 (Commit) and Step 1.2.3 (Reveal & Validate), where Battlefield Modifier Cards and Intel Tokens are now handled. No such step currently exists. Per Governing Rule 6.1 / Design Pillar 4.7b, this must be defined as a generalizable Art 03 procedure before the card is fully executable at the table — tracked as new PM05 item 04-n148. The registered condition is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions will know a Guild condition is active on the district before they declare their own totals; this is intended, not an oversight.
 
-**Deeper issue (04-n176):** No Layer/Function/Subject assignment was attempted here, and not because tagging was skipped — `arbiter.register_battlefield_modifier(...)` doesn't correspond to any effect shape the taxonomy system (Territory/Economy/Information/Submission/Standing × the Layer×Function matrix) actually supports. This is a level deeper than 04-n148's gap (missing Art 03 procedure): even once §10.1.2 knows how to apply a registered modifier, the card's fundamental mechanic — a third-party faction pre-committing a Battlefield Strength delta to a named contesting faction, off-cycle from the battle itself — has no home in the current taxonomy at all. Direction: this needs redesign, not a new taxonomy category invented to fit it. See 04-n176.
+**Taxonomy (resolved):** `layer = Resolution`, `function = Modify`, `subject = BattlefieldStrength`. The Resolution layer explicitly governs Battlefield Strength, and `Modify` is the matrix-valid function for altering a value without changing fundamental state — `Shift` is scoped to the Public Standing and Portrait tracks specifically and does not apply. `BattlefieldStrength` is a Subject registration this card prompted: no prior card acts on a contest total, so the vocabulary had no name for it. The earlier reading — that the mechanic had no taxonomy home and needed redesign rather than a new category — was superseded once the card's effect was simplified to a single upward direction, which removed the part that resisted classification.
 
 #### Card Story
-Tension breaks out over a contested block, and every material order in the district suddenly has two delivery dates — one for the faction Guild's crews like working with, one for everyone else. By the time the district actually goes to the wire, one side got their scaffolding early.
+Tension breaks out over a contested block, and one faction's material orders quietly move to the front of the queue. Nobody else's slip — Guild doesn't work that way, and says so. By the time the district actually goes to the wire, one side got their scaffolding early.
 
-04-n148 (missing Art 03 procedure) and 04-n176 (no taxonomy home) are structurally serious: this card fails Card type fit/Taxonomy fit outright (not just "pending"), and Supported by game procedure is a real Governing Rule 6.1/Design Pillar 4.7b violation as currently drafted (new ARBITER behavior used before being defined as a generalizable procedure). Flagged in full, not force-closed.
+One blocker remains: Art 03 §10.1.2 still has no step that reads a registered condition and applies it to a contesting faction's total, so *Supported by game procedure* is a genuine Governing Rule 6.1 / Design Pillar 4.7b gap — new ARBITER behavior used before being defined as a generalizable procedure (04-n148). The taxonomy question that previously sat alongside it is closed.
 
 **Design checklist:**
 
@@ -2810,9 +2966,9 @@ Tension breaks out over a contested block, and every material order in the distr
 | Action fit | ✓ | Guild committing construction priority to a contesting faction, transactionally rather than doctrinally, is a coherent, distinct mechanic from anything else in the set. | Art 00 §7 |
 | Voice fit | ✓ | tagline and all 5 perspectives read correctly in-voice. | Art 00 §6.7 |
 | Doctrine alignment | ✓ | Guild submitter=+1 only, no doctrine_mod — correctly reflects "transactional, not political." | Art 04 §6.5 |
-| Card type fit | ⚠ | ModReactCard/FactionSpecific is the right subclass, but `layer=None, function=None, subject=None` isn't a taxonomy gap to close later — it's a symptom of the deeper problem below. | Art 04 §6.1, §6.2 |
-| Taxonomy fit | ⚠ **(blocker, 04-n176)** | `arbiter.register_battlefield_modifier(...)` doesn't correspond to any Layer×Function pairing the taxonomy system supports. Direction: redesign, not a new category invented to fit it. This is the card's core blocker. | Art 04b §4; ref_taxonomy.md §5.1; PM05 04-n176 |
-| Balance | ⚠ | Fizzle risk (named faction may not still be contesting at §10) is a deliberate design tension, not a flaw — but genuinely hard to finalize while the taxonomy/mechanic itself is unresolved. | Art 02 §6–7; Art 04 §6.5 |
+| Card type fit | ✓ | ModReactCard/FactionSpecific is the right subclass, and the taxonomy is now assigned — a Resolution-layer effect fired from a public board event. | Art 04 §6.1, §6.2 |
+| Taxonomy fit | ✓ | `Resolution / Modify / BattlefieldStrength` — the Resolution layer governs Battlefield Strength, `Modify` is matrix-valid for altering a value without changing fundamental state, and the Subject names the contest total the card acts on. | Art 04b §4; ref_taxonomy.md §5.1 |
+| Balance | ⚠ | Fizzle risk (the named faction may not still be contesting at §10) is deliberate design tension, not a flaw. Whether Capacity×1 correctly prices a +2 Battlefield Strength swing is a cost-model question, not a card defect. | Art 02 §6–7; Art 04c |
 | Effect duration | ✓ | Seasonal correctly fits "ongoing condition across multiple subsequent actions." | Art 04 §5 P19 |
 | Persistence | ✓ | Explicitly declared (`persistence=Seasonal`) — ahead of the rest of the corpus on this field. | Art 04 §6.2 |
 | Trigger validity | ✓ | `tension_marker.placed` confirmed §6.3 vocabulary. | Art 04 §6.3 |
@@ -2820,10 +2976,10 @@ Tension breaks out over a contested block, and every material order in the distr
 | Supported by zones | ✓ | district + adjacency-based restriction ties this to real territorial investment. | Art 01 §6–7 |
 | Supported by components | ⚠ | No physical marker/component represents the "registered condition" on the board beyond the card itself — tied to the same gap as the row below. | Art 02 §6–8 |
 | Supported by game procedure | ⚠ **(blocker, 04-n148)** | Art 03 §10.1.2 has no step that reads a registered Guild condition and applies it. Per Governing Rule 6.1/Design Pillar 4.7b, new ARBITER behavior must be defined as a generalizable procedure *before* the card is finalized — as currently drafted, the card's `arbiter_note` describes behavior that doesn't yet exist as a defined procedure. | Art 03 §10.1.2; GR 6.1; Design Pillar 4.7b; PM05 04-n148 |
-| Data schema validation | ⚠ | `layer/function/subject=None` (deliberate, tied to 04-n176) plus missing `resolution_type` (added as scaffolding). | Art 04 §6.1–§6.3 |
+| Data schema validation | ✓ | All §6.1 fields present and typed; taxonomy assigned; `target_freeform` correctly `None` now that no declaration beyond the named faction is required. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story is concrete and well-formed — the fizzle-risk narrative tension is genuinely the point, not a gap. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic; the fizzle-risk contingency is a real-world board-state dependency, not a hidden or probabilistic outcome — doesn't violate P27. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | Real cost specified (Capacity×1) — not gated on 04-n178 the way cost-less cards are, but whether 1 Capacity is correctly priced for a ±2 Battlefield Strength swing can't be finalized while the mechanic itself is blocked on 04-n176. | Art 00a §9.2 |
+| Resource cost positioning | ⚠ | Real cost specified (Capacity×1). Whether that is correctly priced against a +2 contest swing cannot be settled until the cost model carries magnitude guidance. | Art 00a §9.2; Art 04c 04c-01 |
 | Trigger frequency (ModReactCard) | ✓ | Contested is a specific, less-common board state — low-moderate frequency holds up. |  |
 | Firing window (ModReactCard) | ✓ | no race with other Guild MODs. |  |
 | Automatic vs. d100 (ModReactCard) | ✓ | Guild's registration action is unconditional; the eventual d10 battle roll is untouched. |  |
@@ -2833,7 +2989,8 @@ Tension breaks out over a contested block, and every material order in the distr
 #### Outstanding Issues
 
 - **BLOCKER (04-n148):** applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — no such step currently exists. Card is not fully executable at the table until this procedure is defined (Governing Rule 6.1 / Design Pillar 4.7b).
-- **BLOCKER (04-n176):** `arbiter.register_battlefield_modifier(...)` has no home in the current taxonomy (Territory/Economy/Information/Submission/Standing × Layer×Function) — a level deeper than 04-n148, since even a defined procedure wouldn't give this mechanic a taxonomy assignment. Needs redesign, not a new category invented to fit it.
+- **Supported by components:** no physical marker represents the registered condition on the board beyond the card itself; tied to the same gap as 04-n148.
+- **Stack behavior (ModReactCard):** same open corpus-wide question.
 
 #### Status
 
@@ -2847,7 +3004,7 @@ GUI.MOD.10 = Card(
     name    = "Contractor's Favor",
     tagline = "We don't pick sides. We pick delivery dates.",
     type    = ModReactCard,  subtype = FactionSpecific,  faction = Guild,
-    layer   = None,  function = None,  subject = None,
+    layer   = Resolution,  function = Modify,  subject = BattlefieldStrength,
 
     trigger         = tension_marker.placed(),
     beat            = None,
@@ -2857,6 +3014,7 @@ GUI.MOD.10 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     persistence = Seasonal,
     persistence_condition = None,
@@ -2866,7 +3024,7 @@ GUI.MOD.10 = Card(
     target_district = trigger.district,
     target_faction  = faction.named,   # declared at trigger — must be a Dominant (contesting) faction in target_district at time of declaration
     target_object   = None,
-    target_freeform = direction.named, # "Support" (+2 to target_faction's Battlefield Strength total) or "Withhold" (−2); declared alongside target_faction — this is a ModReactCard using a Target-Profile-scoped field ModReactCards shouldn't have access to — flagged as an open schema question, not yet resolved
+    target_freeform = None,
     affinity        = None,
     restriction     = (
         faction(Guild).presence_in(target_district)
@@ -2878,13 +3036,14 @@ GUI.MOD.10 = Card(
     success = arbiter.register_battlefield_modifier(
         district=target_district,
         faction=target_faction,
-        magnitude=magnitude_from(target_freeform),  # Support = +2, Withhold = −2
+        magnitude=2,
     ),
     # Applied at Art 03 §10.1.2 (Calculate and Declare Totals) if target_faction is still a contesting
     # (Dominant) faction in target_district when §10.1.1 identifies contestants; otherwise the condition
     # lapses with no effect. Condition clears at Phase 21 (End of Quarter) regardless of outcome.
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Guild: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2897,7 +3056,7 @@ GUI.MOD.10 = Card(
         Syndicate:   "Guild's monetizing uncertainty before the dice even get picked up. Professionally, we approve.",
     },
     design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Requires new Art 03 §10.1.2 procedure step — see Outstanding Issues below. `persistence_clearing_trigger` is None — the card clears at Phase 21 (End of Quarter) regardless of outcome, the default Seasonal expiry already implied by `persistence`; no discrete clearing event exists for this card.",
-    arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and direction (Support +2 / Withhold −2), and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization still open — see Outstanding Issues.",
+    arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization still open — see Outstanding Issues.",
 )
 ```
 
@@ -3342,6 +3501,8 @@ GUI.MOD.15 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3349,6 +3510,8 @@ GUI.MOD.15 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3429,6 +3592,8 @@ GUI.MOD.16 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3436,6 +3601,8 @@ GUI.MOD.16 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3516,6 +3683,8 @@ GUI.MOD.17 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3523,6 +3692,8 @@ GUI.MOD.17 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3603,6 +3774,8 @@ GUI.MOD.18 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3610,6 +3783,8 @@ GUI.MOD.18 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3690,6 +3865,8 @@ GUI.MOD.19 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3697,6 +3874,8 @@ GUI.MOD.19 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3777,6 +3956,8 @@ GUI.MOD.20 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3784,6 +3965,8 @@ GUI.MOD.20 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3864,6 +4047,8 @@ GUI.MOD.21 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3871,6 +4056,8 @@ GUI.MOD.21 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3951,6 +4138,8 @@ GUI.MOD.22 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3958,6 +4147,8 @@ GUI.MOD.22 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4038,6 +4229,8 @@ GUI.MOD.23 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4045,6 +4238,8 @@ GUI.MOD.23 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4125,6 +4320,8 @@ GUI.MOD.24 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4132,6 +4329,8 @@ GUI.MOD.24 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4213,6 +4412,8 @@ GUI.MOD.25 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4220,6 +4421,8 @@ GUI.MOD.25 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -4300,6 +4503,8 @@ GUI.MOD.26 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -4307,6 +4512,8 @@ GUI.MOD.26 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 

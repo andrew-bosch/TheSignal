@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 4.15
+**Version:** 4.16
 
-**Status:** Signed off S150 (PM02 L340, L341) — §7.4 restructured (§7.4.0 Calculate District Income → §7.4.0.0 Apply Affinity Bonus/§7.4.0.1 Collect District Income; §7.4.1 Calculate Structure Block Income → §7.4.1.0 Declare/§7.4.1.1 Collect; §7.4.2 Collect Passive Generation), with a new Resource Type rule (district income pays in the district's own Resource Type, not the collecting faction's Native Resource) and the opening paragraph clarified (drawing from the Reservoir is a player action). §18.1/§18.1.0 refined: a faction holding 2+ eligible React cards for one triggering event chooses which single card to present; tied announcements resolve by initiative order (was "ARBITER decides"). Prior: Signed off S149 (PM02 L332) — §18.2.2 added: React cards are permanently removed from the game by default once resolved, unless card text states otherwise (previously unstated anywhere in Art 03; surfaced via schema_cleanup_log #19, PM05 04-n195). Prior: Signed off S146 (PM02 L292) — §9.4.3.1.0.3 Route: zero-payment Public Act invalidation now carries a Public Standing −1 ("failed commitment") consequence, closing the gap left when Art 04's old §14.3 language was retired without carrying its PS penalty forward into the unified Principle 20 payment model. Prior: Signed off S132 (L243). Prior: Signed off S110 (L232). S132: §10.1.2 Calculate and Declare Totals redesigned — Boost/Hinder model replaces Self/Opponent threshold-delta on Battlefield Modifier Cards, with an explicit named target faction chosen by the playing faction (contesting or not); face-down commit + simultaneous reveal (Steps 1.2.1 Count, 1.2.2 Commit, 1.2.3 Reveal & Validate, 1.2.4 Announce); any faction — not just contestants — may commit a Battlefield Modifier Card or Intel Token into an active contest; Intel Token effect changed to a fixed −2 Hinder applied to the named target (supersedes L163's +2 self-boost). §10.1.4.0 (Winner), §10.1.4.0.2 (Press), and §10.1.4.1 (Tie) reformatted to sequential numbered steps; cleanup (discard used Battlefield Modifier Cards, Intel Token hand-off/reset) relocated from §10.1.2.3 to §10.1.4.0 and duplicated at §10.1.4.1, firing once winner/tie is resolved and before any loop back to §10.1.2. Prior (S109–S110): VM-xx lifecycle formalised — §9.4.1.1 VM-xx check added to BEC step; §9.4.2.2.0 VM-xx placement clause; §9.4.3.0.1 renamed Initiative Loop (BEC application moved to per-PA step); §9.4.3.1.3 Apply BEC Modifiers added (mirrors §9.4.1.1 language); §9.4.3.1.4 Base Difficulty (renumbered from 1.3); §9.4.3.3.0 generic VM-xx placement clause. Beat 4 boost detection clause added to §9.4.3.1.0.0 (S109). §9.4.3.3.0 BEC-specific reveal clause removed — VM-xx model supersedes. §9.2.0 Target Profile placed face-down at declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check step.
+**Status:** 🔄 Pending re-sign-off (S163, PM02 L382) — material additions to §13 and §18. **§13.6 Intel Token as Cost** added: `about=`/`status=` cost qualifiers are now validated before a token is accepted as payment, closing a gap that left 18 Intel-costed cards (10 CA, 4 PA, 4 React) unresolvable on that term; §9.4.3.1.0.1 repointed to call it. **§18.2 Pay Cost** added — React cards had no payment step at all while 27 ModReactCards carry a real cost. Payment is public and all-or-nothing (no M-06 partial path); `boost` is now available to the subclass; a voided React takes Public Standing −1 matching §9.4.3.1.0.3, and **does not exhaust the triggering condition** — the next announcer in initiative order may present. **§18 renumbered** to make room: Resolution §18.2→§18.3 (with §18.2.1/§18.2.2 → §18.3.1/§18.3.2) and Resume §18.3→§18.4. Prior: Signed off S150 (PM02 L340, L341) — §7.4 restructured (§7.4.0 Calculate District Income → §7.4.0.0 Apply Affinity Bonus/§7.4.0.1 Collect District Income; §7.4.1 Calculate Structure Block Income → §7.4.1.0 Declare/§7.4.1.1 Collect; §7.4.2 Collect Passive Generation), with a new Resource Type rule (district income pays in the district's own Resource Type, not the collecting faction's Native Resource) and the opening paragraph clarified (drawing from the Reservoir is a player action). §18.1/§18.1.0 refined: a faction holding 2+ eligible React cards for one triggering event chooses which single card to present; tied announcements resolve by initiative order (was "ARBITER decides"). Prior: Signed off S149 (PM02 L332) — §18.2.2 added: React cards are permanently removed from the game by default once resolved, unless card text states otherwise (previously unstated anywhere in Art 03; surfaced via schema_cleanup_log #19, PM05 04-n195). Prior: Signed off S146 (PM02 L292) — §9.4.3.1.0.3 Route: zero-payment Public Act invalidation now carries a Public Standing −1 ("failed commitment") consequence, closing the gap left when Art 04's old §14.3 language was retired without carrying its PS penalty forward into the unified Principle 20 payment model. Prior: Signed off S132 (L243). Prior: Signed off S110 (L232). S132: §10.1.2 Calculate and Declare Totals redesigned — Boost/Hinder model replaces Self/Opponent threshold-delta on Battlefield Modifier Cards, with an explicit named target faction chosen by the playing faction (contesting or not); face-down commit + simultaneous reveal (Steps 1.2.1 Count, 1.2.2 Commit, 1.2.3 Reveal & Validate, 1.2.4 Announce); any faction — not just contestants — may commit a Battlefield Modifier Card or Intel Token into an active contest; Intel Token effect changed to a fixed −2 Hinder applied to the named target (supersedes L163's +2 self-boost). §10.1.4.0 (Winner), §10.1.4.0.2 (Press), and §10.1.4.1 (Tie) reformatted to sequential numbered steps; cleanup (discard used Battlefield Modifier Cards, Intel Token hand-off/reset) relocated from §10.1.2.3 to §10.1.4.0 and duplicated at §10.1.4.1, firing once winner/tie is resolved and before any loop back to §10.1.2. Prior (S109–S110): VM-xx lifecycle formalised — §9.4.1.1 VM-xx check added to BEC step; §9.4.2.2.0 VM-xx placement clause; §9.4.3.0.1 renamed Initiative Loop (BEC application moved to per-PA step); §9.4.3.1.3 Apply BEC Modifiers added (mirrors §9.4.1.1 language); §9.4.3.1.4 Base Difficulty (renumbered from 1.3); §9.4.3.3.0 generic VM-xx placement clause. Beat 4 boost detection clause added to §9.4.3.1.0.0 (S109). §9.4.3.3.0 BEC-specific reveal clause removed — VM-xx model supersedes. §9.2.0 Target Profile placed face-down at declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check step.
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02 — Components
 
@@ -905,9 +905,7 @@ If the operation card or an active card effect specifies BM-xx: ARBITER retrieve
 
 **§9.4.3.1.0.1 Intel Tokens**
 
-Acting Faction Player hands all submitted Intel Tokens to ARBITER. ARBITER calculates token age and applies effects per §13 Intel Token Age table.
-
-ARBITER resets (erases) and deposits all Intel Tokens to The Dossier, or discards if single-use.
+Acting Faction Player hands all submitted Intel Tokens to ARBITER. ARBITER validates and processes them per §13.6 — including any `about=` or `status=` qualification the card's cost places on the token — applying age effects per the §13.5 Intel Token Age table, then resetting and depositing to The Dossier or discarding if single-use.
 
 **§9.4.3.1.0.2 Verify Payment**
 
@@ -1374,6 +1372,25 @@ Token age = current Quarter − Quarter generated (written on token by ARBITER a
 
 ---
 
+### §13.6 Intel Token as Cost
+
+Where a card's `cost` includes an Intel Token, the token is surrendered as payment rather than consulted as intelligence. The presenting or Acting Faction Player hands it to ARBITER, which validates it, applies its age effect per §13.5, then resets (erases) and deposits it to The Dossier, or discards it if single-use.
+
+**Qualified Intel.** A cost term may narrow which token satisfies it:
+
+| Qualifier | Meaning |
+|-----------|---------|
+| `about=` | The token's written subject must be the named faction or party. A token about anyone else does not satisfy the term. |
+| `status=` | The token's age status (§13.5) must be one of those listed. |
+
+ARBITER checks the submitted token's written subject and computed age status against the qualification *before* accepting it as payment. A token that fails qualification is not valid payment for that term and is returned to the player unspent — the term stands unpaid, and the action is routed as a shortfall by whichever payment step called here.
+
+An **Expired** token counts as partial payment per §13.5 regardless of whether it satisfies `about=`. Under a payment step that admits partial payment (§9.4.3.1.0.2) it reduces the shortfall; under one that does not (§18.2), it does not satisfy the term.
+
+*A faction cannot pay for a card that demands intelligence on a specific rival by handing over a token about someone else. The qualification is the point of the cost — the card is asking what you know about them, not what you know.*
+
+---
+
 ## §14 Apex Activation
 
 *Entry: called from covert or public resolution (§9.4.2.0.0 or §9.4.3.1.1).*
@@ -1486,19 +1503,38 @@ When a trigger condition is met: the holding Faction Player announces *"React"*,
 
 First to announce pauses play. If 2+ Faction Players announce *"React"* for the same board-state change, resolve by initiative order. Only one React resolves at a time — a second React may only fire in response to the new board state produced after the first resolves. The original triggering event is exhausted for every other card that matched only the prior state, including cards belonging to Faction Players who did not announce in time.
 
-### §18.2 Resolution
+### §18.2 Pay Cost
+
+If the presented card's `cost` is `None`, proceed to §18.3.
+
+Otherwise, the presenting Faction Player places the card's full cost face-up alongside the presented card. Payment is public: the card and its trigger are already revealed under §18.1, so the table validates the payment in the open rather than ARBITER counting a sealed packet alone.
+
+**Transfer.** Presenting Faction Player transfers resource tokens to the Reservoir.
+
+**Boost.** For a card with a `boost` field (value ≠ None): after base cost is transferred, count any submitted boost resources of the specified type. Calculate n = floor(count ÷ boost unit cost). If n > 0: ARBITER retrieves n BM-xx tokens from supply and places them on the card. Boost resources are processed normally.
+
+**Intel Tokens.** Presenting Faction Player hands all submitted Intel Tokens to ARBITER, which validates and processes them per §13.6.
+
+**Verify.** ARBITER verifies total payment against the cost printed on the card. Payment is all-or-nothing — there is no partial-payment path for a React card and no partial payment threshold marker (M-06). Either the full cost is present, or the React is void.
+
+- *Full payment:* ARBITER acknowledges. Proceed to §18.3.
+- *Anything less:* ARBITER announces the React void. No effect resolves. Resources already transferred are spent and the card is permanently removed per §18.3.2. ARBITER then moves the presenting faction's marker down one step on the Public Standing track immediately, at the void — the same −1 ("failed commitment") a zero-payment Public Act carries under §9.4.3.1.0.3. The shift is applied here rather than carried by the card: a voided React never resolves, so its `ps_framing` — if it has one — does not fire.
+
+**A voided React does not exhaust the triggering condition.** Art 00a §7.2c exhausts a condition on *resolution*; a void produces no resolution and no new board state, so the original state persists and the trigger remains live. ARBITER returns to §18.1.0 and the next Faction Player in initiative order who announced against the same event may present their card. Only when no further React is presented does ARBITER proceed to §18.4.
+
+### §18.3 Resolution
 
 The React card resolves per its stated effect.
 
-#### §18.2.1 Persistent React Card Effects
+#### §18.3.1 Persistent React Card Effects
 
 If a modifier react card creates a persistent board state (a card placed on the board), the card remains with its duration type per §15.
 
-#### §18.2.2 Default Discard
+#### §18.3.2 Default Discard
 
 A React card is permanently removed from the game once it resolves — not returned to a discard pile, not held for future use — unless its own card text states otherwise. A card that remains in hand for repeated firing, or that is returned to circulation by another card's effect, must say so explicitly; permanent removal is the default with no exception required.
 
-### §18.3 Resume
+### §18.4 Resume
 
 ARBITER resumes the original procedure from the point it paused.
 

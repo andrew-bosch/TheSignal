@@ -83,6 +83,7 @@ SYN.CA.1 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -101,8 +102,12 @@ SYN.CA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Syndicate does not need to be somewhere to profit from it. Ownership and presence are different things.",
     perspectives = {Syndicate: "We own the revenue stream. Whether we are physically present is irrelevant."},
@@ -163,6 +168,7 @@ SYN.CA.2 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Economy,  function = Remove,  subject = NativeResource,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10},
+    doctrine_mod = None,
     trigger=None,
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
@@ -183,6 +189,12 @@ SYN.CA.2 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -238,6 +250,7 @@ SYN.CA.3 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Territory,  function = Redirect,  subject = StructureBlock,
     beat=3, resolution=d100, threshold=50, ring_mod={0:-15,1:-10,2:0,3:+10},
+    doctrine_mod = None,
     trigger=None,
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
@@ -264,6 +277,12 @@ SYN.CA.3 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 4,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -318,6 +337,7 @@ SYN.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Economy,  function = Protect,  subject = NativeResource,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -335,6 +355,12 @@ SYN.CA.4 = Card(
     design_note     = "Capital declared at Dispatch on target profile. Beat 0: retained (not drained). Beat 2: distributed across target_faction Beat 3 ops targeting Syndicate, first-to-last, until exhausted. Beat 3: full coverage = void + Capital to submitter case; partial = −50 marker + Capital to submitter case. No ops from target_faction = windfall to return case. Wager structure: Syndicate bets positionally — wrong bet wastes Capital, correct bet nullifies threat.",
     arbiter_note = None,
     value_rating = 1,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -393,6 +419,7 @@ SYN.CA.5 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
     layer   = Submission,  function = Block,  subject = CovertOperation,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -414,6 +441,12 @@ SYN.CA.5 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 2,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -484,6 +517,7 @@ LandTitle = Card(
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=district.named, target_faction=None, target_object=None,
     target_freeform=None,
@@ -493,9 +527,14 @@ LandTitle = Card(
         AND district(target) != ChorusNode
     ),
     cost        = Capital * 6,
+    boost = None,
     success     = arbiter.dispatch(GrantDeed(district=district(target)), faction(acting).case),
     successcrit = None,  fail=None,  failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "The deed was filed before the foundation was poured. That is how the Syndicate prefers it.",
     perspectives = {Syndicate: "We don't need to be there. We just need to be on the paperwork."},
     design_note  = "Delivers Grant Deed (GD-01) component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire Issued ModReactCard (acquisition=Issued) held in faction hand; fires when any faction places a structure block in the named district. Fire effect: +1 Presence Token and +1 Structure Block for deed holder in named district, and removal of 1 Structure Block belonging to the triggering faction — the registered deed displaces the unauthorized build that fired it. GR 8.2 governs the holder's structure placement (blocked if holder already has structure there; Presence Token still placed). No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds on same district permitted; cost-governed.",
@@ -561,6 +600,7 @@ HostileTakeover = Card(
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=district.named, target_faction=faction(named_opponent), target_object=PresenceToken,
     target_freeform=None,
@@ -570,6 +610,7 @@ HostileTakeover = Card(
         AND faction(acting).intel_tokens(faction=faction(target)) >= 1
     ),
     cost        = Capital * 2 + Mandate * 1,
+    boost = None,
     success     = game.replace_presence(
         faction(target), district(target),
         with_faction=faction(acting),
@@ -578,7 +619,11 @@ HostileTakeover = Card(
     successcrit = faction(acting).capital.add(1),
     fail=None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "The Syndicate does not displace people. It acquires their positions. There is a difference, legally speaking.",
     perspectives = {Syndicate: "We purchased the relationship. The people can stay. Their affiliation is now ours."},
     design_note  = "Distinct from SYN.CA.3 Hostile Acquisition (StructureBlock). Replaces ALL target presence in district with Syndicate presence at same count (same control tier — neutral effect on tier, swing in ownership). Requires Ghost-sourced faction-keyed Intel token. Intel token creates structural link between Ghost and Syndicate — neither faction announces it publicly.",
@@ -646,6 +691,8 @@ SYN.CA.10 = Card(
     ring_mod     = None,
     doctrine_mod = None,
     value_rating = 3,
+    trigger = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = faction(outgoing_party),
@@ -693,9 +740,12 @@ SYN.CA.10 = Card(
 
     persistence           = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
+    on_discard         = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative = "The form in the Accord Placement Area is updated. The parties to the original agreement learn about it at the same time as everyone else.",
 
@@ -775,6 +825,7 @@ SYN.CA.6 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.named,
@@ -785,14 +836,21 @@ SYN.CA.6 = Card(
     affinity    = None,
     restriction = None,
     cost        = Capital * 2,
+    boost = None,
 
     success     = arbiter.dispatch(
                     IntelToken(faction=game.ops(beat=3, at=district(target)).first(resolution_order).submitter),
                     faction(acting).case
                   ),
     successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "The Syndicate does not steal from the river. They build a weir.",
     perspectives = {Syndicate: "We invested in the district's infrastructure. Why shouldn't we see what moves through it?"},
@@ -866,6 +924,7 @@ SYN.CA.7 = Card(
     resolution_type = Transactional, outcome_type=ElectPlayer,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district = district.named,
     target_faction  = faction(named_opponent),
@@ -874,6 +933,7 @@ SYN.CA.7 = Card(
     affinity        = None,
     restriction     = faction(target).presence(district(target_district)) > 0,
     cost            = IntelToken() * 1,
+    boost = None,
 
     success     = None,
     successcrit = None,
@@ -888,7 +948,9 @@ SYN.CA.7 = Card(
     ),
     # always: faction(acting).standing -= 1 regardless of outcome (encoded in portrait flat=-1)
 
+    on_discard = None,
     portrait    = {Syndicate: PortraitEntry(submitter=-1)},
+    ps_framing = None,
     narrative   = "The information was gathered properly. What is done with it is simply business.",
     perspectives = {Syndicate: "We don't call it blackmail. We call it an incentive structure with consequences attached."},
     design_note  = "Covert submission; private notification at Beat 3 (ARBITER whispers to target — not public). Target elects comply or resist. Comply: pay resources (amount TBD). Resist: presence tier −1 at target district + PS −1. Syndicate PS −1 always. Covert ElectPlayer procedure required in Art 03 before Issues Resolved.",
@@ -960,6 +1022,8 @@ SYN.CA.11 = Card(
     ring_mod     = None,
     doctrine_mod = None,
     value_rating = 2,
+    trigger = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
@@ -981,9 +1045,13 @@ SYN.CA.11 = Card(
 
     persistence           = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
+    target_freeform    = None,
+    on_discard      = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative = "The document in the placement area is a public record. It has always been a public record. The number in the third clause has always been that number. If it seems different from what you remember — you're probably misremembering.",
 
@@ -1065,6 +1133,8 @@ SYN.CA.12 = Card(
     ring_mod     = None,
     doctrine_mod = None,
     value_rating = 1,
+    trigger = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
@@ -1082,9 +1152,14 @@ SYN.CA.12 = Card(
 
     persistence           = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
+    target_freeform    = None,
+    boost           = None,
+    on_discard = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = None,
     perspectives = None,
@@ -1165,6 +1240,7 @@ SYN.PA.1 = Card(
     outcome_type    = ElectPlayer,  # target accepts or declines at Beat 4
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -1196,6 +1272,7 @@ SYN.PA.1 = Card(
         faction(target).standing.remove(1),
     ),
 
+    on_discard = None,
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing = None,
 
@@ -1273,6 +1350,7 @@ SYN.PA.2 = Card(
     outcome_type    = Unilateral,
     persistence     = Seasonal,  # DividendMarker stays on district until claimed, withdrawn, or Phase 21
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -1299,6 +1377,9 @@ SYN.PA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -1380,6 +1461,7 @@ SYN.PA.3 = Card(
     ring_mod     = None,
     doctrine_mod = None,
     value_rating = 2,
+    trigger = None,
     resolution_type = Transactional,
     outcome_type = ElectPlayer,
 
@@ -1419,6 +1501,7 @@ SYN.PA.3 = Card(
     # terms_accepted: target completes trade OR reveals all tokens face-down (count public)
     # at any point while card is active — either clears card
 
+    persistence_clearing_trigger = None,
     persistence_effect    = React(
         trigger = faction(target).PA(target_profile != None).placed_at("Art 03 §9.2.0"),
         effect  = target_profile.replace(Syndicate.written),
@@ -1430,6 +1513,11 @@ SYN.PA.3 = Card(
     # Table enforces; no ARBITER tracking required.
     # If target submits no PA with Target Profile this Quarter: card expires Quarter end.
 
+    success = None,
+    successcrit = None,
+    fail = None,
+    failcrit = None,
+    on_discard = None,
     portrait = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing = None,
 
@@ -1506,6 +1594,7 @@ SYN.PA.4 = Card(
     resolution_type = Transactional,  outcome_type = None,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
     target_district = None,  target_faction = None,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Capital * 2,
@@ -1513,6 +1602,7 @@ SYN.PA.4 = Card(
     success = "Syndicate gains +2 PS. Every opponent must either pay 1 Capital to the supply or immediately lose 1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
+    on_discard = None,
     portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
@@ -1579,6 +1669,7 @@ SYN.PA.5 = Card(
     resolution_type = Transactional,  outcome_type = None,
     persistence = Seasonal,
     persistence_condition = None,  persistence_effect = None,  # see checklist: prose describes a reactive trigger not structured here
+    persistence_clearing_trigger = None,
     target_district = district.named,  target_faction = None,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Capital * 2 + Mandate * 1,
@@ -1586,6 +1677,7 @@ SYN.PA.5 = Card(
     success = "Places a Standing Condition on target_district for the remainder of the Quarter: whenever a Structure Block or Presence Token is placed here, the faction that owns it must pay 1 Capital to Syndicate. If they do not, the structure or token is immediately removed.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
+    on_discard = None,
     portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
@@ -1653,6 +1745,7 @@ SYN.MOD.1 = Card(
     name    = "The Fixer",
     tagline = "That clause was always going to be a problem. Now it isn't.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
 
     layer   = Information,  function = Remove,  subject = AccordAgreement,
 
@@ -1661,10 +1754,15 @@ SYN.MOD.1 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,  # clause removal doesn't require naming a party — the Accord document itself is the target
     target_object   = AccordAgreement(state=active, clause_declared=True),
+    target_freeform = None,
     affinity        = None,
     restriction     = IntelToken(about=faction(accord.party_a)) in faction(Syndicate).hand
                        or IntelToken(about=faction(accord.party_b)) in faction(Syndicate).hand,
@@ -1677,6 +1775,7 @@ SYN.MOD.1 = Card(
     success     = target_object.alter(type=TermRemoval, clause=declared_clause),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -1740,6 +1839,7 @@ SYN.MOD.2 = Card(
     name    = "Shell Corporation",
     tagline = "Every Accord is a market event. Syndicate responds accordingly.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,  # capital.add(1)
 
     trigger         = accord.placed,
@@ -1750,10 +1850,16 @@ SYN.MOD.2 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -1762,6 +1868,7 @@ SYN.MOD.2 = Card(
     success     = faction(Syndicate).capital.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -1825,6 +1932,7 @@ SYN.MOD.3 = Card(
     name    = "Offshore Slush Fund",
     tagline = "When an Accord fails, Syndicate had a clause for that.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = accord.removed,
@@ -1835,10 +1943,16 @@ SYN.MOD.3 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -1847,6 +1961,7 @@ SYN.MOD.3 = Card(
     success     = faction(Syndicate).capital.add(2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -1910,6 +2025,7 @@ SYN.MOD.4 = Card(
     name    = "Insider Trading",
     tagline = "Public success always creates private wealth.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = standing_marker.increased(faction=opponent),
@@ -1920,10 +2036,16 @@ SYN.MOD.4 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -1932,6 +2054,7 @@ SYN.MOD.4 = Card(
     success     = faction(Syndicate).capital.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -1995,6 +2118,7 @@ SYN.MOD.5 = Card(
     name    = "Short Squeeze",
     tagline = "A reputation in freefall is just an undervalued asset.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = standing_marker.decreased(faction=opponent),
@@ -2005,10 +2129,16 @@ SYN.MOD.5 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Capital * 2 + Findings * 1,
@@ -2017,6 +2147,7 @@ SYN.MOD.5 = Card(
     success     = faction(Syndicate).capital.add(1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2080,6 +2211,7 @@ SYN.MOD.6 = Card(
     name    = "Bounty Contract",
     tagline = "If someone wants them gone, I am willing to subsidize the effort.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Modify,  subject = PublicAct,
 
     trigger         = public_act.placed_on_frg(faction=opponent),
@@ -2097,10 +2229,12 @@ SYN.MOD.6 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -2112,6 +2246,7 @@ SYN.MOD.6 = Card(
     ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2175,6 +2310,7 @@ SYN.MOD.7 = Card(
     name    = "Renegotiation Fee",
     tagline = "When the fine print changes, the lawyers get paid.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = NativeResource,
 
     trigger         = accord.corrupted,
@@ -2185,10 +2321,16 @@ SYN.MOD.7 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -2197,6 +2339,7 @@ SYN.MOD.7 = Card(
     success     = faction(Syndicate).capital.add(2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2260,6 +2403,7 @@ SYN.MOD.8 = Card(
     name    = "Vulture Fund",
     tagline = "Buy when there's blood in the streets.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = StructureBlock,  # dual-effect with presence chip, structure treated as primary
 
     trigger         = structure_block.removed(faction=opponent),
@@ -2270,10 +2414,16 @@ SYN.MOD.8 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Syndicate).resources.has(2, Capital),
     cost            = Capital * 2 + Exposure * 1,
@@ -2282,6 +2432,7 @@ SYN.MOD.8 = Card(
     success     = list([arbiter.place(presence_chip, district=target_district, faction=Syndicate, count=1), arbiter.place(structure_block, district=target_district, faction=Syndicate, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2295,7 +2446,7 @@ SYN.MOD.8 = Card(
 ### SYN.MOD.9 — GOODWILL
 
 #### Design Rationale
-Standing floor + boost card: fires whenever Syndicate's own PS decreases, letting Syndicate declare a variable N and pay Capital×N to gain +N PS (N=1 negates the drop, N>1 nets a gain). `success = faction(Syndicate).standing.add(N)` — corrected from invalid statement syntax. The card's original design_note claimed it "does not discard — remains active for further triggers"; per Art 03 §18.2.2, React cards are permanently removed from the game by default once resolved unless card text says otherwise, and Goodwill isn't meant to be an exception — corrected to fire once and discard like any other React, matching the default. The design_note also self-admits two open questions (N-cap, ElectPlayer-vs-Automatic-payment) — cited directly, not re-derived.
+Standing floor + boost card: fires whenever Syndicate's own PS decreases, letting Syndicate declare a variable N and pay Capital×N to gain +N PS (N=1 negates the drop, N>1 nets a gain). `success = faction(Syndicate).standing.add(N)` — corrected from invalid statement syntax. The card's original design_note claimed it "does not discard — remains active for further triggers"; per Art 03 §18.3.2, React cards are permanently removed from the game by default once resolved unless card text says otherwise, and Goodwill isn't meant to be an exception — corrected to fire once and discard like any other React, matching the default. The design_note also self-admits two open questions (N-cap, ElectPlayer-vs-Automatic-payment) — cited directly, not re-derived.
 
 #### Card Story
 Syndicate's reputation takes a hit — anywhere, any cause. Before the news finishes circulating, a public-goodwill campaign is already funded and running, buying back exactly as much standing as Syndicate is willing to spend on it.
@@ -2310,7 +2461,7 @@ Syndicate's reputation takes a hit — anywhere, any cause. Before the news fini
 | Card type fit | ✓ | ModReactCard/Syndicate, real taxonomy (Standing/Shift/StandingMarker, 04-n175). | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Standing×Shift valid per the matrix (04-n173 precedent). | Art 04b §4; ref_taxonomy.md §5.1 |
 | Balance | ⚠ | Scalable N with an admitted-open cap question — could this be abused as unlimited PS-buying if N is uncapped? Design_note flags this itself as unresolved. | Art 02 §6–7; Art 04 §6.5 |
-| Effect duration | ✓ | Immediate — fires once at trigger, discards per default React behavior (Art 03 §18.2.2). | Art 04 §5 P19 |
+| Effect duration | ✓ | Immediate — fires once at trigger, discards per default React behavior (Art 03 §18.3.2). | Art 04 §5 P19 |
 | Persistence | ✓ | `persistence` field not applicable — this is a hand-held React, not a board-placed Standing Condition. No exception to the default discard-on-fire behavior. | Art 04 §6.2 |
 | Trigger validity | ✓ | `standing_marker.decreased(Syndicate)` — confirmed vocabulary, self-scoped, no ambiguity. | Art 04 §6.3 |
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
@@ -2343,6 +2494,7 @@ SYN.MOD.9 = Card(
     name    = "Goodwill",
     tagline = "Reputation is a line item. We budget for it accordingly.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Standing,  function = Shift,  subject = StandingMarker,  # standing += N
 
     trigger         = standing_marker.decreased(Syndicate),
@@ -2353,10 +2505,16 @@ SYN.MOD.9 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Capital * N,  # N declared at trigger (min 1)
@@ -2365,12 +2523,13 @@ SYN.MOD.9 = Card(
     success     = faction(Syndicate).standing.add(N),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
     narrative    = None,
     perspectives = None,
-    design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card discards after firing, per default React behavior (Art 03 §18.2.2). Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger.",
+    design_note  = "Standing floor + boost card. Fires whenever Syndicate's PS decreases (any source — SYN.CA.7 portrait flat −1, failcrit, card effect). At trigger: Syndicate declares N and pays Capital×N; gains +N PS. N=1 negates the decrease (floor). N>1 nets a PS gain above the prior value (boost). Trigger opens the window; spend is scalable. If Capital unavailable: effect does not fire; decrease stands. Card discards after firing, per default React behavior (Art 03 §18.3.2). Outstanding: (1) N cap — uncapped vs. max-N limit pending design pass. (2) Confirm ElectPlayer or Automatic at trigger time — does Syndicate ALWAYS pay, or may they waive at trigger.",
     arbiter_note = "On trigger (Syndicate's standing marker moved down for any reason): Syndicate declares N (min 1) and pays Capital×N. Apply faction(Syndicate).standing.add(N). If Capital unavailable or Syndicate declines: decrease stands. Card is discarded after resolution.",
 )
 ```
@@ -2428,6 +2587,7 @@ SYN.MOD.10 = Card(
     name    = "Lobby",
     tagline = "We don't oppose your agenda. We make it expensive to execute.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Modify,  subject = PublicAct,
 
     trigger         = public_act.placed_on_frg(faction(target)),
@@ -2438,10 +2598,16 @@ SYN.MOD.10 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = faction(named_opponent),
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Capital * 1,
@@ -2450,6 +2616,7 @@ SYN.MOD.10 = Card(
     success     = arbiter.apply_modifier(op=trigger.card, modifier=-15),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2513,6 +2680,7 @@ SYN.MOD.11 = Card(
     name    = "Signature on File",
     tagline = "We already have what we need. The form is a formality.",
     type    = ModReactCard,  faction = Syndicate,
+    subtype = FactionSpecific,
     layer   = Information,  function = Corrupt,  subject = Accord,
 
     trigger         = accord.tabled,  # PENDING: confirm trigger expression — fires at draft tabling stage (before party signatures), not accord.placed (which fires when Accord is already active)
@@ -2523,10 +2691,16 @@ SYN.MOD.11 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = faction(accord.party_b),
     target_object   = AccordForm(state=drafted),  # AccordForm is the established term (Art 06 §9.2, Overture's AccordForm(blank))
+    target_freeform = None,
     affinity        = None,
     restriction     = IntelToken(about=faction(accord.party_b)) in faction(Syndicate).hand,
     cost            = Capital * 2 + Findings * 1 + Mandate * 1 + IntelToken(about=faction(accord.party_b)),
@@ -2535,6 +2709,7 @@ SYN.MOD.11 = Card(
     success     = arbiter.mark_acceptance(accord=trigger.accord, party=faction(accord.party_b), state=signed),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Syndicate: PortraitEntry(submitter=+2)},
     ps_framing   = None,
@@ -2986,6 +3161,8 @@ SYN.MOD.16 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2993,6 +3170,8 @@ SYN.MOD.16 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3073,6 +3252,8 @@ SYN.MOD.17 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3080,6 +3261,8 @@ SYN.MOD.17 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3160,6 +3343,8 @@ SYN.MOD.18 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3167,6 +3352,8 @@ SYN.MOD.18 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3247,6 +3434,8 @@ SYN.MOD.19 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3254,6 +3443,8 @@ SYN.MOD.19 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3334,6 +3525,8 @@ SYN.MOD.20 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3341,6 +3534,8 @@ SYN.MOD.20 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3421,6 +3616,8 @@ SYN.MOD.21 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3428,6 +3625,8 @@ SYN.MOD.21 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3508,6 +3707,8 @@ SYN.MOD.22 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3515,6 +3716,8 @@ SYN.MOD.22 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3595,6 +3798,8 @@ SYN.MOD.23 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3602,6 +3807,8 @@ SYN.MOD.23 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3682,6 +3889,8 @@ SYN.MOD.24 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3689,6 +3898,8 @@ SYN.MOD.24 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3769,6 +3980,8 @@ SYN.MOD.25 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3776,6 +3989,8 @@ SYN.MOD.25 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3857,6 +4072,8 @@ SYN.MOD.26 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3864,6 +4081,8 @@ SYN.MOD.26 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3944,6 +4163,8 @@ SYN.MOD.27 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3951,6 +4172,8 @@ SYN.MOD.27 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 

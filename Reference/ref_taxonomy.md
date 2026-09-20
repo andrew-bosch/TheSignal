@@ -68,6 +68,7 @@ Core sequence: Remove → Transform? → Place. Human hand is implicit intermedi
 | Modifier Card | Economy / Submission |
 | Modifier Token (DB:47) | Resolution | *Art 04 subject field: `ModifierToken` — the physical Resolution-Tools token applied to a Beat 3 row, distinct from Modifier Card (a card type). Registered S149 (schema_cleanup_log #27) — DIR.CA.8 was misclassified as the abstract, non-component Subject "Difficulty" before this.*|
 | Target Profile (DB:48) | Information | *Art 04 subject field: `TargetProfile`. Already a valid Corrupt target below — registered in `card_subject_map` S149 (schema_cleanup_log #27); was previously a `card_subject_map` registration gap, not a conceptual question (GHO.CA.15).* |
+| Battlefield Strength (no component) | Resolution | *Art 04 subject field: `BattlefieldStrength` — a contesting faction's Battlefield Strength total in a contested district (Art 03 §10.1.2). Registered S163 with `component_id = NULL`, like `InfluenceTier`: it is a derived quantity, not a physical piece. First and only user: GUI.MOD.10.* |
 | Covert Operation | Submission / Resolution |
 | Public Act / Public Act | Submission / Standing |
 | Action attribution | Information |

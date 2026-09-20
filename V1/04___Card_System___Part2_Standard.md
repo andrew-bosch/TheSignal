@@ -88,6 +88,7 @@ STD.CA.1 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -101,17 +102,22 @@ STD.CA.1 = Card(
         district(target).faction(acting).structure == 0
     ),
     cost = faction.acting.native * 1 + district.target.native * 1,
+    boost = None,
 
     success     = arbiter.place(structure_block, district=target, faction=acting, count=1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild: PortraitEntry(submitter=+1),
         Ghost: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "Every faction that wants to matter in New Meridian eventually has to build something.",
     perspectives = {
         Guild:       "This is what we do. Every structure we build is an argument that permanence is possible here.",
@@ -120,6 +126,8 @@ STD.CA.1 = Card(
         Ghost:       "A structure is a commitment. Commitments are data points.",
         Syndicate:   "Every structure generates value. The question is who captures it.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -187,6 +195,7 @@ STD.CA.2 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -200,11 +209,15 @@ STD.CA.2 = Card(
         district(target).faction(target).structure > 0
     ),
     cost = faction.acting.native * 1 + district.target.native * 1,
+    boost = None,
 
     success     = arbiter.remove(structure_block, district=target, faction=target, count=1),
     successcrit = faction(acting).native.add(1),
     fail        = None,
     failcrit    = faction(acting).standing.remove(1),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild:       PortraitEntry(submitter=-1),
@@ -212,6 +225,7 @@ STD.CA.2 = Card(
         Directorate: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "Not everything built in New Meridian was meant to last.",
     perspectives = {
         Guild:       "We build. We do not unmake. Every time we perform this action something has gone badly wrong.",
@@ -220,6 +234,8 @@ STD.CA.2 = Card(
         Ghost:       "A demolished structure tells us as much as a standing one. We note the absence.",
         Syndicate:   "Assets change hands. Sometimes the most efficient transfer is removal.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -287,6 +303,7 @@ STD.CA.3 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -297,13 +314,18 @@ STD.CA.3 = Card(
     affinity    = faction(acting) == Network: cost.district.target.native = 0,
     restriction = district(target).faction(acting).presence > 0,
     cost        = faction.acting.native * 1 + district.target.native * 1,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Network: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "Presence without roots is just occupation.",
     perspectives = {
@@ -313,6 +335,8 @@ STD.CA.3 = Card(
         Ghost:       "Presence creates exposure. We expand only when the intelligence justifies the risk.",
         Syndicate:   "Market position requires footprint. We place ourselves where the returns justify it.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -380,6 +404,7 @@ STD.CA.4 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -393,11 +418,15 @@ STD.CA.4 = Card(
         district(target).faction(target).presence > 0
     ),
     cost        = faction.acting.native * 1 + district.target.native * 1,
+    boost = None,
 
     success     = arbiter.remove(presence_chip, district=target, faction=target, count=1),
     successcrit = arbiter.remove(presence_chip, district=target, faction=target, count=1),
     fail        = None,
     failcrit    = faction(acting).standing.remove(1),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild:       PortraitEntry(submitter=-1),
@@ -405,6 +434,7 @@ STD.CA.4 = Card(
         Network:     PortraitEntry(submitter=+1),
     },
 
+    ps_framing = None,
     narrative    = "The most effective opposition leaves no visible wound.",
     perspectives = {
         Guild:       "We do not erase what others have built. Even our enemies.",
@@ -413,6 +443,8 @@ STD.CA.4 = Card(
         Ghost:       "Disruption without intelligence purpose is noise. We prefer signal.",
         Syndicate:   "If their presence can be eroded, it was never well-positioned to begin with.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -480,6 +512,7 @@ STD.CA.5 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -493,13 +526,18 @@ STD.CA.5 = Card(
         faction(acting) == Ghost
     ),
     cost        = faction.acting.native * 1,
+    boost = None,
 
     success     = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     successcrit = game.dispatch(faction(acting), IntelToken(faction=faction(target), quarter=game.quarter)),
     fail        = None,
     failcrit    = game.dispatch(faction(target), NotificationSlip),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Ghost: PortraitEntry(submitter=+1)},
+    ps_framing = None,
 
     narrative    = "In New Meridian, knowing is the first form of power.",
     perspectives = {
@@ -509,6 +547,8 @@ STD.CA.5 = Card(
         Ghost:       "This is what we are here for. Everything else follows from understanding.",
         Syndicate:   "Information has market value. We acquire it when the return justifies the cost.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -576,6 +616,7 @@ STD.CA.6 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -586,11 +627,15 @@ STD.CA.6 = Card(
     affinity    = faction(acting) == Network: cost.Exposure -= 1,
     restriction = None,
     cost        = Exposure * 2,
+    boost = None,
 
     success     = game.ops(beat=4, type=PublicAct, at=district(target)).cost.native.add(1),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Network:     PortraitEntry(submitter=+1),
@@ -598,6 +643,7 @@ STD.CA.6 = Card(
         Directorate: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "People don't act naturally when they know they're being watched.",
     perspectives = {
         Guild:       "Disrupting communications delays approvals, permits, agreements. We feel this more than most.",
@@ -606,6 +652,8 @@ STD.CA.6 = Card(
         Ghost:       "Interference creates analytical cover. We appreciate the quiet.",
         Syndicate:   "Disrupted communications create market inefficiencies. Those can be profitable.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -673,6 +721,7 @@ STD.CA.7 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -683,17 +732,22 @@ STD.CA.7 = Card(
     affinity    = faction(acting) == Network: cost.Exposure -= 1,
     restriction = None,
     cost        = Exposure * 2,
+    boost = None,
 
     success     = faction(acting).op(beat=4, type=PublicAct).standing_impact *= 2,
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Network: PortraitEntry(submitter=+1),
         Ghost:   PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "A message worth sending is worth sending loudly.",
     perspectives = {
         Guild:       "We let our structures speak. Amplification is for those who lack physical evidence.",
@@ -702,6 +756,8 @@ STD.CA.7 = Card(
         Ghost:       "Amplification is the opposite of what we do. Volume attracts attention. Attention ends operations.",
         Syndicate:   "Leverage applied at the right moment can move markets. This is that tool.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -769,6 +825,7 @@ STD.CA.8 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -779,11 +836,15 @@ STD.CA.8 = Card(
     affinity    = faction(acting) == Syndicate: threshold += 25,
     restriction = None,
     cost        = Capital * 3,
+    boost = None,
 
     success     = arbiter.place(presence_chip, district=target, faction=acting, count=2),
     successcrit = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     fail        = None,
     failcrit    = faction(acting).standing.remove(2),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild:       PortraitEntry(submitter=-1),
@@ -793,6 +854,7 @@ STD.CA.8 = Card(
         Syndicate:   PortraitEntry(submitter=+1),
     },
 
+    ps_framing = None,
     narrative    = "In New Meridian, capital is a language everyone understands.",
     perspectives = {
         Guild:       "Presence earned through investment rather than community is fragile. We have seen it collapse.",
@@ -801,6 +863,8 @@ STD.CA.8 = Card(
         Ghost:       "Bought presence is noisier than earned presence. It draws the wrong kind of attention.",
         Syndicate:   "Capital does not just open doors. It determines which doors exist in the first place.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -870,6 +934,7 @@ STD.CA.9 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -880,6 +945,7 @@ STD.CA.9 = Card(
     affinity    = faction(acting) == Syndicate: threshold += 25,
     restriction = None,
     cost        = Capital * 2,
+    boost = None,
 
     success     = (
         faction(target).capital.add(2),
@@ -888,12 +954,16 @@ STD.CA.9 = Card(
     successcrit = faction(acting).standing.add(1),
     fail        = None,
     failcrit    = faction(acting).standing.remove(1),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Directorate: PortraitEntry(submitter=-1),
         Syndicate:   PortraitEntry(submitter=+1),
     },
 
+    ps_framing = None,
     narrative    = "Every alliance in New Meridian begins with someone extending a hand.",
     perspectives = {
         Guild:       "Investment in relationships is as important as investment in structures.",
@@ -902,6 +972,8 @@ STD.CA.9 = Card(
         Ghost:       "Resources flowing between factions change the operational landscape. We note the direction.",
         Syndicate:   "Capital in motion creates relationships. Relationships create opportunities.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -970,6 +1042,7 @@ STD.CA.10 = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -980,11 +1053,15 @@ STD.CA.10 = Card(
     affinity    = faction(acting) IN [Guild, Directorate]: threshold_protection = 45,
     restriction = district(target).faction(acting).presence > 0,
     cost        = district.target.native * 1,
+    boost = None,
 
     success     = game.ops(beat=3, at=district(target), targeting=faction(acting).assets).threshold.remove(threshold_protection if affinity else 25),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild:       PortraitEntry(submitter=+1),
@@ -992,6 +1069,7 @@ STD.CA.10 = Card(
         Ghost:       PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "What you build is only worth as much as your willingness to defend it.",
     perspectives = {
         Guild:       "We protect what we build. This is not optional.",
@@ -1000,6 +1078,8 @@ STD.CA.10 = Card(
         Ghost:       "The best protection is not being found in the first place.",
         Syndicate:   "Protected assets retain value. Unprotected assets invite acquisition.",
     },
+    design_note = None,
+    arbiter_note = None,
 )
 ```
 
@@ -1062,15 +1142,21 @@ STD.CA.11 = Card(
     resolution_type = Transactional, outcome_type=None,
     persistence     = Permanent,
     persistence_condition = not (game.end OR Accord(named).breach_by_party),
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None, target_faction=None, target_object=Accord(executed, on_table),
     target_freeform=None,
     affinity=None,
     restriction = Accord(named).is_executed == True AND Accord(named).on_table == True,
     cost        = Mandate * 1 + faction.acting.native * 1,
+    boost = None,
     success     = game.lock(Accord(named), until=game.end OR Accord(named).breach_by_party),
     successcrit=None, fail=None, failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = None,
+    ps_framing = None,
     narrative   = "The agreement stands. Whatever your reasons for wanting out, the record disagrees.",
     perspectives = {
         Directorate: "The agreement is now a matter of institutional record. Dissolution would require a filing no one is prepared to make.",
@@ -1147,15 +1233,21 @@ STD.CA.12 = Card(
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=district.named, target_faction=None, target_object=Beat2BlockOrProtectCard,
     target_freeform=None,
     affinity=None,
     restriction = district(target).beat2_row.has_block_or_protect_card == True,
     cost        = IntelToken() * 1,
+    boost = None,
     success     = game.discard(target_card, district(target).beat2_row),
     successcrit=None, fail=None, failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = None,
+    ps_framing = None,
     narrative   = "There are no walls. There are only varying degrees of access.",
     perspectives = {},
     design_note  = "Scope: CA-inclusive — targets Block/Protect plays in both the Faction Resolution Grid (Type A CMs, Protect/Fortify modifier plays) and ARBITER's covert resolution grid (Beat 2 CA cards with function=Block or function=Protect). Cannot target Type B Countermeasures (faction defense — reduces difficulty, not a Block/Protect play). Intel token consumed is any held token.",
@@ -1227,6 +1319,7 @@ C_DisinformationCampaign = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -1240,6 +1333,7 @@ C_DisinformationCampaign = Card(
     ),
     restriction = faction(acting).presence(target_district) > 0,
     cost        = faction.acting.native * 2,
+    boost = None,
 
     success     = (faction(target).standing.remove(2), faction(acting).standing.add(1)),
     successcrit = None,
@@ -1249,12 +1343,16 @@ C_DisinformationCampaign = Card(
         arbiter.dispatch(NotificationSlip(type="Disinformation Campaign", district=target_district), target_faction),
     ),
 
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait = {
         Network:     PortraitEntry(submitter=+1),
         Ghost:       PortraitEntry(submitter=-1),
         Directorate: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "The city's opinion is infrastructure. It can be built. It can be demolished.",
     perspectives = {
         Guild:       "Narrative operations are not our toolset. We notice the shift after the quarter closes.",
@@ -1332,6 +1430,7 @@ C_Disprove = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1342,18 +1441,23 @@ C_Disprove = Card(
     affinity    = None,
     restriction = None,
     cost        = faction.acting.native * 2,
+    boost = None,
 
     success     = arbiter.draw_random(IntelToken, source=faction(target).supply,
                       count=1, action=destroy),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Ghost:   PortraitEntry(submitter=+1),
         Network: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "What the record does not contain cannot be verified.",
     perspectives = {
         Guild:       "Operational evidence is a fact of the city. We account for what we do. Who removes the accounting is who fears it.",
@@ -1433,6 +1537,7 @@ C_IntelExtraction = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1445,12 +1550,16 @@ C_IntelExtraction = Card(
     ),
     restriction = None,
     cost        = faction.acting.native * 1,
+    boost = None,
 
     success     = arbiter.draw_random(IntelToken, source=faction(target).supply,
                       count=1, action=transfer(faction(acting).case, face_down=True)),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Syndicate:   PortraitEntry(submitter=+1),
@@ -1458,6 +1567,7 @@ C_IntelExtraction = Card(
         Directorate: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "Information doesn't belong to anyone. It belongs to whoever holds it.",
     perspectives = {
         Guild:       "We do not take what others have built. The intelligence they gathered represents real work.",
@@ -1535,6 +1645,7 @@ C_ModifierRaid = Card(
     outcome_type    = None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1547,12 +1658,16 @@ C_ModifierRaid = Card(
     ),
     restriction = None,
     cost        = faction.acting.native * 2,
+    boost = None,
 
     success     = arbiter.draw_random(ModifierCard, source=faction(target).hand,
                       count=1, action=transfer(faction(acting).case, face_down=True)),
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Syndicate:   PortraitEntry(submitter=+1),
@@ -1560,6 +1675,7 @@ C_ModifierRaid = Card(
         Directorate: PortraitEntry(submitter=-1),
     },
 
+    ps_framing = None,
     narrative    = "They packed for an operation they will never run.",
     perspectives = {
         Guild:       "Tools are built for a purpose. Taking them from someone who made them is not the same as earning them.",
@@ -1663,6 +1779,7 @@ STD.PA.1 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -1679,6 +1796,9 @@ STD.PA.1 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Directorate: PortraitEntry(submitter=+1),
@@ -1762,6 +1882,7 @@ STD.PA.2 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -1786,6 +1907,9 @@ STD.PA.2 = Card(
     successcrit = None,
     fail        = faction(acting).standing.remove(1),
     failcrit    = faction(acting).standing.remove(2),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Network:     PortraitEntry(submitter=+1),
@@ -1870,6 +1994,7 @@ STD.PA.3 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -1889,6 +2014,9 @@ STD.PA.3 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Guild: PortraitEntry(submitter=+1),
@@ -1972,6 +2100,7 @@ STD.PA.4 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -1992,6 +2121,9 @@ STD.PA.4 = Card(
     successcrit = None,
     fail        = faction(acting).standing.remove(1),
     failcrit    = faction(acting).standing.remove(2),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Network:     PortraitEntry(submitter=+1),
@@ -2077,6 +2209,7 @@ STD.PA.5 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -2100,6 +2233,9 @@ STD.PA.5 = Card(
     successcrit = None,
     fail        = faction(acting).standing.remove(1),
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Network: PortraitEntry(submitter=+1),
@@ -2183,6 +2319,7 @@ STD.PA.6 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -2203,6 +2340,9 @@ STD.PA.6 = Card(
     successcrit = None,
     fail        = faction(acting).standing.remove(1),
     failcrit    = faction(acting).standing.remove(2),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Syndicate: PortraitEntry(submitter=+1),
@@ -2286,6 +2426,7 @@ STD.PA.7 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,
@@ -2302,6 +2443,9 @@ STD.PA.7 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Directorate: PortraitEntry(submitter=+1),
@@ -2387,6 +2531,7 @@ STD.PA.8 = Card(
     outcome_type    = BilateralAgreement,
     persistence     = Immediate,  # AccordForm delivery resolves at Beat 4; form lifecycle governed by Art 06 §9.4
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -2410,6 +2555,9 @@ STD.PA.8 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {
         Directorate: PortraitEntry(submitter=+1),
@@ -2493,6 +2641,7 @@ STD.PA.9 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.any,

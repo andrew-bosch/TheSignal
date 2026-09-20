@@ -69,6 +69,7 @@ NET.CA.1 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Information,  function = Reveal,  subject = CovertOperation,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -89,6 +90,12 @@ NET.CA.1 = Card(
     design_note  = "Pre-execution discovery + cancellation model: target op cancelled, resources lost, PS reduction applies. Cross-resource cost 1 Exposure + 1 Findings by design to force trade dependency. Beat 3 initiative incentive: Network benefits from going first; fizzle risk if target ops resolve before Leak fires. ps_framing for target PS reduction pending finalization. Subject is CovertOperation, not District: DistrictTile has no Reveal in comp_verb_phase — the card reveals and cancels the operation, not the district itself.",
     arbiter_note = "Among target faction's unresolved covert operations in the Beat 3 grid, identify the operation with the highest total resource cost submitted. Publicly announce: operation name, acting faction, target district. Cancel the operation — it does not resolve; resources submitted are lost. Target faction PS reduction applies (discovery consequence — ps_framing pending finalization). If no unresolved operations remain for target faction at time of Leak's resolution, operation has no effect — Network's resources spent. Network's acting faction identity is not announced at resolution.",
     value_rating = 4,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -144,6 +151,7 @@ NET.CA.2 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Economy,  function = Add,  subject = Exposure,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -161,6 +169,12 @@ NET.CA.2 = Card(
     design_note  = "Replaces NET.CA.2 Source Protection (retired S51). Source Protection was doctrinally misaligned — protecting attribution is Ghost's register, not Network's. Pairs with NET.CA.1 Leak and NET.CA.3 Breaking News.",
     arbiter_note = "At Beat 3 cleanup, check whether any Network Reveal card resolved successfully this round. If yes, deliver 1 Exposure to Network's resource pool. If no Reveal resolved, card takes effect but produces nothing — the slot cost was the investment.",
     value_rating = 1,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -224,6 +238,7 @@ NET.CA.3 = Card(
     type    = CovertOperation, subtype = FactionSpecific, faction = Network,
     layer   = Information, function = Reveal, subject = CovertOperation,
     beat=2, resolution=d100, threshold=50, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = Probabilistic, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -253,6 +268,12 @@ NET.CA.3 = Card(
     design_note  = "Point-in-time forced reveal, avoiding the cross-beat state tracking a notification-redirect model would require (Governing Rule 6.1). Fills Network's forced-transparency FactionSpecific slot at L1. Beat 2: ARBITER announces target's first Beat 3 queue entry to all players; VM-xx placed to flag public Beat 3 resolution. Distinct from NET.CA.1 Leak (Beat 3 cancel + reveal) and GHO.CA.2 Intercept (private IS-xx to Ghost). Fizzle: if target has no committed Beat 3 ops at Beat 2, announce fizzle; cost spent. Second Beat 2 d100 card alongside GHO.CA.2 — procedure gap in Art 03, not yet formalized.",
     arbiter_note = "Network has played Breaking News targeting faction X. Roll d100 (threshold 50 + PS modifier). Success: check faction X's Beat 3 queue. If empty: announce 'No operations queued for faction X — Breaking News fizzles'; cost spent, no further effect. Otherwise: identify faction X's first entry in Beat 3 resolution order; announce to all players: card name, type, declared targets; place VM-xx on that card in the grid. VM-xx procedure at Beat 3: when this card is reached, announce it publicly, roll d100 visibly, announce outcome to table, then remove VM-xx. Do not announce Network as acting faction. Crit success: reveal and place VM-xx on ALL of faction X's Beat 3 queue entries. Fail: cost spent, no announcement. Crit fail: dispatch NotificationSlip to faction X only. Do not announce Network.",
     value_rating = 4,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -308,6 +329,7 @@ NET.CA.4 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Submission,  function = Modify,  subject = PublicAct,
     beat=2, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = PositionalWager, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -325,6 +347,12 @@ NET.CA.4 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 1,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -380,6 +408,7 @@ NET.CA.5 = Card(
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Network,
     layer   = Territory,  function = Add,  subject = PresenceToken,
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, trigger=None,
+    doctrine_mod = None,
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
@@ -397,6 +426,12 @@ NET.CA.5 = Card(
     design_note  = None,
     arbiter_note = None,
     value_rating = 1,
+    persistence_clearing_trigger = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -455,15 +490,21 @@ NET.CA.6 = Card(
     resolution_type = Transactional, outcome_type=None,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
     target_district=None, target_faction=faction.any, target_object=None,
     target_freeform=None,
     affinity=None,
     restriction=None,
     cost        = None,
+    boost = None,
     success     = (faction(acting).standing.remove(2), IntelToken(target_faction).add(1)),
     successcrit=None, fail=None, failcrit=None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = None,
+    ps_framing = None,
     narrative   = "The Network knows: sometimes you spend credibility like currency. This is one of those times.",
     perspectives = {Network: "What we have built is not a goal. It is a tool. And sometimes a tool must be spent."},
     design_note  = "PS −2 is a success effect, not a cost — PS is non-fungible and cannot appear in the cost field (Art 04 §6.2). target_faction required: tokens must be keyed at Dispatch. Single use per play; 2:1 ratio prevents cheap IntelToken arbitrage.",
@@ -535,18 +576,22 @@ NET.CA.7 = Card(
     resolution_type = Probabilistic,
     outcome_type=None,
     persistence=Immediate, persistence_condition=None, persistence_effect=None,
+    persistence_clearing_trigger = None,
     target_district = district.named,
     target_faction=None, target_object=None, target_freeform=None,
     affinity=None,
     restriction = faction(acting).influence_level(district(target)) <= InfluenceLevel.Established,
     cost    = Exposure * 1,
+    boost = None,
     success = faction(acting).standing.add(1),
     successcrit = (arbiter.place(presence_chip, district=target, faction=acting, count=1),
                    faction(acting).standing.add(1)),
     fail=None,
     failcrit    = faction(acting).standing.remove(1),
     on_accept=None, on_decline=None,
+    on_discard = None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
+    ps_framing = None,
     narrative   = "No one announces this. The message moves because the people carrying it are already there, already part of the district's daily traffic. The signal is readable only to those who know how to read it.",
     perspectives = {Network: "We're not running outreach. We're making our existing presence legible to people who've been ignoring it."},
     design_note  = "Restriction: Network IL in target district ≤ Established (Dominant excluded — at Dominant, the street already knows). Successcrit delta: +1 chip in target district + +1 PS additional on top of success's +1 PS (total on successcrit: +2 PS, +1 chip placed).",
@@ -610,6 +655,8 @@ NET.CA.8 = Card(
 
     beat    = 2,
     resolution = d100,  threshold = 50,
+    ring_mod = None,
+    doctrine_mod = None,
     resolution_type = Probabilistic,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
@@ -633,6 +680,15 @@ NET.CA.8 = Card(
     design_note = "Network fabricates a story pointing to a destination district with no strategic value. The target faction's DeploymentMarker follows — their deployment is wasted. TargetProfile: target_faction and target_district identify the marker and its current location; freeform field specifies destination district. ARBITER executes the move and flips marker to Unconverted status. Chain play: Beat 2 covert move → same Quarter Leak or Live Coverage exposing the displaced position.",
     arbiter_note = "Read TargetProfile: target_faction and target_district identify whose marker and from which district. Freeform field specifies destination. Beat 2: move marker from source to destination; flip to Unconverted face. Announce marker has moved — do not announce acting faction. Fail: no effect, cost spent.",
     value_rating = 4,
+    trigger = None,
+    outcome_type = None,
+    persistence_clearing_trigger = None,
+    target_freeform = None,
+    boost = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
+    ps_framing = None,
 )
 ```
 
@@ -708,6 +764,7 @@ NET.PA.1 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = None,
@@ -730,6 +787,9 @@ NET.PA.1 = Card(
         faction(Network).standing.remove(1),
     ),
     failcrit = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Network: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -808,6 +868,7 @@ NET.PA.2 = Card(
     outcome_type    = Unilateral,
     persistence     = Immediate,
     persistence_condition = None,
+    persistence_clearing_trigger = None,
     persistence_effect    = None,
 
     target_district = district.up_to_three,  # 1–3 districts named at Phase B; each must be Established+
@@ -828,6 +889,9 @@ NET.PA.2 = Card(
     successcrit = None,
     fail        = None,
     failcrit    = None,
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
 
     portrait = {Network: PortraitEntry(submitter=+1)},
     ps_framing = None,
@@ -923,6 +987,9 @@ NET.PA.3 = Card(
     ),
     fail        = None,
     failcrit    = faction(acting).standing.remove(1),
+    on_accept = None,
+    on_decline = None,
+    on_discard = None,
     portrait    = {Network: PortraitEntry(submitter=+1)},
     ps_framing  = None,
     narrative   = "The story is already written. The only question is whether the subject chooses the cameras or the consequences.",
@@ -997,17 +1064,28 @@ NET.MOD.2 = Card(
     name    = "Troll Farm",  # placeholder name — confirm before sign-off
     tagline = "The narrative was already moving. We just changed where it was going.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
     trigger = standing_marker.increased(faction=Any, except=Network),
               # fires when any other faction's standing marker increases (publicly observable)
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     beat    = None,  resolution = Automatic,  resolution_type = Transactional,
+    threshold = None,
+    ring_mod = None,
+    doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     target_district = None,  target_faction = trigger.faction,  target_object = None,  target_freeform = None,
+    affinity = None,
     cost    = Exposure * 1 + Capital * 1,
     boost   = None,
     success = faction(trigger.faction).standing.remove(1),
     successcrit = None,  fail = None,  failcrit = None,  on_accept = None,  on_decline = None,
     restriction = None,
+    on_discard = None,
     portrait = {Network: PortraitEntry(submitter=+1)},
     ps_framing = None,
     narrative = None,  perspectives = None,  arbiter_note = None,
@@ -1074,6 +1152,7 @@ NET.PA.4 = Card(
     resolution_type = Probabilistic,  outcome_type = None,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
     target_district = district.named,  target_faction = faction.opponent,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Exposure * 1 + district.target_district.native * 1,
@@ -1081,6 +1160,7 @@ NET.PA.4 = Card(
     success = "Remove 1 target_faction's Presence Token from target_district. Target faction loses 1 PS. Network gains +1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
+    on_discard = None,
     portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
@@ -1146,6 +1226,7 @@ NET.PA.5 = Card(
     resolution_type = Transactional,  outcome_type = None,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
     target_district = None,  target_faction = faction.opponent,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Exposure * 2 + faction.target.native * 1,
@@ -1153,6 +1234,7 @@ NET.PA.5 = Card(
     success = "Target faction loses 3 Public Standing. Network gains +1 PS.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
+    on_discard = None,
     portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
@@ -1218,6 +1300,7 @@ NET.PA.6 = Card(
     resolution_type = Transactional,  outcome_type = None,
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
     target_district = None,  target_faction = None,  target_object = None,  target_freeform = None,
     affinity = None,  restriction = None,
     cost    = Exposure * 1,
@@ -1225,6 +1308,7 @@ NET.PA.6 = Card(
     success = "Network names a resource type. Network gains 1 of that resource type for every 4 points of positive Public Standing they currently have.",
     successcrit = None,  fail = None,  failcrit = None,
     on_accept = None,  on_decline = None,
+    on_discard = None,
     portrait = None,
     ps_framing = None,
     narrative = None,  perspectives = None,
@@ -1286,6 +1370,7 @@ NET.MOD.1 = Card(
     name    = "Pirate Transmitter",
     tagline = "A public action changes the district. The signal finds the opening.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
     trigger = board_state.changed(component=[presence_chip, structure_block], change=Any, cause=public_act, faction=Any),
               # fires on any influence chip or structure block placed/removed in any district,
@@ -1296,15 +1381,21 @@ NET.MOD.1 = Card(
     ring_mod=None,  doctrine_mod=None,  outcome_type=None,
     value_rating = 1,
     persistence=Immediate,  persistence_condition=None,  persistence_effect=None,
+    persistence_clearing_trigger = None,
     target_faction=None,  target_object=None,  target_freeform=None,
     affinity=None,  restriction=None,
     cost    = Exposure * 1,
+    boost = None,
     success = arbiter.place(presence_chip, district=target, faction=acting, count=1),
     successcrit = faction(acting).standing.add(1),
     fail    = None,
     failcrit = faction(acting).standing.remove(1),
     on_accept=None,  on_decline=None,
+    on_discard = None,
     portrait = {Network: PortraitEntry(submitter=+1)},
+    ps_framing = None,
+    ring_constraint = None,
+    ring_origin = None,
     narrative   = "The district was already moving. Network didn't start the change — it arrived at the same time the change did. Two signals crossing in the open.",
     perspectives = {Network: "We don't need to create the disruption. We need to be in position when it happens."},
     design_note  = "Trigger: any PA success that causes a board state change (influence chip or structure block placed or removed in district). Target district fixed by trigger — not a free choice. No restriction on Network existing presence. Modifier card schema fields are CA-convention placeholders pending reconciliation.",
@@ -1338,7 +1429,7 @@ Network's standing takes a public hit. Before the damage settles, the redundant 
 | Portrait validity | ✓ | Empty `{}` justified per Doctrine alignment row. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=None` — correct; not a territory effect. | Art 01 §6–7 |
 | Supported by components | ✓ | Standard PS/standing-marker mechanism, once the magnitude is resolved. | Art 02 §6–8 |
-| Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Reuses existing PS-decrease event; no new ARBITER behavior. | Art 03; GR 6.1 |
+| Supported by game procedure | ✓ | Card carries no `arbiter_note` and no inline comments. Its cost and boost are charged by the general React payment step, which validates the submitted resources and places the resulting BoostMarkers — no card-specific ARBITER handling. | Art 03 §18.2; GR 6.1 |
 | Data schema validation | ⚠ | `success` magnitude is a literal `TBD` — not a schema-format issue (the field is present and correctly typed as a mutation call), but a genuine unresolved content gap. | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | `narrative` field empty. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch (once the magnitude is resolved). | Art 04 §5 P27 |
@@ -1366,6 +1457,7 @@ NET.MOD.3 = Card(
     name    = "Backup Server Racks",
     tagline = "When Network loses standing, redirect the narrative before it lands.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Standing,  function = Shift,  subject = StandingMarker,
 
     trigger         = standing_marker.decreased(faction=Network),
@@ -1376,10 +1468,16 @@ NET.MOD.3 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = Network,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Exposure * 1,
@@ -1388,6 +1486,7 @@ NET.MOD.3 = Card(
     success     = faction(Network).standing.add(1 + n_boost),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -1451,6 +1550,7 @@ NET.MOD.4 = Card(
     name    = "Amplification Array",
     tagline = "When news breaks publicly, the Network's signal extends.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = broadcast_card.placed,  # db25 — SitRep card placed in Situation Report Zone
@@ -1461,10 +1561,16 @@ NET.MOD.4 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = faction(Network).district.any,  # any district where Network has presence
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Network).any_presence,  # must have at least 1 district with presence
     cost            = None,
@@ -1473,6 +1579,7 @@ NET.MOD.4 = Card(
     success     = arbiter.place(presence_chip, district=faction(Network).district.acting_choice, faction=Network, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -1536,6 +1643,7 @@ NET.MOD.5 = Card(
     name    = "Infrastructure Signal",
     tagline = "Public broadcasts amplify Network reach in established infrastructure districts.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = broadcast_card.placed,  # db25
@@ -1546,10 +1654,16 @@ NET.MOD.5 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = faction(Network).district.ring(2).any,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Network).presence_in_ring(2),
     cost            = None,
@@ -1558,6 +1672,7 @@ NET.MOD.5 = Card(
     success     = arbiter.place(presence_chip, district=faction(Network).district.ring(2).acting_choice, faction=Network, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -1621,6 +1736,7 @@ NET.MOD.6 = Card(
     name    = "Street-level Agitator",
     tagline = "When anyone moves in the Baryo, Network's voice follows.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = presence_chip.placed(faction=Any, ring=3),
@@ -1631,10 +1747,16 @@ NET.MOD.6 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = faction(Network).district.ring(3).adjacent_to(trigger.district),
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Network).any_presence,
     cost            = None,
@@ -1643,6 +1765,7 @@ NET.MOD.6 = Card(
     success     = arbiter.place(presence_chip, district=faction(Network).district.ring(3).acting_choice, faction=Network, count=1),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -1706,6 +1829,7 @@ NET.MOD.7 = Card(
     name    = "Community Amplifiers",
     tagline = "The louder the city gets, the more they listen.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = ModifierCard,
 
     trigger         = public_act.resolved(faction=Any),
@@ -1716,10 +1840,16 @@ NET.MOD.7 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = None,
@@ -1728,6 +1858,7 @@ NET.MOD.7 = Card(
     success     = arbiter.draw_modifier(faction=Network, count=2, if_acting_faction=Network, then_count=3),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -1791,6 +1922,7 @@ NET.MOD.8 = Card(
     name    = "Frequency Splitter",
     tagline = "A single broadcast splinters into a dozen channels.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Add,  subject = PresenceToken,
 
     trigger         = board_state.changed(component=modifier_card, change=placed, faction=Network),
@@ -1801,10 +1933,16 @@ NET.MOD.8 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = faction(Network).district.ring(3).acting_choice,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = faction(Network).any_presence,
     cost            = None,
@@ -1813,6 +1951,7 @@ NET.MOD.8 = Card(
     success     = list([arbiter.draw_modifier(faction=Network, count=1), arbiter.place(presence_chip, district=target_district, faction=Network, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -1876,6 +2015,7 @@ NET.MOD.9 = Card(
     name    = "Bandwidth Override",
     tagline = "Conflict creates the ultimate engagement metric.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = ModifierCard,
 
     trigger         = tension_marker.placed(),
@@ -1886,10 +2026,16 @@ NET.MOD.9 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = None,
     target_faction  = None,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Exposure * 1 + Findings * 1,
@@ -1898,6 +2044,7 @@ NET.MOD.9 = Card(
     success     = arbiter.draw_modifier(faction=Network, count=4),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -1961,6 +2108,7 @@ NET.MOD.10 = Card(
     name    = "Local Organizers",
     tagline = "They sent operatives. We sent neighbors.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Territory,  function = Redirect,  subject = PresenceToken,
 
     trigger         = presence_chip.placed(faction=Any, ring=3),
@@ -1971,10 +2119,16 @@ NET.MOD.10 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
 
     target_district = trigger.district,
     target_faction  = trigger.faction,
     target_object   = None,
+    target_freeform = None,
     affinity        = None,
     restriction     = None,
     cost            = Resource(Exposure, 1),
@@ -1983,6 +2137,7 @@ NET.MOD.10 = Card(
     success     = list([arbiter.remove(presence_chip, district=target_district, faction=target_faction, count=1), arbiter.place(presence_chip, district=target_district, faction=Network, count=1)]),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2049,6 +2204,7 @@ NET.MOD.11 = Card(
     name    = "Cancel Campaign",
     tagline = "Hijack the narrative of an opponent's public action.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
 
     layer   = Standing,  function = Shift,  subject = StandingMarker,  # confirmed registered pairing — ref_taxonomy.md §5.2 (Standing Marker: Standing)
 
@@ -2057,11 +2213,16 @@ NET.MOD.11 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 4,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = None,
     target_faction  = faction(trigger.public_act.submitter),
     target_object   = None,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = Exposure(1),
     boost           = None,
@@ -2069,6 +2230,7 @@ NET.MOD.11 = Card(
     success     = (faction(target_faction).standing.remove(2), faction(Network).exposure.add(1)),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Network: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2132,6 +2294,7 @@ NET.MOD.12 = Card(
     name    = "Forced Transparency",
     tagline = "Broadcast their intended target before they are ready.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
 
     layer   = Information,  function = Reveal,  subject = TargetProfile,
 
@@ -2140,11 +2303,16 @@ NET.MOD.12 = Card(
     ring_constraint = None,  ring_origin = None,  value_rating = 1,
     resolution      = Automatic,  threshold = None,  resolution_type = Transactional,  outcome_type = None,
     ring_mod        = None,  doctrine_mod = None,
+    persistence = Immediate,
+    persistence_condition = None,
+    persistence_clearing_trigger = None,
+    persistence_effect = None,
     acquisition     = Deck,  generating_card = None,
 
     target_district = None,
     target_faction  = None,  # not declared — targets whichever PA the trigger identifies
     target_object   = trigger.public_act,
+    target_freeform = None,
     affinity        = None,  restriction = None,
     cost            = Exposure(1),
     boost           = None,
@@ -2152,6 +2320,7 @@ NET.MOD.12 = Card(
     success     = arbiter.reveal(TargetProfile, on=trigger.public_act),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Network: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2214,6 +2383,7 @@ NET.MOD.13 = Card(
     name    = "Press Credentials",
     tagline = "The broadcast is live. No one pulls a credentialed signal off the air.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Submission,  function = Protect,  subject = PublicAct,
 
     trigger         = public_act.placed_on_frg(faction=Network),
@@ -2222,6 +2392,7 @@ NET.MOD.13 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
@@ -2235,10 +2406,12 @@ NET.MOD.13 = Card(
     persistence_condition = not trigger.card.resolved,
     persistence_clearing_trigger = None,  # clears via persistence_condition going False when the protected PA resolves
     persistence_effect = arbiter.protect(trigger.card, from=targeting),
+    target_freeform = None,
 
     success     = None,
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = {Network: PortraitEntry(submitter=+1)},
     ps_framing   = None,
@@ -2301,6 +2474,7 @@ NET.MOD.14 = Card(
     name    = "Subscriber Network",
     tagline = "The audience grows. So does the signal.",
     type    = ModReactCard,  faction = Network,
+    subtype = FactionSpecific,
     layer   = Economy,  function = Add,  subject = ModifierCard,
 
     trigger         = standing_marker.increased(faction=Network),
@@ -2309,6 +2483,7 @@ NET.MOD.14 = Card(
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
+    outcome_type = None,
 
     target_district = None,
     target_faction  = None,
@@ -2320,10 +2495,13 @@ NET.MOD.14 = Card(
 
     persistence = Immediate,
     persistence_condition = None,  persistence_effect = None,
+    persistence_clearing_trigger = None,
+    target_freeform = None,
 
     success     = arbiter.draw_modifier(faction=Network, count=2),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
+    on_discard = None,
 
     portrait     = None,
     ps_framing   = None,
@@ -2774,6 +2952,8 @@ NET.MOD.19 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2781,6 +2961,8 @@ NET.MOD.19 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2861,6 +3043,8 @@ NET.MOD.20 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2868,6 +3052,8 @@ NET.MOD.20 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -2948,6 +3134,8 @@ NET.MOD.21 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -2955,6 +3143,8 @@ NET.MOD.21 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3035,6 +3225,8 @@ NET.MOD.22 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3042,6 +3234,8 @@ NET.MOD.22 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3122,6 +3316,8 @@ NET.MOD.23 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3129,6 +3325,8 @@ NET.MOD.23 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3209,6 +3407,8 @@ NET.MOD.24 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3216,6 +3416,8 @@ NET.MOD.24 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3296,6 +3498,8 @@ NET.MOD.25 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3303,6 +3507,8 @@ NET.MOD.25 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3383,6 +3589,8 @@ NET.MOD.26 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3390,6 +3598,8 @@ NET.MOD.26 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3470,6 +3680,8 @@ NET.MOD.27 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3477,6 +3689,8 @@ NET.MOD.27 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3557,6 +3771,8 @@ NET.MOD.28 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3564,6 +3780,8 @@ NET.MOD.28 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3645,6 +3863,8 @@ NET.MOD.29 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3652,6 +3872,8 @@ NET.MOD.29 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
@@ -3732,6 +3954,8 @@ NET.MOD.30 = Card(
     target_faction = None,
     target_object = None,
     target_freeform = None,
+    affinity = None,
+    restriction = None,
     success = None,
     successcrit = None,
     fail = None,
@@ -3739,6 +3963,8 @@ NET.MOD.30 = Card(
     on_accept = None,
     on_decline = None,
     on_discard = None,
+    perspectives = None,
+    design_note = None,
 )
 ```
 
