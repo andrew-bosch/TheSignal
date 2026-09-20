@@ -911,7 +911,7 @@ Guild's Grant Deed card — parallel to SYN.CA.8 Land Title in mechanism, distin
 
 Cost: 4 Capacity + 1 `district(target).native` — a modest bump reflecting that GD-01's fire effect is trigger-conditional, not a guaranteed payoff, so cost scales sub-proportionally to the deed's raw value — the district-native term is the cross-resource commitment that satisfies the §9.2 ceiling gap (04-n119). Guild must engage with the target district's resource economy to file the order. Restriction: no Guild structure in target district (same gate as GUI.CA.4) and not Chorus Node. Automatic resolution — filing a development order doesn't require a roll. Multiple orders on the same district permitted; cost-governed.
 
-Doctrinal distinction from SYN.CA.8: Guild's deed doesn't extract value from others' development. It establishes Guild's right to participate. The fire effect (+1 Presence Token + 1 Structure Block per GD-01) reflects Guild crews arriving to execute the build — not just a claim on paper.
+Doctrinal distinction from SYN.CA.8: Guild's deed doesn't extract value from others' development. It establishes Guild's right to participate. The fire effect (+1 Presence Token and +1 Structure Block for the holder, and removal of the triggering faction's structure block, per GD-01) reflects Guild crews arriving to execute the build — not just a claim on paper, and not merely alongside whoever built first.
 
 #### Card Story
 The Guild files the development order before a single wall goes up. The district is undeveloped — for now. When any faction breaks ground, the permit is already on file. The crews arrive with the first delivery truck.

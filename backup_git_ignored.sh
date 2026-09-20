@@ -2,7 +2,7 @@
 set -e
 
 PROJECT_DIR="/home/abosch/Projects/TheSignal"
-ARCHIVE_DIR="/home/abosch/Projects/TheSignal/Database/db_backups/ignored_files_archives"
+ARCHIVE_DIR="/mnt/storage/backups/TheSignal_Ignored"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
 mkdir -p "$ARCHIVE_DIR"

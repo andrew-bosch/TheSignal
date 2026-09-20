@@ -1,8 +1,8 @@
 # 04b — ACTION TAXONOMY & DESIGN ANALYSIS
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.6  
-**Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off. v1.9: §5.2 card index and §7 faction coverage matrix relocated to Art 04 §8/§9 (S116); §8 completed items removed. v2.0: §8.0 Standard doctrine statement added (S119, gate for 04-n87 audit). v2.1: §6.4 Economic Integration Audit added (S119, per 00a §9.2 — audit framework for 04-n87–04-n92). v2.2: §6.4 STD+GHO audit results added (S120, gates 04-n87/04-n88). v2.3: §6.4 STD+DIR audit results added; §8.2 Directorate section updated to S121 (S121, 04-n89). v2.4: §6.4 STD+GUI audit results added; §8.5 Guild section updated to S122 (S122, 04-n92 ✅). v2.5: §6.4 STD+SYN audit results added; §8.4 Syndicate section updated to S123 (S123, 04-n91 ✅). v2.6: §6.4 STD+NET audit results added; §8.3 Network section updated to S123 (S123, 04-n90 ✅).  
+**Version:** 2.7  
+**Status:** ✅ Locked — v1.8 signed off S108 (04b-21). §4/§5 material changes require re-sign-off. §6–9 are working sections; updates do not require re-sign-off. v1.9: §5.2 card index and §7 faction coverage matrix relocated to Art 04 §8/§9 (S116); §8 completed items removed. v2.0: §8.0 Standard doctrine statement added (S119, gate for 04-n87 audit). v2.1: §6.4 Economic Integration Audit added (S119, per 00a §9.2 — audit framework for 04-n87–04-n92). v2.2: §6.4 STD+GHO audit results added (S120, gates 04-n87/04-n88). v2.3: §6.4 STD+DIR audit results added; §8.2 Directorate section updated to S121 (S121, 04-n89). v2.4: §6.4 STD+GUI audit results added; §8.5 Guild section updated to S122 (S122, 04-n92 ✅). v2.5: §6.4 STD+SYN audit results added; §8.4 Syndicate section updated to S123 (S123, 04-n91 ✅). v2.6: §6.4 STD+NET audit results added; §8.3 Network section updated to S123 (S123, 04-n90 ✅). **v2.7 (S162, PM02 L380) — two §5.1 corrections, both material, both signed off by Andy in session.** (1) The blanket *"Modifier Cards are excluded from Layer — Function — Subject taxonomy"* scoped to ModActionCard and ModBattleCard only; ModReactCard carries real taxonomy on 91 of 93 cards. (2) **Add vs. Redirect discriminator added** to the Function vocabulary — the test is whether one and the same element changes hands, with STD.CA.9 / GUI.PA.2 as the worked pair (04-n232, closed as no defect).  
 **Last Updated:** 2026-06-26  
 **Companion to:** 04 — Action Card System  
 **Purpose:** Preserve the taxonomy framework, development decisions, coverage analysis, and faction design recommendations that govern Artifact 04 and all future card design passes.
@@ -145,9 +145,23 @@ This distinguishes Economy — Remove — Native Resource (removing tokens from 
 | Shift | Moves a track value (Portrait, Public Standing) up or down | Move |
 | Corrupt | Alters a physically written or recorded value on a component | Corrupt |
 
+**Add vs. Redirect — the discriminator is whether the same element changes hands.**
+
+Both Functions can describe a card where one faction pays and another gains, so the shapes look alike. They are told apart by a single test:
+
+> **Does one and the same element leave one holder and arrive at another?** If yes, it is **Redirect** — an ownership change, primitive verb Move. If the acting faction's payment is *consumed* and a different element is *created* for the beneficiary, nothing changed hands: it is **Add**, drawn from supply.
+
+Worked pair, both correct as tagged:
+
+- **STD.CA.9 Fund** — `Economy / Redirect / NativeResource`. Costs `Capital * 2`; success is `faction(target).capital.add(2)`. The same resource, in the same amount, leaves the acting faction and arrives in the target's pool. An ownership change.
+- **GUI.PA.2 Infrastructure Bond** — `Economy / Add / AccordAgreement`. Costs `Capacity * 3`; success is `faction(target).resource(native).add(2)`. Guild's Capacity is consumed and the *target's own* native resource is created. No single element changes hands.
+
+A delivered instrument on either side of the test — an Overture, a blank Accord form — is incidental to it. Deciding the Function on which artifact feels more important is what produces mis-tags; decide it on whether an element moved.
+
+
 **Primitive Verb(s)** — the physical verb(s) from §3.1 that execute this card's effect on a component. `—` indicates the card operates as a constraint or modifier on another action rather than directly executing a physical primitive. This is the bridge between the card design layer and the physical action model.
 
-**Modifier Card Scope** — Modifier Cards are excluded from Layer — Function — Subject taxonomy (§9). They do not produce game-state primitives; they alter the parameters of primitives initiated by taxonomy cards. Their design space spans all six layers — any valid action from any layer can be the host action for a Modifier. The design question is not "which layer?" but "what host action does this require, and what parameter does it change?" Parameters a Modifier can alter include difficulty, cost, threshold, scope, outcome, timing, or validity of the host action.
+**Modifier Card Scope** — **ModActionCard and ModBattleCard** are excluded from Layer — Function — Subject taxonomy. They do not produce game-state primitives; they alter the parameters of primitives initiated by taxonomy cards. **ModReactCard is not excluded and carries real taxonomy** — it does not attach to a host action; it fires on its own when a board-state trigger matches, and so produces primitives of its own. 91 of 93 ModReactCards carry a populated Layer/Function/Subject. The blanket exclusion stated here previously was superseded and is corrected; Art 04 §8's ModReactCard rows still carry the retired wording and are tracked separately at PM05 04-n237. Their design space spans all six layers — any valid action from any layer can be the host action for a Modifier. The design question is not "which layer?" but "what host action does this require, and what parameter does it change?" Parameters a Modifier can alter include difficulty, cost, threshold, scope, outcome, timing, or validity of the host action.
 
 **React, Instant, and Interrupt** — timing sub-functions within the Modifier Card type that describe *when* a Modifier fires, not *what* it affects. Timing is a separate classification axis from Layer and Function: a Modifier is classified by its primary effect, not its trigger. Because Modifiers can target host actions from any layer, React/Instant/interrupt effects can appear across all layers — for example, Economy — Add — Native Resource triggered by an opponent's resolved action (GUI.CA.2); Submission — Block on an Instant played in-flight; Information — Reveal triggered on attribution. React triggers must be publicly observable (Art 04 §5 P5). Full mechanic treatment — trigger conditions, stack behavior, observability requirements — is in Art 03 §18. A Timing column may be added to §5.2 when the full modifier timing model is locked.
 

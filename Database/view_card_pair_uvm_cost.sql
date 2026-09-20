@@ -27,7 +27,7 @@
 -- pays is already recorded by `cost`; it does not belong in the tier as well.
 --
 -- The signed axis is still built and still useful -- it lives in `v_card_value_to_acting`
--- (Database/view_card_value_to_acting.sql), which is where Art 00c gap #1 is answered.
+-- (Database/view_card_value_to_acting.sql), which is where Art 04c §6 gap #1 is answered.
 -- Units below are UNSIGNED magnitude, as they were before the experiment.
 --
 -- Two findings kept, because they still apply if anyone rewires it: a sign has to be

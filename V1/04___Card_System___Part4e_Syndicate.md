@@ -463,7 +463,7 @@ Land Title files a capital claim on undeveloped land — no faction holds a stru
 #### Outstanding Issues
 
 - **Grant Deed trigger vocabulary (04-n27):** `structure_block.placed(district=deed.district)` is a district-scoped trigger not yet in confirmed TriggerExpr vocabulary. Extension needed in Art 04 §6.3.
-- **Grant Deed component registration (04-n26):** New component; Art 02 entry pending. Physical form: blank card; fill-in fields: `district | holder`. Fire effect: +1 Presence Token + 1 Structure Block for deed holder (GD-01 — Art 04 §12b.2). GR 8.2 governs structure placement.
+- **Grant Deed component registration (04-n26):** New component; Art 02 entry pending. Physical form: blank card; fill-in fields: `district | holder`. Fire effect: +1 Presence Token and +1 Structure Block for deed holder, and removal of 1 Structure Block belonging to the triggering faction (GD-01 — Art 04 §12b.2). GR 8.2 governs the holder's structure placement.
 
 #### Status
 
@@ -498,7 +498,7 @@ LandTitle = Card(
     portrait    = {Syndicate: PortraitEntry(submitter=+1)},
     narrative   = "The deed was filed before the foundation was poured. That is how the Syndicate prefers it.",
     perspectives = {Syndicate: "We don't need to be there. We just need to be on the paperwork."},
-    design_note  = "Delivers Grant Deed (GD-01) component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire Issued ModReactCard (acquisition=Issued) held in faction hand; fires when any faction places a structure block in the named district. Fire effect: +1 Presence Token + 1 Structure Block for deed holder in named district. GR 8.2 governs structure placement (blocked if holder already has structure there; Presence Token still placed). No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds on same district permitted; cost-governed.",
+    design_note  = "Delivers Grant Deed (GD-01) component (ARBITER tableau → Syndicate case → hand at Debrief). Grant Deed is a tripwire Issued ModReactCard (acquisition=Issued) held in faction hand; fires when any faction places a structure block in the named district. Fire effect: +1 Presence Token and +1 Structure Block for deed holder in named district, and removal of 1 Structure Block belonging to the triggering faction — the registered deed displaces the unauthorized build that fired it. GR 8.2 governs the holder's structure placement (blocked if holder already has structure there; Presence Token still placed). No board marker from this card. Automatic resolution — no crit or fail. Multiple deeds on same district permitted; cost-governed.",
     arbiter_note = "Take 1 blank Grant Deed (GD-01) from ARBITER tableau. Write target district name and Syndicate as holder. Place in submitting faction's Dispatch Case. Grant Deed moves to hand at Debrief.",
 )
 ```

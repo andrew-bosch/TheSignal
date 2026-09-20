@@ -26,6 +26,8 @@ STD.CA.12 (Absolute Compromise) can remove active Type A and Protect/Fortify pla
 
 **Outcome addition (ModActionCard behavior)** — attaches an additional Automatic outcome to the host PA at Beat 4 regardless of host success or failure. No Dispatch Token required.
 
+**Which Modifier subclasses charge resources (S162, Art 04c §5).** `cost` is `None` by **schema guarantee** on **ModActionCard** (its cost folds into the host operation's packet total, Art 03 §9.4.0.1 Step 4) and on **ModBattleCard** (Art 03 §10.1.2's commit sequence has no cost validation or payment step at all, so a cost would be unenforceable — a procedural reason, explicitly not inherited from ModActionCard). **ModReactCard is the only Modifier subclass that charges** — 27 of 93 do; the other 66 are free. Its costs follow an **observed convention that is deliberately not a rule** (PM05 04c-01): ~1 unit per resource type, scaling by *breadth* (1–4 types) rather than depth, anchored on the playing faction's own native (23 of 27), with Intel Tokens as an additional discrete cost. **Do not price new React cards against it** — it describes 27 cards, it is not a calibrated rate.
+
 No cap on Modifier Cards attached per action submitted (Art 04 §11.4, resolved S133 — PM05 04-n153) — a faction may attach as many as it holds in hand, limited only by hand size (§11.3, also no cap), not an artificial per-action count. Applies uniformly across ModActionCard/ModReactCard/ModBattleCard; the old "max 1" rule was itself flagged non-canonical/sketch-stage and removed.
 
 **Modifier card naming convention (locked S130):** All faction and ring modifier card names must be Asset (human/business), Equipment, or Tactic. Full category definitions and examples: design_reference_card_system.md.

@@ -48,7 +48,8 @@ python3 tools/extract_card_checklist.py | tail -5 || true
 
 echo
 echo "[4/5] Extracting card_effect_component (cost-model substrate)..."
-python3 tools/extract_card_effects.py | head -3
+echo "  deferred to [5/5] — the extractor reads card_body from the DB, so it must"
+echo "  run AFTER card_body_load.sql lands, not before it."
 
 BODY_SQL=$(inserts_for Database/card_body_load.sql card_body)
 CLAUSE_SQL=$(inserts_for Database/card_body_load.sql card_restriction_clause)
@@ -78,6 +79,13 @@ echo
 echo "[5/5] Loading all mirrors into $DB..."
 mariadb "$DB" < Database/card_body_load.sql
 mariadb "$DB" < Database/card_checklist_load.sql
+
+# card_effect_component is derived from the card_body TABLE, not from the .md or
+# the load file -- so it must be extracted after card_body is in the DB. Running
+# it earlier (as this script did until S162) silently produced effect rows one
+# sync behind the corpus, which made the drift check below report the PREVIOUS
+# state of any card edited since the last run.
+python3 tools/extract_card_effects.py | head -3
 mariadb "$DB" < Database/card_effect_load.sql
 
 BODY_AFTER=$(row_count card_body)

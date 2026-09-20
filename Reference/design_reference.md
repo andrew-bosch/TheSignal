@@ -42,6 +42,8 @@
 
 **For card spec work:** also read `design_reference_card_system.md` (schema, governing rules, design flags — always relevant for card design).
 
+**For anything about what a card costs or is worth: read Art 04c — Card System Cost Model directly** (canonical, signed off S162). It holds Principle 15, the cost vocabulary, cost by card type, cross-resource and Intel Token costs, the `value_rating` definition (**gross effect delivered** — what the acting faction pays does not subtract from it), the UVM methodology and its ⚠ governing caveat, the locked tier boundaries, and the model's known limits. There is no ref-file condensation of it and there should not be one — it is short, it is the reasoning rather than a lookup, and two of its sections are live open questions. **Do not cite Art 00c for cost or economy reasoning**; §5 and §8 moved to 04c at S162 and 00c is now a non-canonical index whose remaining content is itself unverified (PM05 00c-04).
+
 ---
 
 ## Board at a Glance

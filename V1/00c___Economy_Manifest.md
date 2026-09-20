@@ -1,10 +1,12 @@
 # 00c — Economy Manifest
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.6
+**Version:** 0.7
 **Status:** ⚠️ Future Analysis Stub — Not Canonical
 
-**Purpose:** Future economic calibration index — not yet active. Will aggregate resource generation rates, operation costs, and modifier thresholds from source artifacts into a single balance/playtesting reference. **Not canonical:** Art 02, Art 03, and Art 04 are the authoritative sources for all current economic values. Do not cite 00c for design decisions or ref files.
+**Purpose:** Future economic calibration index — not yet active. Will aggregate resource generation rates, operation costs, and modifier thresholds from source artifacts into a single balance/playtesting reference. **Not canonical:** Art 02, Art 03, Art 03-init and Art 04 are the authoritative sources for all current economic values. Do not cite 00c for design decisions or ref files.
+
+**The one exception that made that prohibition unenforceable is gone.** §5 held the UVM cost model — authored content with nothing upstream of it — and was cited as authority by Art 04 §6.1 and by a Reference file this header forbids. It was relocated to **Art 04c — Card System Cost Model** at S162 (PM02 L378, closing PM05 00c-03), along with §8 Derived Cost Analysis, which is card economics rather than an index entry. Every remaining *populated* section here is a true index — §9 is an unstarted analysis section whose home is still TBD. The prohibition above now holds without exception.
 
 **Relationship to source artifacts:** Source artifacts remain canonical. This document does not define economic values — it indexes them. When a source artifact defines a cost or rate, the value lives in the source artifact; 00c registers it here for cross-system visibility. Discrepancies resolve in favor of the source artifact; flag and correct here.
 
@@ -12,7 +14,7 @@
 
 **Depends on:** 02 — Components; 03 — Round Structure & Gameplay; 04 — Card System (§8, §9 still blocked pending further work)
 
-**Source versions:** 02 v2.4; 03 v1.7; 04 v0.9.91 (§5 populated S153)
+**Source versions:** 02 v2.4; 03 v1.7; 04 v0.9.91 — ⚠️ **stale stamp, and the index content behind it is unverified.** Actual current: 02 v2.5, 03 v4.15, 04 v0.9.100. An S162 spot-check found the §3/§4/§6 *values* largely current but systematically mis-provenanced, and §4 missing Art 03 §20's Resource Type rule (S150) — which makes §3's derived "Round 1 Totals" table wrong. Tracked at PM05 **00c-04**. Do not rely on any section here until that closes.
 
 ---
 
@@ -22,10 +24,10 @@
 2. [Index](#2-index)
 3. [Starting Assets & Resource Quantities](#3-starting-assets-resource-quantities)
 4. [Resource Generation Rates](#4-resource-generation-rates)
-5. [Card Costs & Modifier Thresholds](#5-card-costs-modifier-thresholds)
+5. [Card Costs & Modifier Thresholds](#5-card-costs-modifier-thresholds) *(relocated S162 → Art 04c)*
 6. [Operation System Values](#6-operation-system-values)
 7. [Balance Notes & Playtest Observations](#7-balance-notes-playtest-observations)
-8. [Derived Cost Analysis](#8-derived-cost-analysis) *(blocked — Art 04 §7, §8 required)*
+8. [Derived Cost Analysis](#8-derived-cost-analysis) *(relocated S162 → Art 04c §12)*
 9. [Round Income Analysis — Quarters 2–8](#9-round-income-analysis-quarters-2-8) *(blocked — probability model required; home TBD)*
 
 ---
@@ -239,43 +241,20 @@ Amplifies all Public Standing changes for factions with presence in the Resident
 
 ## 5. Card Costs & Modifier Thresholds
 
-*Source: Art 04 §6 (`value_rating` field). Full derivation history, worked examples, and resolved outliers: PM05 04-n178, PM02 L277–L284, L367; archived working detail: `Retired/Whiteboard_Archive/cost_baseline_recommendations.md`.*
+**Relocated S162 → Art 04c — Card System Cost Model.**
 
-**Status:** `value_rating` (1–4) assigned corpus-wide, locked S145 (PM02 L284); cost model closed S158 (PM02 L367), which settled the last open question in it — `persistence_effect` counts toward `total_pair_cost` — and applied 10 CA/PA re-ratings on that basis. The S157 caveat that every rating was provisional is **lifted**. Two standing qualifications remain: the ⚠ governing caveat below (calibration is self-consistency, not playtest), and five bare-prose PublicActs (NET.PA.4/PA.5/PA.6, SYN.PA.4/PA.5) whose ratings are held rather than derived, since their outcome fields are prose rather than MutationExpr and the model has nothing to price — they become computable when PM05 04-n218/04-n220 convert them, and must be re-derived at that point.
+The UVM cost model is not an index entry and never was: it *authored* the `value_rating` definition, the pair-pricing methodology and the locked tier boundaries, with nothing upstream of it to mirror. That made it canonical content sitting inside a non-canonical artifact, and this document's own header forbade citing it — the conflict tracked as PM05 00c-03 and resolved by Andy at S162 (PM02 L378).
 
-**What `value_rating` means (Andy, S160 — PM02 L376, 04-n236).** **Gross effect delivered.** It is a way to bucket cards by how much of the game they move: cards that affect more of it sit in higher tiers. It is *not* a net ledger, and what the acting faction pays does not subtract from it — `cost` is already its own field and records that separately. This had never been written down, and its absence let an S160 pass briefly wire a signed, net-of-payments measure into the tier, which rated a card that buys a real effect at a fair price as floor-tier. Reverted. Practical consequences: every effect row counts by its magnitude regardless of who it lands on; a card that both spends and inflicts counts both; a transfer counts once, not twice (04-n229).
+It now lives in full at **Art 04c**, scoped to the card system where it applies. Cite Art 04c, not this section, for:
 
-**Scope of the model:** CA and PA cards only. Modifier/React cards are rated on the S132/S134 magnitude convention, not UVM-tiered, so a MOD card whose rating differs from its modeled tier is expected rather than defective.
+- what `value_rating` means (gross effect delivered — PM02 L376)
+- the UVM pair-based pricing methodology and its ⚠ governing calibration caveat
+- the locked 1–4 tier boundaries (PM02 L284)
+- the model's known open gaps
 
-Hand size, deck construction economics, and Burst Play threshold remain unaddressed — out of scope for this model, still pending.
-
-### Methodology — Universal Value Metric (UVM) pair-based pricing
-
-A fixed per-Subject value × per-Function multiplier was tried first and rejected (tested against real card data, S143): the Remove/Add cost ratio alone ranges from 1.15x to 8.58x depending on Subject — no universal multiplier fits every Subject consistently. In its place, each confirmed **(Subject, Function) pair** is priced as one atomic calibrated unit, derived directly from the existing corpus's own designed costs. A card's total modeled value sums its distinct pairs' calibrated rates × actual magnitude, with `successcrit` folded in at a flat 5% weight (crit-success is an unconditional floor per Design Pillar 4.8b) and `failcrit` excluded (mutually exclusive with success — the model specifically answers "what does success cost").
-
-**⚠ Governing caveat:** calibration is by averaging the *existing designed cost* of cards that already use a given pair — not by playtesting, simulation, or any external measure of actual in-game value. "Validated" means "≥2 existing cards agreed closely enough to average," not "confirmed correct by play." Every value below is a self-consistency check against the current corpus — it can catch a card priced out of line with its siblings, but cannot confirm the sibling group itself is priced right. Re-derive/re-calibrate once real playtest data (session counts, win-rate correlation, "this felt broken" reports against actual cost) becomes available.
-
-### value_rating Tier Boundaries (locked S145)
-
-Counts are the priced population — the 205 cards `v_card_pair_uvm_cost` returns a modeled value for — bucketed by that modeled value, not by assigned rating.
-
-| value_rating | Range (modeled value) | Count |
-|---|---|---|
-| 1 (floor) | < 3.0 | 113 |
-| 2 (standard) | 3.0–4.99 | 49 |
-| 3 (advanced) | 5.0–6.99 | 21 |
-| 4 (ceiling) | ≥ 7.0 | 22 |
-
-Counts re-derived S160 after the 04-n229 transfer-collapse and the 04-n235 parser fixes (was 114/49/23/19 at S159). Natural-break boundaries, not equal-population — a histogram of the full 205-card priced corpus thins going up (a clean pyramid), matching the intended 1=floor/basic, 4=end-game-ceiling design shape. Equal-population quartiles were checked and rejected — they'd force a ~50/50 floor/non-floor split, contradicting that intent.
-
-### Known open modeling gaps (not card redesigns — the model itself needs more work)
-
-- ~~**Self-cost vs. delivered-value confusion.**~~ **CLOSED S160 (PM02 L373 + L374).** The model now distinguishes the acting faction paying its own resource from inflicting that loss on an opponent. `card_effect_component.target` was rewritten to name the entity whose holdings a row changes (108 rows corrected), and `v_card_pair_uvm_cost` now signs each row by it — `acting` → +magnitude, `target`/`third_party` → −magnitude, no-beneficiary rows unchanged at +ABS. 9 cards of 205 repriced; NET.CA.6 3→1 and GUI.PA.10 4→1 re-rated. **5 held under 04-n235** (STD.CA.9, GUI.PA.2, SYN.PA.1, STD.PA.6, DIR.PA.3) — each mixes an unquantified `count=n` gain, priced at the 1-unit floor, with a payment counted in full, so their negatives are an artefact of that flooring rather than a design signal; the sync reports them in their own bucket, not as drift. The original diagnosis in this entry was wrong and is corrected rather than updated: the cause was never that `target` was inconsistent, but that **no view read it at all**.
-- ~~**Add-vs-Redirect mis-tagging.**~~ **Swept and closed S160 (PM02 L370).** All 85 `Function=Add` cards were audited, not just the Territory subset originally scoped here — Art 04b §5.1 defines Redirect as subsuming cross-faction resource movement in Economy as well. One further mis-tag found and retagged (GD-01 Grant Deed); everything else is a genuine supply-side Add. The sweep did surface a real pricing defect in its place: the model bills a Redirect's remove-half and place-half as two separate priced operations, inconsistently by effect category — see 04-n229.
-- **`has_boost`/variable-count cards are floor-only.** Any effect built on a `count(...)` board-state read (rather than a literal magnitude) is priced at N=1, the absolute floor — not an average or a realistic case. Not a miscount; there's no number to read at query time. Confirmed on GUI.PA.9 and SYN.CA.9 — both hand-verified as correctly priced at a realistic N once traced manually. **S160 re-scoped this and partly fixed it.** The real defect is not variable counts specifically but **quantification asymmetry**: when some of a card's rows are readable and others are not, and they fall on opposite sides of the acting / non-acting split, the unreadable side is floored at 1 unit while the other counts in full — and it runs in *both* directions (GUI.PA.6's 8.50 *overstates* it, for the same reason SYN.PA.1's −1.66 understates it). Most NULL-magnitude rows are not affected at all: of 101 across 84 cards, the majority price correctly at 1 unit, being a fixed single thing or not a quantity at all. `find_magnitude` was extended to read `.native * N`, `IntelToken(...) * N` and `min(N, ...)` — 7 magnitudes recovered, which corrected SYN.CA.3 from 20.13 to 7.63. Tracked in full at **04-n235** (5 ratings held), with the separate definitional question — net material ledger vs power tier — at **04-n236**.
+Card cost values themselves remain in Art 04 §6 and `card_status`.
 
 ---
-
 ## 6. Operation System Values
 
 *Source: Art 03 §14*
@@ -340,43 +319,11 @@ Counts re-derived S160 after the 04-n229 transfer-collapse and the 04-n235 parse
 
 ## 8. Derived Cost Analysis
 
-*Blocked on Art 04 §7 (card costs) and §8 (critical effects) — full card set must be locked before this table can be populated.*
+**Relocated S162 → Art 04c — Card System Cost Model §12.**
 
-**Purpose:** For each card, express the resource cost in terms of expected outcome value — not just nominal cost. A card that costs 3 Capital at Average difficulty costs 6 Capital per successful outcome on expected value. That comparison, invisible from the card itself, is the core balance signal.
+Cost-against-outcome-probability analysis is card economics, not an economy index entry, and it belongs beside the pricing model it complements. It remains **blocked on Art 04 sign-off**; the move does not change its gate.
 
-**Columns per card:**
-
-| Column | Description |
-|--------|-------------|
-| Card ID | Source: Art 04 |
-| Nominal Cost | Resources spent to play the card |
-| Base Difficulty | Easy / Average / Challenging (base threshold) |
-| Success Probability | At base difficulty, no modifiers |
-| Cost per Success | Nominal Cost ÷ Success Probability |
-| Cost per Crit Success | Nominal Cost at 5% floor — always possible |
-| Cost per Crit Fail | Nominal Cost at 5% ceiling — always possible |
-| Expected Cost | Weighted average across all four outcomes at base difficulty |
-
-**Formula (no modifiers, base difficulty):**
-
-```
-Expected Cost = Nominal Cost × (1 / base threshold)
-
-Cost per Success   = Nominal Cost / P(success)
-Cost per Crit Suc  = Nominal Cost / 0.05
-Cost per Crit Fail = Nominal Cost / 0.05
-```
-
-*Modifier effects (M-01–M-12) shift probability without changing nominal cost — apply modifier stack to base threshold before computing expected cost for specific scenarios.*
-
-**Example (placeholder — values not yet locked):**
-
-| Card ID | Nominal Cost | Difficulty | P(success) | Cost/Success | Expected Cost |
-|---------|-------------|-----------|------------|-------------|--------------|
-| C01 | TBD | TBD | TBD | TBD | TBD |
-| P01 | TBD | TBD | TBD | TBD | TBD |
-
-— To be populated from Art 04 §7 and §8 once C01–C35 and P01–P18 are fully locked.
+Its stale framing was corrected on relocation: the gate was written as *"Art 04 §7 (card costs) and §8 (critical effects)"*, but Art 04 §8 is the Card Taxonomy Index, and its worked example used the retired `C01`/`P01` card-ID scheme.
 
 ---
 

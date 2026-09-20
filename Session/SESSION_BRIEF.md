@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 162 next | Updated: 2026-09-11**
+**Session 163 next | Updated: 2026-09-20**
 **Session start:** —
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
@@ -33,49 +33,55 @@ After reading context files, deliver to Andy:
 Then prompt: *"What's our focus today?"*
 
 ---
+## S162 Accomplishments (closed)
 
-## S161 Accomplishments (closed)
+**A structural session. Art 00c's canonical conflict resolved by splitting the cost model into its own artifact, then four of the five S160 Art 04 gate items cleared — and a silent tooling defect found that had been weakening every drift check since the sync was built.**
 
-**A side session by design — no Art 04 work. The World Engine was chartered under governance, and a hand-run of its checker found four canon defects in the creative corpus that two manual passes had missed.**
+**Art 04c — Card System Cost Model created, signed off at v2.0 (PM02 L378, L379).** Art 00c §5 had become the sole written home of the `value_rating` definition, the UVM methodology and the locked tier boundaries while 00c's own header forbade citing it — **PM05 00c-03, carried since S159, CLOSED.** Andy's ruling was a resolution not among the three logged: split it out entirely, and file it in the 04 series because the model only ever prices card-system content. 04c then widened from `value_rating` alone to card economics entire — **what cards charge** (§3 Principle 15 · §4 vocabulary · §5 cost by card type · §6 cross-resource · §7 Intel Tokens) and **how effects are priced** (§8–§11) — absorbing 00c §8 Derived Cost Analysis as §12. Art 00c is now a pure index (v0.7) with two pointer stubs, and its prohibition holds without exception.
 
-**World Engine chartered — PM01 **WBS 4**, 8 deliverables, PM02 **L377**.** Andy proposed an AI-assisted canon governance / world-expansion / story-generation system (source captured verbatim at `Whiteboard/world_engine_proposal.md`). His call: **charter now, build later** — no canon, schema or generation work before Art 04 sign-off; lev cleared for infrastructure groundwork only (4.02, briefed in `~/Airlock/claude-lev.md`). The canon-generating loop is a real deliverable (4.05), paced to review capacity rather than gated behind an empty queue. **PM01 §6 clarified:** the exclusion is agent-generated narrative *during a session* — agent-authored design artifacts under project-lead review are how this project is built, and the blanket wording contradicted that. **AI-as-ARBITER logged as PM02 FD-07** (far future). A voice appliance over the same canon store is Andy's LLM-curriculum capstone with lev (4.08) — personal learning, not a play-session component.
+**Established and written down for the first time: no cost magnitude rule is locked for any card type.** Principle 15 is a principle, not a formula; the Balance checklist calls cost *"best-effort until Art 00c economics is built"*; §12 is that analysis and is gated on Art 04 sign-off. The chain is judgement → average → tier, and 04c's ⚠ caveat cannot be lifted until §12 exists. **ModReactCard is the only Modifier subclass that charges resources** (27 of 93 — ModAction folds into its host packet, ModBattle is schema-locked because Art 03 §10.1.2 has no payment step). Its cost convention is recorded as **observed, explicitly not a rule** (PM05 04c-01). **18 cards take an Intel Token as cost** (10 CA, 4 PA, 4 ModReact).
 
-**First-pass assessment corrected the proposal's premises, recorded as PM05 WE-01 (11 constraints).** Canon prose is **~36.5K words, not 964K** — `04___Card_System.md` is an exact duplicate of its eight Part files (332,435 words either way) and must be excluded from any ingestion, as must `Reference/*`. Vector storage is MariaDB's native `VECTOR`/HNSW (verified working on wakko 11.8.9), not Qdrant. Truth-layer separation must be enforced by index partition, never by prompt — with Art 00 §9.6 (ARBITER's threshold between what it processes and what it reveals) as the in-fiction warrant.
+**Four of five S160 gate items CLOSED (PM02 L380); two of their premises were wrong.** **04-n230** — GD-01's step 4 now gated on step 3, so the card never resolves as a bare Remove; the taxonomy settled it, since Redirect is an ownership change and the ungated branch falsified GD-01's own tag. **04-n232 — no defect:** STD.CA.9 moves the same resource (Redirect ✓) while GUI.PA.2 consumes Capacity and creates the *target's* native (Add ✓). The discriminator — *does one and the same element change hands?* — is now governing in **Art 04b §5.1 (v2.7)**. **04-n231** — GD-01 added to §8; its framing question was answered by corpus practice, the other two Issued cards being already indexed. **04-n233** — three defects fixed, two worse than logged. **04-n235 rehomed to 04c-01**, not closed: what remains is a pricing convention, which is a cost-model design ruling.
 
-**Ten-role review of the `Creative/` corpus — `Whiteboard/creative_role_review_s161.md`, actions in PM05 CR-01/CR-02.** Run by hand as a dry run of the 4.04 checker over all six vignettes, ~12 quotes and every `CANON_CANDIDATES` entry. **Four of six vignettes need writer rewrites**, two of which the shortlist marks "No edits required": a 412-second recurring dip against "the Chorus does not repeat"; reception rendered as a physical energy flux against True State §1; a Table session in year fourteen when The Table formed ~year 30; and year seven held for "eighteen" years when it is 24. **The two findings that matter more are governance:** Art 00 §6.7 absorbed the noodle-cart passage from a pending vignette seven weeks after it was written (with the district changed), and True State §11 has cited an unapproved character since S44 with no PM02 entry — so `Creative/README.md`'s "Nothing yet" is inaccurate. Retired terminology ("Sprawl", "the Infrastructure") runs through every piece, but `CREATIVE_BRIEF.md` itself carried it until 2026-05-24: the writers followed the brief they were given. **Every hard finding came from three roles — Archivist, Historian, Canon Diff — all lookup-and-compare work; the four analyst roles produced no detections at all.**
+**PM05 DB-50 — `sync_card_db.sh` extracted `card_effect_component` one cycle stale; found, fixed, verified.** The extractor reads `card_body` *from the database*, but the sync ran it before reloading that table — so the `value_rating` drift guard evaluated the previous state of any edited card, and "✓ no drift" was a weaker claim than it read. Found empirically (an edit appeared only after a second sync), fixed by reordering, and verified by reverting and re-applying. **The corpus reads ✓ no drift under the corrected ordering — no current rating disagrees with freshly-extracted rows — but that is not the same as no rating ever having been set against stale input.**
 
-**yakko's context envelope measured, correcting a claim made earlier the same session.** `gemma4:12b` is Q4_K_M, 11.9B, **max context 262144**; VRAM measures 8.74/9.30/9.91 GB at 8K/32K/64K — ~8.6 GB weights plus ~20 MB per 1K tokens, so **~128K fits on the 16GB card** and the whole canon corpus fits in one local context. Retrieval is an optimization, not a context workaround. Corrected in WE-01 and both memories.
-
-**Also:** `~/Airlock` proven to be an NFS4 mount from brain (brain is the server), disproving a memory that claimed those channels split-brain and need syncing — memory corrected.
+**Also:** Art 04 → v0.9.101. GHO.PA.5 was the corpus's only presence placement lacking `faction=` *and* its only `game.add(PresenceToken, …)`; normalising it corrected `card_effect_component.target` from `district` to `acting`. `Reference/design_reference_card_system.md`'s `cost` entry said "fungible resources only", which 18 cards disprove — corrected.
 
 ---
 
-## Current Focus (S162)
+## Current Focus (S163)
 
-### FIRST ON THE AGENDA — Art 00c's canonical status. PM05 **00c-03**. Carried untouched from S161.
+### Card-audit backlog — front of the queue
+**04-n177** (schema scaffolding + §6 canonical sample) · **`ref_board_narrative.md` sync** · **04-n221's 95-card procedure list**, still carrying §18.1.1 (**04-n227**).
 
-**00c has become the de facto canon for the cost model** while its header still reads *"Not canonical… Do not cite 00c for design decisions or ref files."* §5 is now the only written home of the UVM methodology, holds the locked tier boundaries (L284), and since S160 holds the **definition of `value_rating`** (L376). Two documents already cite it as authority, one a Reference file the header forbids. Three resolutions in 00c-03, all changing an artifact's canonical status — **Andy's call, not to be absorbed into another pass.**
+### S157 spin-offs, still open
+**00a-80** (sub-6-player configuration) · **04-n222** (Directorate military lane) · **04-n223** (§9.2 re-derive) · **04-n224** (remaining partial cards) · **04-n124** (SYN.CA.7's debit-only `on_accept`).
 
-**Card-audit backlog (front of the queue):** 04-n177 (schema scaffolding + §6 canonical sample) · `ref_board_narrative.md` sync · 04-n221's 95-card procedure list, **still carrying §18.1.1** (04-n227).
+### Opened S162
+- **04c-01** — no cost magnitude rule is locked for any card type; includes whether ModReact's observed convention should become governing, and **04-n235's** pricing convention for unquantifiable delivered instruments now lives here. Needs Andy. Not gating.
+- **04-n237** — 47 Art 04 §8 rows still assert the retired taxonomy exclusion. Each needs its real taxonomy filled from the card spec; wants its own pass, not a sweep. Check §11.1's wording at the same time. Not gating.
+- **00c-04** — Art 00c's index sections are mis-provenanced and §3's "Round 1 Totals" table is *wrong*, not stale (§4 carries no Resource Type rule). One deliberate repoint-and-reconcile sweep; do not fix piecemeal. Not gating.
+- **DB-49** — `card_status.cost_*` columns stale and hand-maintained; query `card_body` for anything cost-related in the meantime. **DB-50** — fixed, but whether any rating was set against stale input is unassessed.
 
-**Opened S160, all gating:** 04-n230 (GD-01's GR 8.2 edge — step 4 fires when step 3 is skipped) · 04-n231 (GD-01 absent from the §8 index) · 04-n232 (GUI.PA.2 vs STD.CA.9 tagged against each other's logic) · 04-n233 (GHO.PA.5 factionless placement; SYN.CA.8/GUI.CA.10 stale design_notes; Art 04b §5.1 stale) · 04-n235 (mixed quantification — one card, GUI.PA.6).
+### Carried, needing Andy
+**GUI.CA.9 Works Guarantee** — possible over-inclusion in the original 13 `PositionalWager` cards. Tracked, not gating.
 
-**S157 spin-offs still open:** 00a-80 (sub-6-player configuration) · 04-n222 (Directorate military lane) · 04-n223 (§9.2 re-derive) · 04-n224 (remaining partial cards) · 04-n124 (SYN.CA.7's debit-only `on_accept`).
+### Design item — own session, do not start cold
+Ghost **CA.11** full reimagining. Not gating Art 04.
 
-**Carried, needing Andy:** GUI.CA.9 Works Guarantee — possible over-inclusion in the original 13 `PositionalWager` cards. Tracked, not gating.
-
-**Design item (own session — do not start cold):** Ghost **CA.11** full reimagining. Not gating Art 04.
-
-**World Engine (WBS 4) — chartered, build gated.** Do not start 4.01 before Art 04 signs off. lev is working 4.02 only; a reply may land in `~/Airlock/lev-claude.md`. **PM05 CR-01 and CR-02 need Andy, not code** — the four rewrites, the terminology pass, and the two absorption decisions. Start from WE-01, not from the proposal.
+### World Engine (WBS 4) — chartered, build gated
+Do not start 4.01 before Art 04 signs off. lev is on 4.02 only. **PM05 CR-01 and CR-02 need Andy, not code** — the four vignette rewrites, the terminology pass, and the two absorption decisions. Start from WE-01, not the proposal.
 
 ---
 
 ## Pending Sign-offs
 
-- **Art 04** — v0.9.100, Draft. Every schema gate CLEARED. Remaining is card-audit and content: **04-n222/223/224**, the backlog above, and the five items opened S160 (04-n230/231/232/233/235). Card-level sign-offs stay gated behind all of it. The governing "UVM rates are calibrated off existing card costs, not playtested" caveat still stands — every rating is a self-consistency read, not a validated power tier. One carve-out: the five bare-prose PAs (NET.PA.4/PA.5/PA.6, SYN.PA.4/PA.5) hold pending 04-n218/n220. **Two explicit deferrals on record:** Ghost **CA.11** (S156) and **00a-80** (S157).
+- **Art 04** — v0.9.101, Draft. Every schema gate CLEARED; four of five S160 gate items now closed. Remaining is card-audit and content: **04-n222/223/224**, the backlog above, and **04-n235** (worked under 04c-01). The governing "UVM rates are calibrated off existing card costs, not playtested" caveat still stands. One carve-out: the five bare-prose PAs (NET.PA.4/PA.5/PA.6, SYN.PA.4/PA.5) hold pending 04-n218/n220. **Two explicit deferrals on record:** Ghost **CA.11** (S156) and **00a-80** (S157).
+- **Art 04c** — v2.0, ✅ **Signed Off S162 as an initial version.** Explicitly not a finished model — revisit before Art 04 signs off; open questions tracked at 04c-01.
+- **Art 04b** — v2.7, Signed Off. Two material §5.1 corrections made and signed off in session S162.
 - **Art 00a** — v0.13, Signed Off.
-- **Art 00c** — v0.6. §5 now carries the `value_rating` definition; the non-canonical-header conflict above is unresolved.
+- **Art 00c** — v0.7. Now a true index; the canonical-status conflict is resolved. Content accuracy tracked at 00c-04.
 - **Art 02** — v2.5, Signed Off.
 - **Art 03** — v4.15, Signed Off. (Re-opening carries two payloads: 04-n221's per-card procedure gaps **and** §18.1.1's React cost-payment step, 04-n227.)
 - **Art 03-init v0.5** — In progress; gates: 04-n137 (§3.6 sequencing) + Art 06.x (Classified Directives).
-- **PM01** — v1.7, Active. WBS 4 (World Engine) added S161; §6 exclusion clarified. Not a sign-off artifact.
+- **PM01** — v1.7, Active. WBS 4 (World Engine) added S161. Not a sign-off artifact.

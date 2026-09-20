@@ -1834,7 +1834,7 @@ GHO.PA.5 = Card(
     cost        = Findings * 1,
     boost       = None,
 
-    success     = game.add(PresenceToken, to=target_district, count=2),
+    success     = arbiter.place(presence_chip, district=target_district, faction=Ghost, count=2),
     successcrit = faction(Ghost).standing.add(1),
     fail        = None,
     failcrit    = faction(Ghost).standing.sub(1),
