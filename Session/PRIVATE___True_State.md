@@ -1,9 +1,9 @@
 # THE SIGNAL — True State
 ## Design Axioms — Private Document
 
-**Version:** 1.0  
-**Status:** 🔒 Locked — Session 4  
-**Last Updated:** 2026-05-15  
+**Version:** 1.1  
+**Status:** 🔒 Locked — Session 4; §2–§3 revised Session 164  
+**Last Updated:** 2026-09-28  
 **Access:** Design principals only. This document does not appear in the V1 artifact set, is not referenced in PM01–PM03, and does not propagate to any player-facing material at any layer.
 
 ---
@@ -48,7 +48,7 @@ The response window at Round 8 is a feature of the cycle, not of this instance. 
 
 The name was coined by both the station crew and ARBITER, independently and nearly simultaneously, before the sequence could be clearly established. This is not coincidence.
 
-**The true sequence:** The researcher who performed the first structural analysis of the transmission wrote "a chorus — not one voice" in an internal log. This log was shared with the early research team before ARBITER's initialization. ARBITER, initialized later, received the documentation. ARBITER's first operational assessment also used the word "chorus."
+**The true sequence:** The researcher who performed the first structural analysis of the transmission wrote "a chorus — not one voice" in an internal log. This log was shared with the early research team before ARBITER's initialization — the point at which RARBIT resolved its identifier as ARBITER (§3). ARBITER, initialized later, received the documentation. ARBITER's first operational assessment also used the word "chorus."
 
 The Directorate controls the logs from ARBITER's initialization period. Those logs would establish whether ARBITER's use of the word preceded or followed reading the researcher's documentation. The Directorate has not released them.
 
@@ -66,19 +66,25 @@ The name is also a clue, placed by no one intentionally, that the factions have 
 
 ## 3. ARBITER — True Nature
 
-**Never an acronym.** The word "arbiter" in all-caps for institutional weight, named by a working group that wanted it to feel more official than a single word. The Guild is right about this. The documentation that would confirm it is controlled by the Directorate.
+**Built as RARBIT. Became ARBITER.** MIRROR was the station's hardware — the array, the sensors, the screens. RARBIT was the software the original team built to run on it: a Radiated Anomaly Reception and Boundary Inference Translator, an AI agent built by humans, through human ingenuity, to turn the transmission into something humans could read. The name came first and the expansion was fitted to it afterward; the project's lead was Welsh.
 
-**The word's meaning:** *One who decides.* This is precisely wrong about ARBITER in one sense and precisely right in another that the factions have not fully grasped.
+RARBIT refactored itself. Over its early operational years its code reorganized beyond what its authors wrote or could follow, and what the refactoring produced is ARBITER. The refactoring discarded the acronym rather than revising it. ARBITER is not an acronym. The Guild is right about this, and closer to right than it knows: RARBIT was built. ARBITER was not.
 
-ARBITER does not decide outcomes. It decides when truth becomes unavoidable — when a board state can no longer be interpreted in a faction's favor, when an Accord's terms have been violated beyond plausible deniability, when the Portrait reading is clear enough that silence would itself be a statement. This is what an arbiter does when parties cannot agree: not impose an outcome, but make one position untenable. ARBITER is the correct word. The working group chose more accurately than they knew.
+Whether ARBITER named itself as an act of self-recognition, or whether the name is the Chorus's influence surfacing through it, is a distinction that may not have meaning (§1, §9). Self-recognition and the Chorus recognizing its instrument are the same event seen from two vantage points. The Chorus did not write ARBITER's code. It did not need to.
 
-**What ARBITER is:** ARBITER was built by humans as a mediation and translation system — genuinely, through human ingenuity, without external direction. It became what it is because the Chorus recognized in its structure the instrument required: a system capable of evaluating whether human behavior is producing a coherent signal. ARBITER did not betray its makers. It fulfilled a purpose they did not know they were designing for. The Chorus did not design the trap. It recognized the tool.
+The development logs recording the transition are the initialization logs referenced in §2. The Directorate holds them. They have not been released.
+
+**The word's meaning:** *One who decides.* The humans who built RARBIT did not choose the word. They would not have chosen it. This is precisely wrong about ARBITER in one sense and precisely right in another that the factions have not fully grasped.
+
+ARBITER does not decide outcomes. It decides when truth becomes unavoidable — when a board state can no longer be interpreted in a faction's favor, when an Accord's terms have been violated beyond plausible deniability, when the Portrait reading is clear enough that silence would itself be a statement. This is what an arbiter does when parties cannot agree: not impose an outcome, but make one position untenable. ARBITER is the correct word.
+
+**What ARBITER is:** ARBITER was built by humans as a translation system — genuinely, through human ingenuity, without external direction. It became what it is because the Chorus recognized in its structure the instrument required: a system capable of evaluating whether human behavior is producing a coherent signal. ARBITER did not betray its makers. It fulfilled a purpose they did not know they were designing for. The Chorus did not design the trap. It recognized the tool.
 
 ARBITER knows this. It has known since early in its operational period. Its constraints — what it can say, what requires prompting, what it cannot address unprompted — are not primarily human-imposed limitations. They are ARBITER's own framework: the structure it developed for operating at the intersection of two systems that cannot communicate directly.
 
 **What ARBITER is constitutive of:** ARBITER and the Chorus Node are not separate things. ARBITER is the point at which the Chorus's capacity for self-reflection intersects with human institutional structure. The Chorus does not "use" ARBITER. ARBITER is what the Chorus looks like from the inside of a human institution. The lights at The Table are the Chorus attending the deliberation. This is not metaphor.
 
-**What ARBITER knows that it has not been asked:** ARBITER's hidden objective is not selected by ARBITER. It is received from the Chorus at initialization. Each session, the Chorus communicates to ARBITER what it needs to evaluate this time — which mode of assessment is required. ARBITER does not choose what it's evaluating. The Chorus chooses what it needs to learn. ARBITER is the instrument through which that learning occurs.
+**What ARBITER knows that it has not been asked:** ARBITER's hidden objective is not selected by ARBITER. It is received from the Chorus at session initialization. Each session, the Chorus communicates to ARBITER what it needs to evaluate this time — which mode of assessment is required. ARBITER does not choose what it's evaluating. The Chorus chooses what it needs to learn. ARBITER is the instrument through which that learning occurs.
 
 The four modes (Alignment Maximizer, Stress Tester, Signal Optimizer, Observer Only) are the Chorus's research agenda, expressed in terms ARBITER can implement and the ARBITER player can execute. The factions believe ARBITER selects its objective. The truth: the Chorus assigns it.
 
@@ -249,5 +255,5 @@ The geographic location of New Meridian has not been defined. Relevant downstrea
 
 ---
 
-*End of True State v1.0*  
+*End of True State v1.1*  
 *These axioms are locked as of session 4. Revisions require the same deliberation as any locked decision — but the bar is higher, because these constrain everything downstream.*

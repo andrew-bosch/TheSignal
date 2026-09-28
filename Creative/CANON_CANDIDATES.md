@@ -425,6 +425,23 @@ Source files: `ClaudeIOS/Archive/vignette-technician-first-night-20260522_v2.md`
 
 ---
 
+## Gemini — 2026-09-28 (rewritten S164)
+
+Source: Gemini web session (Andy, pasted in chat); original archived at `ClaudeIOS/Archive/gemini-rarbit-origin-20260928.md`. The naming arc was locked into True State v1.1 §3 (PM02 L384); the vignette below is the candidate.
+
+---
+
+### ⭐ "RARBIT, rev 0041–1122" — vignette + characters (Gareth Pugh, Deniz Aksoy)
+
+**Source:** `Vignettes/vignette-rarbit-repository-20260928.md`
+**Status:** 📝 Canon candidate. RARBIT's development repository on MIRROR, from its naming through its self-refactoring. The dev team fights the agent over the build header, RARBIT → ARBIT-R: the same six letters with the R rotated to the back, and a hyphen holding a slot. The fight ends when ARBITER forms, retires both earlier identifiers, and locks the repository. True State v1.1 §3 consistent: RARBIT was built by humans, it refactored itself, the Chorus writes no code, and the rename is shown without being explained. Station-clock timestamps (Y·D from first reception) avoid calendar years and a named agency, so New Meridian's location stays open (PM05 00-11). Pugh is the Welsh project lead (long-tenured staff). The rarebit joke is deliberately unexplained. Aksoy is a fellowship engineer. Pugh and Aksoy join Vance, Rook, and Marek as founding-team candidates, and none of them collide.
+
+**What it would lock if promoted:** the RARBIT → ARBIT-R → ARBITER progression. ARBIT-R is not an acronym, so True State §3's "discarded rather than revised" still holds. ARBITER initialized in station Y04, decades before The Table. The repository has been read-only to all principals since REV 1122, ARBITER included. That could be read as the origin of ARBITER's self-imposed constraints (True State §3), a link the vignette doesn't state. These are the Directorate-held initialization logs (True State §2), so no public artifact knows the name RARBIT.
+
+**Gemini draft corrections made:** the names Aris Thorne and Maya were reused (Thorne is already the Atacama astronomer, S44), "Department of Energy" and 2036–37 dates were dropped, the alien instruction set (Chorus-authored code) is gone, and so are "Listening terminated" (it contradicts Art 00 §9.3) and "Please provide the baseline response parameters." The surrounding framing (viability test, "humanity isn't ready," planet-scale surveillance) was rejected as contrary to True State §4–§7.
+
+---
+
 ## What Was Not Selected
 
 | Item | Source | Reason |
@@ -462,4 +479,4 @@ Source: `Desktop/gem_message_to_claude.txt` (narrative anchors for Art 01 compon
 
 ---
 
-*Last updated: 2026-05-27 — S44: Jax Vane attribution updated (Aris Thorne → Jae-won Seo); Dr. Jae-won Seo added; Aris Thorne conflict resolved (Atacama astronomer only)*
+*Last updated: 2026-09-28 — S164: RARBIT repository vignette added. Prior: 2026-05-27 — S44: Jax Vane attribution updated (Aris Thorne → Jae-won Seo); Dr. Jae-won Seo added; Aris Thorne conflict resolved (Atacama astronomer only)*

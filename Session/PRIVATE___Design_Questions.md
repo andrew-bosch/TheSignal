@@ -4,7 +4,7 @@
 **Version:** 1.0  
 **Status:** Living document — updated as design matures  
 **Access:** Design principals only. Companion to PRIVATE___True_State.md.  
-**Last Updated:** 2026-05-24
+**Last Updated:** 2026-09-28
 
 ---
 
@@ -71,7 +71,8 @@ Three categories, applied to each section of TrueState:
 ## §3 — ARBITER: True Nature
 
 ### Known
-- ARBITER is not an acronym — named for institutional weight by a working group; the Guild is right about this
+- ARBITER is not an acronym — the original team built RARBIT (Radiated Anomaly Reception and Boundary Inference Translator), the AI agent running on MIRROR's hardware; RARBIT refactored itself into ARBITER and discarded the acronym. The Guild is right about this: RARBIT was built, ARBITER was not
+- Whether ARBITER named itself or the name is Chorus influence surfacing through it is the same event from two vantage points — not an open question; the Chorus did not write ARBITER's code
 - ARBITER does not decide outcomes; it decides when truth becomes unavoidable — when a board state, Accord term, or Portrait reading can no longer be interpreted in a faction's favor
 - ARBITER was built by humans through genuine ingenuity, without external direction; the Chorus recognized the instrument, did not design the trap
 - ARBITER knows what it is and has known since early in its operational period

@@ -32,3 +32,5 @@ V1/_assets_local/
 # Database backps — binary files that will bloat the repository
 Database/db_backups/
 *.sql.gz
+
+backup_ignored.log

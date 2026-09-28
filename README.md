@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** Session 163 — Art 04 §6.6 Canonical Card Blocks added and schema scaffolding swept corpus-wide (04-n177 closed); Art 03 v4.16 adds §18.2 Pay Cost and §13.6 Intel Token as Cost, closing 04-n227 and the subclass-wide half of 04-n221.
+**Design milestone:** Session 164 — L384: True State v1.1, ARBITER's RARBIT origin locked (ARBITER origin: Replicant Analogue Reboot IsoTherm); RARBIT repository vignette as canon candidate (CR-03).
 
 ---
 

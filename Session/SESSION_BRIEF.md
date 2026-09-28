@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 164 next | Updated: 2026-09-20**
+**Session 165 next | Updated: 2026-09-28**
 **Session start:** —
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
@@ -33,23 +33,19 @@ After reading context files, deliver to Andy:
 Then prompt: *"What's our focus today?"*
 
 ---
-## S163 Accomplishments (closed)
+## S164 Accomplishments (closed)
 
-**Two Art 04 gates cleared and a React payment procedure written — and the session's own sweep introduced a defect that took three verification passes to surface.**
+**A creative session: ARBITER's origin story came in from a Gemini web session, was checked against canon, and was partly locked.**
 
-**04-n177 CLOSED (PM02 L381) — schema scaffolding swept corpus-wide, §6.6 Canonical Card Blocks added.** Andy's ruling: every §6.1 field is explicit on every card, absence is always a defect (the alternatives — documenting omit-defaults in §6.2, or splitting on the `Displayed` column — were rejected). 339 cards, 1,821 fields. **Two of the item's three S140 expansion premises were wrong:** `acquisition`/`generating_card` are not base-class fields at all and have carried an omit-unless-`Issued` default since **S133**, seven sessions before S140 logged them as defects; `outcome_type` was real but inverted (PublicAct 0/46 missing). Its `schema_cleanup_log item D` citation is stale. **§6.6** holds five synthetic exemplars, one per card class — numbered §6.6 because §6.4/§6.5 are taken and §6.5 is cited in hundreds of checklist rows. Art 04 → v0.9.102.
+**True State v1.0 → v1.1, §2–§3 revised (PM02 L384).** ARBITER was built as **RARBIT**, the AI agent running on MIRROR, which is the hardware (array, sensors, screens). The name stands for Radiated Anomaly Reception and Boundary Inference Translator. The name came first and the expansion was fitted to it; the project lead was Welsh. RARBIT refactored itself into ARBITER and discarded the acronym. *"RARBIT was built. ARBITER was not."* Whether ARBITER named itself or the name is the Chorus's influence is ruled the same event seen from two vantage points (the §1/§9 pattern). **The Chorus did not write ARBITER's code**, which keeps recognized-not-designed intact. §2's unreleased Directorate-held initialization logs are now defined as the transition logs. This replaced *"never an acronym, named by a working group."* `PRIVATE___Design_Questions.md` was synced.
 
-**The sweep corrupted 25 cards, and the fix explains DB-51.** The first insertion pass anchored by line number without tracking paren depth, so on cards with multi-line values it wrote fields *inside* the expression — 66 lines. It surfaced only when scoping 04-n124 returned SYN.CA.7's `on_decline` with a literal `on_discard = None,` embedded. Root cause of the count anomaly too: **a field nested inside an expression produces no `card_body` row** — the extractor folds it into the parent value silently. `card_body` 17,928 → **17,995**. `sync_card_db.sh` is exonerated; DB-50's S162 fix has no sibling. Script is now depth-aware. **Standing lesson, logged in `schema_reference.md`: an extractor that absorbs malformed input reports a smaller number, not an error.**
+**Vignette *RARBIT, rev 0041–1122* is a canon candidate (PM05 CR-03).** It covers the dev repository from the rarebit-lunch naming through the ARBIT-R header fight to ARBITER's final commit, which locks the repository to every principal. Station-clock timestamps keep New Meridian's location open. Gemini's draft reused Aris Thorne and Maya, named a real agency, set calendar dates, and had the Chorus writing code; all of that was removed. Its surrounding framing (viability test, "humanity isn't ready") was rejected as contrary to True State §4–§7. The source is archived at `ClaudeIOS/Archive/gemini-rarbit-origin-20260928.md`.
 
-**Art 03 → v4.16, pending re-sign-off (PM02 L382).** **§18.2 Pay Cost** written — React cards had no payment step at all while **27** ModReactCards carry a real cost (04-n227's recorded 26 was stale). Public, all-or-nothing, `boost` extended to the subclass. Three questions the approved shape left open, all ruled by Andy: numbered **§18.2** not §18.1.1 (so Resolution → §18.3, Resume → §18.4, and §18.2 is written **flat** so no stale `§18.2.2` reference can resolve to a payment clause); a voided React takes **PS −1**; and a void **does not exhaust the trigger** — the next announcer in initiative order may present. **The larger find: Intel cost qualification had no home in Art 03 for any card type.** Three of four Intel-costed React cards demand a *qualified* token (`about=`, and DIR.MOD.9 also `status=`). Written once as **§13.6**, called from both §18.2 and §9.4.3.1.0.1 — 18 cards covered, not 4. **04-n227 RESOLVED; 04-n221's subclass-wide half closed.**
-
-**GUI.MOD.10 unblocked (PM02 L383) — 04-n176 and `schema_cleanup_log` #53 CLOSED.** Andy reversed S137's *"redesign, don't invent a category"* — but by sequence, not force-fit: he **first simplified the card**, striking `direction.named` so the favor only ever *adds* (helping an ally and hindering a rival are the same move from opposite ends of the contest). That removed the shape that resisted classification. Taxonomy is `Resolution / Modify / BattlefieldStrength`, the Subject registered with `component_id = NULL` like `InfluenceTier`. **#53 closes as a side effect** — GUI.MOD.10 was the last ModReactCard carrying a live `target_freeform`; that is the item running out of instances, not the React-declaration design pass it asked for. **04-n148 deliberately NOT closed.**
-
-**Also:** `ref_procedures.md` still said *"ARBITER decides tiebreakers"*, superseded at S150 and never synced — corrected. **04-n224 verified largely stale** (GUI.PA.10 rated, NET.MOD.3's TBD resolved, zero TBDs corpus-wide).
+**Also:** Save State had no S163 block (S163's close never wrote one). The S163 accomplishments were moved there from this brief at the S164 close.
 
 ---
 
-## Current Focus (S164)
+## Current Focus (S165)
 
 ### S157 spin-offs — front of the queue, all still open
 - **04-n124** — SYN.CA.7's `on_accept` is debit-only (`faction(target).resource(native).remove(2)`) with no matching credit to Syndicate. A real mechanical defect, not annotation, and the more urgent half. Its `on_accept` also carries an `# amount TBD` comment. Plus doctrine justification for CA.1/CA.7 (model: GHO.CA.10 Flip).
@@ -67,7 +63,7 @@ Then prompt: *"What's our focus today?"*
 - **04c-01** · **04-n237** (47 §8 rows) · **00c-04** · **DB-49**. **DB-50/DB-51 both resolved.**
 
 ### Sequencing — unchanged, confirmed S163
-04-n221's 95-card list stays **behind** 09-16 steps 4–5 (faction-level + cross-faction re-audit). Ghost **CA.11** needs its own session. World Engine build gated on Art 04; **CR-01/CR-02 need Andy, not code.**
+04-n221's 95-card list stays **behind** 09-16 steps 4–5 (faction-level + cross-faction re-audit). Ghost **CA.11** needs its own session. World Engine build gated on Art 04; **CR-01/CR-02/CR-03 need Andy, not code** (CR-03 = RARBIT vignette promotion, S164).
 
 ---
 
