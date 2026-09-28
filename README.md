@@ -10,7 +10,7 @@ A legacy negotiation and area-control tabletop game for 2–6 players (up to 5 f
 
 **Current phase:** L1 — Paper Prototype (physical-only, no electronics)  
 **Active design layer:** `/V1`  
-**Design milestone:** Session 164 — L384: True State v1.1, ARBITER's RARBIT origin locked (ARBITER origin: Replicant Analogue Reboot IsoTherm); RARBIT repository vignette as canon candidate (CR-03).
+**Design milestone:** Session 164 — L384: True State v1.1, ARBITER's RARBIT origin locked; RARBIT repository vignette as canon candidate (CR-03).
 
 ---
 
