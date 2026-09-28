@@ -1,9 +1,9 @@
 # 03 — Quarter Structure & Gameplay
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 4.16
+**Version:** 4.17
 
-**Status:** 🔄 Pending re-sign-off (S163, PM02 L382) — material additions to §13 and §18. **§13.6 Intel Token as Cost** added: `about=`/`status=` cost qualifiers are now validated before a token is accepted as payment, closing a gap that left 18 Intel-costed cards (10 CA, 4 PA, 4 React) unresolvable on that term; §9.4.3.1.0.1 repointed to call it. **§18.2 Pay Cost** added — React cards had no payment step at all while 27 ModReactCards carry a real cost. Payment is public and all-or-nothing (no M-06 partial path); `boost` is now available to the subclass; a voided React takes Public Standing −1 matching §9.4.3.1.0.3, and **does not exhaust the triggering condition** — the next announcer in initiative order may present. **§18 renumbered** to make room: Resolution §18.2→§18.3 (with §18.2.1/§18.2.2 → §18.3.1/§18.3.2) and Resume §18.3→§18.4. Prior: Signed off S150 (PM02 L340, L341) — §7.4 restructured (§7.4.0 Calculate District Income → §7.4.0.0 Apply Affinity Bonus/§7.4.0.1 Collect District Income; §7.4.1 Calculate Structure Block Income → §7.4.1.0 Declare/§7.4.1.1 Collect; §7.4.2 Collect Passive Generation), with a new Resource Type rule (district income pays in the district's own Resource Type, not the collecting faction's Native Resource) and the opening paragraph clarified (drawing from the Reservoir is a player action). §18.1/§18.1.0 refined: a faction holding 2+ eligible React cards for one triggering event chooses which single card to present; tied announcements resolve by initiative order (was "ARBITER decides"). Prior: Signed off S149 (PM02 L332) — §18.2.2 added: React cards are permanently removed from the game by default once resolved, unless card text states otherwise (previously unstated anywhere in Art 03; surfaced via schema_cleanup_log #19, PM05 04-n195). Prior: Signed off S146 (PM02 L292) — §9.4.3.1.0.3 Route: zero-payment Public Act invalidation now carries a Public Standing −1 ("failed commitment") consequence, closing the gap left when Art 04's old §14.3 language was retired without carrying its PS penalty forward into the unified Principle 20 payment model. Prior: Signed off S132 (L243). Prior: Signed off S110 (L232). S132: §10.1.2 Calculate and Declare Totals redesigned — Boost/Hinder model replaces Self/Opponent threshold-delta on Battlefield Modifier Cards, with an explicit named target faction chosen by the playing faction (contesting or not); face-down commit + simultaneous reveal (Steps 1.2.1 Count, 1.2.2 Commit, 1.2.3 Reveal & Validate, 1.2.4 Announce); any faction — not just contestants — may commit a Battlefield Modifier Card or Intel Token into an active contest; Intel Token effect changed to a fixed −2 Hinder applied to the named target (supersedes L163's +2 self-boost). §10.1.4.0 (Winner), §10.1.4.0.2 (Press), and §10.1.4.1 (Tie) reformatted to sequential numbered steps; cleanup (discard used Battlefield Modifier Cards, Intel Token hand-off/reset) relocated from §10.1.2.3 to §10.1.4.0 and duplicated at §10.1.4.1, firing once winner/tie is resolved and before any loop back to §10.1.2. Prior (S109–S110): VM-xx lifecycle formalised — §9.4.1.1 VM-xx check added to BEC step; §9.4.2.2.0 VM-xx placement clause; §9.4.3.0.1 renamed Initiative Loop (BEC application moved to per-PA step); §9.4.3.1.3 Apply BEC Modifiers added (mirrors §9.4.1.1 language); §9.4.3.1.4 Base Difficulty (renumbered from 1.3); §9.4.3.3.0 generic VM-xx placement clause. Beat 4 boost detection clause added to §9.4.3.1.0.0 (S109). §9.4.3.3.0 BEC-specific reveal clause removed — VM-xx model supersedes. §9.2.0 Target Profile placed face-down at declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check step.
+**Status:** 🔄 Pending re-sign-off (S165, PM02 L385; S163, PM02 L382) — material additions to §9, §13 and §18. **§9.5 Covert Demands** added (S165): a covert operation whose outcome depends on another faction's answer is delivered into the target's Dispatch Case in Month N and answered through the target's next case, with hook lines in the Dispatch Token rule, §9.1.1, §9.4.0.1 (steps 2 and 5), §9.4.2.2, §9.4.2.2.0, §9.4.2.3, §9.4.2.4.0 and §9.4.2.6.0. S163: **§13.6 Intel Token as Cost** added: `about=`/`status=` cost qualifiers are now validated before a token is accepted as payment, closing a gap that left 18 Intel-costed cards (10 CA, 4 PA, 4 React) unresolvable on that term; §9.4.3.1.0.1 repointed to call it. **§18.2 Pay Cost** added — React cards had no payment step at all while 27 ModReactCards carry a real cost. Payment is public and all-or-nothing (no M-06 partial path); `boost` is now available to the subclass; a voided React takes Public Standing −1 matching §9.4.3.1.0.3, and **does not exhaust the triggering condition** — the next announcer in initiative order may present. **§18 renumbered** to make room: Resolution §18.2→§18.3 (with §18.2.1/§18.2.2 → §18.3.1/§18.3.2) and Resume §18.3→§18.4. Prior: Signed off S150 (PM02 L340, L341) — §7.4 restructured (§7.4.0 Calculate District Income → §7.4.0.0 Apply Affinity Bonus/§7.4.0.1 Collect District Income; §7.4.1 Calculate Structure Block Income → §7.4.1.0 Declare/§7.4.1.1 Collect; §7.4.2 Collect Passive Generation), with a new Resource Type rule (district income pays in the district's own Resource Type, not the collecting faction's Native Resource) and the opening paragraph clarified (drawing from the Reservoir is a player action). §18.1/§18.1.0 refined: a faction holding 2+ eligible React cards for one triggering event chooses which single card to present; tied announcements resolve by initiative order (was "ARBITER decides"). Prior: Signed off S149 (PM02 L332) — §18.2.2 added: React cards are permanently removed from the game by default once resolved, unless card text states otherwise (previously unstated anywhere in Art 03; surfaced via schema_cleanup_log #19, PM05 04-n195). Prior: Signed off S146 (PM02 L292) — §9.4.3.1.0.3 Route: zero-payment Public Act invalidation now carries a Public Standing −1 ("failed commitment") consequence, closing the gap left when Art 04's old §14.3 language was retired without carrying its PS penalty forward into the unified Principle 20 payment model. Prior: Signed off S132 (L243). Prior: Signed off S110 (L232). S132: §10.1.2 Calculate and Declare Totals redesigned — Boost/Hinder model replaces Self/Opponent threshold-delta on Battlefield Modifier Cards, with an explicit named target faction chosen by the playing faction (contesting or not); face-down commit + simultaneous reveal (Steps 1.2.1 Count, 1.2.2 Commit, 1.2.3 Reveal & Validate, 1.2.4 Announce); any faction — not just contestants — may commit a Battlefield Modifier Card or Intel Token into an active contest; Intel Token effect changed to a fixed −2 Hinder applied to the named target (supersedes L163's +2 self-boost). §10.1.4.0 (Winner), §10.1.4.0.2 (Press), and §10.1.4.1 (Tie) reformatted to sequential numbered steps; cleanup (discard used Battlefield Modifier Cards, Intel Token hand-off/reset) relocated from §10.1.2.3 to §10.1.4.0 and duplicated at §10.1.4.1, firing once winner/tie is resolved and before any loop back to §10.1.2. Prior (S109–S110): VM-xx lifecycle formalised — §9.4.1.1 VM-xx check added to BEC step; §9.4.2.2.0 VM-xx placement clause; §9.4.3.0.1 renamed Initiative Loop (BEC application moved to per-PA step); §9.4.3.1.3 Apply BEC Modifiers added (mirrors §9.4.1.1 language); §9.4.3.1.4 Base Difficulty (renumbered from 1.3); §9.4.3.3.0 generic VM-xx placement clause. Beat 4 boost detection clause added to §9.4.3.1.0.0 (S109). §9.4.3.3.0 BEC-specific reveal clause removed — VM-xx model supersedes. §9.2.0 Target Profile placed face-down at declaration; §9.4.3.1.1 Target Profile flipped face-up at Apex Check step.
 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian; 02 — Components
 
@@ -52,6 +52,7 @@ The main game loop of THE SIGNAL: the repeatable quarterly sequence that frames 
      - [Beats 2 and 3: Covert Operations Resolve](#942-beats-2-and-3-covert-operations-resolve)
      - [Beat 4: Public Acts Resolve](#943-beat-4-public-acts-resolve)
      - [Close Month](#944-close-month)
+   - [§9.5 Covert Demands](#95-covert-demands)
 10. [Resolve District Tension](#10-resolve-district-tension)
 11. [Quarterly Debrief](#11-quarterly-debrief)
 12. [Quarter Close](#12-quarter-close)
@@ -153,6 +154,7 @@ The complete quarterly loop — six sections in sequence. Each line is an entry 
     §9.4.2  Beats 2 and 3: Covert Operations Resolve
     §9.4.3  Beat 4: Public Acts Resolve
     §9.4.4  Close Month
+  §9.5  Covert Demands (reference — entered from §9.4.0 / §9.4.2)
   Repeat for Months 2 and 3. Month 3 Close Month: do not advance month — proceed to §10.
 
 §10 RESOLVE DISTRICT TENSION
@@ -423,7 +425,7 @@ Placement complete. Proceed to §9 Monthly Activities.
 
 *Entry: Month 1 — §8 Placement complete; Months 2–3 — §9.4.4 complete. Repeats three times; exit via §9.4.4 each month.*
 
-**Dispatch Token rule:** Each action requires 1 Dispatch Token. Covert Operations: token placed in the Dispatch Case with the operation card (§9.1). Public Acts: token placed on the declared card on the Overview (§9.2). A Covert Operation Card submitted without a token is rejected by ARBITER at Beat 0 without resolution and returned to the faction. A Public Act declared without a token is invalid.
+**Dispatch Token rule:** Each action requires 1 Dispatch Token. Covert Operations: token placed in the Dispatch Case with the operation card (§9.1). Public Acts: token placed on the declared card on the Overview (§9.2). A Covert Operation Card submitted without a token is rejected by ARBITER at Beat 0 without resolution and returned to the faction — except a returned Covert Demand card, which needs none (§9.5.2). A Public Act declared without a token is invalid.
 
 *Faction Players budget their Dispatch Tokens across Months 1, 2, and 3, split between Covert Operations and Public Acts as they choose. Not spending a token is a pass for that action.*
 
@@ -468,7 +470,7 @@ ARBITER announces: *"Dispatch is open."* The ARBITER Player starts the dispatch 
 
 #### §9.1.1 Step 1: Assemble Cases
 
-Faction Players load operation cards, Dispatch Tokens (1 per operation card), resources, Target Profiles, and any Modifier Cards being assigned to specific operations into their cases.
+Faction Players load operation cards, Dispatch Tokens (1 per operation card), resources, Target Profiles, and any Modifier Cards being assigned to specific operations into their cases, along with any Covert Demand cards being answered (§9.5.2).
 
 *Modifier Cards (drawn at §7.5.3) are assigned to operations by placing each card in the case with that operation's packet. A faction may assign Modifier Cards to some, all, or none of their submitted operations. Unassigned Modifier Cards remain in the tableau modifier area and are not submitted.*
 
@@ -613,6 +615,8 @@ From left to right, lane by lane:
    | Any shortfall | Apex | Drain any submitted resources to Reservoir | Face-down in grid |
    | Retained | Resource-retaining cards | Validate resource count matches declared value on Target Profile; resources declared are placed on card — do not drain to Reservoir. Any unallocated resources are placed in target_faction's Dispatch Case. | Face-up in grid |
 
+   *A returned Covert Demand card is validated per §9.5.3, not this table — an empty returned demand is a decline, placed face-up, not a Zero payment.*
+
    *If any Intel Token is submitted as part of payment, calculate age for each token — per §13 Intel Token Age table.*
 
    *All submitted Intel Tokens are reset (erased) and returned to The Dossier, or discarded if single-use.*
@@ -647,7 +651,7 @@ From left to right, lane by lane:
 
    *Modifier Cards are splayed beneath the operation card to display their values during resolution. Modifier Card physical design must support cascade orientation — value printed prominently at both top and bottom edge. (XA-22, Art 11)*
 
-5. If a Dispatch Token accompanies the card: set aside the token. If no Dispatch Token accompanies the card: flip the operation card face-down; remove attached Modifier Cards from the game.
+5. If a Dispatch Token accompanies the card: set aside the token. If no Dispatch Token accompanies the card: flip the operation card face-down; remove attached Modifier Cards from the game. *Exception: a returned Covert Demand card needs no Dispatch Token and stays face-up (§9.5.2).*
 
 6. Repeat sub-steps 0–5 for each remaining packet in the lane, then advance to the next lane. Repeat until all lanes are processed.
 
@@ -778,6 +782,8 @@ Compare roll to threshold — apply Critical Success/Fail rules per §13. If VM-
 
 *If VM-xx: announce the effect aloud.*
 
+*If this is a Covert Demand's first pass (Month N): deliver per §9.5.0 instead of applying an outcome. If it is a returned demand (Month N+1): resolve per §9.5.4.*
+
 *If BM-xx tokens are present (count = n): all outcome effects execute (1+n) times in sequence. If the outcome specifies a Notification Slip: deliver one slip only, regardless of n.*
 
 *If this operation's outcome blocks the acting faction's Deployment Marker conversion: flip the relevant marker to the Blocked face.*
@@ -790,7 +796,7 @@ If the outcome specifies VM-xx placement on another card in the Resolution Grid:
 
 If the card specifies a Notification Slip or Intel Delivery Slip: ARBITER writes and places it in the Dispatch Packet.
 
-*Successful Covert Operations do not produce Standing Marker moves — the action is unobserved. Any Standing Marker move occurs only as a card-specified failure or discovery condition.*
+*Successful Covert Operations do not produce Standing Marker moves — the action is unobserved. Any Standing Marker move occurs only as a card-specified failure or discovery condition, or a Covert Demand's decline (§9.5.4).*
 
 ###### §9.4.2.2.1 Failed
 
@@ -805,7 +811,7 @@ ARBITER announces the discovery to all players: acting faction, operation name, 
 ##### §9.4.2.3 Step 3: Clean Up Grid Cell
 
 Complete the Dispatch Packet for the acting faction:
-1. Place the operation card in the Dispatch Packet.
+1. Place the operation card in the Dispatch Packet. *Exception: on a Covert Demand's first pass, the operation card and Target Profile go to the target faction's Dispatch Case instead (§9.5.0).*
 2. Place the Target Profile in the Dispatch Packet.
 3. Discard Modifier Cards from the grid cell — removed from the game.
 4. Return Modifier Tokens, BM-xx tokens, and VM-xx (if present) to ARBITER supply.
@@ -818,7 +824,7 @@ Place the completed Dispatch Packet in the acting faction's Dispatch Case.
 
 ###### §9.4.2.4.0 Update Chorus Portrait Track
 
-The ARBITER Player privately updates the acting faction's Portrait Marker on the hidden track.
+The ARBITER Player privately updates the acting faction's Portrait Marker on the hidden track. *Covert Demands update once, when the returned demand resolves (§9.5.4) — not on the delivery pass.*
 
 ###### §9.4.2.4.1 Note for Chronicle (optional)
 
@@ -840,7 +846,7 @@ Advance to the next grid slot, left to right, row by row within the current beat
 
 The ARBITER Player returns all Dispatch Cases to their owners. Each case contains all Dispatch Packets from this Month's covert resolution, and any Intel Tokens issued to this faction this Month.
 
-*Not returned: resources (spent), Modifier Cards (discarded at Step 3), Countermeasure Cards (removed from game when played).*
+*Not returned: resources (spent — except Covert Demand payments, placed in the acting faction's case per §9.5.4), Modifier Cards (discarded at Step 3), Countermeasure Cards (removed from game when played).*
 
 ###### §9.4.2.6.1 Faction Players Read Results
 
@@ -1062,6 +1068,59 @@ Each Faction Player removes all Transient-duration cards from their Faction Reso
 ARBITER advances the Round Track pointer:
 - Month 1 or 2: advance to the next month. Return to §9.0 Start of Month.
 - Month 3: do not advance. Proceed to §10 Resolve District Tension. Quarter advance occurs at the end of the quarter close procedure.
+
+---
+
+### §9.5 Covert Demands
+
+*A reference procedure, entered from §9.4.2 and §9.4.0 — not a step in the monthly sequence.*
+
+A **Covert Demand** is a Covert Operation whose outcome depends on another faction's answer: a CovertOperation card with `outcome_type = ElectPlayer`. The Dispatch Case is the only covert channel between the table and ARBITER, and cases travel once per Month — so the demand and the answer each take one case cycle. The demand is delivered in Month N and resolved in the target's next Month (N+1). When Month N is Month 3, the answer is due in Month 1 of the next Quarter.
+
+#### §9.5.0 Step 0: Delivery (Month N, Beat 3)
+
+When a Covert Demand reaches its slot in the Resolution Grid (§9.4.2.2), the ARBITER Player applies no outcome:
+1. Place the operation card and the acting faction's Target Profile together in the **target faction's** Dispatch Case. Together they are the demand: the card's face states what compliance costs and what resisting costs; the Target Profile names the target and the district under threat.
+2. Nothing for this operation goes in the acting faction's Dispatch Packet.
+3. Do not update the Chorus Portrait Track on this pass (§9.4.2.4.0).
+
+#### §9.5.1 Step 1: Holding
+
+The target faction keeps the demand card and Target Profile privately and must return both in its next Dispatch Case.
+
+*The ARBITER Player does not track whether a response is owed or given. Follow-up is the acting faction's responsibility: its packet for this operation did not come back, so it knows a reply is outstanding. A demand not returned is the acting faction's to pursue at the table — self-policed under GR 6.1a, with disputes ruled under GR 6.1c.*
+
+#### §9.5.2 Step 2: Respond (Month N+1, §9.1.1)
+
+The target faction places the demand card and Target Profile in its Dispatch Case:
+- **To comply:** attach the demanded resources to the card.
+- **To resist:** return the card with nothing attached.
+
+A returned demand card requires no Dispatch Token and does not count toward the faction's operations for the Month.
+
+*A faction that cannot pay the demand in full can only resist.*
+
+#### §9.5.3 Step 3: Validate (Month N+1, Beat 0)
+
+When the ARBITER Player encounters a returned demand card (§9.4.0.1):
+- **Full demand attached:** process per the Retained row — place the resources on the card; do not drain to the Reservoir. The demand resolves as accept.
+- **Less than the full demand attached:** the demand resolves as decline. Place any partial payment in the target faction's Dispatch Case.
+
+In either case, place the card face-up in the Beat 3 section of the target faction's lane.
+
+#### §9.5.4 Step 4: Resolve (Month N+1, Beat 3)
+
+When the returned demand card reaches its slot:
+- **Accept:** apply `on_accept`. Resources on the card are placed in the acting faction's Dispatch Case.
+- **Decline:** apply `on_decline`. If the target faction no longer holds presence in the target district, only the non-presence consequences apply.
+
+Update the Chorus Portrait Track now (§9.4.2.4.0) — once, for the demand as a whole. Place the operation card and Target Profile in the **acting faction's** Dispatch Packet (§9.4.2.3). Cases return per §9.4.2.6.
+
+*Each Covert Demand is answered on its own. A faction holding two demands answers each separately.*
+
+#### §9.5.5 Step 5: Unanswered at Game End
+
+A demand still held when the session ends has no effect. The acting faction's cost is not returned.
 
 ---
 

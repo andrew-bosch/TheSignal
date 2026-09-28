@@ -86,5 +86,6 @@ Before any card spec:
 6. New ARBITER behavior: define as generalizable procedure in Art 03/07 first (Design Pillar 4.7b)
 7. Narrative field: no flavor implies faction knows what the message to the Chorus should say (Design Pillar 4.6b)
 8. Card-as-condition (Permanent PA): no board marker; card IS the condition; define `persistence_condition` + `persistence_effect`
+9. **The Dispatch Case is the only covert channel** (Andy, S165). Everyone at the table sees everything else — no whispering, no unseen hand-offs to ARBITER, no hidden accept/decline. Cases travel once per Month, so a covert exchange that needs another faction's answer takes a case cycle each way (Art 03 §9.5 Covert Demands). Keep ARBITER out of the middle: the faction that started the exchange owns the follow-up.
 
 *Full governing rules table, card schema (§6.1/§6.2), and design flags: `design_reference_card_system.md`*

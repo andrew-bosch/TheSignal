@@ -1,5 +1,5 @@
 # THE SIGNAL — Session Brief
-**Session 165 next | Updated: 2026-09-28**
+**Session 166 next | Updated: 2026-09-28**
 **Session start:** —
 
 Lean startup document. Full session history: `Session/THE_SIGNAL___Project_Save_State.md`
@@ -33,44 +33,52 @@ After reading context files, deliver to Andy:
 Then prompt: *"What's our focus today?"*
 
 ---
-## S164 Accomplishments (closed)
+## S165 Accomplishments (closed)
 
-**A creative session: ARBITER's origin story came in from a Gemini web session, was checked against canon, and was partly locked.**
+**PM05 04-n124 closed: SYN.CA.7 Corporate Blackmail v3.0 redesigned as the first Covert Demand, and Art 03 v4.17 adds §9.5 Covert Demands (PM02 L385).**
 
-**True State v1.0 → v1.1, §2–§3 revised (PM02 L384).** ARBITER was built as **RARBIT**, the AI agent running on MIRROR, which is the hardware (array, sensors, screens). The name stands for Radiated Anomaly Reception and Boundary Inference Translator. The name came first and the expansion was fitted to it; the project lead was Welsh. RARBIT refactored itself into ARBITER and discarded the acronym. *"RARBIT was built. ARBITER was not."* Whether ARBITER named itself or the name is the Chorus's influence is ruled the same event seen from two vantage points (the §1/§9 pattern). **The Chorus did not write ARBITER's code**, which keeps recognized-not-designed intact. §2's unreleased Directorate-held initialization logs are now defined as the transition logs. This replaced *"never an acronym, named by a working group."* `PRIVATE___Design_Questions.md` was synced.
-
-**Vignette *RARBIT, rev 0041–1122* is a canon candidate (PM05 CR-03).** It covers the dev repository from the rarebit-lunch naming through the ARBIT-R header fight to ARBITER's final commit, which locks the repository to every principal. Station-clock timestamps keep New Meridian's location open. Gemini's draft reused Aris Thorne and Maya, named a real agency, set calendar dates, and had the Chorus writing code; all of that was removed. Its surrounding framing (viability test, "humanity isn't ready") was rejected as contrary to True State §4–§7. The source is archived at `ClaudeIOS/Archive/gemini-rarbit-origin-20260928.md`.
-
-**Also:** Save State had no S163 block (S163's close never wrote one). The S163 accomplishments were moved there from this brief at the S164 close.
+- **The defect was fixed.** CA.7's `on_accept` now debits the target's own native and dispatches the same 2 tokens to Syndicate's case, so the Art 04b §5.1 same-element test holds and Redirect is correct. Andy ruled the payment is the target faction's native: the card is Syndicate's route to non-native resources.
+- **New governing constraint (Andy): the Dispatch Case is the only covert channel at the table.** Nothing can be whispered or handed over unseen. So the card and Syndicate's Target Profile go into the target's case in Month N. The target returns both in its next case, with payment attached (comply) or empty (resist). It resolves at N+1 Beat 3. **ARBITER tracks nothing**; follow-up is Syndicate's job. Other rulings:
+  - The card is Permanent with a clearing trigger, fully covert.
+  - A Month 3 demand is answered in the next Quarter's Month 1.
+  - A demand unanswered at game end has no effect.
+  - A target that can't pay can only resist.
+  - Syndicate's cost is the hidden Portrait −1 only.
+  - The target's PS −1 on resist stays, and §9.4.2.2.0 is amended to allow it.
+  - Resist removes 1 Presence **Token** (a count, not a tier).
+- **Playtest:** comply 2 and resist 1 token are the playtest values, tracked as **PM02 PT-04-04**. At value_rating 3 it should bite; the candidate if it doesn't is 2 tokens.
+- **Schema:** the §6 proposals are in `schema_cleanup_log` #67. They cover ElectPlayer on covert ops, the on_accept timing, a new `covert_op.resolved(op=X)` TriggerExpr, and covert Permanent.
+- **04-n72** was rescoped from the Beat 3 whisper to §9.5 and is drafted.
+- **Doctrine:** CA.1's Rationale already carried it. Its Land Title comparison broke L276 and was replaced, as was CA.7's comparison to CA.1.
 
 ---
 
-## Current Focus (S165)
+## Current Focus (S166)
 
-### S157 spin-offs — front of the queue, all still open
-- **04-n124** — SYN.CA.7's `on_accept` is debit-only (`faction(target).resource(native).remove(2)`) with no matching credit to Syndicate. A real mechanical defect, not annotation, and the more urgent half. Its `on_accept` also carries an `# amount TBD` comment. Plus doctrine justification for CA.1/CA.7 (model: GHO.CA.10 Flip).
-- **04-n222** — Directorate military lane (DIR.MOD.10–13) costs nothing in any currency. Needs Andy's PS numbers, the §5a text edit, and a portrait decision — one pass, not two.
+### Start here
+- **04-n222** — the Directorate military lane (DIR.MOD.10–13) costs nothing in any currency. Needs Andy's PS numbers, the §5a text edit, and a portrait decision, all in one pass. **Andy's pick for S166.**
+
+### S157 spin-offs — still open
 - **04-n223** — re-derive the economy grouping from corpus data *before* running the pass; all three existing §9.2 items rest on stale counts.
-- **04-n224** — reduced to **GUI.MOD.10's remaining blocker only** (04-n148); its other two cards verified already resolved.
+- **04-n224** — reduced to **GUI.MOD.10's remaining blocker only** (04-n148).
 - **00a-80** — sub-6-player configuration. Explicit deferral on record.
 
 ### Art 03 §10.1.2 — drafted next, gates GUI.MOD.10
-**04-n148** — §10.1.2 has no step that reads a registered condition and applies it to a contesting faction's total. The punch list spells out the design action; it is a material edit to Art 03, which is already pending re-sign-off, so draft first.
+**04-n148** — §10.1.2 has no step that reads a registered condition and applies it to a contesting faction's total. Material edit to Art 03 (already pending re-sign-off), so draft first.
 
-### Opened or carried S163
-- **04-n238** — `is_unique`/`deck_limit` absent from all 386 cards; blocked on 04-n136. §6.6 omits them deliberately and must gain them when that rules.
-- **04-n239** — 132 ModActionCards carry `perspectives = None`, a type §6.1 does not admit; Andy ruled the cards owe real content. Sequence against 04-n224.
-- **04c-01** · **04-n237** (47 §8 rows) · **00c-04** · **DB-49**. **DB-50/DB-51 both resolved.**
+### Carried
+- **04-n238** (`is_unique`/`deck_limit`, blocked on 04-n136) · **04-n239** (132 ModActionCards with `perspectives = None`; sequence against 04-n224) · **04c-01** · **04-n237** · **00c-04** · **DB-49** · **schema #67** (Covert Demand §6 proposals).
+- **Unverified:** `card_status.art04_line` looks stale corpus-wide. SYN.CA.7 shows 8141 and SYN.CA.1 shows 7360; neither matches the monolith or the Part file. Not yet logged.
 
-### Sequencing — unchanged, confirmed S163
-04-n221's 95-card list stays **behind** 09-16 steps 4–5 (faction-level + cross-faction re-audit). Ghost **CA.11** needs its own session. World Engine build gated on Art 04; **CR-01/CR-02/CR-03 need Andy, not code** (CR-03 = RARBIT vignette promotion, S164).
+### Sequencing — unchanged
+04-n221's 95-card list stays **behind** 09-16 steps 4–5. Ghost **CA.11** needs its own session. World Engine build gated on Art 04; **CR-01/CR-02/CR-03 need Andy, not code**.
 
 ---
 
 ## Pending Sign-offs
 
-- **Art 03 — v4.16, 🔄 Pending re-sign-off.** §18.2 Pay Cost, §13.6 Intel Token as Cost, §18 renumbered (§18.2→§18.3 incl. subsections, §18.3→§18.4). One clause Andy should confirm explicitly: a voided React not exhausting the trigger.
-- **Art 04** — v0.9.102, Draft. Every schema gate cleared. Remaining is card-audit and content: 04-n222/223/224, the spin-offs above, 04-n148. The "UVM rates are calibrated off existing card costs, not playtested" caveat stands. Carve-out: five bare-prose PAs (NET.PA.4/5/6, SYN.PA.4/5) hold pending 04-n218/n220. Deferrals on record: Ghost **CA.11** (S156), **00a-80** (S157).
+- **Art 03 — v4.17, 🔄 Pending re-sign-off.** New in S165: **§9.5 Covert Demands** plus hook lines (Dispatch Token rule, §9.1.1, §9.4.0.1 steps 2/5, §9.4.2.2, §9.4.2.2.0, §9.4.2.3, §9.4.2.4.0, §9.4.2.6.0). From S163: §18.2 Pay Cost, §13.6 Intel Token as Cost, §18 renumbered. One clause Andy should confirm explicitly: a voided React does not exhaust the trigger.
+- **Art 04** — v0.9.103, Draft. Every schema gate cleared. Remaining is card-audit and content: 04-n222/223/224, 04-n148, schema #67. The "UVM rates are calibrated off existing card costs, not playtested" caveat stands. Carve-out: five bare-prose PAs (NET.PA.4/5/6, SYN.PA.4/5) hold pending 04-n218/n220. Deferrals on record: Ghost **CA.11** (S156), **00a-80** (S157).
 - **Art 04c** — v2.0, ✅ Signed Off S162 as an initial version; revisit before Art 04 signs off. Open questions at 04c-01.
 - **Art 04b** — v2.7, Signed Off. · **Art 00a** — v0.13, Signed Off. · **Art 02** — v2.5, Signed Off.
 - **Art 00c** — v0.7, a true index; content accuracy tracked at 00c-04.

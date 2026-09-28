@@ -1,7 +1,13 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-09-28 — Session 164 Close
+**Last Updated:** 2026-09-28 — Session 165 Close
+
+### Session 165 Summary (2026-09-28)
+
+**PM05 04-n124 CLOSED: SYN.CA.7 Corporate Blackmail v3.0 redesigned as the first Covert Demand; Art 03 v4.17 adds §9.5 Covert Demands, pending re-sign-off (PM02 L385).** The debit-only `on_accept` now debits the target's own native and dispatches the same 2 tokens to Syndicate's case (Art 04b §5.1 same-element test; Redirect correct). Andy ruled that the Dispatch Case is the only covert channel at the table. The card and Syndicate's Target Profile go into the target's case in Month N; the target returns both in its next case, with payment attached (comply) or empty (resist); the demand resolves at N+1 Beat 3. ARBITER tracks nothing, and follow-up is Syndicate's job. Other rulings: Permanent with a clearing trigger, fully covert; unanswered at game end = no effect; a target that can't pay can only resist; Syndicate's cost is Portrait −1 only; the target's PS −1 on resist stays (§9.4.2.2.0 amended); resist removes 1 Presence Token (a count, not a tier). Playtest magnitudes are tracked as PM02 PT-04-04. §6 proposals are in schema_cleanup_log #67. 04-n72 was rescoped and drafted. SYN.CA.1's Land Title comparison (an L276 breach) was replaced with a doctrine line. Art 04 → v0.9.103.
+
+---
 
 ### Session 164 Summary (2026-09-28)
 

@@ -26,7 +26,7 @@
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate's non-presence resource extraction card — Capital buys immediate resource extraction from any district without Syndicate being physically present. Establishes the doctrine that ownership and presence are separate things. Distinguished from Land Title (extended set) by duration: SYN.CA.1 is a per-round transactional play; Land Title creates a permanent revenue claim. Core cost is the action slot itself; the 2:1 Capital:native conversion is a secondary trade rate, not the primary barrier.
+Syndicate's non-presence resource extraction card — Capital buys immediate resource extraction from any district without Syndicate being physically present. Establishes the doctrine that ownership and presence are separate things. The resource arrives in the district's own type, not Syndicate's: Syndicate doctrine treats any district's economic output as convertible, and extraction wherever the money is made is the faction's purpose, not a side effect. Core cost is the action slot itself; the 2:1 Capital:native conversion is a secondary trade rate, not the primary barrier.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -35,7 +35,7 @@ Syndicate's non-presence resource extraction card — Capital buys immediate res
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Non-presence resource extraction — Capital buys revenue stream from any district; implements "ownership ≠ presence" doctrine; distinct from Land Title (permanent) | Art 00 §7 |
+| Action fit | ✓ | Non-presence resource extraction — Capital buys revenue stream from any district; implements "ownership ≠ presence" doctrine; non-native output is doctrinal extraction, not incidental | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Syndicate perspective by design | Art 00 §7 |
 | Doctrine alignment | ✓ | Syndicate only; Capital×2; no per-round limit; core cost = action slot; affinity boost directed (condition TBD — see Outstanding Issues) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) — non-presence extraction is Syndicate-exclusive | Art 04 §6.2; Art 04b §5 |
@@ -873,7 +873,7 @@ Card A (Capital coercion) below. Card B (forced Accord vote) stub follows — me
 [↑ Covert Operations](#syndicate-covert-operations)
 
 #### Design Rationale
-Syndicate uses covertly gathered intelligence to threaten a faction operating in a named district. ARBITER delivers the blackmail notice privately to the target at Beat 3 — notification is covert, not public. The target faces a binary choice: comply (pay resources and keep their position) or resist (accept consequences). Either way, Syndicate pays a PS cost — operating this way corrodes institutional relationships regardless of outcome. Distinct from SYN.CA.1 Leveraged Acquisition: SYN.CA.1 is transactional extraction (pays Capital, receives native output without interaction); SYN.CA.7 is coercive leverage (threatens loss to extract compliance from a specific target at a specific position).
+Syndicate uses covertly gathered intelligence to threaten a faction's position in a named district. The demand arrives in the target's Dispatch Case and nowhere else. The target answers the same way in its next case: it returns the card with payment attached, or returns it empty and accepts the consequences. Compliance is paid in the target's own native resource. Syndicate doctrine treats any faction's output as convertible, and the price of silence is set in whatever the target has most of. Operating this way corrodes Syndicate's standing with the Chorus whatever the target decides.
 
 #### Card Story
 ⚠ Story pending 04-n79.
@@ -882,39 +882,39 @@ Syndicate uses covertly gathered intelligence to threaten a faction operating in
 
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
-| Action fit | ✓ | Intel-to-compliance coercion; target choice (pay or suffer) replaces forced transfer; presence restriction grounds the threat in a real position | Art 00 §7 |
+| Action fit | ✓ | Intel-to-compliance coercion; target choice (pay or suffer) replaces forced transfer; presence restriction grounds the threat in a real position; the demand and the answer both travel by Dispatch Case, the only covert channel | Art 00 §7 |
 | Voice fit | ✓ | Faction-specific; single Syndicate perspective by design | Art 00 §7 |
-| Doctrine alignment | ✓ | Syndicate only; IntelToken cost; flat portrait −1 self-cost; target_district field present | Art 00 §7; Art 04 §6.5 |
+| Doctrine alignment | ✓ | Syndicate only; IntelToken cost; submitter portrait −1 self-cost (hidden — no public Standing move); target_district field present; non-native acquisition is stated doctrine (any faction's output is convertible) | Art 00 §7; Art 04 §6.5 |
 | Card type fit | ✓ | CovertOperation / FactionSpecific (Syndicate) | Art 04 §6.2; Art 04b §5 |
-| Taxonomy fit | ✓ | Economy/Redirect/NativeResource — compliance payment or presence loss at target district | Art 04b §4, §5 |
-| Balance | — | Comply cost (resource amount) TBD; resist consequence (presence tier loss + PS −1) outstanding | Art 02 §6–§7 |
-| Effect duration | ✓ | Immediate at Beat 3 resolution | — |
-| Persistence | ✓ | Immediate — no lingering game-state marker | Art 04 §6 |
+| Taxonomy fit | ✓ | Economy/Redirect/NativeResource — on comply, the same 2 tokens leave the target and arrive in Syndicate's case (Art 04b §5.1 same-element test) | Art 04b §4, §5 |
+| Balance | — | Playtest values: comply 2 target native; resist 1 Presence Token + PS −1 (PM02 PT-04-04) | Art 02 §6–§7 |
+| Effect duration | ✓ | Permanent with a clearing trigger — delivered Month N, resolves at Beat 3 of the target's next Month; void if unanswered at game end | Art 04 §5 P19 |
+| Persistence | ⚠ | `Permanent`, cleared by `covert_op.resolved(op=self)` — first covert Permanent card (held in the target's case, not on the table); both need §6 support | Art 04 §6 |
 | Trigger validity | ✓ | trigger = None | — |
 | Portrait validity | ✓ | `submitter=-1` (corrected from `flat=-1` — Syndicate is this card's own submitter, so `submitter=` is the semantically correct field, schema_cleanup_log #7). | Art 04 §6.2 |
 | Supported by zones | ✓ | target_district = district.named — presence restriction is district-specific | Art 01 §6–§7 |
-| Supported by components | — | Comply path: resource transfer (amount TBD). Resist path: presence tier reduction + PS — components confirmed; amount outstanding | Art 02 §6–§8 |
-| Supported by game procedure | — | Beat 3 covert ElectPlayer: ARBITER whispers to target; target elects comply/resist. No existing Art 03 procedure for covert notification + choice at Beat 3. New procedure required before Issues Resolved. | Art 03 §9, §11 |
-| Data schema validation | ⚠ | `card_id` present and correctly typed (verified against `--dump-d`). Missing `boost`/`ps_framing` (`doctrine_mod=None` present). `on_accept`/`on_decline` correctly used only because `outcome_type=ElectPlayer` — good confirming example of the schema's ElectPlayer-only field group being used correctly. | Art 04 §6.1–§6.3 |
+| Supported by components | ✓ | The card and Syndicate's Target Profile together carry the demand (price and penalty on the card face; target and district on the Profile) — no new component; Dispatch Cases carry delivery, response and payment; Presence Tokens + PS track for resist | Art 02 §6–§8 |
+| Supported by game procedure | ⚠ | Art 03 §9.5 Covert Demands (v4.17) — pending re-sign-off | Art 03 §9.5 |
+| Data schema validation | ⚠ | `outcome_type=ElectPlayer` on a CovertOperation, `covert_op.resolved` and covert Permanent are not yet admitted by §6 — proposals logged | Art 04 §6.1–§6.3 |
 | Card narrative | ⚠ | Pending 04-n79 | Art 04 §5 P26 |
-| Outcome determinacy | ✓ | `Automatic`; `success`/`successcrit`/`fail`/`failcrit` all `None` by design — the real outcome logic lives in `on_accept`/`on_decline` (ElectPlayer), each resolving to exactly one outcome, no `game.choose_one()`. | Art 04 §5 P27 |
+| Outcome determinacy | ✓ | `Automatic`; `success`/`successcrit`/`fail`/`failcrit` all `None` by design — the outcome lives in `on_accept`/`on_decline`, selected by what the target returns; each resolves to exactly one outcome. | Art 04 §5 P27 |
 | Resource cost positioning | ✓ | Cost is IntelToken alone, no fungible resource paired — confirmed valid as its own cost category (§6.3, schema_cleanup_log #10), same basis as GHO.CA.9/GHO.CA.10. | Art 00a §9.2; Art 04 §6.3 |
 
 #### Outstanding Issues
 
-- **Comply resource amount:** What does the target pay on compliance? Suggest 2 native of target district (parallel to SYN.CA.1 output rate). Confirm type and amount.
-- **Resist consequence — presence loss:** "Lose influence" interpreted as lose 1 presence tier at target_district. Confirm: tier loss vs. token count loss.
-- **Covert ElectPlayer procedure:** No Art 03 procedure exists for covert notification + player choice at Beat 3. Must be written as generalizable procedure. Issues Resolved blocked until written.
+- **Playtest balance (PM02 PT-04-04):** comply 2 target native / resist 1 Presence Token + PS −1 are the values to playtest. At `value_rating` 3, the demand should be impactful and hard to comply with — watch whether either path feels too light (candidate: resist removes 2 Presence Tokens).
+- **Procedure:** Art 03 §9.5 Covert Demands must be signed off before Issues Resolved.
+- **Schema:** §6 must admit ElectPlayer on a CovertOperation, a covert Permanent card, and `covert_op.resolved` (schema_cleanup_log #67).
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | ✓ S165 | | |
 
 ```python
 SYN.CA.7 = Card(
-    id      = "SYN.CA.7",  card_id="SYN.CA.7",  version="v2.0",
+    id      = "SYN.CA.7",  card_id="SYN.CA.7",  version="v3.0",
     name    = "Corporate Blackmail",
     tagline = "Submit covertly. The target decides what compliance costs less.",
     type    = CovertOperation,  subtype = FactionSpecific,  faction = Syndicate,
@@ -922,9 +922,9 @@ SYN.CA.7 = Card(
     beat=3, resolution=Automatic, threshold=None, ring_mod=None, doctrine_mod=None, trigger=None,
     value_rating = 3,
     resolution_type = Transactional, outcome_type=ElectPlayer,
-    persistence     = Immediate,
+    persistence     = Permanent,
     persistence_condition = None,
-    persistence_clearing_trigger = None,
+    persistence_clearing_trigger = covert_op.resolved(op=self),
     persistence_effect    = None,
     target_district = district.named,
     target_faction  = faction(named_opponent),
@@ -940,21 +940,22 @@ SYN.CA.7 = Card(
     fail        = None,
     failcrit    = None,
 
-    # ElectPlayer — ARBITER notifies target privately at Beat 3 resolution
-    on_accept  = faction(target).resource(native).remove(2),  # amount TBD; placeholder 2 native
+    on_accept  = (
+        faction(target).native.remove(2),
+        game.dispatch(faction(acting), faction(target).native * 2),
+    ),
     on_decline = (
-        faction(target).presence_tier(district(target_district)).remove(1),
+        arbiter.remove(presence_chip, district=target_district, faction=target, count=1),
         faction(target).standing.remove(1),
     ),
-    # always: faction(acting).standing -= 1 regardless of outcome (encoded in portrait flat=-1)
 
     on_discard = None,
     portrait    = {Syndicate: PortraitEntry(submitter=-1)},
     ps_framing = None,
     narrative   = "The information was gathered properly. What is done with it is simply business.",
     perspectives = {Syndicate: "We don't call it blackmail. We call it an incentive structure with consequences attached."},
-    design_note  = "Covert submission; private notification at Beat 3 (ARBITER whispers to target — not public). Target elects comply or resist. Comply: pay resources (amount TBD). Resist: presence tier −1 at target district + PS −1. Syndicate PS −1 always. Covert ElectPlayer procedure required in Art 03 before Issues Resolved.",
-    arbiter_note = "Beat 3: whisper privately to target faction — inform them of blackmail attempt. Target elects comply or resist (not announced publicly). On comply: transfer [X native TBD] from target to Syndicate. On resist: reduce target's presence tier at named district by 1; reduce target PS by 1. Regardless of outcome: reduce Syndicate PS by 1.",
+    design_note  = "Covert Demand. Month N: card and Target Profile delivered to the target's case. Month N+1: the target returns both, with 2 of its own native attached to comply or empty to resist. Resolves at N+1 Beat 3. A target that cannot pay can only resist. Syndicate follows up on an unreturned demand itself; ARBITER does not track it. Syndicate's cost is the hidden Portrait −1 only.",
+    arbiter_note = None,
 )
 ```
 

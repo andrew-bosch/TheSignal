@@ -1017,3 +1017,16 @@ Corpus is now **12** `PositionalWager` (was 8 as enumerated, 9 after DIR.CA.8).
 **Status:** CLOSED S159. Art 04 → v0.9.99. No longer gates Art 04 sign-off.
 
 ---
+
+### 67. Category: Covert Demands — §6 does not yet admit a covert operation that waits a Month for another faction's answer
+
+**Surfaced by:** PM05 04-n124 / 04-n72 (S165, PM02 L385). SYN.CA.7 Corporate Blackmail v3.0 was redesigned around the rule that the Dispatch Case is the only covert channel: the demand is delivered into the target's case in Month N and answered through the target's next case (Art 03 §9.5, v4.17, pending re-sign-off). The card is written against that procedure; four §6 statements do not yet support it.
+
+1. **`outcome_type` field row (§6.2)** reads *"None for covert operations."* SYN.CA.7 already carried `ElectPlayer` under v2.0 in breach of that wording. **Proposed:** *"None for covert operations, except Covert Demands (`ElectPlayer`, Art 03 §9.5)."* `ElectPlayer` on a CovertOperation is the flag §9.5 keys on — no new enum value.
+2. **`on_accept` / `on_decline` rows (§6.2)** read *"applied when target accepts the offer at resolution."* **Proposed:** add *"— for a Covert Demand, at the resolution following the target's response (Art 03 §9.5.4)."*
+3. **`covert_op.resolved(op=X)` — new TriggerExpr vocabulary (§6.3).** Used as SYN.CA.7's `persistence_clearing_trigger`. Modeled directly on the confirmed `public_act.resolved(pa=X)`. **Proposed:** register it beside that entry — *"the named covert operation resolves at Beat 2/3 — for a Covert Demand, its Month N+1 resolution."* `op=self` needs confirming as the self-reference form (the PA precedent uses `pa=trigger.card`).
+4. **Covert Permanent (§6.2 `persistence` row; Principle 19).** Andy's ruling (S165): the card is *"technically permanent with a clearing condition but fully covert."* Every existing Permanent card is a public Standing Condition on the table; SYN.CA.7 is held in the target's case or hand, with no board effect while held. **Proposed:** the `persistence` row gains a covert case — a Permanent card may be held covertly rather than placed, cleared by its `persistence_clearing_trigger`. This case never runs into Principle 6's ban on multi-Quarter temporaries: a Month 3 demand is answered in the next Quarter's Month 1, and a demand still held at game end has no effect (§9.5.5).
+
+**Status:** Open — proposals only, per schema discipline (§6 changes follow the card, not precede it). Gates SYN.CA.7 Issues Resolved alongside Art 03 §9.5 sign-off.
+
+---

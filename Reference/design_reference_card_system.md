@@ -318,7 +318,7 @@ Rules marked **HARD** cannot be overridden by card design without a PM02 locked 
 | `ring_mod` | dict[Ring, int] \| None | Per-ring threshold adjustment; positive = easier |
 | `doctrine_mod` | dict[PentagramRelation, int] \| None | Per-doctrinal-relationship threshold adjustment; None when no faction target |
 | `trigger` | TriggerExpr \| None | None = default beat timing |
-| `outcome_type` | OutcomeType \| None | Public acts only |
+| `outcome_type` | OutcomeType \| None | Public acts only — **except Covert Demands** (CovertOperation + `ElectPlayer`, Art 03 §9.5, v4.17 pending; first instance SYN.CA.7). §6 wording not yet amended — proposal in `schema_cleanup_log` #67, along with `covert_op.resolved(op=X)` and covert Permanent. |
 | `persistence` | Persistence | Immediate / Transient / Seasonal / Permanent; covert op default = Immediate |
 | `persistence_condition` | BoolExpr \| None | **None unless Permanent.** Card discarded immediately when False. |
 | `persistence_effect` | MutationExpr \| None | **None unless Permanent.** Ongoing board condition while card is in play. |

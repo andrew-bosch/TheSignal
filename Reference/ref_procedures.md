@@ -64,6 +64,21 @@ Built fresh at Beat 0; cleared at end of Beat 3. Entirely ARBITER-private — fa
 
 ---
 
+### Covert Demands (§9.5, added S165 — Art 03 v4.17 pending re-sign-off)
+
+**Governing constraint (Andy, S165):** the **Dispatch Case is the only covert channel** between the table and ARBITER. Everyone sees everything else — nothing is whispered, handed over, or declined unseen. Cases travel once per Month, so any covert exchange needing another faction's answer takes one case cycle each way.
+
+A **Covert Demand** = CovertOperation with `outcome_type = ElectPlayer` (first instance: SYN.CA.7 Corporate Blackmail).
+- **Month N, Beat 3 — Delivery (§9.5.0):** no outcome applied. The op card **and the acting faction's Target Profile** go into the **target's** case (card face = price and penalty; Profile = target + district). No Portrait update this pass.
+- **Holding (§9.5.1):** target keeps both privately, must return both next case. **ARBITER tracks nothing** — follow-up is the acting faction's responsibility (its packet didn't come back); disputes via GR 6.1a/6.1c.
+- **Month N+1, §9.1.1 — Respond (§9.5.2):** card + Profile returned with payment attached (comply) or empty (resist). No Dispatch Token; doesn't count as an operation. Can't pay in full → can only resist.
+- **Beat 0 — Validate (§9.5.3):** full payment → Retained row (placed on card, not drained) = accept; anything less = decline, partial payment returned. Card face-up in Beat 3 of target's lane either way.
+- **Beat 3 — Resolve (§9.5.4):** accept → payment into acting faction's case; decline → `on_decline` (only non-presence consequences if target has left the district). Portrait updated once, now. Card + Profile return to acting faction.
+- Month 3 → answered in next Quarter's Month 1. **Unanswered at game end → no effect** (§9.5.5), cost not returned. Two demands on one target are answered separately.
+- A Covert Demand's decline is a permitted Standing move for a covert op (§9.4.2.2.0).
+
+---
+
 ### Faction Resolution Grid (PA domain)
 
 Built at §9.2; processed at Beat 4. Visible to all players.
