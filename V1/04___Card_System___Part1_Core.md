@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.103 Draft  
+**Version:** 0.9.104 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-09-28  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -396,7 +396,7 @@ Network believes no one gets to decide this in the dark. They arrived after The 
 The Directorate's doctrine is not domination — it is managed stability. Survival requires control, restraint, and continuity; the win state is Established in more districts than any other faction because that configuration is not hegemony — it is the only board state the Directorate can guarantee remains reversible. No faction Dominant anywhere means no escalation has outrun institutional capacity to model and correct. Suppression is the instrument of restraint, not aggression: pushing another faction's tier down prevents a condition from becoming irreversible. The Directorate makes no distinction between rogue capital and rogue information — the Syndicate's gray-market acquisitions and the Network's broadcast operations are the same threat expressed through different channels. The procedural commitment does not change based on the mechanism of the disruption.
 
 - **Economy:** Mandate via institutional acts and Core structures
-- **Modifier deck — military assets:** enforcement personnel and equipment for conflict resolution and presence removal; available but costs Portrait
+- **Modifier deck — military assets:** enforcement personnel and equipment for conflict resolution and presence removal. Available, but turning force on the city costs Public Standing: removing a faction's presence, or imposing a curfew or lockdown in a contest, reads to New Meridian as martial law. Troops committed only to hold a line cost nothing.
 - **Modifier deck — legislative assets:** regulatory teams that reduce Public Act costs and extend world event duration; the doctrinal mode
 - **Suppression toolkit:** push other factions' control tiers down rather than building own tiers up — best suppression capability in the game
 - **Entry/Exit Controls (P-D1):** persistent world event; lowers opposing presence placement thresholds district-wide until another faction removes it

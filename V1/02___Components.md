@@ -1,8 +1,8 @@
 # 02 — Components
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 2.5
-**Status:** ✅ Signed Off — S111 (L233). **Re-signed off S149 (L326):** §8 Target Profile Gameplay Requirements amendment (Target Profile as sole CA/PA target-declaration mechanism, multi-target via free-form line, ModReactCard exclusion — PM02 L317) reviewed and confirmed by Andy. Version 2.5 current.
+**Version:** 2.6
+**Status:** ✅ Signed Off — S166 (PM02 L388): §8 Target Profile — ModReactCard exclusion replaced: further targets are stated aloud at presentation; recording them on a Target Profile placed with the card is optional, otherwise the table remembers them. Prior: ✅ Signed Off — S111 (L233). **Re-signed off S149 (L326):** §8 Target Profile Gameplay Requirements amendment (Target Profile as sole CA/PA target-declaration mechanism, multi-target via free-form line, ModReactCard exclusion — PM02 L317) reviewed and confirmed by Andy. 
 **Depends on:** 00 — Factions, World & Narrative Context; 01 — Game Board: New Meridian
 **DB Anchor:** `the_signal_db.component` — canonical component registry. Names and IDs from that registry are authoritative.
 **DB Sync:** Changes to component schema design or any component entry fields must be coordinated with corresponding DB updates. Art 02 and `the_signal_db` must remain in sync. *(Note: You can easily synchronize the database with this document's metadata blocks by running `python3 Database/seed_component_metadata.py --execute`.)*
@@ -879,7 +879,7 @@ Physical infrastructure of the covert dispatch and return channel — submission
 
 **Gameplay Requirements:** Must record one or more of: target faction, target district, target object (named component — e.g., Broadcast Card), operation type, declared parameters (free-form text — additional blank line for card-specific declarations, e.g., target clause and new value for SYN.CA.11 Redline). Completed by the submitting faction before submission. Erased or disposed of after use — physical design pending Art 08.
 
-Target Profile is the sole mechanism by which a Covert Operation or Public Act declares/enumerates its target(s) — no CA/PA card targets any other way. Cards requiring more than one target of the same type (e.g. two target districts, two target factions — Art 04 §6.3 CostExpr's `target1`/`target2`/`each_target` grammar) record the additional target(s) on the free-form declared-parameters line; there is no dedicated second printed field per type. Modifier Cards (ModReactCard subclass) do not use Target Profile at all — they fire off board-state events, not a declared target, so whatever targeting context their effect needs comes from the triggering event's own metadata (which faction, which district/ring — Art 04 §6.3 TriggerExpr `faction=`/`district=`/`ring=` parameters), never a Target Profile entry.
+Target Profile is the sole mechanism by which a Covert Operation or Public Act declares/enumerates its target(s) — no CA/PA card targets any other way. Cards requiring more than one target of the same type (e.g. two target districts, two target factions — Art 04 §6.3 CostExpr's `target1`/`target2`/`each_target` grammar) record the additional target(s) on the free-form declared-parameters line; there is no dedicated second printed field per type. Modifier Cards (ModReactCard subclass) fire off board-state events; the trigger supplies their targeting context (Art 04 §6.3 TriggerExpr `faction=`/`district=`/`ring=` parameters). Any further target the card's effect needs is stated aloud when the card is presented. **Recording it on a Target Profile is optional** — a Target Profile may be placed with the card to record the stated target(s). If none is used, the table must remember the stated target(s) when the card's effect resolves.
 
 **Metadata:**
 | Field | Value |

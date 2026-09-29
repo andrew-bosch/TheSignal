@@ -97,5 +97,5 @@
 **IntelToken targeting — design observation:** An IntelToken submitted by a faction on a PA in the Faction Resolution Grid (DB:88) at §9.2 is no longer privately held — it is in ARBITER's procedural domain and is a valid card effect target at Beat 3 (before Beat 4 processes the PA). This is the only location where an opposing faction's IntelToken can be reached. This is a structural consequence of the §9.2 submission model, not a named governing rule in Art 00a.
 
 **Two resolution grid domains (never conflate):**
-- **Faction Resolution Grid** — where PAs are submitted (§9.2); factions place their PA cards face-up here with resources and IntelTokens; Target Profile placed face-down. IntelTokens here are ARBITER-domain at Beat 3.
+- **Faction Resolution Grid** — where PAs are submitted (§9.2); factions place their PA cards face-up here with resources and IntelTokens; Target Profile placed face-down. IntelTokens here are ARBITER-domain at Beat 3. Its standing effects area also holds every persistent React for its duration (Art 03 §18.3.1, S166), with an optional Target Profile recording a verbally stated target; battlefield conditions there are claimed by players at §10.1.2 Step 1.2.4.
 - **ARBITER covert grid** — where covert Dispatch Cases are assembled (§9.1); entirely ARBITER-domain; never a valid card effect target.

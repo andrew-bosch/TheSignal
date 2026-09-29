@@ -764,7 +764,7 @@ Two of the 8 are blocked on other work rather than on this item: **GHO.CA.11** i
 1. **L284's "revisit per-card when each unblocks" was overdue.** Five of the eight had become computable since S145: **GD-01 → 3** (6.40), **GHO.CA.11 → 4** (26.67), **GUI.CA.10 → 1** (2.20), **GUI.PA.10 → 4** (9.25), **SYN.MOD.1 → 1** (1.00). GD-01 and GHO.CA.11 had the field absent entirely and had it inserted; the rest were the string `"None"`. **SYN.MOD.1 is a modifier card** and so sat between the two conventions — resolved to the UVM tier on L284's own precedent that the pricing model wins on conflict.
 2. **Four CA/PA cards had drifted** from the tier scheme, all rated *above* their computed tier — **DIR.PA.8** 4→2 (cost 3.00), **GUI.CA.9** 3→2 (4.00), **GUI.CA.4** 3→2 (4.10), **DIR.CA.2** 3→2 (4.13). This is post-S145 edit drift, not S145 error: DIR.PA.8 is confirmed rewritten at S150 (item #29) from a `d100`+prose hybrid to ElectPlayer, which moved its cost while its rating stayed. Note DIR.PA.8 is a **two-tier** correction.
 
-**Three remain `None`, correctly** — GHO.MOD.1, GUI.MOD.10, STD.MOD.1 "Overture": no computable `total_pair_cost`, which is exactly what L284 says `None` means. Corpus is now 1×186 · 2×129 · 3×35 · 4×31 · None×3 = 384.
+**Three remain `None`, correctly** — GHO.MOD.1, GUI.MOD.10, STD.MOD.1 "Overture": no computable `total_pair_cost`, which is exactly what L284 says `None` means. Corpus is now 1×186 · 2×129 · 3×35 · 4×31 · None×3 = 384. **S166:** GUI.MOD.10 set to 1 by Andy's judgment (PM02 L387), overriding the not-computable convention for that card — two remain `None`.
 
 **Regression guard added.** `tools/sync_card_db.sh` now runs a CA/PA-only drift check against the L284 boundaries on every sync, plus a "computable cost but no rating" check for the revisit case. Advisory — it reports, never edits, never fails the sync. Modifier cards are excluded by design. Currently reports clean.
 
@@ -1028,5 +1028,30 @@ Corpus is now **12** `PositionalWager` (was 8 as enumerated, 9 after DIR.CA.8).
 4. **Covert Permanent (§6.2 `persistence` row; Principle 19).** Andy's ruling (S165): the card is *"technically permanent with a clearing condition but fully covert."* Every existing Permanent card is a public Standing Condition on the table; SYN.CA.7 is held in the target's case or hand, with no board effect while held. **Proposed:** the `persistence` row gains a covert case — a Permanent card may be held covertly rather than placed, cleared by its `persistence_clearing_trigger`. This case never runs into Principle 6's ban on multi-Quarter temporaries: a Month 3 demand is answered in the next Quarter's Month 1, and a demand still held at game end has no effect (§9.5.5).
 
 **Status:** Open — proposals only, per schema discipline (§6 changes follow the card, not precede it). Gates SYN.CA.7 Issues Resolved alongside Art 03 §9.5 sign-off.
+
+---
+
+### 68. Category: Public Standing on a Battlefield Modifier Card — `ModBattleExpr` has no way to carry the playing faction's own PS shift
+
+**Surfaced by:** PM05 04-n222 (S166, PM02 L386). Andy ruled that Directorate's suppression cards in a contest cost Public Standing ("government force reads as martial law"): DIR.MOD.11 Emergency Curfew costs PS −1 and DIR.MOD.13 Martial Lockdown PS −2, applied at reveal whatever the contest outcome (Art 03 §10.1.2.3 step 3, v4.18, pending re-sign-off). The Boosts DIR.MOD.10/12 stay free. The cards are written as `ModBattleExpr(direction=Hinder, target=None, magnitude=n, ps_shift=PSShift(faction="acting", delta=-n))`.
+
+Why not the existing fields: `cost` is schema-locked None for ModBattleCard (L302), and Art 04c rules Public Standing is not a valid cost anyway. `ps_framing` is schema-locked None for the subclass, is used by zero cards corpus-wide, and models a public-reception roll triggered at resolution/discovery/placement, none of which is the reveal step. The shift belongs to the card's effect, the same way `ModActionExpr.ps_shift` carries it for ModActionCard.
+
+1. **§6.3 `ModBattleExpr`** — **Proposed:** add `ps_shift: PSShift | None  # None = no PS effect; applied to the playing faction at Art 03 §10.1.2.3 step 3, whatever the outcome`. Only `faction="acting"` is used so far.
+2. **§6.2 `effect` row for ModBattleCard** — **Proposed:** append *"; may carry a PS shift on the playing faction, applied at reveal (Art 03 §10.1.2.3)."*
+3. **§11 ModBattleCard effects table** — **Proposed:** a note under the Boost/Hinder table that a card may carry a `ps_shift`.
+
+**Status:** Open — proposals only, per schema discipline (§6 changes follow the card, not precede it). Gates DIR.MOD.11/13 Issues Resolved alongside Art 03 §10.1.2.3 sign-off.
+
+---
+
+### 69. Category: `arbiter.` prefix on effects that players carry out
+
+**Surfaced by:** GUI.MOD.10 Contractor's Favor v0.2 (S166, PM02 L387). The card's effect was written `arbiter.register_battlefield_modifier(district=, faction=, magnitude=)`, but under Art 03 §18.3.1 / §10.1.2 Step 1.2.4 the players place, record and claim the favor — ARBITER does nothing. Andy (S166): "it is not arbiter doing anything for any of this activity."
+
+1. **GUI.MOD.10 — changed in place:** `success = faction(target_faction).battlefield_strength.add(2, district=target_district)`. **Proposed §6.3:** register `faction(X).battlefield_strength.add(n, district=D)` — a delta to X's Battlefield Strength total in a contest over D; with `persistence=Seasonal` it stands as a battlefield condition claimed at Art 03 §10.1.2 Step 1.2.4.
+2. **Corpus-wide question, not swept:** the `arbiter.` prefix appears on many effects the players physically perform (e.g. `arbiter.remove(presence_chip, ...)` on DIR.MOD.1–3). Decide whether `arbiter.` should mean ARBITER-performed only, and re-derive the corpus against that rule.
+
+**Status:** Open — (1) proposal only, per schema discipline; (2) needs Andy's ruling before any sweep.
 
 ---

@@ -2950,14 +2950,12 @@ This is new mechanical ground: the existing ModBattleCard subclass lets a *conte
 
 Restriction (Guild Present in the district or an adjacent district) keeps this tied to actual territorial investment — Guild needs to already have people nearby to know whose crews to prioritize. Target is any Dominant/contesting faction, no doctrinal constraint (Art 00 §7 pentagram) — Guild's doctrine here is transactional, not political: contracts go to whoever Guild backs, not to an ally by default.
 
-**Outstanding Issue:** Applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — check for active Guild Seasonal conditions on the contested district and apply the registered delta to the named faction's total, alongside Step 1.2.2 (Commit) and Step 1.2.3 (Reveal & Validate), where Battlefield Modifier Cards and Intel Tokens are now handled. No such step currently exists. Per Governing Rule 6.1 / Design Pillar 4.7b, this must be defined as a generalizable Art 03 procedure before the card is fully executable at the table — tracked as new PM05 item 04-n148. The registered condition is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions will know a Guild condition is active on the district before they declare their own totals; this is intended, not an oversight.
+**Procedure:** Guild states the favored faction aloud when it presents the card; the card stays on Guild's Faction Resolution Grid, and a Target Profile may be placed with it to record the favored faction (optional — otherwise the table remembers it). At the contest, Guild or the favored faction claims the +2 when totals are announced (§10.1.2 Step 1.2.4); a favor nobody claims has no effect, and it applies in every round of the contest, including rounds reached by a press. The favor is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions know it is active before they commit their own cards; this is intended, not an oversight.
 
 **Taxonomy (resolved):** `layer = Resolution`, `function = Modify`, `subject = BattlefieldStrength`. The Resolution layer explicitly governs Battlefield Strength, and `Modify` is the matrix-valid function for altering a value without changing fundamental state — `Shift` is scoped to the Public Standing and Portrait tracks specifically and does not apply. `BattlefieldStrength` is a Subject registration this card prompted: no prior card acts on a contest total, so the vocabulary had no name for it. The earlier reading — that the mechanic had no taxonomy home and needed redesign rather than a new category — was superseded once the card's effect was simplified to a single upward direction, which removed the part that resisted classification.
 
 #### Card Story
 Tension breaks out over a contested block, and one faction's material orders quietly move to the front of the queue. Nobody else's slip — Guild doesn't work that way, and says so. By the time the district actually goes to the wire, one side got their scaffolding early.
-
-One blocker remains: Art 03 §10.1.2 still has no step that reads a registered condition and applies it to a contesting faction's total, so *Supported by game procedure* is a genuine Governing Rule 6.1 / Design Pillar 4.7b gap — new ARBITER behavior used before being defined as a generalizable procedure (04-n148). The taxonomy question that previously sat alongside it is closed.
 
 **Design checklist:**
 
@@ -2968,14 +2966,14 @@ One blocker remains: Art 03 §10.1.2 still has no step that reads a registered c
 | Doctrine alignment | ✓ | Guild submitter=+1 only, no doctrine_mod — correctly reflects "transactional, not political." | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/FactionSpecific is the right subclass, and the taxonomy is now assigned — a Resolution-layer effect fired from a public board event. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | `Resolution / Modify / BattlefieldStrength` — the Resolution layer governs Battlefield Strength, `Modify` is matrix-valid for altering a value without changing fundamental state, and the Subject names the contest total the card acts on. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ⚠ | Fizzle risk (the named faction may not still be contesting at §10) is deliberate design tension, not a flaw. Whether Capacity×1 correctly prices a +2 Battlefield Strength swing is a cost-model question, not a card defect. | Art 02 §6–7; Art 04c |
+| Balance | ⚠ | `value_rating = 1`: a conditional +2 on another faction's contest total, delivered only if that faction still contests and the favor is claimed — no direct board change. Fizzle risk (the named faction may not still be contesting at §10) is deliberate design tension, not a flaw. Whether Capacity×1 correctly prices a +2 Battlefield Strength swing is a cost-model question, not a card defect. | Art 02 §6–7; Art 04c |
 | Effect duration | ✓ | Seasonal correctly fits "ongoing condition across multiple subsequent actions." | Art 04 §5 P19 |
 | Persistence | ✓ | Explicitly declared (`persistence=Seasonal`) — ahead of the rest of the corpus on this field. | Art 04 §6.2 |
 | Trigger validity | ✓ | `tension_marker.placed` confirmed §6.3 vocabulary. | Art 04 §6.3 |
 | Portrait validity | ✓ | submitter-bounded only, correctly excludes the named target_faction per P16. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | district + adjacency-based restriction ties this to real territorial investment. | Art 01 §6–7 |
-| Supported by components | ⚠ | No physical marker/component represents the "registered condition" on the board beyond the card itself — tied to the same gap as the row below. | Art 02 §6–8 |
-| Supported by game procedure | ⚠ **(blocker, 04-n148)** | Art 03 §10.1.2 has no step that reads a registered Guild condition and applies it. Per Governing Rule 6.1/Design Pillar 4.7b, new ARBITER behavior must be defined as a generalizable procedure *before* the card is finalized — as currently drafted, the card's `arbiter_note` describes behavior that doesn't yet exist as a defined procedure. | Art 03 §10.1.2; GR 6.1; Design Pillar 4.7b; PM05 04-n148 |
+| Supported by components | ✓ | The card sits face-up on Guild's Faction Resolution Grid; the favored faction is stated aloud and may be recorded on a Target Profile placed with it (optional) — existing components, public. | Art 02 §8 |
+| Supported by game procedure | ⚠ | Contingent on sign-off: placement at Art 03 §18.3.1 and Art 02 §8, application at §10.1.2 Step 1.2.4, where the owner or the favored faction claims it. Card carries no note and no comment. | Art 03 §10.1.2, §18.3.1; Art 02 §8 |
 | Data schema validation | ✓ | All §6.1 fields present and typed; taxonomy assigned; `target_freeform` correctly `None` now that no declaration beyond the named faction is required. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story is concrete and well-formed — the fizzle-risk narrative tension is genuinely the point, not a gap. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic; the fizzle-risk contingency is a real-world board-state dependency, not a hidden or probabilistic outcome — doesn't violate P27. | Art 04 §5 P27 |
@@ -2983,14 +2981,12 @@ One blocker remains: Art 03 §10.1.2 still has no step that reads a registered c
 | Trigger frequency (ModReactCard) | ✓ | Contested is a specific, less-common board state — low-moderate frequency holds up. |  |
 | Firing window (ModReactCard) | ✓ | no race with other Guild MODs. |  |
 | Automatic vs. d100 (ModReactCard) | ✓ | Guild's registration action is unconditional; the eventual d10 battle roll is untouched. |  |
-| Stack behavior (ModReactCard) | ⚠ | Same open question as originally flagged — still open, not resolved. |  |
+| Stack behavior (ModReactCard) | ✓ | One card per board-state change (Art 03 §18.1). | Art 03 §18.1 |
 | Ring constraint (ModReactCard) | ✓ | redundant with the presence/adjacency restriction, correctly omitted. |  |
 
 #### Outstanding Issues
 
-- **BLOCKER (04-n148):** applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — no such step currently exists. Card is not fully executable at the table until this procedure is defined (Governing Rule 6.1 / Design Pillar 4.7b).
-- **Supported by components:** no physical marker represents the registered condition on the board beyond the card itself; tied to the same gap as 04-n148.
-- **Stack behavior (ModReactCard):** same open corpus-wide question.
+- Placement (Art 03 §18.3.1, Art 02 §8) and application (Art 03 §10.1.2 Step 1.2.4) are pending re-sign-off.
 
 #### Status
 
@@ -3000,7 +2996,7 @@ One blocker remains: Art 03 §10.1.2 still has no step that reads a registered c
 
 ```python
 GUI.MOD.10 = Card(
-    id      = "GUI.MOD.10",  card_id = "GUI.MOD.10",  version = "v0.1",
+    id      = "GUI.MOD.10",  card_id = "GUI.MOD.10",  version = "v0.2",
     name    = "Contractor's Favor",
     tagline = "We don't pick sides. We pick delivery dates.",
     type    = ModReactCard,  subtype = FactionSpecific,  faction = Guild,
@@ -3010,7 +3006,7 @@ GUI.MOD.10 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating    = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
@@ -3022,25 +3018,19 @@ GUI.MOD.10 = Card(
     persistence_effect    = None,
 
     target_district = trigger.district,
-    target_faction  = faction.named,   # declared at trigger — must be a Dominant (contesting) faction in target_district at time of declaration
+    target_faction  = faction.named,
     target_object   = None,
     target_freeform = None,
     affinity        = None,
     restriction     = (
-        faction(Guild).presence_in(target_district)
-        or faction(Guild).presence_in(district.adjacent_to(target_district))
+        (faction(Guild).presence_in(target_district)
+         or faction(Guild).presence_in(district.adjacent_to(target_district)))
+        and faction(target_faction).influence >= Dominant
     ),
     cost            = Capacity * 1,
     boost           = None,
 
-    success = arbiter.register_battlefield_modifier(
-        district=target_district,
-        faction=target_faction,
-        magnitude=2,
-    ),
-    # Applied at Art 03 §10.1.2 (Calculate and Declare Totals) if target_faction is still a contesting
-    # (Dominant) faction in target_district when §10.1.1 identifies contestants; otherwise the condition
-    # lapses with no effect. Condition clears at Phase 21 (End of Quarter) regardless of outcome.
+    success = faction(target_faction).battlefield_strength.add(2, district=target_district),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
     on_discard = None,
@@ -3055,8 +3045,8 @@ GUI.MOD.10 = Card(
         Network:     "Everyone can see who Guild backed. That's a story whether the bet pays off or not.",
         Syndicate:   "Guild's monetizing uncertainty before the dice even get picked up. Professionally, we approve.",
     },
-    design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Requires new Art 03 §10.1.2 procedure step — see Outstanding Issues below. `persistence_clearing_trigger` is None — the card clears at Phase 21 (End of Quarter) regardless of outcome, the default Seasonal expiry already implied by `persistence`; no discrete clearing event exists for this card.",
-    arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization still open — see Outstanding Issues.",
+    design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Placement on Guild's Faction Resolution Grid, favored faction stated aloud (optional Target Profile record, Art 03 §18.3.1); claimed at §10.1.2 Step 1.2.4 by Guild or the favored faction. `persistence_clearing_trigger` is None — the card clears at Phase 21 (End of Quarter) regardless of outcome, the default Seasonal expiry already implied by `persistence`; no discrete clearing event exists for this card.",
+    arbiter_note = None,
 )
 ```
 

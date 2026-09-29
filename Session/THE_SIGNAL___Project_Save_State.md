@@ -1,11 +1,11 @@
 # THE SIGNAL — Project Save State
 ## Complete Context Document for Session Handoff
 
-**Last Updated:** 2026-09-28 — Session 165 Close
+**Last Updated:** 2026-09-29 — Session 166 Close
 
-### Session 165 Summary (2026-09-28)
+### Session 166 Summary (2026-09-28/29)
 
-**PM05 04-n124 CLOSED: SYN.CA.7 Corporate Blackmail v3.0 redesigned as the first Covert Demand; Art 03 v4.17 adds §9.5 Covert Demands, pending re-sign-off (PM02 L385).** The debit-only `on_accept` now debits the target's own native and dispatches the same 2 tokens to Syndicate's case (Art 04b §5.1 same-element test; Redirect correct). Andy ruled that the Dispatch Case is the only covert channel at the table. The card and Syndicate's Target Profile go into the target's case in Month N; the target returns both in its next case, with payment attached (comply) or empty (resist); the demand resolves at N+1 Beat 3. ARBITER tracks nothing, and follow-up is Syndicate's job. Other rulings: Permanent with a clearing trigger, fully covert; unanswered at game end = no effect; a target that can't pay can only resist; Syndicate's cost is Portrait −1 only; the target's PS −1 on resist stays (§9.4.2.2.0 amended); resist removes 1 Presence Token (a count, not a tier). Playtest magnitudes are tracked as PM02 PT-04-04. §6 proposals are in schema_cleanup_log #67. 04-n72 was rescoped and drafted. SYN.CA.1's Land Title comparison (an L276 breach) was replaced with a doctrine line. Art 04 → v0.9.103.
+**Art 02 v2.6 and Art 03 v4.18 both SIGNED OFF (PM02 L388, L389). PM05 04-n222, 04-n148 and 04-n224 closed; 03-n27 opened.** 04-n222 (L386): the Directorate military lane is priced in Public Standing, not Portrait. Government force reads as martial law. DIR.MOD.1–3 cost Mandate 1 + PS −1 per removal and got narratives. The Hinders DIR.MOD.11/13 cost PS −1/−2 at reveal (new Art 03 §10.1.2.3 step 3, schema #68); the Boosts stay free. The §5a Portrait line was replaced. 04-n148 (L387): battlefield conditions are claimed by players at §10.1.2 Step 1.2.4; unclaimed conditions fizzle; they apply every round, including presses. Every persistent React lives on its player's Faction Resolution Grid (§18.3.1). Art 02 §8: React targets are stated aloud and a Target Profile record is optional. GUI.MOD.10 v0.2 is clean, with VR=1 and `battlefield_strength.add` notation; the `arbiter.` prefix question is logged as schema #69. Art 03 review: §18.2 put into numbered steps (forfeiture kept, no re-present after a void); §13.6 Expired Intel is always partial, and Intel handed over is lost even if invalid; §9.5 signed off as drafted, with its holes (non-response agency, attribution leak, mandatory reply loop) at 03-n27, paired with Art 06. Tooling: Claude Code permission allow rules added so read-only commands and the card-DB sync survive auto-mode classifier outages.
 
 ---
 

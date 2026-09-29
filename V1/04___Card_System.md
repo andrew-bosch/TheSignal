@@ -1,7 +1,7 @@
 # 04 — CARD SYSTEM
 ## THE SIGNAL P1 — Paper Prototype
 
-**Version:** 0.9.103 Draft  
+**Version:** 0.9.104 Draft  
 **Status:** 🔄 Draft — Pending Sign-Off  
 **Last Updated:** 2026-09-28  
 **Supersedes:** v0.9.5, action_redesign (retired artifact)  
@@ -396,7 +396,7 @@ Network believes no one gets to decide this in the dark. They arrived after The 
 The Directorate's doctrine is not domination — it is managed stability. Survival requires control, restraint, and continuity; the win state is Established in more districts than any other faction because that configuration is not hegemony — it is the only board state the Directorate can guarantee remains reversible. No faction Dominant anywhere means no escalation has outrun institutional capacity to model and correct. Suppression is the instrument of restraint, not aggression: pushing another faction's tier down prevents a condition from becoming irreversible. The Directorate makes no distinction between rogue capital and rogue information — the Syndicate's gray-market acquisitions and the Network's broadcast operations are the same threat expressed through different channels. The procedural commitment does not change based on the mechanism of the disruption.
 
 - **Economy:** Mandate via institutional acts and Core structures
-- **Modifier deck — military assets:** enforcement personnel and equipment for conflict resolution and presence removal; available but costs Portrait
+- **Modifier deck — military assets:** enforcement personnel and equipment for conflict resolution and presence removal. Available, but turning force on the city costs Public Standing: removing a faction's presence, or imposing a curfew or lockdown in a contest, reads to New Meridian as martial law. Troops committed only to hold a line cost nothing.
 - **Modifier deck — legislative assets:** regulatory teams that reduce Public Act costs and extend world event duration; the doctrinal mode
 - **Suppression toolkit:** push other factions' control tiers down rather than building own tiers up — best suppression capability in the game
 - **Entry/Exit Controls (P-D1):** persistent world event; lowers opposing presence placement thresholds district-wide until another faction removes it
@@ -20110,14 +20110,12 @@ This is new mechanical ground: the existing ModBattleCard subclass lets a *conte
 
 Restriction (Guild Present in the district or an adjacent district) keeps this tied to actual territorial investment — Guild needs to already have people nearby to know whose crews to prioritize. Target is any Dominant/contesting faction, no doctrinal constraint (Art 00 §7 pentagram) — Guild's doctrine here is transactional, not political: contracts go to whoever Guild backs, not to an ally by default.
 
-**Outstanding Issue:** Applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — check for active Guild Seasonal conditions on the contested district and apply the registered delta to the named faction's total, alongside Step 1.2.2 (Commit) and Step 1.2.3 (Reveal & Validate), where Battlefield Modifier Cards and Intel Tokens are now handled. No such step currently exists. Per Governing Rule 6.1 / Design Pillar 4.7b, this must be defined as a generalizable Art 03 procedure before the card is fully executable at the table — tracked as new PM05 item 04-n148. The registered condition is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions will know a Guild condition is active on the district before they declare their own totals; this is intended, not an oversight.
+**Procedure:** Guild states the favored faction aloud when it presents the card; the card stays on Guild's Faction Resolution Grid, and a Target Profile may be placed with it to record the favored faction (optional — otherwise the table remembers it). At the contest, Guild or the favored faction claims the +2 when totals are announced (§10.1.2 Step 1.2.4); a favor nobody claims has no effect, and it applies in every round of the contest, including rounds reached by a press. The favor is public board state (Governing Rule 7.2a — no hidden board surface state), so contesting factions know it is active before they commit their own cards; this is intended, not an oversight.
 
 **Taxonomy (resolved):** `layer = Resolution`, `function = Modify`, `subject = BattlefieldStrength`. The Resolution layer explicitly governs Battlefield Strength, and `Modify` is the matrix-valid function for altering a value without changing fundamental state — `Shift` is scoped to the Public Standing and Portrait tracks specifically and does not apply. `BattlefieldStrength` is a Subject registration this card prompted: no prior card acts on a contest total, so the vocabulary had no name for it. The earlier reading — that the mechanic had no taxonomy home and needed redesign rather than a new category — was superseded once the card's effect was simplified to a single upward direction, which removed the part that resisted classification.
 
 #### Card Story
 Tension breaks out over a contested block, and one faction's material orders quietly move to the front of the queue. Nobody else's slip — Guild doesn't work that way, and says so. By the time the district actually goes to the wire, one side got their scaffolding early.
-
-One blocker remains: Art 03 §10.1.2 still has no step that reads a registered condition and applies it to a contesting faction's total, so *Supported by game procedure* is a genuine Governing Rule 6.1 / Design Pillar 4.7b gap — new ARBITER behavior used before being defined as a generalizable procedure (04-n148). The taxonomy question that previously sat alongside it is closed.
 
 **Design checklist:**
 
@@ -20128,14 +20126,14 @@ One blocker remains: Art 03 §10.1.2 still has no step that reads a registered c
 | Doctrine alignment | ✓ | Guild submitter=+1 only, no doctrine_mod — correctly reflects "transactional, not political." | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/FactionSpecific is the right subclass, and the taxonomy is now assigned — a Resolution-layer effect fired from a public board event. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | `Resolution / Modify / BattlefieldStrength` — the Resolution layer governs Battlefield Strength, `Modify` is matrix-valid for altering a value without changing fundamental state, and the Subject names the contest total the card acts on. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ⚠ | Fizzle risk (the named faction may not still be contesting at §10) is deliberate design tension, not a flaw. Whether Capacity×1 correctly prices a +2 Battlefield Strength swing is a cost-model question, not a card defect. | Art 02 §6–7; Art 04c |
+| Balance | ⚠ | `value_rating = 1`: a conditional +2 on another faction's contest total, delivered only if that faction still contests and the favor is claimed — no direct board change. Fizzle risk (the named faction may not still be contesting at §10) is deliberate design tension, not a flaw. Whether Capacity×1 correctly prices a +2 Battlefield Strength swing is a cost-model question, not a card defect. | Art 02 §6–7; Art 04c |
 | Effect duration | ✓ | Seasonal correctly fits "ongoing condition across multiple subsequent actions." | Art 04 §5 P19 |
 | Persistence | ✓ | Explicitly declared (`persistence=Seasonal`) — ahead of the rest of the corpus on this field. | Art 04 §6.2 |
 | Trigger validity | ✓ | `tension_marker.placed` confirmed §6.3 vocabulary. | Art 04 §6.3 |
 | Portrait validity | ✓ | submitter-bounded only, correctly excludes the named target_faction per P16. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | district + adjacency-based restriction ties this to real territorial investment. | Art 01 §6–7 |
-| Supported by components | ⚠ | No physical marker/component represents the "registered condition" on the board beyond the card itself — tied to the same gap as the row below. | Art 02 §6–8 |
-| Supported by game procedure | ⚠ **(blocker, 04-n148)** | Art 03 §10.1.2 has no step that reads a registered Guild condition and applies it. Per Governing Rule 6.1/Design Pillar 4.7b, new ARBITER behavior must be defined as a generalizable procedure *before* the card is finalized — as currently drafted, the card's `arbiter_note` describes behavior that doesn't yet exist as a defined procedure. | Art 03 §10.1.2; GR 6.1; Design Pillar 4.7b; PM05 04-n148 |
+| Supported by components | ✓ | The card sits face-up on Guild's Faction Resolution Grid; the favored faction is stated aloud and may be recorded on a Target Profile placed with it (optional) — existing components, public. | Art 02 §8 |
+| Supported by game procedure | ⚠ | Contingent on sign-off: placement at Art 03 §18.3.1 and Art 02 §8, application at §10.1.2 Step 1.2.4, where the owner or the favored faction claims it. Card carries no note and no comment. | Art 03 §10.1.2, §18.3.1; Art 02 §8 |
 | Data schema validation | ✓ | All §6.1 fields present and typed; taxonomy assigned; `target_freeform` correctly `None` now that no declaration beyond the named faction is required. | Art 04 §6.1–§6.3 |
 | Card narrative | ✓ | Card Story is concrete and well-formed — the fizzle-risk narrative tension is genuinely the point, not a gap. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic; the fizzle-risk contingency is a real-world board-state dependency, not a hidden or probabilistic outcome — doesn't violate P27. | Art 04 §5 P27 |
@@ -20143,14 +20141,12 @@ One blocker remains: Art 03 §10.1.2 still has no step that reads a registered c
 | Trigger frequency (ModReactCard) | ✓ | Contested is a specific, less-common board state — low-moderate frequency holds up. |  |
 | Firing window (ModReactCard) | ✓ | no race with other Guild MODs. |  |
 | Automatic vs. d100 (ModReactCard) | ✓ | Guild's registration action is unconditional; the eventual d10 battle roll is untouched. |  |
-| Stack behavior (ModReactCard) | ⚠ | Same open question as originally flagged — still open, not resolved. |  |
+| Stack behavior (ModReactCard) | ✓ | One card per board-state change (Art 03 §18.1). | Art 03 §18.1 |
 | Ring constraint (ModReactCard) | ✓ | redundant with the presence/adjacency restriction, correctly omitted. |  |
 
 #### Outstanding Issues
 
-- **BLOCKER (04-n148):** applying this card's registered condition requires a new ARBITER-facing step in Art 03 §10.1.2 (Calculate and Declare Totals) — no such step currently exists. Card is not fully executable at the table until this procedure is defined (Governing Rule 6.1 / Design Pillar 4.7b).
-- **Supported by components:** no physical marker represents the registered condition on the board beyond the card itself; tied to the same gap as 04-n148.
-- **Stack behavior (ModReactCard):** same open corpus-wide question.
+- Placement (Art 03 §18.3.1, Art 02 §8) and application (Art 03 §10.1.2 Step 1.2.4) are pending re-sign-off.
 
 #### Status
 
@@ -20160,7 +20156,7 @@ One blocker remains: Art 03 §10.1.2 still has no step that reads a registered c
 
 ```python
 GUI.MOD.10 = Card(
-    id      = "GUI.MOD.10",  card_id = "GUI.MOD.10",  version = "v0.1",
+    id      = "GUI.MOD.10",  card_id = "GUI.MOD.10",  version = "v0.2",
     name    = "Contractor's Favor",
     tagline = "We don't pick sides. We pick delivery dates.",
     type    = ModReactCard,  subtype = FactionSpecific,  faction = Guild,
@@ -20170,7 +20166,7 @@ GUI.MOD.10 = Card(
     beat            = None,
     ring_constraint = None,
     ring_origin     = None,
-    value_rating    = None,
+    value_rating    = 1,
 
     resolution = Automatic,  threshold = None,  resolution_type = Transactional,
     ring_mod = None,  doctrine_mod = None,
@@ -20182,25 +20178,19 @@ GUI.MOD.10 = Card(
     persistence_effect    = None,
 
     target_district = trigger.district,
-    target_faction  = faction.named,   # declared at trigger — must be a Dominant (contesting) faction in target_district at time of declaration
+    target_faction  = faction.named,
     target_object   = None,
     target_freeform = None,
     affinity        = None,
     restriction     = (
-        faction(Guild).presence_in(target_district)
-        or faction(Guild).presence_in(district.adjacent_to(target_district))
+        (faction(Guild).presence_in(target_district)
+         or faction(Guild).presence_in(district.adjacent_to(target_district)))
+        and faction(target_faction).influence >= Dominant
     ),
     cost            = Capacity * 1,
     boost           = None,
 
-    success = arbiter.register_battlefield_modifier(
-        district=target_district,
-        faction=target_faction,
-        magnitude=2,
-    ),
-    # Applied at Art 03 §10.1.2 (Calculate and Declare Totals) if target_faction is still a contesting
-    # (Dominant) faction in target_district when §10.1.1 identifies contestants; otherwise the condition
-    # lapses with no effect. Condition clears at Phase 21 (End of Quarter) regardless of outcome.
+    success = faction(target_faction).battlefield_strength.add(2, district=target_district),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
     on_discard = None,
@@ -20215,8 +20205,8 @@ GUI.MOD.10 = Card(
         Network:     "Everyone can see who Guild backed. That's a story whether the bet pays off or not.",
         Syndicate:   "Guild's monetizing uncertainty before the dice even get picked up. Professionally, we approve.",
     },
-    design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Requires new Art 03 §10.1.2 procedure step — see Outstanding Issues below. `persistence_clearing_trigger` is None — the card clears at Phase 21 (End of Quarter) regardless of outcome, the default Seasonal expiry already implied by `persistence`; no discrete clearing event exists for this card.",
-    arbiter_note = "On trigger (Tension Marker placed in any district): if Guild satisfies restriction, Guild may declare target_faction (must currently be Dominant/tied in the district) and pay Capacity×1. ARBITER records the condition publicly against the district. At §10.1.1 (Identify Contesting Factions), if target_faction is among the identified contestants: apply the registered magnitude to target_faction's declared total at §10.1.2, alongside Battlefield Modifier Cards and Intel Tokens. If target_faction is not contesting: condition lapses, no effect, no refund. Condition clears automatically at Phase 21 if §10 does not resolve the district this Quarter. Procedure step formalization still open — see Outstanding Issues.",
+    design_note  = "First Guild card to influence Battlefield Strength (§10) without Guild itself contesting the district. New mechanical pattern: a Seasonal ModReactCard registers a delta against a named contesting faction's total, resolved later at §10.1.2 rather than played live like a ModBattleCard. Fizzle risk (named faction may no longer be contesting when §10 actually resolves) is the cost of early commitment and is the card's core narrative tension. Restriction requires Guild Present or adjacent in the district. Target is any Dominant faction — no doctrine_mod; Guild's construction contracts are transactional, not political. Placement on Guild's Faction Resolution Grid, favored faction stated aloud (optional Target Profile record, Art 03 §18.3.1); claimed at §10.1.2 Step 1.2.4 by Guild or the favored faction. `persistence_clearing_trigger` is None — the card clears at Phase 21 (End of Quarter) regardless of outcome, the default Seasonal expiry already implied by `persistence`; no discrete clearing event exists for this card.",
+    arbiter_note = None,
 )
 ```
 
@@ -27953,7 +27943,7 @@ DIR.PA.11 = Card(
 ### DIR.MOD.1 — RIOT SQUAD
 
 #### Design Rationale
-First Directorate React — establishes the Territory\|Remove\|PresenceToken enforcement family for Directorate: three variants at increasing narrowness/strength — DIR.MOD.1 (generic, Established-gated), DIR.MOD.2 (Syndicate-targeted, same gate), DIR.MOD.3 (Ring 1-locked, no gate — strongest). Mechanically the simplest expression of "Directorate polices unauthorized expansion": any faction's presence placement in a district where Directorate holds Established+ draws an immediate, single-chip institutional response. The trigger's `faction=Any` scope is broader than sibling DIR.MOD.7's `opponent` scope and, as written, includes Directorate's own placements — self-fire here is a harmless costed no-op (Directorate placing its own chip in ground it already holds Established+, triggering removal of that same chip), intentional self-policing, not a bug. `arbiter.remove(presence_chip, ...)` can never target a Deployment Marker — Presence Token and Deployment Marker are separate physical components, not a marker-plus-linked-chip pair, confirmed and documented in §6.3.
+First Directorate React — establishes the Territory\|Remove\|PresenceToken enforcement family for Directorate: three variants at increasing narrowness/strength — DIR.MOD.1 (generic, Established-gated), DIR.MOD.2 (Syndicate-targeted, same gate), DIR.MOD.3 (Ring 1-locked, no gate — strongest). Mechanically the simplest expression of "Directorate polices unauthorized expansion": any faction's presence placement in a district where Directorate holds Established+ draws an immediate, single-chip institutional response. The trigger's `faction=Any` scope is broader than sibling DIR.MOD.7's `opponent` scope and, as written, includes Directorate's own placements — self-fire would remove Directorate's own chip and cost it Mandate and Public Standing, so Directorate never has reason to present it; the inclusive scope is not a bug. Every removal costs Directorate 1 Public Standing: government force turned on the city reads as martial law to New Meridian, whatever the jurisdictional justification. It also spends 1 Mandate: orders have to be signed, and every deployment draws on the same institutional authority that funds Directorate's legislation. `arbiter.remove(presence_chip, ...)` can never target a Deployment Marker — Presence Token and Deployment Marker are separate physical components, not a marker-plus-linked-chip pair, confirmed and documented in §6.3.
 
 #### Card Story
 A rival faction moves a marker onto ground the Directorate already considers under its administration. Before the ink on the placement is dry, an enforcement team already has its orders — the marker comes back off the map, and no one needed to ask permission first.
@@ -27963,26 +27953,26 @@ A rival faction moves a marker onto ground the Directorate already considers und
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Institutional enforcement against unauthorized presence placement fits Directorate's control/continuity doctrine directly. | Art 00 §7 |
-| Voice fit | ✓ | Tagline/name read in Directorate's institutional-enforcement register. `narrative` field itself is empty — see Card narrative row. | Art 00 §6.7 |
+| Voice fit | ✓ | Tagline/name read in Directorate's institutional-enforcement register. `narrative` reads in the same register. | Art 00 §6.7 |
 | Doctrine alignment | ✓ | Portrait submitter=+1 rewards Directorate for exercising jurisdictional authority — directly expresses doctrine when played. | Art 04 §6.5 |
 | Card type fit | ✓ | ModReactCard/Directorate with real taxonomy (Territory/Remove/PresenceToken, 04-n175) — correctly classified per §6.1. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Verified against `ref_taxonomy.md`: PresenceToken's Layer is Territory; Layer×Function matrix confirms Territory×Remove valid. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ⚠ | Single-chip, Immediate, Established-gated — plausible on its face, but cost is an open TBD (see Resource cost positioning); can't finalize balance until 04-n178 resolves the value_rating→cost model. | Art 02 §6–7; Art 04 §6.5 |
+| Balance | ✓ | Single-chip, Immediate, Established-gated; priced at 1 Mandate plus 1 Public Standing — one resource like other factions' React removals, plus the public backlash. Playtest to confirm. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate — fully resolved at trigger, no lingering marker. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Field absent from spec, same open schema question as the Ring set (implicit-default-Immediate vs. explicit line), not resolved here. | Art 04 §6.2 |
-| Trigger validity | ✓ | `presence_chip.placed(faction=Any)` is confirmed TriggerExpr vocabulary (§6.3). `faction=Any` is inclusive-of-self by default; Directorate's own placements also satisfying the trigger is intentional self-policing, a harmless costed no-op, not a bug. | Art 04 §6.3 |
+| Trigger validity | ✓ | `presence_chip.placed(faction=Any)` is confirmed TriggerExpr vocabulary (§6.3). `faction=Any` is inclusive-of-self by default; Directorate's own placements also satisfy the trigger, but presenting on them would cost Directorate its own chip, 1 Mandate and 1 Public Standing, so the scope is harmless. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Directorate: submitter=+1}` is submitter-bounded, correctly structured per P16. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `target_district=trigger.district`; no ring constraint, consistent with an Established-gated (not ring-gated) mechanism. | Art 01 §6–7 |
 | Supported by components | ✓ | Presence chip removal reuses the standard mechanism; `arbiter.remove(presence_chip,...)` is confirmed to never target a Deployment Marker, so no GR 8.3a conflict. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Reuses existing chip-removal behavior; no new ARBITER procedure needed. | Art 03; GR 6.1 |
-| Data schema validation | ⚠ (deferred) | Scaffolded (04-n177): `ps_framing`/`boost`/`resolution_type` now present as placeholders, not filled with real values; `cost` remains a TBD comment. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | Card Story above gives a concrete event, but the in-card `narrative` prose field is still empty — narrative-writing pass still needed. | Art 04 §5 Card Story |
+| Data schema validation | ⚠ (deferred) | Scaffolded (04-n177): `ps_framing`/`boost`/`resolution_type` now present as placeholders, not filled with real values. The Public Standing hit is written as a `success` effect, not `ps_framing` or `cost` (Art 04c: Public Standing is not a valid cost). | Art 04 §6.1–§6.3; Art 04c |
+| Card narrative | ✓ | Narrative places the order before the placement — authority that anticipates, not reacts. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch, no `game.choose_one()`. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | `cost=None` with a TBD comment ("possibly 1 Mandate") — cannot close this row card-by-card; gated on 04-n178 (Floor Act singularity + value_rating-derived cost, whole-set decision). | Art 00a §9.2; PM05 04-n178 |
-| Trigger frequency (ModReactCard) | ✓ (best-effort) | Presence-chip placement is common; Established-gate and single-chip yield keep the effect modest. Final read pending 04-n178. |  |
-| Firing window (ModReactCard) | ⚠ | DIR.MOD.2 (Syndicate-narrowed) and DIR.MOD.3 (Ring 1, no gate) share overlapping trigger space with this card. No documented rule on whether all three fire off the same single placement event if Directorate holds the full family. |  |
+| Resource cost positioning | ✓ | Mandate 1 — mono native, in line with other factions' React removals at 1 resource. The Public Standing −1 is the separate public price, written as an effect (Art 04c). | Art 04c |
+| Trigger frequency (ModReactCard) | ✓ (best-effort) | Presence-chip placement is common; the Established gate, single-chip yield and Mandate-plus-Standing price keep the effect modest. |  |
+| Firing window (ModReactCard) | ✓ | One placement triggers at most one card from the family: a player holding 2+ eligible Reacts presents one (Art 03 §18.1), and the removal it produces is not a new placement. Each card can still fire later in the same Month on a separate placement. | Art 03 §18.1 |
 | Automatic vs. d100 (ModReactCard) | ✓ | Bounded institutional-authority action, no execution-quality dimension to model via roll. |  |
-| Stack behavior (ModReactCard) | ⚠ | Same open question as the Ring set: does holding 2 copies double-fire on one rival placement? Undocumented. |  |
+| Stack behavior (ModReactCard) | ✓ | Two copies cannot both fire on one placement — Art 03 §18.1 lets a player present only one card per board-state change. | Art 03 §18.1 |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct, since this variant is gated by Established status, not ring; correctly distinguishes from DIR.MOD.3 (ring-locked). |  |
 
 #### Outstanding Issues
@@ -27993,13 +27983,13 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | ✓ S154, re-reviewed S166 | | |
 
-*First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core). Full content-review: 3 open flags (cost/04-n178, family firing-window overlap, narrative prose absent). Design Pass ✓ (all 22 rows evaluated), Issues Resolved not yet (real flags remain open).*
+*First Directorate React. Military-mode enforcement — institutional authority to reverse unauthorized presence placement. Generic variant (faction=Any). Faction-targeted variant: DIR.MOD.2 (Syndicate). Ring-constrained variant: DIR.MOD.3 (Ring 1 Core). Each removal costs Directorate 1 Mandate and 1 Public Standing. Design Pass ✓ (all 22 rows evaluated). Remaining ⚠ rows are deferred schema/procedure items (Persistence, inline comments, Data schema), not design flags.
 
 ```python
 DIR.MOD.1 = Card(
-    id      = "DIR.MOD.1",  card_id = "DIR.MOD.1",  version = "v0.1",
+    id      = "DIR.MOD.1",  card_id = "DIR.MOD.1",  version = "v0.2",
     name    = "Riot Squad",
     tagline = "Presence placed without Directorate approval can be removed with Directorate authority.",
     type    = ModReactCard,  faction = Directorate,
@@ -28026,19 +28016,22 @@ DIR.MOD.1 = Card(
     target_freeform = None,
     affinity        = None,
     restriction     = faction(Directorate).influence >= Established,  # jurisdictional authority requires Established presence
-    cost            = None,  # card consumed; cost TBD (possibly 1 Mandate)
+    cost            = Mandate * 1,
     boost           = None,
 
-    success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+    success     = (
+        arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+        faction(Directorate).standing.remove(1),
+    ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
     on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
-    narrative    = None,
+    narrative    = "The order was signed before the marker went down; the squad was only waiting to be told where.",
     perspectives = None,
-    design_note  = "Military-mode enforcement React. Fires when any faction places presence in a district where Directorate has Established presence. Directorate may remove 1 chip immediately. Restriction: Directorate must be Established — jurisdictional authority is earned by presence, not proclaimed. This is the suppression toolkit delivered at React speed: Directorate responds to expansion before Beat 3 resolves. Cost TBD — possibly 1 Mandate (enforcement has institutional overhead).",
+    design_note  = "Military-mode enforcement React. Fires when any faction places presence in a district where Directorate has Established presence. Directorate may remove 1 chip immediately. Restriction: Directorate must be Established — jurisdictional authority is earned by presence, not proclaimed. This is the suppression toolkit delivered at React speed: Directorate responds to expansion before Beat 3 resolves. The removal costs 1 Mandate (enforcement has institutional overhead) and 1 Public Standing — government force on the street reads as martial law.",
     arbiter_note = None,
 )
 ```
@@ -28048,7 +28041,7 @@ DIR.MOD.1 = Card(
 ### DIR.MOD.2 — CAPITAL SUPPRESSION
 
 #### Design Rationale
-Second card of the DIR.MOD.1/2/3 Territory\|Remove\|PresenceToken enforcement family — same mechanism as DIR.MOD.1, narrowed from `faction=Any` to `faction=Syndicate` specifically. No self-fire ambiguity here (Directorate can never trigger against itself), so that flag doesn't carry over. Portrait is submitter-only: Directorate's own entry reflects its choice to enforce; Syndicate carries no portrait entry here, since Portrait tracks the acting faction's own doctrine, not consequences imposed on a target. `cost=None` here carries no TBD comment, unlike DIR.MOD.1's explicit "possibly 1 Mandate" flag for the *same* enforcement mechanism — an internal inconsistency worth surfacing rather than silently accepting one sibling's confidence over the other's doubt.
+Second card of the DIR.MOD.1/2/3 Territory\|Remove\|PresenceToken enforcement family — same mechanism as DIR.MOD.1, narrowed from `faction=Any` to `faction=Syndicate` specifically. No self-fire ambiguity here (Directorate can never trigger against itself), so that flag doesn't carry over. Portrait is submitter-only: Directorate's own entry reflects its choice to enforce; Syndicate carries no portrait entry here, since Portrait tracks the acting faction's own doctrine, not consequences imposed on a target. Each removal costs Directorate 1 Public Standing: government force turned on the city reads as martial law to New Meridian, whatever the jurisdictional justification. It also spends 1 Mandate: orders have to be signed, and every deployment draws on the same institutional authority that funds Directorate's legislation.
 
 #### Card Story
 Syndicate stakes a claim on ground Directorate already administers. The response isn't generic policing — Directorate's doctrine treats Syndicate's gray-market capital expansion as its own category of threat, and the file on Syndicate specifically is already open.
@@ -28058,11 +28051,11 @@ Syndicate stakes a claim on ground Directorate already administers. The response
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Faction-targeted institutional enforcement; design_note frames Syndicate as Directorate's primary doctrinal territorial adversary — grounded, not arbitrary narrowing. | Art 00 §7 |
-| Voice fit | ✓ | Tagline reads in Directorate's register. `narrative` field itself is empty — see Card narrative row. | Art 00 §6.7 |
+| Voice fit | ✓ | Tagline reads in Directorate's register. `narrative` reads in the same register. | Art 00 §6.7 |
 | Doctrine alignment | ✓ | Directorate submitter=+1 correctly expresses doctrine on play. | Art 04 §6.5 |
 | Card type fit | ✓ | Same shape as DIR.MOD.1 — ModReactCard/Directorate, real taxonomy, correctly classified. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory/Remove/PresenceToken — same verified matrix cell as DIR.MOD.1. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ⚠ | Narrower trigger than DIR.MOD.1 (Syndicate-only), so lower frequency — plausible, but final read gated on 04-n178 like the rest of the family. | Art 02 §6–7; Art 04 §6.5 |
+| Balance | ✓ | Syndicate-only trigger keeps frequency low; priced at 1 Mandate plus 1 Public Standing. Playtest to confirm. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as DIR.MOD.1. | Art 04 §6.2 |
 | Trigger validity | ✓ | `presence_chip.placed(faction=Syndicate)` — confirmed vocabulary, explicitly scoped, no self-fire ambiguity (Directorate ≠ Syndicate). | Art 04 §6.3 |
@@ -28071,13 +28064,13 @@ Syndicate stakes a claim on ground Directorate already administers. The response
 | Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict, family-wide resolution. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ✓ (contingent) | Same as DIR.MOD.1. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177) — placeholders only. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Card narrative | ✓ | Narrative frames the removal as non-recognition — capital does not confer legitimacy. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | `cost=None`, no TBD comment — inconsistent with DIR.MOD.1's explicit doubt on the identical mechanism. Both gated on 04-n178; the inconsistency itself is worth flagging so the eventual cost model applies uniformly across the family. | Art 00a §9.2; PM05 04-n178 |
+| Resource cost positioning | ✓ | Mandate 1 — mono native, in line with other factions' React removals at 1 resource. The Public Standing −1 is the separate public price, written as an effect (Art 04c). | Art 04c |
 | Trigger frequency (ModReactCard) | ✓ (best-effort) | Syndicate-only scope keeps frequency lower than DIR.MOD.1's generic trigger. |  |
-| Firing window (ModReactCard) | ⚠ | Same family-overlap flag as DIR.MOD.1 — no documented rule for simultaneous fire if Directorate holds the full 1/2/3 set. |  |
+| Firing window (ModReactCard) | ✓ | One placement triggers at most one card from the family: a player holding 2+ eligible Reacts presents one (Art 03 §18.1), and the removal it produces is not a new placement. Each card can still fire later in the same Month on a separate placement. | Art 03 §18.1 |
 | Automatic vs. d100 (ModReactCard) | ✓ | Same as DIR.MOD.1. |  |
-| Stack behavior (ModReactCard) | ⚠ | Same open question as DIR.MOD.1. |  |
+| Stack behavior (ModReactCard) | ✓ | Two copies cannot both fire on one placement — Art 03 §18.1 lets a player present only one card per board-state change. | Art 03 §18.1 |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=None` — correct; this variant is gated by faction identity, not ring. |  |
 
 #### Outstanding Issues
@@ -28088,13 +28081,13 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | ✓ S154, re-reviewed S166 | | |
 
-*Faction-targeted variant of DIR.MOD.1. Trigger narrowed to Syndicate presence placement. Syndicate's capital-driven territorial expansion is Directorate's primary doctrinal adversary in Ring 1/2. Full content-review: 3 open flags (Syndicate portrait-on-target question, cost-flag inconsistency vs. DIR.MOD.1, family firing-window overlap). Design Pass ✓, Issues Resolved not yet.*
+*Faction-targeted variant of DIR.MOD.1. Trigger narrowed to Syndicate presence placement. Syndicate's capital-driven territorial expansion is Directorate's primary doctrinal adversary in Ring 1/2. Each removal costs Directorate 1 Mandate and 1 Public Standing. Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 DIR.MOD.2 = Card(
-    id      = "DIR.MOD.2",  card_id = "DIR.MOD.2",  version = "v0.1",
+    id      = "DIR.MOD.2",  card_id = "DIR.MOD.2",  version = "v0.2",
     name    = "Capital Suppression",
     tagline = "Syndicate presence in regulated territory draws immediate institutional response.",
     type    = ModReactCard,  faction = Directorate,
@@ -28121,19 +28114,22 @@ DIR.MOD.2 = Card(
     target_freeform = None,
     affinity        = None,
     restriction     = faction(Directorate).influence >= Established,
-    cost            = None,
+    cost            = Mandate * 1,
     boost           = None,
 
-    success     = arbiter.remove(presence_chip, district=trigger.district, faction=Syndicate, count=1),
+    success     = (
+        arbiter.remove(presence_chip, district=trigger.district, faction=Syndicate, count=1),
+        faction(Directorate).standing.remove(1),
+    ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
     on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
-    narrative    = None,
+    narrative    = "The Syndicate bought the lot; the Directorate never recognized the sale.",
     perspectives = None,
-    design_note  = "Syndicate-targeted variant of DIR.MOD.1. Directorate's doctrine makes no distinction between rogue capital and rogue information — Syndicate's gray-market acquisitions are the same institutional threat as Network's broadcasts. Syndicate portrait flat=-1 on fire: the Syndicate's response to having presence removed is public and traceable. Narrower trigger window than generic; reliable in SYN-heavy games.",
+    design_note  = "Syndicate-targeted variant of DIR.MOD.1. Directorate's doctrine makes no distinction between rogue capital and rogue information — Syndicate's gray-market acquisitions are the same institutional threat as Network's broadcasts. Narrower trigger window than generic; reliable in SYN-heavy games. The removal costs 1 Mandate (enforcement has institutional overhead) and 1 Public Standing — government force on the street reads as martial law.",
     arbiter_note = None,
 )
 ```
@@ -28143,7 +28139,7 @@ DIR.MOD.2 = Card(
 ### DIR.MOD.3 — CITY COUNCIL LOYALIST
 
 #### Design Rationale
-Third and strongest card of the DIR.MOD.1/2/3 family — Ring 1 (Core)-locked, and unlike its siblings carries *no* restriction at all: Directorate doesn't even need Established presence to fire. The design_note's justification (Core is institutional home territory; authority there is structural, not earned) is coherent doctrine. It also means this variant carries DIR.MOD.1's `faction=Any` self-inclusion with the *least* friction of the three — no restriction to even incidentally gate a Directorate self-trigger — but this is a harmless costed no-op under the inclusive-by-default semantics, same as DIR.MOD.1.
+Third and strongest card of the DIR.MOD.1/2/3 family — Ring 1 (Core)-locked, and unlike its siblings carries *no* restriction at all: Directorate doesn't even need Established presence to fire. The design_note's justification (Core is institutional home territory; authority there is structural, not earned) is coherent doctrine. It also means this variant carries DIR.MOD.1's `faction=Any` self-inclusion with the *least* friction of the three — no restriction to even incidentally gate a Directorate self-trigger — but presenting on its own placement would cost Directorate its own chip, 1 Mandate and 1 Public Standing, so Directorate never has reason to. Each removal costs Directorate 1 Public Standing: even on home ground, government force turned on the city reads as martial law to New Meridian. It also spends 1 Mandate: even structural authority spends political capital when it is used.
 
 #### Card Story
 In the Core, nobody double-checks Directorate's paperwork. A rival plants a marker in the shadow of the Citadel; the response is already moving before the district tile finishes settling.
@@ -28153,26 +28149,26 @@ In the Core, nobody double-checks Directorate's paperwork. A rival plants a mark
 | Category | Pass | Note | Artifact ref |
 |----------|------|------|--------------|
 | Action fit | ✓ | Unrestricted home-territory authority is a coherent, distinct escalation from DIR.MOD.1/2 — not a redundant reprint. | Art 00 §7 |
-| Voice fit | ✓ | Tagline ("does not require a justification") lands the doctrine cleanly. `narrative` field itself empty — see Card narrative row. | Art 00 §6.7 |
+| Voice fit | ✓ | Tagline ("does not require a justification") lands the doctrine cleanly. `narrative` shows a single councilman's call doing the work. | Art 00 §6.7 |
 | Doctrine alignment | ✓ | Portrait submitter=+1; correctly expresses "Core is structural, not earned" doctrine framing. | Art 04 §6.5 |
 | Card type fit | ✓ | Same shape as DIR.MOD.1/2. | Art 04 §6.1, §6.2 |
 | Taxonomy fit | ✓ | Territory/Remove/PresenceToken — same verified matrix cell. | Art 04b §4; ref_taxonomy.md §5.1 |
-| Balance | ⚠ | Strongest of the family (no restriction) — reasonable given Ring-lock narrows scope to Core only, but final read gated on 04-n178 like its siblings. | Art 02 §6–7; Art 04 §6.5 |
+| Balance | ✓ | Strongest of the family (no restriction), narrowed by the Ring 1 lock; priced at 1 Mandate plus 1 Public Standing, the same as its siblings. Playtest to confirm. | Art 02 §6–7; Art 04 §6.5 |
 | Effect duration | ✓ | Immediate. | Art 04 §5 P19 |
 | Persistence | ⚠ (deferred) | Same open schema question as DIR.MOD.1/2. | Art 04 §6.2 |
-| Trigger validity | ✓ | Same `faction=Any` scope as DIR.MOD.1 — inclusive-of-self by default, harmless costed no-op here too. | Art 04 §6.3 |
+| Trigger validity | ✓ | `faction=Any` is inclusive-of-self by default; presenting on a Directorate placement would cost Directorate its own chip, 1 Mandate and 1 Public Standing, so the scope is harmless. | Art 04 §6.3 |
 | Portrait validity | ✓ | `{Directorate: submitter=+1}` only — no target-faction entry, so DIR.MOD.2's Item 7 question doesn't apply here. | Art 04 §6.2 P11 |
 | Supported by zones | ✓ | `ring_constraint=1` matches trigger's `ring=1` scope; consistent. | Art 01 §6–7 |
 | Supported by components | ✓ | `arbiter.remove(presence_chip,...)` confirmed to never target a Deployment Marker — no GR 8.3a conflict, family-wide resolution. | Art 02 §6–8; GR 8.3a |
 | Supported by game procedure | ⚠ | Card carries a real `arbiter_note`/inline comment — per S154 rule, a clean card should have zero of either; presence means Art 03 doesn't yet cover this mechanic standalone (new procedure and/or card redesign needed), not yet ✓. Prior note: Same as siblings. | Art 03; GR 6.1 |
 | Data schema validation | ⚠ (deferred) | Scaffolded (04-n177) — placeholders only. | Art 04 §6.1–§6.3 |
-| Card narrative | ⚠ | `narrative` field empty; Card Story above is new this pass. | Art 04 §5 Card Story |
+| Card narrative | ✓ | Narrative shows a person, not a force — quiet erasure by standing authority. | Art 04 §5 Card Story |
 | Outcome determinacy | ✓ | Automatic, single success branch. | Art 04 §5 P27 |
-| Resource cost positioning | ⚠ | `cost=None`, no TBD note — same family inconsistency flagged at DIR.MOD.2 (DIR.MOD.1 flags doubt on the identical mechanism, 2/3 don't). Gated on 04-n178. | Art 00a §9.2; PM05 04-n178 |
-| Trigger frequency (ModReactCard) | ⚠ | Ring-locked to Core (fewer districts, but institutionally dense — Core is where most factions eventually push). Combined with no restriction, this may be the highest-frequency card in the family; final read pending 04-n178. |  |
-| Firing window (ModReactCard) | ⚠ | Same family-overlap flag as DIR.MOD.1/2 — if a Core placement also satisfies DIR.MOD.1's generic trigger, no documented rule on whether both fire. |  |
+| Resource cost positioning | ✓ | Mandate 1 — mono native, in line with other factions' React removals at 1 resource. The Public Standing −1 is the separate public price, written as an effect (Art 04c). | Art 04c |
+| Trigger frequency (ModReactCard) | ✓ | Core placements are common and the card is unrestricted, so a trigger is easy to find — acceptable because the card fires once and is removed from the game (Art 03 §18.3.2), at 1 Mandate plus 1 Public Standing. | Art 03 §18.3.2 |
+| Firing window (ModReactCard) | ✓ | One placement triggers at most one card from the family: a player holding 2+ eligible Reacts presents one (Art 03 §18.1), and the removal it produces is not a new placement. Each card can still fire later in the same Month on a separate placement. | Art 03 §18.1 |
 | Automatic vs. d100 (ModReactCard) | ✓ | Same as siblings. |  |
-| Stack behavior (ModReactCard) | ⚠ | Same open question as DIR.MOD.1/2. |  |
+| Stack behavior (ModReactCard) | ✓ | Two copies cannot both fire on one placement — Art 03 §18.1 lets a player present only one card per board-state change. | Art 03 §18.1 |
 | Ring constraint (ModReactCard) | ✓ | `ring_constraint=1` correctly matches trigger scope; distinguishes this as the ring-locked family member. |  |
 
 #### Outstanding Issues
@@ -28183,13 +28179,13 @@ None
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | ✓ S154, re-reviewed S166 | | |
 
-*Ring-constrained variant of DIR.MOD.1. Ring 1 (Core) only. No Established restriction — Directorate has blanket institutional authority in Core ring regardless of presence level. Full content-review: carries DIR.MOD.1's self-fire flag plus a frequency flag specific to being both unrestricted and Ring 1-locked. Design Pass ✓, Issues Resolved not yet.*
+*Ring-constrained variant of DIR.MOD.1. Ring 1 (Core) only. No Established restriction — Directorate has blanket institutional authority in Core ring regardless of presence level. Each removal costs Directorate 1 Mandate and 1 Public Standing.  Design Pass ✓, Issues Resolved not yet.*
 
 ```python
 DIR.MOD.3 = Card(
-    id      = "DIR.MOD.3",  card_id = "DIR.MOD.3",  version = "v0.1",
+    id      = "DIR.MOD.3",  card_id = "DIR.MOD.3",  version = "v0.2",
     name    = "City Council Loyalist",
     tagline = "In the Core, the Directorate's authority does not require a justification.",
     type    = ModReactCard,  faction = Directorate,
@@ -28216,19 +28212,22 @@ DIR.MOD.3 = Card(
     target_freeform = None,
     affinity        = None,
     restriction     = None,  # Core ring: no Established requirement — blanket institutional authority
-    cost            = None,
+    cost            = Mandate * 1,
     boost           = None,
 
-    success     = arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+    success     = (
+        arbiter.remove(presence_chip, district=trigger.district, faction=trigger.faction, count=1),
+        faction(Directorate).standing.remove(1),
+    ),
     successcrit = None,  fail = None,  failcrit = None,
     on_accept   = None,  on_decline = None,
     on_discard = None,
 
     portrait     = {Directorate: PortraitEntry(submitter=+1)},
     ps_framing   = None,
-    narrative    = None,
+    narrative    = "The councilman made one call from the Citadel steps; by evening, the claim had never been filed.",
     perspectives = None,
-    design_note  = "Ring 1–constrained variant of DIR.MOD.1. Core ring is institutional home territory — Directorate removes presence without needing Established status. Reflects doctrine: Directorate's authority in the Core is structural, not earned faction by faction. Strongest DIR enforcement React — no restriction to work around.",
+    design_note  = "Ring 1–constrained variant of DIR.MOD.1. Core ring is institutional home territory — Directorate removes presence without needing Established status. Reflects doctrine: Directorate's authority in the Core is structural, not earned faction by faction. Strongest DIR enforcement React — no restriction to work around. The removal still costs 1 Mandate and 1 Public Standing — even structural authority spends political capital, and government force on the street reads as martial law, even in the Core.",
     arbiter_note = None,
 )
 ```
@@ -28907,7 +28906,7 @@ DIR.MOD.10 = Card(
 ### DIR.MOD.11 — EMERGENCY CURFEW
 
 #### Design Rationale
-Weak-tier Hinder, completing the pattern-setter's doctrine expression with §5a's other half — "best suppression capability in the game," pushing a named faction's position down rather than building Directorate's own up. A curfew constrains the ground itself rather than adding force to a side, which is why it's a Tactic rather than a deployed Asset. Same no-cost/playtest-flagged (04-n94) terms as DIR.MOD.10. DIR.MOD.13 Martial Lockdown is the escalated −2 counterpart.
+Weak-tier Hinder, completing the pattern-setter's doctrine expression with §5a's other half — "best suppression capability in the game," pushing a named faction's position down rather than building Directorate's own up. A curfew constrains the ground itself rather than adding force to a side, which is why it's a Tactic rather than a deployed Asset. No resource cost (the subclass has no payment step), but the curfew costs Directorate 1 Public Standing when it is revealed: government suppression of the city reads as martial law to New Meridian. Magnitude playtest-flagged (04-n94). DIR.MOD.13 Martial Lockdown is the escalated −2 counterpart.
 
 #### Card Story
 A curfew order drops on short notice, checkpoints going up before anyone can react — whichever faction the playing side has named loses the freedom of movement it was counting on.
@@ -28921,40 +28920,41 @@ A curfew order drops on short notice, checkpoints going up before anyone can rea
 | Doctrine alignment | ✓ | Hinder expresses §5a's "best suppression capability in the game" directly; `doctrine_mod`/`target_faction` correctly None — target lives in `ModBattleExpr.target`. | Art 04 §6.2 |
 | Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills the Tactic-category Hinder slot in the locked pattern. | Art 04 §6.1, §11.1 |
 | Taxonomy fit | N/A | Schema-locked None — contest itself is the taxonomy-bearing act (§11.1). | Art 04 §6.2, §11.1 |
-| Balance | ✓ | Weak Hinder tier per the locked pattern; no cost step exists for this subclass; magnitude playtest-flagged (04-n94), not re-litigated here. | PM05 04-n94 |
+| Balance | ✓ | Weak Hinder tier per the locked pattern, priced at 1 Public Standing on reveal; magnitude playtest-flagged (04-n94), not re-litigated here. | PM05 04-n94 |
 | Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
 | Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
 | Trigger validity | N/A | Schema-locked None; fires at Battlefield Strength commit, not a trigger. | Art 04 §6.2 |
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass convention). | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district` (schema-locked); `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
-| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Supported by game procedure | ⚠ | Contingent on Art 03 §10.1.2.3 sign-off. Card carries no note and no comment. The Hinder resolves at §10.1.2.3 and the Public Standing −1 at §10.1.2.3 step 3, where the owner of a revealed card that carries a Public Standing shift moves its own PS marker. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ⚠ | `ModBattleExpr` carries `ps_shift`, which §6.3 does not yet define for this subclass — proposed at `schema_cleanup_log` #68. `ps_framing` stays None: the Public Standing hit is part of the card's effect, not a public-reception roll. | Art 04 §6.1–§6.3; schema #68 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. The Public Standing −1 is an effect, not a cost (Art 04c). | PM05 04-n94; Art 04c |
 
 #### Outstanding Issues
 
-None
+- `ModBattleExpr.ps_shift` is not yet defined in §6.3 — proposed at `schema_cleanup_log` #68.
+- The Public Standing shift resolves at Art 03 §10.1.2.3 step 3, which is pending re-sign-off.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | ✓ S154, re-reviewed S166 | | |
 
-*Hinder counterpart to DIR.MOD.10, expressing the other half of §5a's Directorate doctrine: "Suppression toolkit: push other factions' control tiers down rather than building own tiers up — best suppression capability in the game." A curfew doesn't reinforce Directorate's own position in the contest — it makes the named faction's position harder to hold, a Tactic rather than a deployed Asset. Weaker Hinder tier (−1); DIR.MOD.13 Martial Lockdown is the escalated −2 counterpart. Same disposition as DIR.MOD.10.*
+*Hinder counterpart to DIR.MOD.10, expressing the other half of §5a's Directorate doctrine: "Suppression toolkit: push other factions' control tiers down rather than building own tiers up — best suppression capability in the game." A curfew doesn't reinforce Directorate's own position in the contest — it makes the named faction's position harder to hold, a Tactic rather than a deployed Asset. Weaker Hinder tier (−1); DIR.MOD.13 Martial Lockdown is the escalated −2 counterpart. Costs Directorate 1 Public Standing on reveal.*
 
 ```python
 DIR.MOD.11 = Card(
-    id      = "DIR.MOD.11",  card_id = "DIR.MOD.11",  version = "v0.1",
+    id      = "DIR.MOD.11",  card_id = "DIR.MOD.11",  version = "v0.2",
     name    = "Emergency Curfew",
     tagline = "Movement restricted, checkpoints up — whoever needed the street tonight doesn't get it.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Directorate,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1),
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=1, ps_shift=PSShift(faction="acting", delta=-1)),
     value_rating    = 1,
     ring_constraint = None,
     ring_origin     = None,
@@ -29093,7 +29093,7 @@ DIR.MOD.12 = Card(
 ### DIR.MOD.13 — MARTIAL LOCKDOWN
 
 #### Design Rationale
-Escalated Hinder tier, completing the locked 2 Boost/2 Hinder pattern. Where DIR.MOD.11 Emergency Curfew is a routine administrative order, Martial Lockdown is §5a's suppression doctrine turned all the way up — full mobilization against a named faction's position rather than a movement restriction. Same no-cost, playtest-flagged (04-n94) terms as the rest of the set.
+Escalated Hinder tier, completing the locked 2 Boost/2 Hinder pattern. Where DIR.MOD.11 Emergency Curfew is a routine administrative order, Martial Lockdown is §5a's suppression doctrine turned all the way up — full mobilization against a named faction's position rather than a movement restriction. No resource cost (the subclass has no payment step), but the lockdown costs Directorate 2 Public Standing when it is revealed: full mobilization against the city reads as martial law, and the public backlash scales with the force. Magnitude playtest-flagged (04-n94).
 
 #### Card Story
 Full lockdown comes down from Government Citadel, no explanation offered — whichever faction the playing side has named finds its position in the district untenable overnight.
@@ -29107,40 +29107,41 @@ Full lockdown comes down from Government Citadel, no explanation offered — whi
 | Doctrine alignment | ✓ | Hinder expresses §5a's "best suppression capability in the game" at its escalated tier; `doctrine_mod`/`target_faction` correctly None. | Art 04 §6.2 |
 | Card type fit | ✓ | ModBattleCard/FactionSpecific correct; fills the Tactic-category escalated Hinder slot alongside DIR.MOD.11. | Art 04 §6.1, §11.1 |
 | Taxonomy fit | N/A | Schema-locked None (§11.1). | Art 04 §6.2, §11.1 |
-| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per the locked pattern; playtest-flagged (04-n94). | PM05 04-n94 |
+| Balance | ✓ | Stronger Hinder tier (magnitude 2/value_rating 2) per the locked pattern, priced at 2 Public Standing on reveal; playtest-flagged (04-n94). | PM05 04-n94 |
 | Effect duration | N/A | Immediate-resolution, discarded at §10.1.4 cleanup. | Art 04 §5 P19 |
 | Persistence | N/A | Schema-locked None. | Art 04 §6.2 |
 | Trigger validity | N/A | Schema-locked None. | Art 04 §6.2 |
 | Portrait validity | ✓ | `portrait=None` is correct and permanent — ModBattleCard carries no portrait value (locked whole-subclass convention). | Art 04 §6.1–§6.2 |
 | Supported by zones | ✓ | No `target_district`; `ring_constraint=None` correct for a faction-deck card. | Art 01 §6–§7 |
 | Supported by components | ✓ | No new components invoked. | Art 02 |
-| Supported by game procedure | ✓ | Prior `arbiter_note` was found fully redundant with the card's own fields and/or an already-existing, verified Art 03 procedure (S154 follow-up) and removed — card now carries no note and no comment, genuinely supported. | Art 03 §10.1.2, §10.1.4 |
-| Data schema validation | ✓ | `ps_framing`/`boost`/`resolution_type` added as explicit None placeholders (04-n177 scaffolding). | Art 04 §6.1–§6.3; 04-n177 |
+| Supported by game procedure | ⚠ | Contingent on Art 03 §10.1.2.3 sign-off. Card carries no note and no comment. The Hinder resolves at §10.1.2.3 and the Public Standing −2 at §10.1.2.3 step 3, where the owner of a revealed card that carries a Public Standing shift moves its own PS marker. | Art 03 §10.1.2, §10.1.4 |
+| Data schema validation | ⚠ | `ModBattleExpr` carries `ps_shift`, which §6.3 does not yet define for this subclass — proposed at `schema_cleanup_log` #68. `ps_framing` stays None: the Public Standing hit is part of the card's effect, not a public-reception roll. | Art 04 §6.1–§6.3; schema #68 |
 | Card narrative | ✓ | Plain New Meridian event, no mechanic restatement. | Art 04 §5 Card Story |
 | Outcome determinacy | N/A | Schema-locked None. | Art 04 §6.2 |
-| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. | PM05 04-n94 |
+| Resource cost positioning | N/A | `cost=None` is the locked whole-subclass convention. The Public Standing −2 is an effect, not a cost (Art 04c). | PM05 04-n94; Art 04c |
 
 #### Outstanding Issues
 
-None
+- `ModBattleExpr.ps_shift` is not yet defined in §6.3 — proposed at `schema_cleanup_log` #68.
+- The Public Standing shift resolves at Art 03 §10.1.2.3 step 3, which is pending re-sign-off.
 
 #### Status
 
 | | Design Pass | Issues Resolved | Signed off |
 |--|-------------|-----------------|------------|
-| Status | ✓ S154 | | |
+| Status | ✓ S154, re-reviewed S166 | | |
 
-*Escalated Hinder counterpart to DIR.MOD.11 Emergency Curfew (−2 vs. −1) — completes the 2 Boost / 2 Hinder pattern. Where Curfew is a routine administrative order, Lockdown is Directorate's "best suppression capability in the game" (§5a) turned all the way up: full mobilization against the named faction's position, not just restricted movement. Same disposition as DIR.MOD.11.*
+*Escalated Hinder counterpart to DIR.MOD.11 Emergency Curfew (−2 vs. −1) — completes the 2 Boost / 2 Hinder pattern. Where Curfew is a routine administrative order, Lockdown is Directorate's "best suppression capability in the game" (§5a) turned all the way up: full mobilization against the named faction's position, not just restricted movement. Costs Directorate 2 Public Standing on reveal.*
 
 ```python
 DIR.MOD.13 = Card(
-    id      = "DIR.MOD.13",  card_id = "DIR.MOD.13",  version = "v0.1",
+    id      = "DIR.MOD.13",  card_id = "DIR.MOD.13",  version = "v0.2",
     name    = "Martial Lockdown",
     tagline = "Full mobilization. Whatever ground they were counting on tonight, they don't get to hold it.",
     type    = ModBattleCard,  subtype = FactionSpecific,  faction = Directorate,
     layer   = None,  function = None,  subject = None,
 
-    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2),
+    effect          = ModBattleExpr(direction=Hinder, target=None, magnitude=2, ps_shift=PSShift(faction="acting", delta=-2)),
     value_rating    = 2,
     ring_constraint = None,
     ring_origin     = None,
